@@ -1,5 +1,31 @@
 # Changelog
 
+## v1.1.0 (2026-10-15) — 生态建设：API 文档 + 插件机制 + 贡献指南
+
+### Highlights
+- 新增 `src/docs/` 包：API 文档自动生成
+  - 从导出函数生成 API 文档条目
+  - Markdown 格式输出（含签名、描述、示例、平台支持）
+  - JSON 格式输出
+  - 多格式支持（Markdown / JSON / HTML）
+- 新增 `src/plugin/` 包：插件机制 + 模板库
+  - 插件注册/注销/启用/禁用
+  - 6 种钩子（PreCompile, PostCompile, PreCodegen, PostCodegen, PreFfi, PostFfi）
+  - 钩子执行与结果收集
+  - 4 个内置模板（basic-library, ffi-wrapper, full-application, plugin-template）
+  - 模板实例化与文件生成
+- 新增 `CONTRIBUTING.md` 贡献指南
+- 新增 28 个测试（总计 517 个，全部通过）
+
+### Stats
+- 新增包: src/docs/ + src/plugin/
+- 新增测试: 28 个（总计 517 个，全部通过）
+- Warning: 0
+- 总包数: 23
+
+### Breaking Changes
+- 无（纯新增功能）
+
 ## v1.0.0 (2026-10-15) — 性能提升 + 稳定版发布
 
 ### Highlights
