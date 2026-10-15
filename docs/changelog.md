@@ -1,5 +1,20 @@
 # Changelog
 
+## v0.6.0 (2026-10-15) — 中英双文注释改造
+
+### Highlights
+- 全部源码文档注释改为中英双文格式（`/// 中文 | English`）
+- 21 个源文件文档注释双语化（core / config / typesys / codegen / platform / ffi / integration / scaffold / sync）
+- 开源文档国际化治理，方便国际开发者理解 API 语义
+- 所有 348 测试保持通过，无功能变更
+
+### Stats
+- 修改文件: 21 个源文件 + 4 个文档文件
+- 测试: 348 个（全部通过，无回归）
+
+### Breaking Changes
+- 无（仅文档注释格式变更，不影响 API）
+
 ## v0.5.0 (2026-10-15) — 远期迭代增强
 
 ### Highlights

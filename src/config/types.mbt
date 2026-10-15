@@ -1,12 +1,12 @@
 ///|
-/// 导出函数参数声明
+/// 导出函数参数声明 | Export function parameter declaration
 pub(all) struct ExportParam {
   name : String
   typ : String
 } derive(Debug, Eq)
 
 ///|
-/// 导出函数声明
+/// 导出函数声明 | Export function declaration
 pub(all) struct ExportFunction {
   name : String
   params : Array[ExportParam]
@@ -14,21 +14,21 @@ pub(all) struct ExportFunction {
 } derive(Debug, Eq)
 
 ///|
-/// 导出类型字段声明
+/// 导出类型字段声明 | Export type field declaration
 pub(all) struct ExportField {
   name : String
   typ : String
 } derive(Debug, Eq)
 
 ///|
-/// 导出类型声明
+/// 导出类型声明 | Export type declaration
 pub(all) struct ExportType {
   name : String
   fields : Array[ExportField]
 } derive(Debug, Eq)
 
 ///|
-/// moon-cross.json 完整配置
+/// moon-cross.json 完整配置 | moon-cross.json full configuration
 pub(all) struct CrossConfig {
   version : Int
   module_path : String
@@ -39,7 +39,7 @@ pub(all) struct CrossConfig {
 } derive(Debug, Eq)
 
 ///|
-/// 创建默认配置
+/// 创建默认配置 | Create default configuration
 pub fn default_config(name : String) -> CrossConfig {
   {
     version: 1,
@@ -52,7 +52,7 @@ pub fn default_config(name : String) -> CrossConfig {
 }
 
 ///|
-/// 配置版本号
+/// 配置版本号 | Configuration version number
 pub fn config_version() -> Int {
   1
 }

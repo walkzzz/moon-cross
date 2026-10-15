@@ -1,5 +1,5 @@
 ///|
-/// 跨平台目标平台
+/// 跨平台目标平台 | Cross-platform target platform
 pub(all) enum Platform {
   Ios
   Android
@@ -8,14 +8,14 @@ pub(all) enum Platform {
 } derive(Debug, Eq)
 
 ///|
-/// CPU 架构
+/// CPU 架构 | CPU architecture
 pub(all) enum Arch {
   Arm64
   X86_64
 } derive(Debug, Eq)
 
 ///|
-/// 目标三元组（platform + arch + triple string）
+/// 目标三元组（platform + arch + triple string） | Target triple (platform + arch + triple string)
 pub(all) struct TargetTriple {
   platform : Platform
   arch : Arch
@@ -23,7 +23,7 @@ pub(all) struct TargetTriple {
 } derive(Debug, Eq)
 
 ///|
-/// 平台转字符串标识
+/// 平台转字符串标识 | Platform to string identifier
 pub fn Platform::to_id(self : Platform) -> String {
   match self {
     Ios => "ios"
@@ -34,7 +34,7 @@ pub fn Platform::to_id(self : Platform) -> String {
 }
 
 ///|
-/// 平台显示名
+/// 平台显示名 | Platform display name
 pub fn Platform::display_name(self : Platform) -> String {
   match self {
     Ios => "iOS"
@@ -45,7 +45,7 @@ pub fn Platform::display_name(self : Platform) -> String {
 }
 
 ///|
-/// 从字符串解析平台
+/// 从字符串解析平台 | Parse platform from string
 pub fn Platform::from_id(s : String) -> Platform? {
   match s {
     "ios" => Some(Ios)
@@ -57,13 +57,13 @@ pub fn Platform::from_id(s : String) -> Platform? {
 }
 
 ///|
-/// 所有平台列表
+/// 所有平台列表 | All platforms list
 pub fn all_platforms() -> Array[Platform] {
   [Ios, Android, Windows, Ohos]
 }
 
 ///|
-/// 架构转字符串标识
+/// 架构转字符串标识 | Architecture to string identifier
 pub fn Arch::to_id(self : Arch) -> String {
   match self {
     Arm64 => "arm64"
@@ -72,7 +72,7 @@ pub fn Arch::to_id(self : Arch) -> String {
 }
 
 ///|
-/// 从字符串解析架构
+/// 从字符串解析架构 | Parse architecture from string
 pub fn Arch::from_id(s : String) -> Arch? {
   match s {
     "arm64" => Some(Arm64)
@@ -82,7 +82,7 @@ pub fn Arch::from_id(s : String) -> Arch? {
 }
 
 ///|
-/// 平台默认架构
+/// 平台默认架构 | Default architecture for platform
 pub fn Platform::default_arch(self : Platform) -> Arch {
   match self {
     Ios => Arm64
@@ -93,7 +93,7 @@ pub fn Platform::default_arch(self : Platform) -> Arch {
 }
 
 ///|
-/// 构建目标三元组
+/// 构建目标三元组 | Build target triple
 pub fn make_target_triple(platform : Platform, arch : Arch) -> TargetTriple {
   let triple = match (platform, arch) {
     (Ios, Arm64) => "arm64-apple-ios"
@@ -109,7 +109,7 @@ pub fn make_target_triple(platform : Platform, arch : Arch) -> TargetTriple {
 }
 
 ///|
-/// 目标三元组字符串
+/// 目标三元组字符串 | Target triple to string
 pub fn TargetTriple::to_string(self : TargetTriple) -> String {
   self.triple
 }

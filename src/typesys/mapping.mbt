@@ -1,5 +1,5 @@
 ///|
-/// MoonBit 源类型
+/// MoonBit 源类型 | MoonBit source type
 pub(all) enum MoonBitType {
   IntT
   DoubleT
@@ -12,7 +12,7 @@ pub(all) enum MoonBitType {
 } derive(Debug, Eq)
 
 ///|
-/// C 适配层类型
+/// C 适配层类型 | C adapter type
 pub(all) enum CType {
   CInt32
   CDouble
@@ -24,7 +24,7 @@ pub(all) enum CType {
 } derive(Debug, Eq)
 
 ///|
-/// C 类型转字符串
+/// C 类型转字符串 | C type to string
 pub fn CType::to_string(self : CType) -> String {
   match self {
     CInt32 => "int32_t"
@@ -38,7 +38,7 @@ pub fn CType::to_string(self : CType) -> String {
 }
 
 ///|
-/// MoonBit 类型转 C 类型
+/// MoonBit 类型转 C 类型 | MoonBit type to C type
 pub fn moonbit_to_c(t : MoonBitType) -> CType {
   match t {
     IntT => CInt32
@@ -53,7 +53,7 @@ pub fn moonbit_to_c(t : MoonBitType) -> CType {
 }
 
 ///|
-/// 从字符串解析 MoonBit 类型
+/// 从字符串解析 MoonBit 类型 | Parse MoonBit type from string
 pub fn parse_moonbit_type(s : String) -> MoonBitType? {
   match s {
     "Int" => Some(IntT)
@@ -67,7 +67,7 @@ pub fn parse_moonbit_type(s : String) -> MoonBitType? {
 }
 
 ///|
-/// MoonBit 类型转字符串
+/// MoonBit 类型转字符串 | MoonBit type to string
 pub fn MoonBitType::to_string(self : MoonBitType) -> String {
   match self {
     IntT => "Int"

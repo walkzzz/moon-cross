@@ -1,18 +1,18 @@
 ///|
-/// C wrapper 生成结果（头文件 + 源文件）
+/// C wrapper 生成结果（头文件 + 源文件） | C wrapper generation result (header + source)
 pub(all) struct CWrapperResult {
   header : String
   source : String
 } derive(Debug, Eq)
 
 ///|
-/// C wrapper 生成器版本
+/// C wrapper 生成器版本 | C wrapper generator version
 pub fn c_wrapper_version() -> String {
   "moon-cross C wrapper v0.1.0"
 }
 
 ///|
-/// 生成 C wrapper 头文件骨架
+/// 生成 C wrapper 头文件骨架 | Generate C wrapper header skeleton
 pub fn generate_header(module_name : String) -> String {
   "#ifndef " +
   module_name +

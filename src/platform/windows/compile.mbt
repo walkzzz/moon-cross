@@ -1,5 +1,5 @@
 ///|
-/// Windows 编译配置
+/// Windows 编译配置 | Windows compilation configuration
 pub(all) struct WindowsCompileConfig {
   arch : @core.Arch
   output_dir : String
@@ -7,7 +7,7 @@ pub(all) struct WindowsCompileConfig {
 } derive(Debug, Eq)
 
 ///|
-/// Windows 编译命令生成
+/// Windows 编译命令生成 | Windows compile command generation
 pub fn windows_compile_command(config : WindowsCompileConfig) -> String {
   let target = match config.arch {
     @core.Arm64 => "aarch64-pc-windows-msvc"
@@ -23,13 +23,13 @@ pub fn windows_compile_command(config : WindowsCompileConfig) -> String {
 }
 
 ///|
-/// Windows 平台标识
+/// Windows 平台标识 | Windows platform identifier
 pub fn windows_platform_id() -> String {
   "windows"
 }
 
 ///|
-/// Windows 默认编译配置
+/// Windows 默认编译配置 | Windows default compilation configuration
 pub fn default_windows_config(
   output_dir : String,
   output_name : String,

@@ -1,5 +1,5 @@
 ///|
-/// 平台编译规格
+/// 平台编译规格 | Platform compilation specification
 pub(all) struct PlatformSpec {
   platform : @core.Platform
   compiler : String
@@ -10,7 +10,7 @@ pub(all) struct PlatformSpec {
 } derive(Debug, Eq)
 
 ///|
-/// 获取平台编译规格
+/// 获取平台编译规格 | Get platform compilation specification
 pub fn platform_spec(platform : @core.Platform) -> PlatformSpec {
   match platform {
     @core.Ios =>
@@ -53,7 +53,7 @@ pub fn platform_spec(platform : @core.Platform) -> PlatformSpec {
 }
 
 ///|
-/// 平台规格版本
+/// 平台规格版本 | Platform specification version
 pub fn platform_spec_version() -> String {
   "moon-cross platform v0.1.0"
 }

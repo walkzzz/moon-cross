@@ -1,5 +1,5 @@
 ///|
-/// 增量同步结果
+/// 增量同步结果 | Incremental sync result
 pub(all) struct SyncResult {
   platform : @core.Platform
   updated_files : Array[String]
@@ -7,13 +7,13 @@ pub(all) struct SyncResult {
 } derive(Debug, Eq)
 
 ///|
-/// 同步版本
+/// 同步版本 | Sync version
 pub fn sync_version() -> String {
   "moon-cross sync v0.1.0"
 }
 
 ///|
-/// 创建成功同步结果
+/// 创建成功同步结果 | Create successful sync result
 pub fn sync_success(
   platform : @core.Platform,
   files : Array[String],
@@ -22,7 +22,7 @@ pub fn sync_success(
 }
 
 ///|
-/// 创建失败同步结果
+/// 创建失败同步结果 | Create failed sync result
 pub fn sync_failure(platform : @core.Platform) -> SyncResult {
   { platform, updated_files: [], success: false, }
 }

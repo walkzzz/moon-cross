@@ -1,5 +1,5 @@
 ///|
-/// Moon Cross 错误类型
+/// Moon Cross 错误类型 | Moon Cross error type
 pub(all) enum MoonCrossError {
   ConfigError(String)
   ParseError(String)
@@ -12,7 +12,7 @@ pub(all) enum MoonCrossError {
 } derive(Debug)
 
 ///|
-/// 错误转可读消息
+/// 错误转可读消息 | Error to readable message
 pub fn MoonCrossError::to_message(self : MoonCrossError) -> String {
   match self {
     ConfigError(msg) => "Config error: \{msg}"
@@ -27,7 +27,7 @@ pub fn MoonCrossError::to_message(self : MoonCrossError) -> String {
 }
 
 ///|
-/// 错误简短标签
+/// 错误简短标签 | Error short label
 pub fn MoonCrossError::label(self : MoonCrossError) -> String {
   match self {
     ConfigError(_) => "config"

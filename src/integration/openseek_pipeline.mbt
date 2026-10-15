@@ -1,5 +1,5 @@
 ///|
-/// openseek 端到端流水线结果
+/// openseek 端到端流水线结果 | openseek end-to-end pipeline result
 pub(all) struct OpenseekPipelineResult {
   config : @config.CrossConfig
   c_header : String
@@ -13,19 +13,19 @@ pub(all) struct OpenseekPipelineResult {
 } derive(Debug, Eq)
 
 ///|
-/// 生成 openseek C wrapper 头文件
+/// 生成 openseek C wrapper 头文件 | Generate openseek C wrapper header
 pub fn openseek_c_header() -> String {
   @codegen_c.generate_header(openseek_module_name())
 }
 
 ///|
-/// 生成 openseek C 导出宏
+/// 生成 openseek C 导出宏 | Generate openseek C export macro
 pub fn openseek_c_export_macro() -> String {
   @codegen.generate_export_macro()
 }
 
 ///|
-/// 生成 openseek 四平台规格
+/// 生成 openseek 四平台规格 | Generate openseek four-platform specs
 pub fn openseek_platform_specs() -> Array[@platform.PlatformSpec] {
   let result = []
   for platform in @core.all_platforms() {
@@ -35,7 +35,7 @@ pub fn openseek_platform_specs() -> Array[@platform.PlatformSpec] {
 }
 
 ///|
-/// 生成 openseek 四平台 FFI 绑定类型
+/// 生成 openseek 四平台 FFI 绑定类型 | Generate openseek four-platform FFI binding types
 pub fn openseek_ffi_bindings() -> Array[@ffi.FfiBindingType] {
   let result = []
   for platform in @core.all_platforms() {
@@ -45,7 +45,7 @@ pub fn openseek_ffi_bindings() -> Array[@ffi.FfiBindingType] {
 }
 
 ///|
-/// 生成 openseek Windows 编译命令
+/// 生成 openseek Windows 编译命令 | Generate openseek Windows compile command
 pub fn openseek_windows_compile_command() -> String {
   let cfg = @platform_windows.default_windows_config(
     "output",
@@ -55,7 +55,7 @@ pub fn openseek_windows_compile_command() -> String {
 }
 
 ///|
-/// 生成 openseek Android 编译命令
+/// 生成 openseek Android 编译命令 | Generate openseek Android compile command
 pub fn openseek_android_compile_command() -> String {
   let cfg = @platform_android.default_android_config(
     "/opt/android-ndk",
@@ -66,7 +66,7 @@ pub fn openseek_android_compile_command() -> String {
 }
 
 ///|
-/// 生成 openseek iOS 编译命令
+/// 生成 openseek iOS 编译命令 | Generate openseek iOS compile command
 pub fn openseek_ios_compile_command() -> String {
   let cfg = @platform_ios.default_ios_config(
     "/sdk/iphoneos",
@@ -77,7 +77,7 @@ pub fn openseek_ios_compile_command() -> String {
 }
 
 ///|
-/// 生成 openseek 鸿蒙编译命令
+/// 生成 openseek 鸿蒙编译命令 | Generate openseek HarmonyOS compile command
 pub fn openseek_ohos_compile_command() -> String {
   let cfg = @platform_ohos.default_ohos_config(
     "$OHOS_SDK/native",
@@ -88,7 +88,7 @@ pub fn openseek_ohos_compile_command() -> String {
 }
 
 ///|
-/// 运行完整 openseek 跨平台流水线
+/// 运行完整 openseek 跨平台流水线 | Run complete openseek cross-platform pipeline
 pub fn run_openseek_pipeline() -> OpenseekPipelineResult {
   {
     config: openseek_cross_config(),
@@ -104,7 +104,7 @@ pub fn run_openseek_pipeline() -> OpenseekPipelineResult {
 }
 
 ///|
-/// 验证 openseek 流水线结果完整性
+/// 验证 openseek 流水线结果完整性 | Validate openseek pipeline result integrity
 pub fn validate_openseek_pipeline(result : OpenseekPipelineResult) -> Bool {
   result.config.functions.length() > 0 &&
   result.config.types.length() > 0 &&

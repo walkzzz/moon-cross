@@ -1,17 +1,17 @@
 ///|
-/// openseek 模块名
+/// openseek 模块名 | openseek module name
 pub fn openseek_module_name() -> String {
   "moonbitlang_openseek"
 }
 
 ///|
-/// openseek 版本
+/// openseek 版本 | openseek version
 pub fn openseek_version() -> String {
   "latest"
 }
 
 ///|
-/// openseek/deepseek 导出函数列表（基于纯数据层 API）
+/// openseek/deepseek 导出函数列表（基于纯数据层 API） | openseek/deepseek export function list (based on pure data layer API)
 pub fn openseek_export_functions() -> Array[@config.ExportFunction] {
   [
     {
@@ -65,7 +65,7 @@ pub fn openseek_export_functions() -> Array[@config.ExportFunction] {
 }
 
 ///|
-/// openseek/deepseek 导出类型
+/// openseek/deepseek 导出类型 | openseek/deepseek export types
 pub fn openseek_export_types() -> Array[@config.ExportType] {
   [
     {
@@ -114,7 +114,7 @@ pub fn openseek_export_types() -> Array[@config.ExportType] {
 }
 
 ///|
-/// 为 openseek/deepseek 生成完整的跨平台配置
+/// 为 openseek/deepseek 生成完整的跨平台配置 | Generate complete cross-platform config for openseek/deepseek
 pub fn openseek_cross_config() -> @config.CrossConfig {
   {
     version: 1,
@@ -127,19 +127,19 @@ pub fn openseek_cross_config() -> @config.CrossConfig {
 }
 
 ///|
-/// openseek 导出函数数量
+/// openseek 导出函数数量 | openseek export function count
 pub fn openseek_function_count() -> Int {
   openseek_export_functions().length()
 }
 
 ///|
-/// openseek 导出类型数量
+/// openseek 导出类型数量 | openseek export type count
 pub fn openseek_type_count() -> Int {
   openseek_export_types().length()
 }
 
 ///|
-/// openseek 目标平台数量
+/// openseek 目标平台数量 | openseek target platform count
 pub fn openseek_target_count() -> Int {
   openseek_cross_config().targets.length()
 }
