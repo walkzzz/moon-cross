@@ -1,0 +1,5 @@
+import {
+  "walkzzz/moon-cross/src/core",
+  "walkzzz/moon-cross/src/config",
+  "walkzzz/moon-cross/src/codegen/c" @codegen_c,
+}

@@ -1,5 +1,27 @@
 # Changelog
 
+## v0.3.0 (2026-10-15) — Week 3
+
+### Highlights
+- iOS clang 交叉编译实现（platform/ios 包）
+- 鸿蒙 OHOS clang 交叉编译实现（platform/ohos 包）
+- Swift C interop 绑定生成（ffi/swift 包）
+- NAPI 绑定生成 + ArkTS import + DevEco 模板（ffi/napi 包）
+- iOS xcrun clang 编译命令生成（真机 + 模拟器）
+- iOS XCFramework 创建命令生成
+- 鸿蒙 .so 编译命令生成（aarch64-linux-ohos / x86_64-linux-ohos）
+- Swift Package.swift 生成 + modulemap + bridging header
+- NAPI napi_register_module_v1 生成 + ArkTS wrapper 文件
+- DevEco oh-package.json5 / build-profile.json5 / module.json5 模板
+
+### Stats
+- 新增测试: 109 个（总计 224 个，全部通过）
+- 新增包: 4 个（platform/ios, platform/ohos, ffi/swift, ffi/napi）
+- 新增 API: 30+
+
+### Breaking Changes
+- 无
+
 ## v0.2.0 (2026-10-15) — Week 2
 
 ### Highlights

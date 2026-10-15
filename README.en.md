@@ -4,7 +4,7 @@
 
 [中文](./README.md) | [Changelog](./docs/changelog.md) | [Roadmap](./docs/roadmap.md) | [Architecture](./docs/architecture.md)
 
-**v0.2.0** | 13 packages | 115 tests | 50+ APIs | MIT License
+**v0.3.0** | 17 packages | 224 tests | 80+ APIs | MIT License
 
 ## Introduction
 
@@ -43,18 +43,24 @@ moon-cross plan --config moon-cross.json
 
 ```
 moon-cross/
-├── core/        # Core types and errors (Platform/Arch/TargetTriple)
-├── config/      # moon-cross.json config parsing and validation
-├── typesys/     # MoonBit → C → four-platform type mapping
-├── codegen/     # Code generation engine
-│   └── c/       #   C adapter generation
-├── platform/    # Platform abstraction and implementation
-│   └── windows/ #   Windows platform
-├── ffi/         # FFI binding generation (JNI/NAPI/DllImport/Swift)
-├── scaffold/    # Scaffold (init cross-platform project)
-├── sync/        # Incremental sync (auto-configure platforms after code update)
-├── cli/         # CLI entry point
-└── docs/        # Documentation
+├── core/          # Core types and errors (Platform/Arch/TargetTriple)
+├── config/        # moon-cross.json config parsing and validation
+├── typesys/       # MoonBit → C → four-platform type mapping
+├── codegen/       # Code generation engine
+│   └── c/         #   C adapter generation
+├── platform/      # Platform abstraction and implementation
+│   ├── windows/   #   Windows platform
+│   ├── android/   #   Android NDK cross-compilation
+│   ├── ios/       #   iOS clang cross-compilation + XCFramework
+│   └── ohos/      #   HarmonyOS OHOS cross-compilation
+├── ffi/           # FFI binding generation
+│   ├── jni/       #   JNI bindings (Android)
+│   ├── swift/     #   Swift C interop (iOS)
+│   └── napi/      #   NAPI bindings + ArkTS (HarmonyOS)
+├── scaffold/      # Scaffold (init cross-platform project)
+├── sync/          # Incremental sync (auto-configure platforms after code update)
+├── cli/           # CLI entry point
+└── docs/          # Documentation
 ```
 
 ## Technical Highlights

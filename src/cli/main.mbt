@@ -1,6 +1,6 @@
 ///|
 fn main {
-  println("Moon Cross v0.1.0 - MoonBit Cross-Platform Native Framework")
+  println("Moon Cross v0.3.0 - MoonBit Cross-Platform Native Framework")
   println("")
   println("Usage: moon-cross <command> [options]")
   println("")
@@ -20,7 +20,11 @@ fn main {
   println("  codegen:   " + @codegen.codegen_version())
   println("  ffi:       " + @ffi.ffi_version())
   println("  jni:       " + @ffi_jni.jni_version())
+  println("  swift:     " + @ffi_swift.swift_version())
+  println("  napi:      " + @ffi_napi.napi_version())
   println("  android:   " + @platform_android.android_platform_id())
+  println("  ios:       " + @platform_ios.ios_platform_id())
+  println("  ohos:      " + @platform_ohos.ohos_platform_id())
   println("  scaffold:  " + @scaffold.scaffold_version())
   println("  sync:      " + @sync.sync_version())
 }

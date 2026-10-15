@@ -4,7 +4,7 @@
 
 [English](./README.md) | [Changelog](./docs/changelog.md) | [Roadmap](./docs/roadmap.md) | [Architecture](./docs/architecture.md)
 
-**v0.2.0** | 13 packages | 115 tests | 50+ APIs | MIT License
+**v0.3.0** | 17 packages | 224 tests | 80+ APIs | MIT License
 
 ## 项目简介
 
@@ -43,18 +43,24 @@ moon-cross plan --config moon-cross.json
 
 ```
 moon-cross/
-├── core/        # 核心类型与错误（Platform/Arch/TargetTriple）
-├── config/      # moon-cross.json 配置解析与校验
-├── typesys/     # MoonBit → C → 四平台类型映射
-├── codegen/     # 代码生成引擎
-│   └── c/       #   C 适配层生成
-├── platform/    # 平台抽象与实现
-│   └── windows/ #   Windows 平台
-├── ffi/         # FFI 绑定生成（JNI/NAPI/DllImport/Swift）
-├── scaffold/    # 脚手架（init 初始化跨平台项目）
-├── sync/        # 增量同步（更新代码后自动配置各平台）
-├── cli/         # CLI 入口
-└── docs/        # 文档
+├── core/          # 核心类型与错误（Platform/Arch/TargetTriple）
+├── config/        # moon-cross.json 配置解析与校验
+├── typesys/       # MoonBit → C → 四平台类型映射
+├── codegen/       # 代码生成引擎
+│   └── c/         #   C 适配层生成
+├── platform/      # 平台抽象与实现
+│   ├── windows/   #   Windows 平台
+│   ├── android/   #   Android NDK 交叉编译
+│   ├── ios/       #   iOS clang 交叉编译 + XCFramework
+│   └── ohos/      #   鸿蒙 OHOS 交叉编译
+├── ffi/           # FFI 绑定生成
+│   ├── jni/       #   JNI 绑定（Android）
+│   ├── swift/     #   Swift C interop（iOS）
+│   └── napi/      #   NAPI 绑定 + ArkTS（鸿蒙）
+├── scaffold/      # 脚手架（init 初始化跨平台项目）
+├── sync/          # 增量同步（更新代码后自动配置各平台）
+├── cli/           # CLI 入口
+└── docs/          # 文档
 ```
 
 ## 技术亮点
