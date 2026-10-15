@@ -1,0 +1,7 @@
+import {
+  "walkzzz/moon-cross/src/core",
+  "walkzzz/moon-cross/src/config",
+  "walkzzz/moon-cross/src/codegen",
+  "walkzzz/moon-cross/src/ffi",
+  "walkzzz/moon-cross/src/platform",
+}

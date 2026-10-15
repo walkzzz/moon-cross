@@ -1,0 +1,12 @@
+target/
+_build/
+*.mbti
+.repos/
+.mooncakes/
+*.log
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+*.swo
