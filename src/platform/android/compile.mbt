@@ -6,6 +6,8 @@ pub(all) struct AndroidCompileConfig {
   output_dir : String
   output_name : String
 } derive(Debug, Eq)
+pub extend AndroidCompileConfig with @moonbitlang/core/debug.Debug::{to_repr}
+pub extend AndroidCompileConfig with Eq::{not_equal, equal}
 
 /// Android 编译命令生成（NDK clang 交叉编译） | Android compile command generation (NDK clang cross-compilation)
 pub fn android_compile_command(config : AndroidCompileConfig) -> String {

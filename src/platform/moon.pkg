@@ -1,4 +1,4 @@
 import {
+  "moonbitlang/core/debug",
   "walkzzz/moon-cross/src/core",
-  "walkzzz/moon-cross/src/config",
 }

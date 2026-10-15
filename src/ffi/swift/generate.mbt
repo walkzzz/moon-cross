@@ -3,6 +3,8 @@ pub(all) struct SwiftBindingConfig {
   module_name : String
   function_name : String
 } derive(Debug, Eq)
+pub extend SwiftBindingConfig with @moonbitlang/core/debug.Debug::{to_repr}
+pub extend SwiftBindingConfig with Eq::{not_equal, equal}
 
 /// Swift interop 版本 | Swift interop version
 pub fn swift_version() -> String {

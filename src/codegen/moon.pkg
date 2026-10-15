@@ -1,5 +1,3 @@
 import {
-  "walkzzz/moon-cross/src/core",
-  "walkzzz/moon-cross/src/config",
-  "walkzzz/moon-cross/src/typesys",
+  "moonbitlang/core/debug",
 }

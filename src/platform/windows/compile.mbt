@@ -5,6 +5,8 @@ pub(all) struct WindowsCompileConfig {
   output_dir : String
   output_name : String
 } derive(Debug, Eq)
+pub extend WindowsCompileConfig with @moonbitlang/core/debug.Debug::{to_repr}
+pub extend WindowsCompileConfig with Eq::{not_equal, equal}
 
 ///|
 /// Windows 编译命令生成 | Windows compile command generation

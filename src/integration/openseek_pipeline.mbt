@@ -11,6 +11,8 @@ pub(all) struct OpenseekPipelineResult {
   ios_command : String
   ohos_command : String
 } derive(Debug, Eq)
+pub extend OpenseekPipelineResult with @moonbitlang/core/debug.Debug::{to_repr}
+pub extend OpenseekPipelineResult with Eq::{not_equal, equal}
 
 ///|
 /// 生成 openseek C wrapper 头文件 | Generate openseek C wrapper header

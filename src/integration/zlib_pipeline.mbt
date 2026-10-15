@@ -11,6 +11,8 @@ pub(all) struct ZlibPipelineResult {
   ios_command : String
   ohos_command : String
 } derive(Debug, Eq)
+pub extend ZlibPipelineResult with @moonbitlang/core/debug.Debug::{to_repr}
+pub extend ZlibPipelineResult with Eq::{not_equal, equal}
 
 ///|
 /// 生成 zlib C wrapper 头文件 | Generate zlib C wrapper header

@@ -4,6 +4,8 @@ pub(all) struct JniBindingConfig {
   class_name : String
   function_name : String
 } derive(Debug, Eq)
+pub extend JniBindingConfig with @moonbitlang/core/debug.Debug::{to_repr}
+pub extend JniBindingConfig with Eq::{not_equal, equal}
 
 /// JNI 版本 | JNI version
 pub fn jni_version() -> String {

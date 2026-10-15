@@ -10,6 +10,8 @@ pub(all) enum MoonBitType {
   ArrayT(String)
   StructT(String)
 } derive(Debug, Eq)
+pub extend MoonBitType with @moonbitlang/core/debug.Debug::{to_repr}
+pub extend MoonBitType with Eq::{not_equal, equal}
 
 ///|
 /// C 适配层类型 | C adapter type
@@ -22,6 +24,8 @@ pub(all) enum CType {
   CMoonbitBytes
   COpaquePtr
 } derive(Debug, Eq)
+pub extend CType with @moonbitlang/core/debug.Debug::{to_repr}
+pub extend CType with Eq::{not_equal, equal}
 
 ///|
 /// C 类型转字符串 | C type to string

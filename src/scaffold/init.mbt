@@ -5,6 +5,8 @@ pub(all) struct ScaffoldOptions {
   platforms : Array[@core.Platform]
   output_dir : String
 } derive(Debug, Eq)
+pub extend ScaffoldOptions with @moonbitlang/core/debug.Debug::{to_repr}
+pub extend ScaffoldOptions with Eq::{not_equal, equal}
 
 ///|
 /// 脚手架版本 | Scaffold version

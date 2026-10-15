@@ -8,6 +8,8 @@ pub(all) struct PlatformSpec {
   output_format : String
   ffi_mechanism : String
 } derive(Debug, Eq)
+pub extend PlatformSpec with @moonbitlang/core/debug.Debug::{to_repr}
+pub extend PlatformSpec with Eq::{not_equal, equal}
 
 ///|
 /// 获取平台编译规格 | Get platform compilation specification

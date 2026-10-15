@@ -1,5 +1,26 @@
 # Changelog
 
+## v0.7.0 (2026-10-15) — Lint + Warning 治理
+
+### Highlights
+- `moon check` warning 从 593 降至 0，全量清零
+- 修复 5 类警告：
+  - `reserved_keyword` (16): `macro` 变量重命名为 `export_macro`（MoonBit 保留关键字）
+  - `unused_package` (52): 清理 18 个 moon.pkg 文件中未使用的依赖导入
+  - `test_unqualified_package` (472): 18 个测试文件中本包引用添加 `@alias.` 前缀限定
+  - `implicit_impl_as_method` (53): 为所有 `derive(Debug, Eq)` 类型添加 `pub extend` 显式声明
+  - `core_package_not_imported` (27): 17 个 moon.pkg 添加 `moonbitlang/core/debug` 导入
+  - `unused_value` (2): 未使用参数 `name` → `_name`
+- 代码质量门禁达标，为后续 CI/CD 集成奠定基础
+
+### Stats
+- 修改文件: 18 个测试文件 + 17 个 moon.pkg + 18 个源文件（pub extend 声明）
+- 测试: 348 个（全部通过，无回归）
+- Warning: 593 → 0
+
+### Breaking Changes
+- 无（仅 lint 修复，不影响 API 语义）
+
 ## v0.6.0 (2026-10-15) — 中英双文注释改造
 
 ### Highlights

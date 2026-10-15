@@ -1,7 +1,7 @@
 import {
+  "moonbitlang/core/debug",
   "walkzzz/moon-cross/src/core",
   "walkzzz/moon-cross/src/config",
-  "walkzzz/moon-cross/src/typesys",
   "walkzzz/moon-cross/src/codegen",
   "walkzzz/moon-cross/src/codegen/c" @codegen_c,
   "walkzzz/moon-cross/src/platform",
@@ -10,9 +10,4 @@ import {
   "walkzzz/moon-cross/src/platform/ios" @platform_ios,
   "walkzzz/moon-cross/src/platform/ohos" @platform_ohos,
   "walkzzz/moon-cross/src/ffi",
-  "walkzzz/moon-cross/src/ffi/jni" @ffi_jni,
-  "walkzzz/moon-cross/src/ffi/swift" @ffi_swift,
-  "walkzzz/moon-cross/src/ffi/napi" @ffi_napi,
-  "walkzzz/moon-cross/src/scaffold",
-  "walkzzz/moon-cross/src/sync",
 }

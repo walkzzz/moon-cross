@@ -6,6 +6,8 @@ pub(all) enum FfiBindingType {
   DllImportBinding
   SwiftInteropBinding
 } derive(Debug, Eq)
+pub extend FfiBindingType with @moonbitlang/core/debug.Debug::{to_repr}
+pub extend FfiBindingType with Eq::{not_equal, equal}
 
 ///|
 /// FFI 绑定生成结果 | FFI binding generation result
@@ -14,6 +16,8 @@ pub(all) struct FfiBindingResult {
   filename : String
   content : String
 } derive(Debug, Eq)
+pub extend FfiBindingResult with @moonbitlang/core/debug.Debug::{to_repr}
+pub extend FfiBindingResult with Eq::{not_equal, equal}
 
 ///|
 /// FFI 绑定版本 | FFI binding version

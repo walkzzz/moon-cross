@@ -1,11 +1,6 @@
 import {
   "walkzzz/moon-cross/src/core",
-  "walkzzz/moon-cross/src/config",
-  "walkzzz/moon-cross/src/typesys",
   "walkzzz/moon-cross/src/codegen",
-  "walkzzz/moon-cross/src/codegen/c" @codegen_c,
-  "walkzzz/moon-cross/src/platform",
-  "walkzzz/moon-cross/src/platform/windows" @platform_windows,
   "walkzzz/moon-cross/src/platform/android" @platform_android,
   "walkzzz/moon-cross/src/platform/ios" @platform_ios,
   "walkzzz/moon-cross/src/platform/ohos" @platform_ohos,

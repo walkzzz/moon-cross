@@ -4,6 +4,8 @@ pub(all) struct CWrapperResult {
   header : String
   source : String
 } derive(Debug, Eq)
+pub extend CWrapperResult with @moonbitlang/core/debug.Debug::{to_repr}
+pub extend CWrapperResult with Eq::{not_equal, equal}
 
 ///|
 /// C wrapper 生成器版本 | C wrapper generator version

@@ -11,6 +11,8 @@ pub(all) enum MoonCrossError {
   IoError(String)
 } derive(Debug)
 
+pub extend MoonCrossError with @moonbitlang/core/debug.Debug::{to_repr}
+
 ///|
 /// 错误转可读消息 | Error to readable message
 pub fn MoonCrossError::to_message(self : MoonCrossError) -> String {

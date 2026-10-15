@@ -3,6 +3,8 @@ pub(all) struct NapiBindingConfig {
   module_name : String
   function_name : String
 } derive(Debug, Eq)
+pub extend NapiBindingConfig with @moonbitlang/core/debug.Debug::{to_repr}
+pub extend NapiBindingConfig with Eq::{not_equal, equal}
 
 /// NAPI 版本 | NAPI version
 pub fn napi_version() -> String {
@@ -47,7 +49,7 @@ pub fn generate_oh_package_json(name : String) -> String {
 }
 
 /// 生成 DevEco build-profile.json5 骨架 | Generate DevEco build-profile.json5 skeleton
-pub fn generate_build_profile(name : String) -> String {
+pub fn generate_build_profile(_name : String) -> String {
   "{\n  \"app\": {\n    \"products\": [{\n      \"name\": \"default\",\n      \"signingConfig\": \"default\"\n    }]\n  },\n  \"modules\": [{\n    \"name\": \"entry\",\n    \"srcPath\": \"./entry\"\n  }]\n}\n"
 }
 
@@ -70,6 +72,6 @@ pub fn arkts_wrapper_file(config : NapiBindingConfig) -> String {
 }
 
 /// 生成 DevEco module.json5 骨架 | Generate DevEco module.json5 skeleton
-pub fn generate_module_json(name : String) -> String {
+pub fn generate_module_json(_name : String) -> String {
   "{\n  \"module\": {\n    \"name\": \"entry\",\n    \"type\": \"entry\",\n    \"deviceTypes\": [\"default\"]\n  }\n}\n"
 }

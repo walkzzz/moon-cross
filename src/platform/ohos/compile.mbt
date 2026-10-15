@@ -5,6 +5,8 @@ pub(all) struct OhosCompileConfig {
   output_dir : String
   output_name : String
 } derive(Debug, Eq)
+pub extend OhosCompileConfig with @moonbitlang/core/debug.Debug::{to_repr}
+pub extend OhosCompileConfig with Eq::{not_equal, equal}
 
 /// 鸿蒙编译命令生成（OHOS clang 交叉编译） | HarmonyOS compile command generation (OHOS clang cross-compilation)
 pub fn ohos_compile_command(config : OhosCompileConfig) -> String {

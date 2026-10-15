@@ -4,6 +4,8 @@ pub(all) struct CodegenResult {
   filename : String
   content : String
 } derive(Debug, Eq)
+pub extend CodegenResult with @moonbitlang/core/debug.Debug::{to_repr}
+pub extend CodegenResult with Eq::{not_equal, equal}
 
 ///|
 /// 代码生成器版本 | Code generator version

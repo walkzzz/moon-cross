@@ -6,6 +6,8 @@ pub(all) struct IosCompileConfig {
   output_name : String
   is_simulator : Bool
 } derive(Debug, Eq)
+pub extend IosCompileConfig with @moonbitlang/core/debug.Debug::{to_repr}
+pub extend IosCompileConfig with Eq::{not_equal, equal}
 
 /// iOS 编译命令生成（xcrun clang 交叉编译） | iOS compile command generation (xcrun clang cross-compilation)
 pub fn ios_compile_command(config : IosCompileConfig) -> String {

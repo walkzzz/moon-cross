@@ -5,6 +5,8 @@ pub(all) struct SyncResult {
   updated_files : Array[String]
   success : Bool
 } derive(Debug, Eq)
+pub extend SyncResult with @moonbitlang/core/debug.Debug::{to_repr}
+pub extend SyncResult with Eq::{not_equal, equal}
 
 ///|
 /// 同步版本 | Sync version
