@@ -1,5 +1,45 @@
 # Changelog
 
+## v0.9.0 (2026-10-15) — 安全性增强 + CI/CD
+
+### Highlights
+- 新增 `src/security/` 包：四维安全防护
+  - ASAN 验证：AddressSanitizer 编译/链接标志生成 + 运行时环境变量 + 输出分析
+  - FFI 边界安全：空指针检查 + 缓冲区边界 + 类型安全 + 安全包装代码生成
+  - 沙箱隔离：临时工作目录 + 超时控制 + 内存限制 + 编译命令包装
+  - 供应链安全：依赖校验和验证 + 许可证兼容性检查 + 依赖锁定文件生成
+- CI/CD 集成：GitHub Actions
+  - `ci.yml`：push/PR 自动运行 moon check + moon test
+  - `cross-compile.yml`：三平台（Ubuntu/macOS/Windows）交叉编译验证
+- 新增 52 个测试（总计 442 个，全部通过）
+
+### Stats
+- 新增包: src/security/（4 个源文件 + 1 个测试文件）
+- 新增测试: 52 个（总计 442 个，全部通过）
+- 新增 CI/CD: 2 个 GitHub Actions 工作流
+- Warning: 0
+
+### Breaking Changes
+- 无（纯新增功能）
+
+## v0.8.0 (2026-10-15) — 鲁棒性增强
+
+### Highlights
+- 新增 `src/robust/` 包：四维鲁棒性保障
+  - 重试策略：指数退避 + 超时控制 + 可配置重试次数
+  - 错误恢复：部分成功恢复 + FFI 绑定回退 + 配置降级 + 失败报告生成
+  - 配置校验：非空校验 + 函数名合法性 + 平台兼容性检查 + 校验结果合并
+  - 边界处理：保留关键字检测 + 标识符净化 + 空输入/超大输入处理 + Unicode 检测
+- 新增 42 个测试（总计 390 个，全部通过）
+
+### Stats
+- 新增包: src/robust/（4 个源文件 + 1 个测试文件）
+- 新增测试: 42 个（总计 390 个，全部通过）
+- Warning: 0
+
+### Breaking Changes
+- 无（纯新增功能）
+
 ## v0.7.0 (2026-10-15) — Lint + Warning 治理
 
 ### Highlights

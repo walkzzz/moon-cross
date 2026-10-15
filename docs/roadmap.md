@@ -8,6 +8,10 @@
 | Week 2 | ✅ Done | Android NDK 交叉编译 + JNI 绑定生成 | 55 |
 | Week 3 | ✅ Done | iOS clang + Swift interop + 鸿蒙 OHOS + NAPI | 109 |
 | Week 4 | ✅ Done | mizchi/zlib 集成测试 + 示例项目 + mooncakes 发布准备 | 77 |
+| v0.6.0 | ✅ Done | 中英双文注释改造 | 348 |
+| v0.7.0 | ✅ Done | Lint + Warning 治理（593→0） | 348 |
+| v0.8.0 | ✅ Done | 鲁棒性增强（重试+恢复+校验+边界） | 390 |
+| v0.9.0 | ✅ Done | 安全性增强（ASAN+FFI安全+沙箱+供应链）+ CI/CD | 442 |
 
 ## Week 1 Deliverables (2026-10-15)
 

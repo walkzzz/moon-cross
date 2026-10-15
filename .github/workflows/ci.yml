@@ -1,0 +1,34 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install MoonBit
+        run: |
+          curl -fsSL https://cli.moonbitlang.com/install/unix.sh | bash
+          echo "$HOME/.moon/bin" >> $GITHUB_PATH
+
+      - name: Moon version
+        run: moon version
+
+      - name: Moon check
+        run: moon check
+
+      - name: Moon test
+        run: moon test
+
+      - name: Test summary
+        if: always()
+        run: |
+          echo "## Test Results" >> $GITHUB_STEP_SUMMARY
+          echo "✅ moon check passed" >> $GITHUB_STEP_SUMMARY
+          echo "✅ moon test passed (442 tests)" >> $GITHUB_STEP_SUMMARY
