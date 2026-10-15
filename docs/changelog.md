@@ -1,5 +1,24 @@
 # Changelog
 
+## v0.2.0 (2026-10-15) — Week 2
+
+### Highlights
+- Android NDK 交叉编译实现（platform/android 包）
+- JNI 绑定代码生成（ffi/jni 包）
+- Android 编译命令生成（NDK clang + target triple + sysroot）
+- JNI C 函数声明生成（Java_pkg_Class_function 命名）
+- Kotlin wrapper 代码生成（external fun + System.loadLibrary）
+- Gradle 模块模板生成（android block + dependencies）
+- CMakeLists.txt 骨架生成（add_library + target_link_libraries）
+
+### Stats
+- 新增测试: 55 个（总计 115 个，全部通过）
+- 新增包: 2 个（platform/android, ffi/jni）
+- 新增 API: 20+
+
+### Breaking Changes
+- 无
+
 ## v0.1.0 (2026-10-15) — Week 1
 
 ### Highlights

@@ -4,7 +4,7 @@
 
 [English](./README.md) | [Changelog](./docs/changelog.md) | [Roadmap](./docs/roadmap.md) | [Architecture](./docs/architecture.md)
 
-**v0.1.0** | 11 packages | 60 tests | 30+ APIs | MIT License
+**v0.2.0** | 13 packages | 115 tests | 50+ APIs | MIT License
 
 ## 项目简介
 

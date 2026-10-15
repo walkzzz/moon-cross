@@ -19,6 +19,8 @@ fn main {
   )
   println("  codegen:   " + @codegen.codegen_version())
   println("  ffi:       " + @ffi.ffi_version())
+  println("  jni:       " + @ffi_jni.jni_version())
+  println("  android:   " + @platform_android.android_platform_id())
   println("  scaffold:  " + @scaffold.scaffold_version())
   println("  sync:      " + @sync.sync_version())
 }

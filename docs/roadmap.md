@@ -5,7 +5,7 @@
 | Phase | Status | Description | Tests |
 |-------|--------|-------------|-------|
 | Week 1 | ✅ Done | CLI 骨架 + 配置解析 + C 适配层 + Windows + 脚手架 + 同步 | 60 |
-| Week 2 | ⏳ Pending | Android NDK 交叉编译 + JNI 绑定生成 | +50 |
+| Week 2 | ✅ Done | Android NDK 交叉编译 + JNI 绑定生成 | 55 |
 | Week 3 | ⏳ Pending | iOS clang + Swift interop + 鸿蒙 OHOS | +50 |
 | Week 4 | ⏳ Pending | 集成测试 + stb-image 示例 + mooncakes 发布 | 200+ |
 

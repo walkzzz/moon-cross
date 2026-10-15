@@ -6,7 +6,9 @@ import {
   "walkzzz/moon-cross/src/codegen/c" @codegen_c,
   "walkzzz/moon-cross/src/platform",
   "walkzzz/moon-cross/src/platform/windows" @platform_windows,
+  "walkzzz/moon-cross/src/platform/android" @platform_android,
   "walkzzz/moon-cross/src/ffi",
+  "walkzzz/moon-cross/src/ffi/jni" @ffi_jni,
   "walkzzz/moon-cross/src/scaffold",
   "walkzzz/moon-cross/src/sync",
 }
