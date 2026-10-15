@@ -7,7 +7,7 @@
 | Week 1 | ✅ Done | CLI 骨架 + 配置解析 + C 适配层 + Windows + 脚手架 + 同步 | 60 |
 | Week 2 | ✅ Done | Android NDK 交叉编译 + JNI 绑定生成 | 55 |
 | Week 3 | ✅ Done | iOS clang + Swift interop + 鸿蒙 OHOS + NAPI | 109 |
-| Week 4 | ⏳ Pending | 集成测试 + stb-image 示例 + mooncakes 发布 | 200+ |
+| Week 4 | ✅ Done | mizchi/zlib 集成测试 + 示例项目 + mooncakes 发布准备 | 77 |
 
 ## Week 1 Deliverables (2026-10-15)
 
@@ -41,3 +41,14 @@
 - [x] NAPI 绑定生成 + ArkTS import（ffi/napi 包）
 - [x] DevEco oh-package.json5 / build-profile.json5 / module.json5 模板
 - [x] 109 个新增测试（全部通过）
+## Week 4 Deliverables (2026-10-15)
+
+- [x] mizchi/zlib 端到端集成测试（src/integration 包）
+- [x] zlib 跨平台配置生成（10 个导出函数 + ZlibError 类型）
+- [x] C wrapper 头文件 + 导出宏生成验证
+- [x] 四平台编译命令生成验证
+- [x] 四平台 FFI 绑定类型验证
+- [x] 完整流水线验证（validate_pipeline）
+- [x] examples/zlib-cross 示例项目
+- [x] mooncakes 发布元数据完善
+- [x] 77 个新增测试（总计 301 个，全部通过）

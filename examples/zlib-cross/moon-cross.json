@@ -1,0 +1,57 @@
+{
+  "version": 1,
+  "module_path": "mizchi/zlib",
+  "package_name": "mizchi/zlib",
+  "targets": ["ios", "android", "windows", "ohos"],
+  "functions": [
+    {
+      "name": "zlib_compress",
+      "params": [{ "name": "data", "typ": "Bytes" }],
+      "return_type": "Bytes"
+    },
+    {
+      "name": "zlib_decompress",
+      "params": [{ "name": "data", "typ": "Bytes" }],
+      "return_type": "Bytes"
+    },
+    {
+      "name": "deflate_compress",
+      "params": [{ "name": "data", "typ": "Bytes" }],
+      "return_type": "Bytes"
+    },
+    {
+      "name": "deflate_decompress",
+      "params": [{ "name": "data", "typ": "Bytes" }],
+      "return_type": "Bytes"
+    },
+    {
+      "name": "gzip_compress",
+      "params": [{ "name": "data", "typ": "Bytes" }],
+      "return_type": "Bytes"
+    },
+    {
+      "name": "gzip_decompress",
+      "params": [{ "name": "data", "typ": "Bytes" }],
+      "return_type": "Bytes"
+    },
+    {
+      "name": "adler32",
+      "params": [{ "name": "data", "typ": "Bytes" }],
+      "return_type": "Int"
+    },
+    {
+      "name": "crc32",
+      "params": [{ "name": "data", "typ": "Bytes" }],
+      "return_type": "UInt"
+    }
+  ],
+  "types": [
+    {
+      "name": "ZlibError",
+      "fields": [
+        { "name": "InvalidData", "typ": "String" },
+        { "name": "OutputTooLarge", "typ": "String" }
+      ]
+    }
+  ]
+}

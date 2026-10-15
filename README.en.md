@@ -4,7 +4,7 @@
 
 [中文](./README.md) | [Changelog](./docs/changelog.md) | [Roadmap](./docs/roadmap.md) | [Architecture](./docs/architecture.md)
 
-**v0.3.0** | 17 packages | 224 tests | 80+ APIs | MIT License
+**v0.4.0** | 18 packages | 301 tests | 100+ APIs | MIT License
 
 ## Introduction
 
@@ -57,9 +57,12 @@ moon-cross/
 │   ├── jni/       #   JNI bindings (Android)
 │   ├── swift/     #   Swift C interop (iOS)
 │   └── napi/      #   NAPI bindings + ArkTS (HarmonyOS)
+├── integration/   # End-to-end integration tests (mizchi/zlib)
 ├── scaffold/      # Scaffold (init cross-platform project)
 ├── sync/          # Incremental sync (auto-configure platforms after code update)
 ├── cli/           # CLI entry point
+├── examples/      # Example projects
+│   └── zlib-cross/  # mizchi/zlib cross-platform export example
 └── docs/          # Documentation
 ```
 

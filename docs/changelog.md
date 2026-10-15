@@ -1,5 +1,26 @@
 # Changelog
 
+## v0.4.0 (2026-10-15) — Week 4
+
+### Highlights
+- mizchi/zlib 端到端集成测试（src/integration 包）
+- zlib 跨平台配置生成（10 个导出函数 + ZlibError 类型）
+- zlib C wrapper 头文件 + 导出宏生成
+- zlib 四平台编译命令生成（Windows DLL / Android SO / iOS dylib / 鸿蒙 SO）
+- zlib 四平台 FFI 绑定类型验证（JNI / NAPI / DllImport / Swift interop）
+- 完整流水线验证（config → C code → compile commands → FFI bindings）
+- examples/zlib-cross 示例项目（moon-cross.json 配置 + README）
+- mooncakes 发布元数据完善（description + repository）
+
+### Stats
+- 新增测试: 77 个（总计 301 个，全部通过）
+- 新增包: 1 个（src/integration）
+- 新增示例: 1 个（examples/zlib-cross）
+- 集成测试目标库: mizchi/zlib v0.4.10（200K+ 下载，Apache-2.0）
+
+### Breaking Changes
+- 无
+
 ## v0.3.0 (2026-10-15) — Week 3
 
 ### Highlights

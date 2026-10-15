@@ -4,7 +4,7 @@
 
 [English](./README.md) | [Changelog](./docs/changelog.md) | [Roadmap](./docs/roadmap.md) | [Architecture](./docs/architecture.md)
 
-**v0.3.0** | 17 packages | 224 tests | 80+ APIs | MIT License
+**v0.4.0** | 18 packages | 301 tests | 100+ APIs | MIT License
 
 ## 项目简介
 
@@ -57,9 +57,12 @@ moon-cross/
 │   ├── jni/       #   JNI 绑定（Android）
 │   ├── swift/     #   Swift C interop（iOS）
 │   └── napi/      #   NAPI 绑定 + ArkTS（鸿蒙）
+├── integration/   # 端到端集成测试（mizchi/zlib）
 ├── scaffold/      # 脚手架（init 初始化跨平台项目）
 ├── sync/          # 增量同步（更新代码后自动配置各平台）
 ├── cli/           # CLI 入口
+├── examples/      # 示例项目
+│   └── zlib-cross/  # mizchi/zlib 跨平台导出示例
 └── docs/          # 文档
 ```
 
