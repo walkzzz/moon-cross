@@ -1,5 +1,27 @@
 # Changelog
 
+## v0.5.0 (2026-10-15) — 远期迭代增强
+
+### Highlights
+- 远期迭代增强计划制定（docs/roadmap-longterm.md）
+  - 易用性：零配置启动 + 交互式 CLI + 错误提示优化 + 文档与示例
+  - 鲁棒性：错误恢复 + 重试策略 + 配置校验增强 + 边界条件处理
+  - 安全性：ASAN 验证 + FFI 边界安全 + 沙箱隔离 + 供应链安全
+  - 性能：并行编译 + 缓存机制 + 增量构建 + 代码生成优化
+- moonbitlang/openseek 跨平台集成测试
+  - openseek/deepseek 纯数据层 API 跨平台导出（8 函数 + 5 类型）
+  - ChatMessage/ToolDefinition/ChatResponse/Model/Role 跨平台配置
+  - 四平台编译命令 + FFI 绑定 + 流水线验证
+- 里程碑时间线 v0.5.0 → v1.0.0（六版本演进计划）
+
+### Stats
+- 新增测试: 47 个（总计 348 个，全部通过）
+- 新增文档: 1 个（docs/roadmap-longterm.md）
+- 集成测试目标库: moonbitlang/openseek（100 stars, Apache-2.0）
+
+### Breaking Changes
+- 无
+
 ## v0.4.0 (2026-10-15) — Week 4
 
 ### Highlights
