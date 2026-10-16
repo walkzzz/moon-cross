@@ -1,5 +1,29 @@
 # Changelog
 
+## v0.1.4 (2026-10-16) — mooncakes 发布准备
+
+### Highlights
+- 新增 `src/publish/` 包：mooncakes 发布工具
+  - 发布配置（PublishConfig）：模块名/版本/许可证/描述/仓库/README/关键词
+  - 就绪检查（PublishReadiness）：7 项自动检查（模块名/版本格式/许可证/描述/仓库/README/关键词）
+  - mooncakes 元数据生成（MooncakesMetadata）：注册表元数据 + 校验和
+  - mooncakes.toml 配置文件生成
+  - 发布命令生成（`moon publish` + `moon add`）
+  - 版本一致性检查
+  - 许可证兼容性检查（MIT/Apache-2.0/BSD-3-Clause/MPL-2.0/ISC）
+  - 发布流程模拟（simulate_publish）
+  - 发布状态管理（NotPublished/Staging/Published/Failed）
+- 新增 52 个测试（总计 755 个，全部通过）
+
+### Stats
+- 新增包: src/publish/
+- 新增测试: 52 个（总计 755 个，全部通过）
+- Warning: 0
+- 总包数: 27
+
+### Breaking Changes
+- 无（纯新增功能）
+
 ## v0.1.3 (2026-10-16) — 集成测试扩展：toml + quickcheck + parser
 
 ### Highlights

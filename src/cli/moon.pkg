@@ -10,6 +10,10 @@ import {
   "walkzzz/moon-cross/src/ffi/napi" @ffi_napi,
   "walkzzz/moon-cross/src/scaffold",
   "walkzzz/moon-cross/src/sync",
+  "walkzzz/moon-cross/src/publish" @publish,
+  "walkzzz/moon-cross/src/diagnostic" @diagnostic,
+  "walkzzz/moon-cross/src/discovery" @discovery,
+  "walkzzz/moon-cross/src/interactive" @interactive,
 }
 
 options(
