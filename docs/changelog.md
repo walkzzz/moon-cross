@@ -1,5 +1,28 @@
 # Changelog
 
+## v0.2.3 (2026-10-16) — 集成测试扩展：regexp + uuid + bufio
+
+### Highlights
+- 新增 `moonbitlang/regexp` 端到端集成测试
+  - 5 导出函数（compile / match / replace / split / find）
+  - 2 导出类型（Regexp / MatchResult）
+- 新增 `moonbitlang/uuid` 端到端集成测试
+  - 5 导出函数（v4 / v7 / parse / to_string / validate）
+  - 1 导出类型（Uuid）
+- 新增 `moonbitlang/bufio` 端到端集成测试
+  - 5 导出函数（new_buffer / write_string / read_line / flush / capacity）
+  - 1 导出类型（Buffer）
+- 新增 34 个测试（总计 1036 个，全部通过）
+
+### Stats
+- 新增集成目标: moonbitlang/regexp + moonbitlang/uuid + moonbitlang/bufio
+- 新增测试: 34 个（总计 1036 个，全部通过）
+- Warning: 0
+- 总包数: 33
+
+### Breaking Changes
+- 无（纯新增功能）
+
 ## v0.2.2 (2026-10-16) — 文件监视器包
 
 ### Highlights
