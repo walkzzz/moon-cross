@@ -1,5 +1,29 @@
 # Changelog
 
+## v0.2.15 (2026-10-16) — 集成测试扩展：net + io + math
+
+### Highlights
+- 新增 `moonbitlang/net` 端到端集成测试
+  - 5 导出函数（net_connect / net_listen / net_send / net_recv / net_close）
+  - 2 导出类型（Socket / Address）
+- 新增 `moonbitlang/io` 端到端集成测试
+  - 5 导出函数（io_open / io_read / io_write / io_seek / io_close）
+  - 2 导出类型（FileHandle / Buffer）
+- 新增 `moonbitlang/math` 端到端集成测试
+  - 8 导出函数（math_sin / math_cos / math_sqrt / math_pow / math_abs / math_floor / math_ceil / math_log）
+  - 2 导出类型（Vector2 / Vector3）
+- 新增 37 个测试（总计 1388 个，全部通过）
+
+### Stats
+- 新增集成目标: moonbitlang/net + moonbitlang/io + moonbitlang/math
+- 新增测试: 37 个（总计 1388 个，全部通过）
+- Warning: 0
+- 总包数: 44
+- 集成目标数: 17
+
+### Breaking Changes
+- 无（纯新增功能）
+
 ## v0.2.14 (2026-10-16) — 状态机包
 
 ### Highlights
