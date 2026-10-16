@@ -1,5 +1,30 @@
 # Changelog
 
+## v0.2.7 (2026-10-16) — 序列化包
+
+### Highlights
+- 新增 `src/serializer/` 包：序列化/反序列化引擎
+  - 序列化格式（SerializeFormat）：Json / Binary / Text
+  - 字段类型（FieldType）：Int / Double / String / Bool / Array / Object
+  - 序列化字段（SerializedField）：名称/类型/值
+  - 序列化配置（SerializeConfig）：格式/缩进/包含null/最大深度
+  - 序列化：serialize_int / serialize_double / serialize_bool / serialize_string
+  - 数组序列化：serialize_array / serialize_int_array
+  - 对象序列化：serialize_object / merge_objects
+  - 反序列化：deserialize_int / deserialize_bool / deserialize_string
+  - 字符串转义：escape_string（处理引号/反斜杠/换行/制表符）
+  - 字段操作：find_field / filter_by_type / field_names / field_count
+- 新增 29 个测试（总计 1150 个，全部通过）
+
+### Stats
+- 新增包: src/serializer/
+- 新增测试: 29 个（总计 1150 个，全部通过）
+- Warning: 0
+- 总包数: 37
+
+### Breaking Changes
+- 无（纯新增功能）
+
 ## v0.2.6 (2026-10-16) — 性能分析器包
 
 ### Highlights

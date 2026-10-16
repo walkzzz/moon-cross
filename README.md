@@ -6,14 +6,14 @@
 
 > 一次编写，四平台交付 — iOS / Android / Windows / 鸿蒙（HarmonyOS）
 
-[![Version](https://img.shields.io/badge/version-0.2.6-blue.svg)](./docs/changelog.md)
-[![Tests](https://img.shields.io/badge/tests-1121-brightgreen.svg)]()
-[![Packages](https://img.shields.io/badge/packages-36-green.svg)]()
+[![Version](https://img.shields.io/badge/version-0.2.7-blue.svg)](./docs/changelog.md)
+[![Tests](https://img.shields.io/badge/tests-1150-brightgreen.svg)]()
+[![Packages](https://img.shields.io/badge/packages-37-green.svg)]()
 [![Warnings](https://img.shields.io/badge/warnings-0-success.svg)]()
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
 [![MoonBit](https://img.shields.io/badge/MoonBit-0.1.20260920-orange.svg)](https://moonbitlang.com)
 
-**36 packages** · **1121 tests** · **570+ APIs** · **0 warnings** · **11 集成目标**
+**37 packages** · **1150 tests** · **590+ APIs** · **0 warnings** · **11 集成目标**
 
 [English](./README.en.md) · [Changelog](./docs/changelog.md) · [Roadmap](./docs/roadmap.md) · [Architecture](./docs/architecture.md) · [Contributing](./CONTRIBUTING.md)
 
