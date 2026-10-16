@@ -1,5 +1,32 @@
 # Changelog
 
+## v0.2.5 (2026-10-16) — 依赖分析包
+
+### Highlights
+- 新增 `src/dependency/` 包：依赖分析引擎
+  - 依赖边（DependencyEdge）：起点/终点
+  - 依赖节点（DependencyNode）：包名/依赖列表/依赖者列表
+  - 依赖图（DependencyGraph）：节点列表/边列表
+  - 依赖配置（DependencyConfig）：包含开发依赖/包含传递依赖/最大深度
+  - 图构建：build_graph / make_edge / empty_graph / merge_graphs
+  - 查询功能：find_node / direct_deps / direct_dependents / transitive_deps / transitive_dependents
+  - 节点分类：is_leaf / is_root / orphan_nodes
+  - 深度计算：dependency_depth
+  - 环检测：has_cycle（DFS 算法）
+  - 拓扑排序：topological_sort（DFS 算法）
+  - 格式化：format_graph
+  - 统计：node_count / edge_count
+- 新增 30 个测试（总计 1096 个，全部通过）
+
+### Stats
+- 新增包: src/dependency/
+- 新增测试: 30 个（总计 1096 个，全部通过）
+- Warning: 0
+- 总包数: 35
+
+### Breaking Changes
+- 无（纯新增功能）
+
 ## v0.2.4 (2026-10-16) — 代码差异分析包
 
 ### Highlights

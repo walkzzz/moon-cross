@@ -4,7 +4,7 @@
 
 [中文](./README.md) | [Changelog](./docs/changelog.md) | [Roadmap](./docs/roadmap.md) | [Architecture](./docs/architecture.md)
 
-**v0.2.4** | 34 packages | 1066 tests | 530+ APIs | 0 warnings | MIT License
+**v0.2.5** | 35 packages | 1096 tests | 550+ APIs | 0 warnings | MIT License
 
 ## Introduction
 
@@ -73,6 +73,7 @@ moon-cross/
 ├── coverage/      # Test coverage analysis (entries+reports+stats)
 ├── watcher/       # File watcher (events+filtering+dedup)
 ├── diff/          # Code diff analysis (line diff+format+reverse)
+├── dependency/    # Dependency analysis (graph+cycle detection+topo sort)
 ├── integration/   # Integration tests (zlib+openseek+toml+quickcheck+parser+base64+json+hash+regexp+uuid+bufio)
 ├── scaffold/      # Scaffold (init cross-platform project)
 ├── sync/          # Incremental sync (auto-configure platforms after code update)
