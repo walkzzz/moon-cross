@@ -1,5 +1,33 @@
 # Changelog
 
+## v0.3.0 (2026-10-16) — 参赛发布版
+
+### Highlights
+- 新增 `src/compress/` 包：压缩工具集
+  - RLE 编解码：rle_encode / rle_decode
+  - 字典编码：dict_encode
+  - 压缩统计：compress_stats（原始大小/压缩大小/压缩率）
+- 新增 `src/algorithm/` 包：算法工具集
+  - 搜索：linear_search / binary_search（含比较次数统计）
+  - 排序：bubble_sort / insertion_sort / selection_sort / quick_sort
+  - 工具：array_min / array_max / array_reverse / array_dedup
+- 新增 `src/stream/` 包：流处理工具集
+  - 操作：stream_map / stream_filter / stream_reduce / stream_take / stream_drop
+  - 高级：stream_chain / stream_zip / stream_flatten / stream_enumerate
+  - 统计：stream_stats
+- 参赛发布版里程碑：60 包 · 1843 测试 · 700+ API · 0 warning · 26 集成目标
+- 新增 62 个测试（总计 1843 个，全部通过）
+
+### Stats
+- 新增包: src/compress/ + src/algorithm/ + src/stream/
+- 新增测试: 62 个（总计 1843 个，全部通过）
+- Warning: 0
+- 总包数: 60
+- 集成目标数: 26
+
+### Breaking Changes
+- 无（纯新增功能）
+
 ## v0.2.30 (2026-10-16) — 集成测试扩展（math64+bits+fmt）
 
 ### Highlights
