@@ -1,5 +1,26 @@
 # Changelog
 
+## v0.1.8 (2026-10-16) — 配置 lint 规则包
+
+### Highlights
+- 新增 `src/linter/` 包：配置 lint 规则引擎
+  - 8 条内置规则：模块路径/函数名格式/非空导出/非空目标/版本格式/重复函数/返回类型/参数类型
+  - Lint 严重级别（Info/Warning/Error）
+  - 规则启用/禁用管理
+  - 按严重级别过滤问题
+  - 格式化输出（format_issue/format_result）
+  - 完整配置 lint 检查（lint_config）
+- 新增 39 个测试（总计 874 个，全部通过）
+
+### Stats
+- 新增包: src/linter/
+- 新增测试: 39 个（总计 874 个，全部通过）
+- Warning: 0
+- 总包数: 30
+
+### Breaking Changes
+- 无（纯新增功能）
+
 ## v0.1.7 (2026-10-16) — 编译追踪与日志包
 
 ### Highlights
