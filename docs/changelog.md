@@ -1,5 +1,32 @@
 # Changelog
 
+## v0.2.19 (2026-10-16) — 资源管理包
+
+### Highlights
+- 新增 `src/resource/` 包：资源管理引擎
+  - 资源类型（ResourceType）：File / Memory / Network / Handle / Custom
+  - 资源（Resource）：ID/名称/类型/大小/获取时间/释放时间/活跃
+  - 资源配置（ResourceConfig）：最大资源数/追踪大小/泄漏检测
+  - 资源统计（ResourceStats）：获取总数/释放总数/泄漏数/活跃数/总大小
+  - 资源管理器（ResourceManager）：资源列表/配置/统计
+  - 核心操作：create_resource_manager / resource_acquire / resource_release / resource_release_all
+  - 泄漏检测：resource_check_leaks / resource_leak_count
+  - 过滤操作：resource_filter_by_type / resource_filter_active / resource_filter_released
+  - 查询操作：resource_get / resource_has / resource_is_active / resource_active_count / resource_total_count / resource_total_size
+  - 统计操作：resource_stats
+  - 合并操作：merge_resource_managers
+- 新增 24 个测试（总计 1481 个，全部通过）
+
+### Stats
+- 新增包: src/resource/
+- 新增测试: 24 个（总计 1481 个，全部通过）
+- Warning: 0
+- 总包数: 48
+- 集成目标数: 17
+
+### Breaking Changes
+- 无（纯新增功能）
+
 ## v0.2.18 (2026-10-16) — 日志系统包
 
 ### Highlights
