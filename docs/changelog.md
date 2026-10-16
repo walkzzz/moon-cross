@@ -1,5 +1,30 @@
 # Changelog
 
+## v0.2.8 (2026-10-16) — 图算法包
+
+### Highlights
+- 新增 `src/graph/` 包：图算法引擎
+  - 图类型（GraphType）：Directed / Undirected
+  - 图边（GraphEdge）：起点/终点/权重
+  - 图（Graph）：节点列表/边列表/类型
+  - 遍历算法：bfs（广度优先）/ dfs（深度优先）
+  - 路径算法：has_path / shortest_path（BFS 最短路径）
+  - 连通性：connected_components / is_connected
+  - 图操作：add_node / add_edge / build_graph / empty_graph
+  - 节点属性：degree / is_isolated / neighbors
+  - 格式化：format_graph
+  - 统计：node_count / edge_count
+- 新增 32 个测试（总计 1182 个，全部通过）
+
+### Stats
+- 新增包: src/graph/
+- 新增测试: 32 个（总计 1182 个，全部通过）
+- Warning: 0
+- 总包数: 38
+
+### Breaking Changes
+- 无（纯新增功能）
+
 ## v0.2.7 (2026-10-16) — 序列化包
 
 ### Highlights
