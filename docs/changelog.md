@@ -1,5 +1,29 @@
 # Changelog
 
+## v0.2.0 (2026-10-16) — 代码格式化包
+
+### Highlights
+- 新增 `src/formatter/` 包：代码格式化引擎
+  - 格式化配置（FormatConfig）：缩进风格/缩进宽度/最大行宽/尾逗号/导出前空行/注释对齐
+  - 格式化结果（FormatResult）：原始文本/格式化文本/变更标志/行数差异
+  - 格式化规则（FormatRule）：规则名/描述/启用状态
+  - 缩进风格（IndentStyle）：Spaces / Tabs
+  - 核心功能：strip_trailing_whitespace / ensure_trailing_newline / format_text
+  - 语言预设：format_c_code / format_moonbit_code / format_json
+  - 规则管理：builtin_format_rules / disable_rule / enable_rule / enabled_rules
+  - 批量格式化：batch_format / count_changes
+  - 辅助函数：indent_string / count_lines / find_long_lines / is_line_too_long
+- 新增 35 个测试（总计 939 个，全部通过）
+
+### Stats
+- 新增包: src/formatter/
+- 新增测试: 35 个（总计 939 个，全部通过）
+- Warning: 0
+- 总包数: 31
+
+### Breaking Changes
+- 无（纯新增功能）
+
 ## v0.1.9 (2026-10-16) — 集成测试扩展：base64 + json + hash
 
 ### Highlights

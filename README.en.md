@@ -4,7 +4,7 @@
 
 [中文](./README.md) | [Changelog](./docs/changelog.md) | [Roadmap](./docs/roadmap.md) | [Architecture](./docs/architecture.md)
 
-**v0.1.9** | 30 packages | 904 tests | 430+ APIs | 0 warnings | MIT License
+**v0.2.0** | 31 packages | 939 tests | 450+ APIs | 0 warnings | MIT License
 
 ## Introduction
 
@@ -66,6 +66,10 @@ moon-cross/
 ├── diagnostic/    # Environment diagnostics (doctor command)
 ├── interactive/   # Interactive CLI (wizard+progress bar)
 ├── publish/       # mooncakes publishing tools
+├── benchmark/     # Performance benchmarks (stats+comparison+suites)
+├── trace/         # Compilation tracing and logging (events+spans+collector)
+├── linter/        # Config lint rules (8 built-in rules)
+├── formatter/     # Code formatter (indent+newline+rule engine)
 ├── integration/   # Integration tests (zlib+openseek+toml+quickcheck+parser)
 ├── scaffold/      # Scaffold (init cross-platform project)
 ├── sync/          # Incremental sync (auto-configure platforms after code update)

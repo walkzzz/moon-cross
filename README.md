@@ -4,7 +4,7 @@
 
 [English](./README.md) | [Changelog](./docs/changelog.md) | [Roadmap](./docs/roadmap.md) | [Architecture](./docs/architecture.md)
 
-**v0.1.9** | 30 packages | 904 tests | 430+ APIs | 0 warnings | MIT License
+**v0.2.0** | 31 packages | 939 tests | 450+ APIs | 0 warnings | MIT License
 
 ## 项目简介
 
@@ -66,6 +66,10 @@ moon-cross/
 ├── diagnostic/    # 环境诊断（doctor 命令）
 ├── interactive/   # 交互式 CLI（向导+进度条）
 ├── publish/       # mooncakes 发布工具
+├── benchmark/     # 性能基准测试（统计+比较+套件）
+├── trace/         # 编译追踪与日志（事件+区间+收集器）
+├── linter/        # 配置 lint 规则（8 内置规则）
+├── formatter/     # 代码格式化（缩进+换行+规则引擎）
 ├── integration/   # 端到端集成测试（zlib+openseek+toml+quickcheck+parser）
 ├── scaffold/      # 脚手架（init 初始化跨平台项目）
 ├── sync/          # 增量同步（更新代码后自动配置各平台）
