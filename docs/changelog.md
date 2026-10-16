@@ -1,5 +1,31 @@
 # Changelog
 
+## v0.2.11 (2026-10-16) — 缓存管理包
+
+### Highlights
+- 新增 `src/cache/` 包：缓存管理引擎
+  - 淘汰策略（EvictionPolicy）：LRU / FIFO / TTL
+  - 缓存条目（CacheEntry）：键/值/时间戳/访问计数/最后访问时间
+  - 缓存配置（CacheConfig）：最大容量/TTL/淘汰策略
+  - 缓存统计（CacheStats）：命中/未命中/淘汰/当前大小
+  - 核心操作：create_cache / cache_get / cache_put / cache_remove / cache_clear
+  - 查询操作：cache_size / cache_contains / cache_keys / cache_values
+  - 统计操作：cache_stats / cache_hit_ratio / record_hit / record_miss
+  - 过期管理：is_expired / evict_expired
+  - 合并操作：merge_caches
+  - LRU 自动淘汰：cache_put 超容量时自动淘汰 last_access 最小条目
+- 新增 26 个测试（总计 1274 个，全部通过）
+
+### Stats
+- 新增包: src/cache/
+- 新增测试: 26 个（总计 1274 个，全部通过）
+- Warning: 0
+- 总包数: 40
+- 集成目标数: 14
+
+### Breaking Changes
+- 无（纯新增功能）
+
 ## v0.2.10 (2026-10-16) — 集成测试扩展：crypto + time + sort
 
 ### Highlights
