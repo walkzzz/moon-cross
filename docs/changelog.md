@@ -1,5 +1,28 @@
 # Changelog
 
+## v0.2.10 (2026-10-16) — 集成测试扩展：crypto + time + sort
+
+### Highlights
+- 新增 `moonbitlang/crypto` 端到端集成测试
+  - 5 导出函数（aes_encrypt / aes_decrypt / hmac / random_bytes / rsa_sign）
+  - 1 导出类型（CipherKey）
+- 新增 `moonbitlang/time` 端到端集成测试
+  - 5 导出函数（now / format / parse / duration / sleep）
+  - 1 导出类型（Duration）
+- 新增 `moonbitlang/sort` 端到端集成测试
+  - 5 导出函数（quick_sort / merge_sort / bubble_sort / binary_search / is_sorted）
+- 新增 32 个测试（总计 1248 个，全部通过）
+
+### Stats
+- 新增集成目标: moonbitlang/crypto + moonbitlang/time + moonbitlang/sort
+- 新增测试: 32 个（总计 1248 个，全部通过）
+- Warning: 0
+- 总包数: 39
+- 集成目标数: 14
+
+### Breaking Changes
+- 无（纯新增功能）
+
 ## v0.2.9 (2026-10-16) — 数据验证包
 
 ### Highlights
