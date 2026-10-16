@@ -1,5 +1,30 @@
 # Changelog
 
+## v0.2.6 (2026-10-16) — 性能分析器包
+
+### Highlights
+- 新增 `src/profiler/` 包：性能分析引擎
+  - 性能条目（ProfileEntry）：函数名/调用次数/总时间/最小时间/最大时间
+  - 性能配置（ProfilerConfig）：启用/采样率/最大条目/内存追踪
+  - 性能统计（ProfileStats）：总调用/总时间/平均时间/热点函数
+  - 性能报告（ProfileReport）：条目列表/总时间/总调用
+  - 核心功能：make_entry / create_report / find_hotspot / summary_stats
+  - 排序功能：sort_by_total_time / sort_by_call_count
+  - 合并条目：merge_entries（同名合并统计）
+  - 格式化输出：format_report_text / format_report_json
+  - 时间转换：average_time_ms / total_time_ms / total_time_sec
+  - 过滤功能：filter_above_threshold / find_entry
+- 新增 25 个测试（总计 1121 个，全部通过）
+
+### Stats
+- 新增包: src/profiler/
+- 新增测试: 25 个（总计 1121 个，全部通过）
+- Warning: 0
+- 总包数: 36
+
+### Breaking Changes
+- 无（纯新增功能）
+
 ## v0.2.5 (2026-10-16) — 依赖分析包
 
 ### Highlights
