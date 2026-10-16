@@ -4,7 +4,7 @@
 
 [English](./README.md) | [Changelog](./docs/changelog.md) | [Roadmap](./docs/roadmap.md) | [Architecture](./docs/architecture.md)
 
-**v0.2.1** | 32 packages | 977 tests | 470+ APIs | 0 warnings | MIT License
+**v0.2.2** | 33 packages | 1002 tests | 490+ APIs | 0 warnings | MIT License
 
 ## 项目简介
 
@@ -71,6 +71,7 @@ moon-cross/
 ├── linter/        # 配置 lint 规则（8 内置规则）
 ├── formatter/     # 代码格式化（缩进+换行+规则引擎）
 ├── coverage/      # 测试覆盖率分析（条目+报告+统计）
+├── watcher/       # 文件监视器（事件+过滤+去重）
 ├── integration/   # 端到端集成测试（zlib+openseek+toml+quickcheck+parser）
 ├── scaffold/      # 脚手架（init 初始化跨平台项目）
 ├── sync/          # 增量同步（更新代码后自动配置各平台）

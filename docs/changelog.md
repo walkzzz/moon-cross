@@ -1,5 +1,31 @@
 # Changelog
 
+## v0.2.2 (2026-10-16) — 文件监视器包
+
+### Highlights
+- 新增 `src/watcher/` 包：文件监视器引擎
+  - 事件类型（EventType）：Created / Modified / Deleted / Renamed
+  - 监视事件（WatchEvent）：路径/事件类型/时间戳
+  - 监视配置（WatchConfig）：路径列表/忽略模式/轮询间隔/递归
+  - 文件变更（FileChange）：路径/旧路径/大小/哈希
+  - 监视结果（WatchResult）：事件列表/总变更数/错误标志
+  - 事件过滤：filter_events / filter_by_path
+  - 事件去重：deduplicate_events
+  - 事件排序：sort_by_timestamp / latest_events
+  - 结果合并：merge_results / make_watch_result / make_error_result
+  - 配置管理：add_watch_path / add_ignore_pattern
+  - 辅助函数：is_ignored / count_by_type / has_changes / event_summary / format_event
+- 新增 25 个测试（总计 1002 个，全部通过）
+
+### Stats
+- 新增包: src/watcher/
+- 新增测试: 25 个（总计 1002 个，全部通过）
+- Warning: 0
+- 总包数: 33
+
+### Breaking Changes
+- 无（纯新增功能）
+
 ## v0.2.1 (2026-10-16) — 测试覆盖率分析包
 
 ### Highlights
