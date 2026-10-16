@@ -1,5 +1,31 @@
 # Changelog
 
+## v0.2.17 (2026-10-16) — 定时器包
+
+### Highlights
+- 新增 `src/timer/` 包：定时器引擎
+  - 定时器类型（TimerType）：OneShot / Periodic
+  - 定时器配置（TimerConfig）：间隔/类型/自动启动
+  - 定时器（Timer）：ID/名称/配置/创建时间/最后触发/触发次数/活跃
+  - 定时器管理器（TimerManager）：定时器列表/统计
+  - 核心操作：create_timer_manager / timer_add / timer_remove / timer_start / timer_stop / timer_fire
+  - 查询操作：timer_count / timer_active_count / timer_has / timer_get / timer_fire_count
+  - 触发判断：timer_should_fire（基于间隔和最后触发时间）
+  - 重置操作：timer_reset
+  - 统计操作：timer_stats
+  - 合并操作：merge_timer_managers
+- 新增 23 个测试（总计 1433 个，全部通过）
+
+### Stats
+- 新增包: src/timer/
+- 新增测试: 23 个（总计 1433 个，全部通过）
+- Warning: 0
+- 总包数: 46
+- 集成目标数: 17
+
+### Breaking Changes
+- 无（纯新增功能）
+
 ## v0.2.16 (2026-10-16) — 信号处理包
 
 ### Highlights
