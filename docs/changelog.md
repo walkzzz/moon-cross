@@ -1,5 +1,27 @@
 # Changelog
 
+## v0.2.28 (2026-10-16) — 并发原语包
+
+### Highlights
+- 新增 `src/concurrency/` 包：并发原语集
+  - 互斥锁（Mutex）：mutex_create / mutex_lock / mutex_unlock / mutex_try_lock
+  - 信号量（Semaphore）：semaphore_create / semaphore_acquire / semaphore_release
+  - 缓冲通道（Channel）：channel_create / channel_send / channel_receive / channel_close
+  - 未来值（Future）：future_create / future_complete / future_is_complete / future_get
+  - 原子计数器（AtomicCounter）：atomic_create / atomic_increment / atomic_decrement / atomic_get / atomic_set / atomic_add
+  - 任务队列（TaskQueue）：task_queue_create / task_enqueue / task_dequeue / task_queue_size / task_queue_is_empty（优先级排序）
+- 新增 26 个测试（总计 1728 个，全部通过）
+
+### Stats
+- 新增包: src/concurrency/
+- 新增测试: 26 个（总计 1728 个，全部通过）
+- Warning: 0
+- 总包数: 56
+- 集成目标数: 23
+
+### Breaking Changes
+- 无（纯新增功能）
+
 ## v0.2.27 (2026-10-16) — 加密工具包
 
 ### Highlights
