@@ -53,7 +53,7 @@
 | v0.2.28 | ✅ Done | 并发原语包（互斥锁/信号量/通道/未来值/原子计数器/任务队列） | 1728 |
 | v0.2.29 | ✅ Done | 内存管理包（追踪器/竞技场/引用计数/内存池/GC统计） | 1751 |
 | v0.2.30 | ✅ Done | 集成测试扩展（math64+bits+fmt） | 1781 |
-| v0.3.0 | ✅ Done | 参赛发布版（compress+algorithm+stream，60包，1843测试） | 1843 |
+| v0.3.0 | ✅ Done | 参赛发布版（compress+algorithm+stream+设计模式12包，70包，2002测试） | 2002 |
 
 ## 远期计划预览（v0.2.16 → v1.0.0）
 
@@ -66,7 +66,7 @@
 | v0.2.16-v0.2.20 | signal/timer/logging/resource + 集成测试(encoding+container+random) | ~1530 |
 | v0.2.21-v0.2.25 | argparse/http/uri/template + 集成测试(fs+path+process) | ~1700 |
 | v0.2.26-v0.2.30 | regex_enhanced/crypto_util/concurrency/memory + 集成测试(math64+bits+fmt) | ~1900 |
-| **v0.3.0** | **参赛发布版（2000+ 测试，60+ 包，mooncakes 发布）** | **2000+** |
+| **v0.3.0** | **参赛发布版（2000+ 测试，70+ 包，mooncakes 发布）** | **2000+** |
 
 ### 参赛后演进
 

@@ -7,13 +7,13 @@
 > Write once, deliver to four platforms — iOS / Android / Windows / HarmonyOS
 
 [![Version](https://img.shields.io/badge/version-0.3.0-blue.svg)](./docs/changelog.md)
-[![Tests](https://img.shields.io/badge/tests-1843-brightgreen.svg)]()
-[![Packages](https://img.shields.io/badge/packages-39-green.svg)]()
+[![Tests](https://img.shields.io/badge/tests-2002-brightgreen.svg)]()
+[![Packages](https://img.shields.io/badge/packages-70-green.svg)]()
 [![Warnings](https://img.shields.io/badge/warnings-0-success.svg)]()
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
 [![MoonBit](https://img.shields.io/badge/MoonBit-0.1.20260920-orange.svg)](https://moonbitlang.com)
 
-**60 packages** · **1843 tests** · **700+ APIs** · **0 warnings** · **26 integration targets**
+**70 packages** · **2002 tests** · **700+ APIs** · **0 warnings** · **26 integration targets**
 
 [中文](./README.md) · [Changelog](./docs/changelog.md) · [Roadmap](./docs/roadmap.md) · [Architecture](./docs/architecture.md) · [Contributing](./CONTRIBUTING.md)
 
@@ -258,7 +258,7 @@ The framework has been verified with end-to-end cross-platform exports for the f
 5. **Refcount memory management** — No GC, suitable for embedded and performance-sensitive scenarios
 6. **Scaffold + incremental sync** — `init` for instant cross-platform, `sync` for update propagation
 7. **Full toolchain** — benchmark / trace / linter / formatter / coverage / watcher / diff / dependency
-8. **1096 tests all passing** — 0 warnings, covering all 35 packages
+8. **2002 tests all passing** — 0 warnings, covering all 70 packages
 
 ## Toolchain Ecosystem
 
@@ -281,7 +281,7 @@ Contributions are welcome! Please read [CONTRIBUTING.md](./CONTRIBUTING.md) for 
 git clone https://github.com/walkzzz/moon-cross.git
 cd moon-cross
 moon check   # 0 warnings
-moon test    # 1096 tests passed
+moon test    # 2002 tests passed
 ```
 
 ### Code Conventions

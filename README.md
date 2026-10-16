@@ -7,13 +7,13 @@
 > 一次编写，四平台交付 — iOS / Android / Windows / 鸿蒙（HarmonyOS）
 
 [![Version](https://img.shields.io/badge/version-0.3.0-blue.svg)](./docs/changelog.md)
-[![Tests](https://img.shields.io/badge/tests-1843-brightgreen.svg)]()
-[![Packages](https://img.shields.io/badge/packages-39-green.svg)]()
+[![Tests](https://img.shields.io/badge/tests-2002-brightgreen.svg)]()
+[![Packages](https://img.shields.io/badge/packages-70-green.svg)]()
 [![Warnings](https://img.shields.io/badge/warnings-0-success.svg)]()
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
 [![MoonBit](https://img.shields.io/badge/MoonBit-0.1.20260920-orange.svg)](https://moonbitlang.com)
 
-**60 packages** · **1843 tests** · **700+ APIs** · **0 warnings** · **26 集成目标**
+**70 packages** · **2002 tests** · **700+ APIs** · **0 warnings** · **26 集成目标**
 
 [English](./README.en.md) · [Changelog](./docs/changelog.md) · [Roadmap](./docs/roadmap.md) · [Architecture](./docs/architecture.md) · [Contributing](./CONTRIBUTING.md)
 
@@ -280,7 +280,7 @@ Moon Cross 不仅是一个跨平台框架，还提供完整的开发工具链：
 git clone https://github.com/walkzzz/moon-cross.git
 cd moon-cross
 moon check   # 0 warnings
-moon test    # 1096 tests passed
+moon test    # 2002 tests passed
 ```
 
 ### 代码规范

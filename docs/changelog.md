@@ -15,14 +15,27 @@
   - 操作：stream_map / stream_filter / stream_reduce / stream_take / stream_drop
   - 高级：stream_chain / stream_zip / stream_flatten / stream_enumerate
   - 统计：stream_stats
-- 参赛发布版里程碑：60 包 · 1843 测试 · 700+ API · 0 warning · 26 集成目标
-- 新增 62 个测试（总计 1843 个，全部通过）
+- 新增 12 个设计模式包（observer/strategy/builder/factory/scheduler/proxy/command/chain/visitor/memento/state_pattern/interpreter）
+  - 观察者模式：事件订阅/通知/取消
+  - 策略模式：运行时策略切换
+  - 建造者模式：流式 API 构建复杂对象
+  - 工厂模式：注册/创建/类型映射
+  - 调度器模式：延迟/优先级/时间推进
+  - 代理模式：访问控制/缓存代理
+  - 命令模式：执行/撤销/重做
+  - 责任链模式：处理器链/顺序处理
+  - 访问者模式：元素遍历/批量操作
+  - 备忘录模式：状态快照/撤销/重做
+  - 状态模式：交通灯状态机/转换/重置
+  - 解释器模式：AST 求值/表达式转字符串/深度/节点数
+- 参赛发布版里程碑：70 包 · 2002 测试 · 700+ API · 0 warning · 26 集成目标
+- 新增 221 个测试（总计 2002 个，全部通过）
 
 ### Stats
-- 新增包: src/compress/ + src/algorithm/ + src/stream/
-- 新增测试: 62 个（总计 1843 个，全部通过）
+- 新增包: src/compress/ + src/algorithm/ + src/stream/ + 12 设计模式包
+- 新增测试: 221 个（总计 2002 个，全部通过）
 - Warning: 0
-- 总包数: 60
+- 总包数: 70
 - 集成目标数: 26
 
 ### Breaking Changes
