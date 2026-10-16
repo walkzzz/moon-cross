@@ -1,5 +1,31 @@
 # Changelog
 
+## v0.2.21 (2026-10-16) — 命令行解析包
+
+### Highlights
+- 新增 `src/argparse/` 包：命令行参数解析引擎
+  - 参数类型（ArgType）：String / Int / Bool / Flag
+  - 参数定义（ArgDef）：名称/短选项/长选项/类型/必需/默认值/描述
+  - 解析结果（ParseResult）：键值对/位置参数/错误列表
+  - 参数解析器（ArgParser）：名称/描述/参数定义/子命令
+  - 核心操作：create_parser / add_arg / add_subcommand / parse_args
+  - 参数工厂：make_arg / make_flag / make_string_arg / make_int_arg
+  - 结果查询：get_value / get_value_or / has_flag / parse_success / error_count / positional_count
+  - 帮助生成：generate_help（自动生成 Usage + Options + Subcommands）
+  - 合并操作：merge_parsers
+  - 支持长选项（--option）、短选项（-o）、标志参数、位置参数、必需参数校验
+- 新增 22 个测试（总计 1537 个，全部通过）
+
+### Stats
+- 新增包: src/argparse/
+- 新增测试: 22 个（总计 1537 个，全部通过）
+- Warning: 0
+- 总包数: 50
+- 集成目标数: 20
+
+### Breaking Changes
+- 无（纯新增功能）
+
 ## v0.2.20 (2026-10-16) — 集成测试扩展：encoding + container + random
 
 ### Highlights
