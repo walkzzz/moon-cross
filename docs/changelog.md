@@ -1,5 +1,31 @@
 # Changelog
 
+## v0.2.12 (2026-10-16) — 对象池包
+
+### Highlights
+- 新增 `src/pool/` 包：对象池引擎
+  - 池配置（PoolConfig）：最小/最大容量/空闲超时/自动收缩
+  - 池条目（PoolEntry）：值/创建时间/最后使用/使用计数
+  - 池统计（PoolStats）：活跃/空闲/创建总数/销毁总数/获取次数/释放次数
+  - 核心操作：create_pool / pool_acquire / pool_release / pool_clear / pool_shrink
+  - 预分配：pool_preallocate（批量预创建对象，尊重 max_size 上限）
+  - 过期管理：is_idle_expired / pool_evict_expired
+  - 查询操作：pool_size / pool_idle_count / pool_active_count / pool_contains / pool_idle_values
+  - 统计操作：pool_stats / pool_utilization
+  - 合并操作：merge_pools
+  - 容量检查：pool_is_full / pool_is_empty
+- 新增 27 个测试（总计 1301 个，全部通过）
+
+### Stats
+- 新增包: src/pool/
+- 新增测试: 27 个（总计 1301 个，全部通过）
+- Warning: 0
+- 总包数: 41
+- 集成目标数: 14
+
+### Breaking Changes
+- 无（纯新增功能）
+
 ## v0.2.11 (2026-10-16) — 缓存管理包
 
 ### Highlights
