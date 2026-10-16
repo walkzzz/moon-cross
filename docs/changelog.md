@@ -1,5 +1,32 @@
 # Changelog
 
+## v0.1.2 (2026-10-15) — 自动发现 + 环境诊断 + 交互式 CLI
+
+### Highlights
+- 新增 `src/discovery/` 包：自动发现导出函数
+  - 源码分析（pub fn / struct / enum / extern / derive 检测）
+  - 平台 SDK 检测与智能默认
+  - 导出函数/类型统计与 FFI 需求判断
+  - 发现结果合并
+- 新增 `src/diagnostic/` 包：环境诊断（doctor 命令）
+  - MoonBit / NDK / Xcode / OHOS SDK 检查
+  - 诊断报告生成（含修复建议）
+  - 环境健康度判断
+- 新增 `src/interactive/` 包：交互式 CLI
+  - Init 向导（4 步配置：项目名/作者/模板/FFI）
+  - 进度条（实时显示编译进度）
+  - 构建计划树状可视化
+- 新增 44 个测试（总计 561 个，全部通过）
+
+### Stats
+- 新增包: src/discovery/ + src/diagnostic/ + src/interactive/
+- 新增测试: 44 个（总计 561 个，全部通过）
+- Warning: 0
+- 总包数: 26
+
+### Breaking Changes
+- 无（纯新增功能）
+
 ## v0.1.1 (2026-10-15) — 生态建设：API 文档 + 插件机制 + 贡献指南
 
 ### Highlights
