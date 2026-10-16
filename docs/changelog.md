@@ -1,5 +1,29 @@
 # Changelog
 
+## v0.2.20 (2026-10-16) — 集成测试扩展：encoding + container + random
+
+### Highlights
+- 新增 `moonbitlang/encoding` 端到端集成测试
+  - 5 导出函数（encoding_encode / encoding_decode / encoding_convert / encoding_detect / encoding_validate）
+  - 1 导出类型（EncodingScheme）
+- 新增 `moonbitlang/container` 端到端集成测试
+  - 5 导出函数（container_push / container_pop / container_peek / container_size / container_clear）
+  - 2 导出类型（Container / ContainerType）
+- 新增 `moonbitlang/random` 端到端集成测试
+  - 5 导出函数（random_next / random_range / random_seed / random_shuffle / random_sample）
+  - 1 导出类型（RngState）
+- 新增 34 个测试（总计 1515 个，全部通过）
+
+### Stats
+- 新增集成目标: moonbitlang/encoding + moonbitlang/container + moonbitlang/random
+- 新增测试: 34 个（总计 1515 个，全部通过）
+- Warning: 0
+- 总包数: 49
+- 集成目标数: 20
+
+### Breaking Changes
+- 无（纯新增功能）
+
 ## v0.2.19 (2026-10-16) — 资源管理包
 
 ### Highlights
