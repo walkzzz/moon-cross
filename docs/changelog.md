@@ -1,5 +1,27 @@
 # Changelog
 
+## v0.1.7 (2026-10-16) — 编译追踪与日志包
+
+### Highlights
+- 新增 `src/trace/` 包：编译追踪与日志系统
+  - 日志级别（LogLevel）：Trace/Debug/Info/Warn/Error/Fatal
+  - 追踪事件（TraceEvent）：时间戳/级别/来源/消息
+  - 追踪区间（TraceSpan）：开始/结束/事件列表/父区间
+  - 追踪收集器（TraceCollector）：事件/区间管理/时间推进
+  - 级别过滤/来源过滤/错误统计/警告统计
+  - 最慢/最快区间查找/总持续时间计算
+  - 格式化输出（text/json）/摘要生成
+- 新增 38 个测试（总计 835 个，全部通过）
+
+### Stats
+- 新增包: src/trace/
+- 新增测试: 38 个（总计 835 个，全部通过）
+- Warning: 0
+- 总包数: 29
+
+### Breaking Changes
+- 无（纯新增功能）
+
 ## v0.1.6 (2026-10-16) — 性能基准测试包
 
 ### Highlights

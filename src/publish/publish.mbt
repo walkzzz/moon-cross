@@ -52,7 +52,7 @@ pub extend MooncakesMetadata with Eq::{not_equal, equal}
 pub fn default_publish_config() -> PublishConfig {
   {
     module_name: "walkzzz/moon-cross",
-    version: "0.1.6",
+    version: "0.1.7",
     license: "MIT",
     description: "MoonBit cross-platform native framework: write once, deliver to iOS/Android/Windows/HarmonyOS",
     repository: "https://github.com/walkzzz/moon-cross",

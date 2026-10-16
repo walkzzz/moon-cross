@@ -19,6 +19,7 @@
 | v0.1.4 | ✅ Done | mooncakes 发布准备（publish 包+元数据生成+就绪检查） | 755 |
 | v0.1.5 | ✅ Done | 示例项目+文档完善（toml/quickcheck/parser 示例） | 755 |
 | v0.1.6 | ✅ Done | 性能基准测试包（统计+比较+套件） | 797 |
+| v0.1.7 | ✅ Done | 编译追踪与日志包（事件+区间+收集器） | 835 |
 
 ## Week 1 Deliverables (2026-10-15)
 
