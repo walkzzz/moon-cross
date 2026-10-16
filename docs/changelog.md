@@ -1,5 +1,33 @@
 # Changelog
 
+## v0.2.13 (2026-10-16) — 事件系统包
+
+### Highlights
+- 新增 `src/event/` 包：事件系统引擎
+  - 事件优先级（EventPriority）：Low / Normal / High / Critical
+  - 事件（Event）：名称/数据/时间戳/来源/优先级
+  - 事件处理器（EventHandler）：ID/事件名/处理器名/优先级/活跃状态
+  - 事件总线（EventBus）：处理器注册表/事件历史/统计
+  - 核心操作：create_event_bus / event_subscribe / event_unsubscribe / event_publish
+  - 批量操作：event_batch_publish
+  - 过滤操作：event_filter_by_name / event_filter_by_priority / event_filter_by_source
+  - 处理器管理：event_disable_handler / event_enable_handler / event_handlers_for
+  - 查询操作：event_handler_count / event_active_handler_count / event_has_handler
+  - 统计操作：event_stats / event_history_count
+  - 合并操作：merge_event_buses
+  - 优先级工具：priority_value / priority_name / priority_from_value
+- 新增 25 个测试（总计 1326 个，全部通过）
+
+### Stats
+- 新增包: src/event/
+- 新增测试: 25 个（总计 1326 个，全部通过）
+- Warning: 0
+- 总包数: 42
+- 集成目标数: 14
+
+### Breaking Changes
+- 无（纯新增功能）
+
 ## v0.2.12 (2026-10-16) — 对象池包
 
 ### Highlights
