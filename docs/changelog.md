@@ -1,5 +1,29 @@
 # Changelog
 
+## v0.2.25 (2026-10-16) — 模板引擎包
+
+### Highlights
+- 新增 `src/template/` 包：模板引擎
+  - 模板上下文（TemplateContext）：变量键值对存储
+  - 模板（Template）：源码存储
+  - 上下文操作：empty_context / context_set / context_get / context_has / context_remove / context_size
+  - 模板操作：parse_template / render_template / template_render（一步渲染）
+  - 变量替换：`{{variable}}`
+  - 条件渲染：`{{#if variable}}...{{/if}}` / `{{#unless variable}}...{{/unless}}`
+  - 循环渲染：`{{#each variable}}...{{this}}...{{/each}}`（逗号分隔列表）
+  - 支持嵌套块和空格容忍（`{{ name }}` 等价于 `{{name}}`）
+- 新增 27 个测试（总计 1654 个，全部通过）
+
+### Stats
+- 新增包: src/template/
+- 新增测试: 27 个（总计 1654 个，全部通过）
+- Warning: 0
+- 总包数: 53
+- 集成目标数: 23
+
+### Breaking Changes
+- 无（纯新增功能）
+
 ## v0.2.24 (2026-10-16) — 集成测试扩展（fs+path+process）
 
 ### Highlights
