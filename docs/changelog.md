@@ -1,5 +1,28 @@
 # Changelog
 
+## v0.2.26 (2026-10-16) — 正则增强包
+
+### Highlights
+- 新增 `src/regex_enhanced/` 包：正则表达式增强引擎
+  - 正则模式（RegexPattern）：pattern + 锚点标记 + 核心模式
+  - 匹配结果（RegexMatch）：matched + start + end
+  - 编译操作：compile_pattern（支持 `^` 前缀锚和 `$` 后缀锚）
+  - 匹配操作：regex_match / simple_match
+  - 批量操作：regex_find_all / regex_replace / regex_split
+  - 模式语法：`.` 任意单字符、`X*` 零或多个X、`^` 前缀锚、`$` 后缀锚
+  - 验证操作：regex_is_valid
+- 新增 24 个测试（总计 1678 个，全部通过）
+
+### Stats
+- 新增包: src/regex_enhanced/
+- 新增测试: 24 个（总计 1678 个，全部通过）
+- Warning: 0
+- 总包数: 54
+- 集成目标数: 23
+
+### Breaking Changes
+- 无（纯新增功能）
+
 ## v0.2.25 (2026-10-16) — 模板引擎包
 
 ### Highlights
