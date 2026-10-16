@@ -76,5 +76,5 @@ pub fn total_timeout(config : RetryConfig) -> Int {
 ///|
 /// 重试策略版本 | Retry strategy version
 pub fn retry_version() -> String {
-  "moon-cross robust/retry v0.8.0"
+  "moon-cross robust/retry v0.0.8"
 }

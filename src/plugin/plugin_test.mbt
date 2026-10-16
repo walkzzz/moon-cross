@@ -95,7 +95,7 @@ test "plugin: hook to string" {
 }
 
 test "plugin: version" {
-  assert_true(@plugin.plugin_version().contains("v1.1.0"))
+  assert_true(@plugin.plugin_version().contains("v0.1.1"))
 }
 
 test "template: builtin templates" {
@@ -150,5 +150,5 @@ test "template: generate ffi wrapper" {
 }
 
 test "template: version" {
-  assert_true(@plugin.template_version().contains("v1.1.0"))
+  assert_true(@plugin.template_version().contains("v0.1.1"))
 }

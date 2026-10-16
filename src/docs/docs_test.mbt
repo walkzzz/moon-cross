@@ -71,5 +71,5 @@ test "docs: doc format to string" {
 }
 
 test "docs: version" {
-  assert_true(@docs.docs_version().contains("v1.1.0"))
+  assert_true(@docs.docs_version().contains("v0.1.1"))
 }

@@ -45,7 +45,7 @@ test "retry: total timeout" {
 }
 
 test "retry: version" {
-  assert_true(@robust.retry_version().contains("v0.8.0"))
+  assert_true(@robust.retry_version().contains("v0.0.8"))
 }
 
 test "recovery: compile result success" {
@@ -146,7 +146,7 @@ test "recovery: failure report" {
 }
 
 test "recovery: version" {
-  assert_true(@robust.recovery_version().contains("v0.8.0"))
+  assert_true(@robust.recovery_version().contains("v0.0.8"))
 }
 
 test "validate: non-empty" {
@@ -214,7 +214,7 @@ test "validate: invalid with only warnings" {
 }
 
 test "validate: version" {
-  assert_true(@robust.validate_version().contains("v0.8.0"))
+  assert_true(@robust.validate_version().contains("v0.0.8"))
 }
 
 test "boundary: reserved keywords" {
@@ -283,5 +283,5 @@ test "boundary: unicode detection" {
 }
 
 test "boundary: version" {
-  assert_true(@robust.boundary_version().contains("v0.8.0"))
+  assert_true(@robust.boundary_version().contains("v0.0.8"))
 }

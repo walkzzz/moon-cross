@@ -203,5 +203,5 @@ pub fn SafetyCheckType::to_string(self : SafetyCheckType) -> String {
 ///|
 /// FFI 安全版本 | FFI safety version
 pub fn ffi_safety_version() -> String {
-  "moon-cross security/ffi_safety v0.9.0"
+  "moon-cross security/ffi_safety v0.0.9"
 }

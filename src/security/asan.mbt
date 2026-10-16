@@ -121,5 +121,5 @@ pub fn asan_failed(errors : Array[String], duration_ms : Int) -> AsanResult {
 ///|
 /// ASAN 版本 | ASAN version
 pub fn asan_version() -> String {
-  "moon-cross security/asan v0.9.0"
+  "moon-cross security/asan v0.0.9"
 }

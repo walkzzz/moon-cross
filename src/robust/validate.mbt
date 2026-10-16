@@ -109,5 +109,5 @@ pub fn merge_validation(results : Array[ValidationResult]) -> ValidationResult {
 ///|
 /// 校验版本 | Validation version
 pub fn validate_version() -> String {
-  "moon-cross robust/validate v0.8.0"
+  "moon-cross robust/validate v0.0.8"
 }

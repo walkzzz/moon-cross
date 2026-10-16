@@ -167,5 +167,5 @@ pub fn DocFormat::to_string(self : DocFormat) -> String {
 ///|
 /// 文档生成版本 | Documentation generation version
 pub fn docs_version() -> String {
-  "moon-cross docs v1.1.0"
+  "moon-cross docs v0.1.1"
 }

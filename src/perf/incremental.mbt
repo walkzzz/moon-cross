@@ -182,5 +182,5 @@ pub fn warmup_config() -> ChangeSet {
 ///|
 /// 增量构建版本 | Incremental build version
 pub fn incremental_version() -> String {
-  "moon-cross perf/incremental v1.0.0"
+  "moon-cross perf/incremental v0.1.0"
 }

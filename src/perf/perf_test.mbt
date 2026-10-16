@@ -45,7 +45,7 @@ test "parallel: optimal parallelism" {
 }
 
 test "parallel: version" {
-  assert_true(@perf.parallel_version().contains("v1.0.0"))
+  assert_true(@perf.parallel_version().contains("v0.1.0"))
 }
 
 test "cache: default config" {
@@ -122,7 +122,7 @@ test "cache: no space to reclaim" {
 }
 
 test "cache: version" {
-  assert_true(@perf.cache_version().contains("v1.0.0"))
+  assert_true(@perf.cache_version().contains("v0.1.0"))
 }
 
 test "incremental: empty change set" {
@@ -195,7 +195,7 @@ test "incremental: warmup" {
 }
 
 test "incremental: version" {
-  assert_true(@perf.incremental_version().contains("v1.0.0"))
+  assert_true(@perf.incremental_version().contains("v0.1.0"))
 }
 
 test "optimize: default config" {
@@ -296,5 +296,5 @@ test "optimize: make result" {
 }
 
 test "optimize: version" {
-  assert_true(@perf.optimize_version().contains("v1.0.0"))
+  assert_true(@perf.optimize_version().contains("v0.1.0"))
 }

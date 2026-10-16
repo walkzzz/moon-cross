@@ -84,7 +84,7 @@ test "asan: failed result" {
 }
 
 test "asan: version" {
-  assert_true(@security.asan_version().contains("v0.9.0"))
+  assert_true(@security.asan_version().contains("v0.0.9"))
 }
 
 test "ffi_safety: null check with pointer" {
@@ -147,7 +147,7 @@ test "ffi_safety: comprehensive check unsafe" {
 }
 
 test "ffi_safety: version" {
-  assert_true(@security.ffi_safety_version().contains("v0.9.0"))
+  assert_true(@security.ffi_safety_version().contains("v0.0.9"))
 }
 
 test "sandbox: default config" {
@@ -226,7 +226,7 @@ test "sandbox: validate config invalid timeout" {
 }
 
 test "sandbox: version" {
-  assert_true(@security.sandbox_version().contains("v0.9.0"))
+  assert_true(@security.sandbox_version().contains("v0.0.9"))
 }
 
 test "supply_chain: make dependency" {
@@ -328,5 +328,5 @@ test "supply_chain: batch check" {
 }
 
 test "supply_chain: version" {
-  assert_true(@security.supply_chain_version().contains("v0.9.0"))
+  assert_true(@security.supply_chain_version().contains("v0.0.9"))
 }

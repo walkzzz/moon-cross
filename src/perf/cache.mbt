@@ -109,5 +109,5 @@ pub fn space_to_reclaim(config : CacheConfig, current_size_bytes : Int) -> Int {
 ///|
 /// 缓存版本 | Cache version
 pub fn cache_version() -> String {
-  "moon-cross perf/cache v1.0.0"
+  "moon-cross perf/cache v0.1.0"
 }

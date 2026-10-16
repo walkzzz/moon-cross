@@ -118,5 +118,5 @@ pub fn batch_check_dependencies(deps : Array[DependencyInfo]) -> Array[String] {
 ///|
 /// 供应链安全版本 | Supply chain security version
 pub fn supply_chain_version() -> String {
-  "moon-cross security/supply_chain v0.9.0"
+  "moon-cross security/supply_chain v0.0.9"
 }

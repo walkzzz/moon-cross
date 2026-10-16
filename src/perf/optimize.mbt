@@ -161,5 +161,5 @@ pub fn compression_ratio(result : OptResult) -> Double {
 ///|
 /// 代码优化版本 | Code optimization version
 pub fn optimize_version() -> String {
-  "moon-cross perf/optimize v1.0.0"
+  "moon-cross perf/optimize v0.1.0"
 }

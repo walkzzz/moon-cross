@@ -158,5 +158,5 @@ pub fn templates_by_category(category : String) -> Array[TemplateInfo] {
 ///|
 /// 模板库版本 | Template library version
 pub fn template_version() -> String {
-  "moon-cross plugin/template v1.1.0"
+  "moon-cross plugin/template v0.1.1"
 }

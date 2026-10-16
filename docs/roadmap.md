@@ -8,12 +8,12 @@
 | Week 2 | ✅ Done | Android NDK 交叉编译 + JNI 绑定生成 | 55 |
 | Week 3 | ✅ Done | iOS clang + Swift interop + 鸿蒙 OHOS + NAPI | 109 |
 | Week 4 | ✅ Done | mizchi/zlib 集成测试 + 示例项目 + mooncakes 发布准备 | 77 |
-| v0.6.0 | ✅ Done | 中英双文注释改造 | 348 |
-| v0.7.0 | ✅ Done | Lint + Warning 治理（593→0） | 348 |
-| v0.8.0 | ✅ Done | 鲁棒性增强（重试+恢复+校验+边界） | 390 |
-| v0.9.0 | ✅ Done | 安全性增强（ASAN+FFI安全+沙箱+供应链）+ CI/CD | 442 |
-| v1.0.0 | ✅ Done | 性能提升（并行+缓存+增量+优化）— 稳定版 | 489 |
-| v1.1.0 | ✅ Done | 生态建设（API文档+插件机制+模板库+贡献指南） | 517 |
+| v0.0.6 | ✅ Done | 中英双文注释改造 | 348 |
+| v0.0.7 | ✅ Done | Lint + Warning 治理（593→0） | 348 |
+| v0.0.8 | ✅ Done | 鲁棒性增强（重试+恢复+校验+边界） | 390 |
+| v0.0.9 | ✅ Done | 安全性增强（ASAN+FFI安全+沙箱+供应链）+ CI/CD | 442 |
+| v0.1.0 | ✅ Done | 性能提升（并行+缓存+增量+优化）— 稳定版 | 489 |
+| v0.1.1 | ✅ Done | 生态建设（API文档+插件机制+模板库+贡献指南） | 517 |
 
 ## Week 1 Deliverables (2026-10-15)
 

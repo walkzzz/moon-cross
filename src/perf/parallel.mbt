@@ -106,5 +106,5 @@ pub fn optimal_parallelism(cpu_cores : Int) -> Int {
 ///|
 /// 并行编译版本 | Parallel compilation version
 pub fn parallel_version() -> String {
-  "moon-cross perf/parallel v1.0.0"
+  "moon-cross perf/parallel v0.1.0"
 }

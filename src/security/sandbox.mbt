@@ -96,5 +96,5 @@ pub fn validate_sandbox_config(config : SandboxConfig) -> String? {
 ///|
 /// 沙箱版本 | Sandbox version
 pub fn sandbox_version() -> String {
-  "moon-cross security/sandbox v0.9.0"
+  "moon-cross security/sandbox v0.0.9"
 }

@@ -123,5 +123,5 @@ pub fn generate_failure_report(summary : CompileSummary) -> String {
 ///|
 /// 错误恢复版本 | Error recovery version
 pub fn recovery_version() -> String {
-  "moon-cross robust/recovery v0.8.0"
+  "moon-cross robust/recovery v0.0.8"
 }

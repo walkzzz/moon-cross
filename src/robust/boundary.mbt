@@ -109,5 +109,5 @@ pub fn has_unicode(name : String) -> Bool {
 ///|
 /// 边界处理版本 | Boundary handling version
 pub fn boundary_version() -> String {
-  "moon-cross robust/boundary v0.8.0"
+  "moon-cross robust/boundary v0.0.8"
 }

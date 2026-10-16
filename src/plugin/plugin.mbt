@@ -168,5 +168,5 @@ pub fn PluginHook::to_string(self : PluginHook) -> String {
 ///|
 /// 插件机制版本 | Plugin system version
 pub fn plugin_version() -> String {
-  "moon-cross plugin v1.1.0"
+  "moon-cross plugin v0.1.1"
 }
