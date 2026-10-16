@@ -1,5 +1,30 @@
 # Changelog
 
+## v0.2.4 (2026-10-16) — 代码差异分析包
+
+### Highlights
+- 新增 `src/diff/` 包：代码差异分析引擎
+  - 差异行类型（DiffLineType）：Added / Removed / Unchanged / Context
+  - 差异行（DiffLine）：内容/类型/旧行号/新行号
+  - 差异结果（DiffResult）：行列表/新增数/删除数/未变更数
+  - 差异配置（DiffConfig）：上下文行数/忽略空白/最大差异行数
+  - 差异统计（DiffStats）：总行数/变更比率/新增/删除/未变更
+  - 核心功能：diff_lines / diff_text / diff_text_with_config
+  - 过滤功能：filter_added / filter_removed / filter_unchanged
+  - 格式化输出：format_diff / diff_summary
+  - 差异操作：merge_diffs / reverse_diff / empty_diff
+  - 统计功能：diff_stats / total_lines / has_changes
+- 新增 30 个测试（总计 1066 个，全部通过）
+
+### Stats
+- 新增包: src/diff/
+- 新增测试: 30 个（总计 1066 个，全部通过）
+- Warning: 0
+- 总包数: 34
+
+### Breaking Changes
+- 无（纯新增功能）
+
 ## v0.2.3 (2026-10-16) — 集成测试扩展：regexp + uuid + bufio
 
 ### Highlights
