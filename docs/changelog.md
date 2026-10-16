@@ -1,5 +1,28 @@
 # Changelog
 
+## v0.2.27 (2026-10-16) — 加密工具包
+
+### Highlights
+- 新增 `src/crypto_util/` 包：加密工具集
+  - 哈希函数：hash_djb2 / hash_fnv1 / hash_sdbm / hash_with_salt
+  - 哈希配置（HashConfig）：算法选择 + 盐值
+  - 十六进制编解码：hex_encode / hex_decode
+  - XOR 加解密：xor_encrypt / xor_decrypt（自逆运算）
+  - 凯撒加解密：caesar_encrypt / caesar_decrypt（字母移位，非字母保留）
+  - 随机数生成器（RngState）：rng_create / rng_next / rng_range
+  - 盐生成：generate_salt
+- 新增 24 个测试（总计 1702 个，全部通过）
+
+### Stats
+- 新增包: src/crypto_util/
+- 新增测试: 24 个（总计 1702 个，全部通过）
+- Warning: 0
+- 总包数: 55
+- 集成目标数: 23
+
+### Breaking Changes
+- 无（纯新增功能）
+
 ## v0.2.26 (2026-10-16) — 正则增强包
 
 ### Highlights
