@@ -1,5 +1,28 @@
 # Changelog
 
+## v0.2.23 (2026-10-16) — URI 解析包
+
+### Highlights
+- 新增 `src/uri/` 包：URI 解析引擎
+  - 查询参数（QueryParam）：名称/值
+  - URI 结构体（Uri）：scheme/host/port/path/query/fragment
+  - 解析操作：parse_uri（支持 scheme://host:port/path?query#fragment 完整解析）
+  - 构建操作：build_uri / make_uri / empty_uri
+  - 编码解码：uri_encode / uri_decode（百分号编码 + 加号转空格）
+  - 查询操作：parse_query / build_query / add_query_param / get_query_param
+  - 工具函数：uri_is_valid / uri_full_path / merge_uris / uri_version
+- 新增 28 个测试（总计 1592 个，全部通过）
+
+### Stats
+- 新增包: src/uri/
+- 新增测试: 28 个（总计 1592 个，全部通过）
+- Warning: 0
+- 总包数: 52
+- 集成目标数: 20
+
+### Breaking Changes
+- 无（纯新增功能）
+
 ## v0.2.22 (2026-10-16) — HTTP 协议包
 
 ### Highlights
