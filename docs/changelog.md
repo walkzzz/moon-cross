@@ -1,5 +1,31 @@
 # Changelog
 
+## v0.1.3 (2026-10-16) — 集成测试扩展：toml + quickcheck + parser
+
+### Highlights
+- 新增 `bobzhang/toml` v0.4.3 端到端集成测试
+  - 10 导出函数（parse / to_string / get / get_string / get_int / get_double / get_bool / value_type / table_keys / array_length）
+  - 2 导出类型（TomlValue / TomlError）
+  - 完整四平台流水线验证
+- 新增 `moonbitlang/quickcheck` v0.15.0 端到端集成测试
+  - 10 导出函数（check / for_all_int / for_all_bool / for_all_string / arbitrary_int / arbitrary_bool / arbitrary_string / with_seed / minimize / result_passed）
+  - 4 导出类型（Property / Arbitrary / QuickCheckResult / QuickCheckError）
+  - 完整四平台流水线验证
+- 新增 `moonbitlang/parser` v0.4.4 端到端集成测试
+  - 10 导出函数（parse / tokenize / to_string / ast_kind / ast_children / token_kind / token_value / token_position / format / comments）
+  - 4 导出类型（Token / Ast / Span / ParseError）
+  - 完整四平台流水线验证
+- 新增 142 个测试（总计 703 个，全部通过）
+
+### Stats
+- 新增集成目标: bobzhang/toml + moonbitlang/quickcheck + moonbitlang/parser
+- 新增测试: 142 个（总计 703 个，全部通过）
+- Warning: 0
+- 总包数: 26
+
+### Breaking Changes
+- 无（纯新增功能）
+
 ## v0.1.2 (2026-10-15) — 自动发现 + 环境诊断 + 交互式 CLI
 
 ### Highlights

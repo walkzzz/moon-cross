@@ -128,10 +128,10 @@
 | 库 | 版本 | 用途 | 状态 |
 |----|------|------|------|
 | mizchi/zlib | 0.4.10 | 压缩算法跨平台导出 | ✅ 已完成 |
-| moonbitlang/openseek | latest | AI agent deepseek 数据层跨平台 | 🔄 进行中 |
-| bobzhang/toml | 0.4.3 | TOML 解析器跨平台导出 | ⏳ 计划中 |
-| moonbitlang/quickcheck | 0.15.0 | 属性测试库跨平台导出 | ⏳ 计划中 |
-| moonbitlang/parser | 0.4.4 | AST 解析器跨平台导出 | ⏳ 计划中 |
+| moonbitlang/openseek | latest | AI agent deepseek 数据层跨平台 | ✅ 已完成 |
+| bobzhang/toml | 0.4.3 | TOML 解析器跨平台导出 | ✅ 已完成 |
+| moonbitlang/quickcheck | 0.15.0 | 属性测试库跨平台导出 | ✅ 已完成 |
+| moonbitlang/parser | 0.4.4 | AST 解析器跨平台导出 | ✅ 已完成 |
 
 ---
 
