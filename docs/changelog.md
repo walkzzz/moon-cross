@@ -1,5 +1,26 @@
 # Changelog
 
+## v0.2.29 (2026-10-16) — 内存管理包
+
+### Highlights
+- 新增 `src/memory/` 包：内存管理工具集
+  - 内存追踪器（MemoryTracker）：tracker_create / tracker_allocate / tracker_free / tracker_live_count / tracker_live_bytes / tracker_has_leaks
+  - 竞技场分配器（Arena）：arena_create / arena_alloc / arena_reset / arena_block_count
+  - 引用计数器（RefCounter）：refcount_create / refcount_increment / refcount_decrement / refcount_is_zero
+  - 内存池（MemoryPool）：pool_create / pool_allocate / pool_deallocate / pool_usage
+  - GC 统计（GcStats）：gc_stats_create / gc_record_alloc / gc_record_collect
+- 新增 23 个测试（总计 1751 个，全部通过）
+
+### Stats
+- 新增包: src/memory/
+- 新增测试: 23 个（总计 1751 个，全部通过）
+- Warning: 0
+- 总包数: 57
+- 集成目标数: 23
+
+### Breaking Changes
+- 无（纯新增功能）
+
 ## v0.2.28 (2026-10-16) — 并发原语包
 
 ### Highlights
