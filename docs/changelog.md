@@ -1,5 +1,31 @@
 # Changelog
 
+## v0.2.16 (2026-10-16) — 信号处理包
+
+### Highlights
+- 新增 `src/signal/` 包：信号处理引擎
+  - 信号类型（SignalType）：User / System / Interrupt / Error / Custom
+  - 信号（Signal）：ID/名称/类型/数据/时间戳/优先级
+  - 信号处理器（SignalHandler）：ID/信号名/处理器名/优先级/活跃/调用计数
+  - 信号管理器（SignalManager）：处理器注册表/历史/统计
+  - 核心操作：create_signal_manager / signal_register / signal_unregister / signal_send
+  - 批量操作：signal_batch_send
+  - 处理器管理：signal_disable_handler / signal_enable_handler / signal_handlers_for
+  - 过滤操作：signal_filter_by_name / signal_filter_by_type
+  - 统计操作：signal_stats / signal_handler_call_count
+  - 合并操作：merge_signal_managers
+- 新增 22 个测试（总计 1410 个，全部通过）
+
+### Stats
+- 新增包: src/signal/
+- 新增测试: 22 个（总计 1410 个，全部通过）
+- Warning: 0
+- 总包数: 45
+- 集成目标数: 17
+
+### Breaking Changes
+- 无（纯新增功能）
+
 ## v0.2.15 (2026-10-16) — 集成测试扩展：net + io + math
 
 ### Highlights
