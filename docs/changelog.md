@@ -1,5 +1,24 @@
 # Changelog
 
+## v0.2.24 (2026-10-16) — 集成测试扩展（fs+path+process）
+
+### Highlights
+- 新增 `src/integration/fs_path_process_*` 集成测试
+  - fs 模块：read/write/exists/mkdir/remove/stat + FileInfo 类型（6 函数 + 1 类型）
+  - path 模块：join/normalize/dirname/basename/extname/is_absolute + Path 类型（6 函数 + 1 类型）
+  - process 模块：spawn/wait/kill/exit/env + Process 类型（5 函数 + 1 类型）
+  - 每模块含跨平台配置 + 流水线测试
+- 新增 35 个测试（总计 1627 个，全部通过）
+
+### Stats
+- 新增集成测试: 35 个（总计 1627 个，全部通过）
+- Warning: 0
+- 总包数: 52
+- 集成目标数: 23
+
+### Breaking Changes
+- 无（纯新增功能）
+
 ## v0.2.23 (2026-10-16) — URI 解析包
 
 ### Highlights
