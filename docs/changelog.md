@@ -1,5 +1,31 @@
 # Changelog
 
+## v0.2.1 (2026-10-16) — 测试覆盖率分析包
+
+### Highlights
+- 新增 `src/coverage/` 包：测试覆盖率分析引擎
+  - 覆盖率条目（CoverageEntry）：文件路径/总行数/覆盖行数/缺失行
+  - 覆盖率报告（CoverageReport）：条目聚合/总行数/覆盖行数/缺失行数
+  - 覆盖率配置（CoverageConfig）：最低阈值/失败策略/显示缺失/排序
+  - 覆盖率统计（CoverageStats）：最小/最大/均值/文件数
+  - 行覆盖状态（LineStatus）：Covered / Uncovered / Partial
+  - 核心功能：make_entry / merge_entries / coverage_percentage / entry_percentage
+  - 报告生成：format_report_text / format_report_json
+  - 阈值检查：is_passing / filter_below_threshold / coverage_grade
+  - 排序功能：sort_by_coverage_ascending / sort_by_coverage_descending
+  - 报告合并：merge_reports / empty_report
+  - 行状态查询：line_status / missing_lines_summary
+- 新增 38 个测试（总计 977 个，全部通过）
+
+### Stats
+- 新增包: src/coverage/
+- 新增测试: 38 个（总计 977 个，全部通过）
+- Warning: 0
+- 总包数: 32
+
+### Breaking Changes
+- 无（纯新增功能）
+
 ## v0.2.0 (2026-10-16) — 代码格式化包
 
 ### Highlights

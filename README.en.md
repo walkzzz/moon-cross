@@ -4,7 +4,7 @@
 
 [中文](./README.md) | [Changelog](./docs/changelog.md) | [Roadmap](./docs/roadmap.md) | [Architecture](./docs/architecture.md)
 
-**v0.2.0** | 31 packages | 939 tests | 450+ APIs | 0 warnings | MIT License
+**v0.2.1** | 32 packages | 977 tests | 470+ APIs | 0 warnings | MIT License
 
 ## Introduction
 
@@ -70,6 +70,7 @@ moon-cross/
 ├── trace/         # Compilation tracing and logging (events+spans+collector)
 ├── linter/        # Config lint rules (8 built-in rules)
 ├── formatter/     # Code formatter (indent+newline+rule engine)
+├── coverage/      # Test coverage analysis (entries+reports+stats)
 ├── integration/   # Integration tests (zlib+openseek+toml+quickcheck+parser)
 ├── scaffold/      # Scaffold (init cross-platform project)
 ├── sync/          # Incremental sync (auto-configure platforms after code update)
