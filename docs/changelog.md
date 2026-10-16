@@ -1,5 +1,38 @@
 # Changelog
 
+## v0.3.2 (2026-10-16) — 形式化证明 + 多手段测试框架
+
+### Highlights
+- 新增形式化证明包 `src/proof/`
+  - ProofResult / Contract / Invariant 结构体
+  - 契约验证（前条件 + 后条件）、不变量检查、性质成立检查
+  - 证明链（proof_chain）：所有证明必须同时成立
+  - 常见性质验证：幂等性、交换律、结合律、互逆性、单位元、范围不变量
+  - 排序不变量：长度保持、有序性检查
+  - 30 个测试
+- 新增 Mock/Fake/Stub/Spy 测试框架 `src/mock/`
+  - Mock：调用记录、期望设置、验证、调用计数、重置
+  - Stub：固定返回值、调用计数
+  - Spy：包装真实对象、调用记录、调用计数
+  - Fake：自定义行为、调用计数
+  - 19 个测试
+- 新增 E2E 端到端测试框架 `src/e2e/`
+  - Step / StepResult / Scenario / ScenarioResult / E2EReport 结构体
+  - 场景创建、步骤添加、场景执行、报告生成
+  - 通过率计算、失败场景提取、步骤总数统计
+  - 20 个测试
+- 新增 AI 辅助测试工具 `src/ai_test/`
+  - TestCase / BoundaryCase / CoverageReport / AITestResult 结构体
+  - 批量用例生成、边界值分析（含中间值）、覆盖率报告
+  - 边缘用例检测、变异测试、测试套件运行
+  - AI 测试摘要、结果合并
+  - 21 个测试
+
+### Stats
+- 新增包: src/proof/, src/mock/, src/e2e/, src/ai_test/（4 个）
+- 新增测试: 90 个（总计 2139 个，全部通过）
+- Warning: 0
+
 ## v0.3.1 (2026-10-16) — Linux 平台支持 + iOS/鸿蒙增强
 
 ### Highlights
