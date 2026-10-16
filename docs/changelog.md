@@ -1,5 +1,32 @@
 # Changelog
 
+## v0.2.14 (2026-10-16) — 状态机包
+
+### Highlights
+- 新增 `src/state/` 包：有限状态机引擎
+  - 状态（State）：名称/是否初始/是否终态
+  - 状态转换（Transition）：源状态/目标状态/事件
+  - 状态机统计（StateMachineStats）：转换次数/访问状态数
+  - 状态机（StateMachine）：状态集/转换集/当前状态/历史/统计
+  - 核心操作：create_state_machine / sm_add_state / sm_add_transition / sm_start / sm_trigger
+  - 查询操作：sm_current_state / sm_can_transition / sm_is_final / sm_state_exists / sm_get_state
+  - 历史操作：sm_history / sm_history_length / sm_reset
+  - 列表操作：sm_valid_events / sm_state_names / sm_transitions
+  - 统计操作：sm_stats
+  - 合并操作：merge_state_machines
+  - 状态工厂：make_state / make_initial_state / make_final_state
+- 新增 25 个测试（总计 1351 个，全部通过）
+
+### Stats
+- 新增包: src/state/
+- 新增测试: 25 个（总计 1351 个，全部通过）
+- Warning: 0
+- 总包数: 43
+- 集成目标数: 14
+
+### Breaking Changes
+- 无（纯新增功能）
+
 ## v0.2.13 (2026-10-16) — 事件系统包
 
 ### Highlights

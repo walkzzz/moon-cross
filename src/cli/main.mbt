@@ -1,6 +1,6 @@
 ///|
 fn main {
-  println("Moon Cross v0.2.13 - MoonBit Cross-Platform Native Framework")
+  println("Moon Cross v0.2.14 - MoonBit Cross-Platform Native Framework")
   println("")
   println("Usage: moon-cross <command> [options]")
   println("")
