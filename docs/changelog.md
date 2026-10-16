@@ -1,5 +1,31 @@
 # Changelog
 
+## v0.2.9 (2026-10-16) — 数据验证包
+
+### Highlights
+- 新增 `src/validator/` 包：数据验证引擎
+  - 验证错误（ValidationError）：字段/消息/错误码
+  - 验证结果（ValidationResult）：有效标志/错误列表
+  - 验证配置（ValidationConfig）：严格模式/首个错误即停
+  - 验证规则（ValidationRule）：名称/描述/启用状态
+  - 内置验证器：validate_required / validate_min_length / validate_max_length
+  - 数值验证：validate_min_value / validate_max_value
+  - 集合验证：validate_not_empty
+  - 结果操作：create_result / merge_results / batch_validate
+  - 错误过滤：filter_errors_by_field / filter_errors_by_code / error_fields
+  - 格式化：format_errors / format_result
+  - 8 条内置规则
+- 新增 34 个测试（总计 1216 个，全部通过）
+
+### Stats
+- 新增包: src/validator/
+- 新增测试: 34 个（总计 1216 个，全部通过）
+- Warning: 0
+- 总包数: 39
+
+### Breaking Changes
+- 无（纯新增功能）
+
 ## v0.2.8 (2026-10-16) — 图算法包
 
 ### Highlights
