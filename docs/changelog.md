@@ -1,5 +1,26 @@
 # Changelog
 
+## v0.1.6 (2026-10-16) — 性能基准测试包
+
+### Highlights
+- 新增 `src/benchmark/` 包：性能基准测试框架
+  - 基准测试配置（BenchmarkConfig）：迭代次数/预热/超时
+  - 基准测试结果（BenchmarkResult）：均值/中位数/最小/最大/ops/sec
+  - 统计摘要（StatsSummary）：均值/中位数/方差/标准差/P95/P99
+  - 性能比较（ComparisonResult）：加速比/改善百分比/显著性判断
+  - 基准测试套件（BenchmarkSuite）：多测试管理/最快最慢查找
+  - 格式化输出（format_result/format_stats/format_comparison）
+- 新增 42 个测试（总计 797 个，全部通过）
+
+### Stats
+- 新增包: src/benchmark/
+- 新增测试: 42 个（总计 797 个，全部通过）
+- Warning: 0
+- 总包数: 28
+
+### Breaking Changes
+- 无（纯新增功能）
+
 ## v0.1.5 (2026-10-16) — 示例项目 + 文档完善
 
 ### Highlights

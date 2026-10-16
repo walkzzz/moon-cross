@@ -5,7 +5,7 @@ test "default_publish_config_module_name" {
 
 test "default_publish_config_version" {
   let cfg = @publish.default_publish_config()
-  assert_eq(cfg.version, "0.1.5")
+  assert_eq(cfg.version, "0.1.6")
 }
 
 test "default_publish_config_license" {
@@ -145,7 +145,7 @@ test "generate_mooncakes_metadata" {
   let cfg = @publish.default_publish_config()
   let meta = @publish.generate_mooncakes_metadata(cfg)
   assert_eq(meta.name, "walkzzz/moon-cross")
-  assert_eq(meta.version, "0.1.5")
+  assert_eq(meta.version, "0.1.6")
   assert_eq(meta.license, "MIT")
 }
 
@@ -165,7 +165,7 @@ test "generate_publish_command" {
   let cfg = @publish.default_publish_config()
   let cmd = @publish.generate_publish_command(cfg)
   assert_true(cmd.contains("moon publish"))
-  assert_true(cmd.contains("0.1.5"))
+  assert_true(cmd.contains("0.1.6"))
 }
 
 test "generate_install_command" {
@@ -230,7 +230,7 @@ test "generate_mooncakes_toml_contains_name" {
 test "generate_mooncakes_toml_contains_version" {
   let cfg = @publish.default_publish_config()
   let toml = @publish.generate_mooncakes_toml(cfg)
-  assert_true(toml.contains("0.1.5"))
+  assert_true(toml.contains("0.1.6"))
 }
 
 test "generate_mooncakes_toml_contains_license" {
