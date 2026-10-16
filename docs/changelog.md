@@ -1,5 +1,33 @@
 # Changelog
 
+## v0.2.18 (2026-10-16) — 日志系统包
+
+### Highlights
+- 新增 `src/logging/` 包：日志系统引擎
+  - 日志级别（LogLevel）：Debug / Info / Warn / Error / Fatal
+  - 日志条目（LogEntry）：级别/消息/时间戳/来源/上下文
+  - 日志配置（LogConfig）：最低级别/包含时间戳/包含来源/最大条目数
+  - 日志统计（LogStats）：总条目/各级别计数/丢弃计数
+  - 日志器（Logger）：配置/条目列表/统计
+  - 核心操作：create_logger / log_at / log_debug / log_info / log_warn / log_error / log_fatal
+  - 过滤操作：log_filter_by_level / log_filter_by_source / log_filter_by_message
+  - 格式化：log_format_entry（可配置时间戳/来源/上下文）
+  - 查询操作：log_count / log_last_n / log_is_enabled
+  - 统计操作：log_stats
+  - 合并操作：merge_loggers
+  - 容量管理：max_entries 自动淘汰旧条目
+- 新增 24 个测试（总计 1457 个，全部通过）
+
+### Stats
+- 新增包: src/logging/
+- 新增测试: 24 个（总计 1457 个，全部通过）
+- Warning: 0
+- 总包数: 47
+- 集成目标数: 17
+
+### Breaking Changes
+- 无（纯新增功能）
+
 ## v0.2.17 (2026-10-16) — 定时器包
 
 ### Highlights
