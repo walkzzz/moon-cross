@@ -1,5 +1,30 @@
 # Changelog
 
+## v0.2.22 (2026-10-16) — HTTP 协议包
+
+### Highlights
+- 新增 `src/http/` 包：HTTP 协议引擎
+  - HTTP 方法（HttpMethod）：Get / Post / Put / Delete / Patch / Head / Options
+  - HTTP 头部（HttpHeader）：名称/值
+  - HTTP 请求（HttpRequest）：方法/URL/头部列表/请求体
+  - HTTP 响应（HttpResponse）：状态码/头部列表/响应体
+  - 请求操作：make_request / make_get_request / make_post_request / request_add_header / request_get_header / request_set_body / format_request
+  - 响应操作：make_response / make_response_with_body / response_add_header / response_get_header / format_response
+  - 状态码工具：status_text / is_success_code / is_redirect_code / is_error_code / is_client_error / is_server_error
+  - 方法工具：method_name / method_from_string
+  - 合并操作：merge_requests
+- 新增 27 个测试（总计 1564 个，全部通过）
+
+### Stats
+- 新增包: src/http/
+- 新增测试: 27 个（总计 1564 个，全部通过）
+- Warning: 0
+- 总包数: 51
+- 集成目标数: 20
+
+### Breaking Changes
+- 无（纯新增功能）
+
 ## v0.2.21 (2026-10-16) — 命令行解析包
 
 ### Highlights
