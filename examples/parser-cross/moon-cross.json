@@ -1,0 +1,91 @@
+{
+  "version": 1,
+  "module_path": "moonbitlang/parser",
+  "package_name": "moonbitlang/parser",
+  "targets": ["ios", "android", "windows", "ohos"],
+  "functions": [
+    {
+      "name": "parser_parse",
+      "params": [{ "name": "source", "typ": "String" }],
+      "return_type": "Ast"
+    },
+    {
+      "name": "parser_tokenize",
+      "params": [{ "name": "source", "typ": "String" }],
+      "return_type": "Array"
+    },
+    {
+      "name": "parser_to_string",
+      "params": [{ "name": "ast", "typ": "Ast" }],
+      "return_type": "String"
+    },
+    {
+      "name": "parser_ast_kind",
+      "params": [{ "name": "ast", "typ": "Ast" }],
+      "return_type": "String"
+    },
+    {
+      "name": "parser_ast_children",
+      "params": [{ "name": "ast", "typ": "Ast" }],
+      "return_type": "Array"
+    },
+    {
+      "name": "parser_token_kind",
+      "params": [{ "name": "token", "typ": "Token" }],
+      "return_type": "String"
+    },
+    {
+      "name": "parser_token_value",
+      "params": [{ "name": "token", "typ": "Token" }],
+      "return_type": "String"
+    },
+    {
+      "name": "parser_token_position",
+      "params": [{ "name": "token", "typ": "Token" }],
+      "return_type": "Span"
+    },
+    {
+      "name": "parser_format",
+      "params": [{ "name": "ast", "typ": "Ast" }],
+      "return_type": "String"
+    },
+    {
+      "name": "parser_comments",
+      "params": [{ "name": "ast", "typ": "Ast" }],
+      "return_type": "Array"
+    }
+  ],
+  "types": [
+    {
+      "name": "Token",
+      "fields": [
+        { "name": "kind", "typ": "String" },
+        { "name": "value", "typ": "String" },
+        { "name": "span", "typ": "Span" }
+      ]
+    },
+    {
+      "name": "Ast",
+      "fields": [
+        { "name": "kind", "typ": "String" },
+        { "name": "children", "typ": "Array" },
+        { "name": "span", "typ": "Span" }
+      ]
+    },
+    {
+      "name": "Span",
+      "fields": [
+        { "name": "start", "typ": "Int" },
+        { "name": "end", "typ": "Int" }
+      ]
+    },
+    {
+      "name": "ParseError",
+      "fields": [
+        { "name": "message", "typ": "String" },
+        { "name": "position", "typ": "Int" },
+        { "name": "expected", "typ": "String" }
+      ]
+    }
+  ]
+}

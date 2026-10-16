@@ -1,0 +1,103 @@
+{
+  "version": 1,
+  "module_path": "moonbitlang/quickcheck",
+  "package_name": "moonbitlang/quickcheck",
+  "targets": ["ios", "android", "windows", "ohos"],
+  "functions": [
+    {
+      "name": "quickcheck_check",
+      "params": [
+        { "name": "property", "typ": "Property" },
+        { "name": "iterations", "typ": "Int" }
+      ],
+      "return_type": "QuickCheckResult"
+    },
+    {
+      "name": "quickcheck_for_all_int",
+      "params": [{ "name": "property", "typ": "Property" }],
+      "return_type": "QuickCheckResult"
+    },
+    {
+      "name": "quickcheck_for_all_bool",
+      "params": [{ "name": "property", "typ": "Property" }],
+      "return_type": "QuickCheckResult"
+    },
+    {
+      "name": "quickcheck_for_all_string",
+      "params": [{ "name": "property", "typ": "Property" }],
+      "return_type": "QuickCheckResult"
+    },
+    {
+      "name": "quickcheck_arbitrary_int",
+      "params": [{ "name": "seed", "typ": "UInt" }],
+      "return_type": "Int"
+    },
+    {
+      "name": "quickcheck_arbitrary_bool",
+      "params": [{ "name": "seed", "typ": "UInt" }],
+      "return_type": "Bool"
+    },
+    {
+      "name": "quickcheck_arbitrary_string",
+      "params": [
+        { "name": "seed", "typ": "UInt" },
+        { "name": "max_len", "typ": "Int" }
+      ],
+      "return_type": "String"
+    },
+    {
+      "name": "quickcheck_with_seed",
+      "params": [
+        { "name": "property", "typ": "Property" },
+        { "name": "seed", "typ": "UInt" },
+        { "name": "iterations", "typ": "Int" }
+      ],
+      "return_type": "QuickCheckResult"
+    },
+    {
+      "name": "quickcheck_minimize",
+      "params": [
+        { "name": "result", "typ": "QuickCheckResult" },
+        { "name": "property", "typ": "Property" }
+      ],
+      "return_type": "QuickCheckResult"
+    },
+    {
+      "name": "quickcheck_result_passed",
+      "params": [{ "name": "result", "typ": "QuickCheckResult" }],
+      "return_type": "Bool"
+    }
+  ],
+  "types": [
+    {
+      "name": "Property",
+      "fields": [
+        { "name": "name", "typ": "String" },
+        { "name": "iterations", "typ": "Int" }
+      ]
+    },
+    {
+      "name": "Arbitrary",
+      "fields": [
+        { "name": "seed", "typ": "UInt" },
+        { "name": "size", "typ": "Int" }
+      ]
+    },
+    {
+      "name": "QuickCheckResult",
+      "fields": [
+        { "name": "passed", "typ": "Bool" },
+        { "name": "iterations", "typ": "Int" },
+        { "name": "counterexample", "typ": "String" }
+      ]
+    },
+    {
+      "name": "QuickCheckError",
+      "fields": [
+        { "name": "NoCounterexample", "typ": "String" },
+        { "name": "PropertyFailed", "typ": "String" },
+        { "name": "GenerationError", "typ": "String" }
+      ]
+    }
+  ]
+}

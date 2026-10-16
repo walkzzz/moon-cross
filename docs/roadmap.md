@@ -17,6 +17,7 @@
 | v0.1.2 | ✅ Done | 自动发现+环境诊断+交互式CLI | 561 |
 | v0.1.3 | ✅ Done | 集成测试扩展（toml+quickcheck+parser） | 703 |
 | v0.1.4 | ✅ Done | mooncakes 发布准备（publish 包+元数据生成+就绪检查） | 755 |
+| v0.1.5 | ✅ Done | 示例项目+文档完善（toml/quickcheck/parser 示例） | 755 |
 
 ## Week 1 Deliverables (2026-10-15)
 

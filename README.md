@@ -4,7 +4,7 @@
 
 [English](./README.md) | [Changelog](./docs/changelog.md) | [Roadmap](./docs/roadmap.md) | [Architecture](./docs/architecture.md)
 
-**v0.1.4** | 27 packages | 755 tests | 310+ APIs | 0 warnings | MIT License
+**v0.1.5** | 27 packages | 755 tests | 310+ APIs | 0 warnings | MIT License
 
 ## 项目简介
 
@@ -57,12 +57,24 @@ moon-cross/
 │   ├── jni/       #   JNI 绑定（Android）
 │   ├── swift/     #   Swift C interop（iOS）
 │   └── napi/      #   NAPI 绑定 + ArkTS（鸿蒙）
-├── integration/   # 端到端集成测试（mizchi/zlib）
+├── robust/        # 鲁棒性（重试+恢复+校验+边界）
+├── security/      # 安全性（ASAN+FFI安全+沙箱+供应链）
+├── perf/          # 性能（并行+缓存+增量+优化）
+├── docs/          # API 文档生成
+├── plugin/        # 插件机制 + 模板库
+├── discovery/     # 自动发现导出函数
+├── diagnostic/    # 环境诊断（doctor 命令）
+├── interactive/   # 交互式 CLI（向导+进度条）
+├── publish/       # mooncakes 发布工具
+├── integration/   # 端到端集成测试（zlib+openseek+toml+quickcheck+parser）
 ├── scaffold/      # 脚手架（init 初始化跨平台项目）
 ├── sync/          # 增量同步（更新代码后自动配置各平台）
 ├── cli/           # CLI 入口
 ├── examples/      # 示例项目
-│   └── zlib-cross/  # mizchi/zlib 跨平台导出示例
+│   ├── zlib-cross/       # mizchi/zlib 跨平台导出示例
+│   ├── toml-cross/       # bobzhang/toml 跨平台导出示例
+│   ├── quickcheck-cross/ # moonbitlang/quickcheck 跨平台导出示例
+│   └── parser-cross/     # moonbitlang/parser 跨平台导出示例
 └── docs/          # 文档
 ```
 

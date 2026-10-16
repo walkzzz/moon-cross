@@ -4,7 +4,7 @@
 
 [中文](./README.md) | [Changelog](./docs/changelog.md) | [Roadmap](./docs/roadmap.md) | [Architecture](./docs/architecture.md)
 
-**v0.1.4** | 27 packages | 755 tests | 310+ APIs | 0 warnings | MIT License
+**v0.1.5** | 27 packages | 755 tests | 310+ APIs | 0 warnings | MIT License
 
 ## Introduction
 
@@ -57,12 +57,24 @@ moon-cross/
 │   ├── jni/       #   JNI bindings (Android)
 │   ├── swift/     #   Swift C interop (iOS)
 │   └── napi/      #   NAPI bindings + ArkTS (HarmonyOS)
-├── integration/   # End-to-end integration tests (mizchi/zlib)
+├── robust/        # Robustness (retry+recovery+validate+boundary)
+├── security/      # Security (ASAN+FFI safety+sandbox+supply chain)
+├── perf/          # Performance (parallel+cache+incremental+optimize)
+├── docs/          # API doc generation
+├── plugin/        # Plugin system + template library
+├── discovery/     # Auto-discover export functions
+├── diagnostic/    # Environment diagnostics (doctor command)
+├── interactive/   # Interactive CLI (wizard+progress bar)
+├── publish/       # mooncakes publishing tools
+├── integration/   # Integration tests (zlib+openseek+toml+quickcheck+parser)
 ├── scaffold/      # Scaffold (init cross-platform project)
 ├── sync/          # Incremental sync (auto-configure platforms after code update)
 ├── cli/           # CLI entry point
 ├── examples/      # Example projects
-│   └── zlib-cross/  # mizchi/zlib cross-platform export example
+│   ├── zlib-cross/       # mizchi/zlib cross-platform export example
+│   ├── toml-cross/       # bobzhang/toml cross-platform export example
+│   ├── quickcheck-cross/ # moonbitlang/quickcheck cross-platform export example
+│   └── parser-cross/     # moonbitlang/parser cross-platform export example
 └── docs/          # Documentation
 ```
 

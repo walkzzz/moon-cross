@@ -1,5 +1,24 @@
 # Changelog
 
+## v0.1.5 (2026-10-16) — 示例项目 + 文档完善
+
+### Highlights
+- 新增 3 个示例项目：
+  - `examples/toml-cross/`：bobzhang/toml v0.4.3 跨平台导出示例
+  - `examples/quickcheck-cross/`：moonbitlang/quickcheck v0.15.0 跨平台导出示例
+  - `examples/parser-cross/`：moonbitlang/parser v0.4.4 跨平台导出示例
+- 更新 README 包结构文档（含全部 27 个包 + 4 个示例）
+- 更新 CLI 版本号至 v0.1.5
+
+### Stats
+- 新增示例: 3 个（总计 4 个）
+- 测试: 755 个（全部通过）
+- Warning: 0
+- 总包数: 27
+
+### Breaking Changes
+- 无（纯新增功能）
+
 ## v0.1.4 (2026-10-16) — mooncakes 发布准备
 
 ### Highlights
