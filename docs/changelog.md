@@ -1,5 +1,26 @@
 # Changelog
 
+## v0.1.9 (2026-10-16) — 集成测试扩展：base64 + json + hash
+
+### Highlights
+- 新增 `moonbitlang/base64` 端到端集成测试
+  - 5 导出函数（encode / decode / encode_urlsafe / decode_urlsafe / validate）
+- 新增 `moonbitlang/json` 端到端集成测试
+  - 5 导出函数（parse / to_string / get / get_array / value_type）
+  - 2 导出类型（JsonValue / JsonError）
+- 新增 `moonbitlang/hash` 端到端集成测试
+  - 5 导出函数（md5 / sha1 / sha256 / sha512 / hmac_sha256）
+- 新增 30 个测试（总计 904 个，全部通过）
+
+### Stats
+- 新增集成目标: moonbitlang/base64 + moonbitlang/json + moonbitlang/hash
+- 新增测试: 30 个（总计 904 个，全部通过）
+- Warning: 0
+- 总包数: 30
+
+### Breaking Changes
+- 无（纯新增功能）
+
 ## v0.1.8 (2026-10-16) — 配置 lint 规则包
 
 ### Highlights
