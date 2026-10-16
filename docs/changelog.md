@@ -1,5 +1,24 @@
 # Changelog
 
+## v0.2.30 (2026-10-16) — 集成测试扩展（math64+bits+fmt）
+
+### Highlights
+- 新增 `src/integration/math64_bits_fmt_*` 集成测试
+  - math64 模块：add/sub/mul/div/mod/compare + Int64 类型（6 函数 + 1 类型）
+  - bits 模块：and/or/xor/not/shift_left/shift_right + BitField 类型（6 函数 + 1 类型）
+  - fmt 模块：int/float/string/bool/array + FormatSpec 类型（5 函数 + 1 类型）
+  - 每模块含跨平台配置 + 流水线测试
+- 新增 30 个测试（总计 1781 个，全部通过）
+
+### Stats
+- 新增集成测试: 30 个（总计 1781 个，全部通过）
+- Warning: 0
+- 总包数: 57
+- 集成目标数: 26
+
+### Breaking Changes
+- 无（纯新增功能）
+
 ## v0.2.29 (2026-10-16) — 内存管理包
 
 ### Highlights
