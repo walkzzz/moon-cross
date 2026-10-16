@@ -39,6 +39,28 @@
 | v0.2.14 | ✅ Done | 状态机包（状态+转换+历史+统计） | 1351 |
 | v0.2.15 | ✅ Done | 集成测试扩展（net+io+math） | 1388 |
 
+## 远期计划预览（v0.2.16 → v1.0.0）
+
+> 完整计划见 [roadmap-longterm.md](./roadmap-longterm.md)
+
+### 参赛冲刺（v0.2.16 → v0.3.0，截止 2026-10-31）
+
+| 版本 | 内容 | 预估测试 |
+|------|------|----------|
+| v0.2.16-v0.2.20 | signal/timer/logging/resource + 集成测试(encoding+container+random) | ~1530 |
+| v0.2.21-v0.2.25 | argparse/http/uri/template + 集成测试(fs+path+process) | ~1700 |
+| v0.2.26-v0.2.30 | regex_enhanced/crypto_util/concurrency/memory + 集成测试(math64+bits+fmt) | ~1900 |
+| **v0.3.0** | **参赛发布版（2000+ 测试，60+ 包，mooncakes 发布）** | **2000+** |
+
+### 参赛后演进
+
+| 阶段 | 版本 | 重点 |
+|------|------|------|
+| 工具链生态 | v0.3.1-v0.4.0 | IDE 集成 + CI/CD + 插件 SDK |
+| 跨平台覆盖 | v0.4.1-v0.5.0 | Linux/macOS/WASM + 条件编译 |
+| 性能极致 | v0.5.1-v0.6.0 | 并行编译 + 增量 + 缓存 + 代码优化 |
+| 生产就绪 | v0.6.1-v1.0.0 | 安全加固 + 可观测性 + SLSA-3 |
+
 ## Week 1 Deliverables (2026-10-15)
 
 - [x] 分层包结构（src/core, config, typesys, codegen, platform, ffi, scaffold, sync, cli）
