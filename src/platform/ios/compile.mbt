@@ -94,3 +94,67 @@ pub fn ios_supported_archs(is_simulator : Bool) -> Array[@core.Arch] {
     [@core.Arch::Arm64]
   }
 }
+/// iOS bitcode 编译标志 | iOS bitcode compile flag
+pub fn ios_bitcode_flag(enable : Bool) -> String {
+  if enable { "-fembed-bitcode" } else { "-fembed-bitcode-marker" }
+}
+
+/// iOS Framework 版本 | iOS Framework version
+pub fn ios_framework_version() -> String {
+  "A"
+}
+
+/// iOS Swift Package 名称 | iOS Swift Package name
+pub fn ios_swift_package_name(name : String) -> String {
+  name + ".swift"
+}
+
+/// iOS Info.plist 内容生成 | iOS Info.plist content generation
+pub fn ios_framework_info_plist(name : String, version : String) -> String {
+  "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+  "<plist version=\"1.0\">\n" +
+  "<dict>\n" +
+  "  <key>CFBundleName</key>\n" +
+  "  <string>" + name + "</string>\n" +
+  "  <key>CFBundleIdentifier</key>\n" +
+  "  <string>com.mooncross." + name + "</string>\n" +
+  "  <key>CFBundleVersion</key>\n" +
+  "  <string>" + version + "</string>\n" +
+  "  <key>CFBundleExecutable</key>\n" +
+  "  <string>" + name + "</string>\n" +
+  "  <key>CFBundlePackageType</key>\n" +
+  "  <string>FMWK</string>\n" +
+  "</dict>\n" +
+  "</plist>"
+}
+
+/// iOS 优化级别 | iOS optimization level
+pub fn ios_optimization_level(level : String) -> String {
+  "-O" + level
+}
+
+/// iOS clang 可用性检查标志 | iOS clang availability check flag
+pub fn ios_availability_flag(version : String) -> String {
+  "-miphoneos-version-min=" + version
+}
+
+/// Swift bridging header 名称 | Swift bridging header name
+pub fn ios_bridging_header_name(name : String) -> String {
+  name + "-Bridging-Header.h"
+}
+
+/// modulemap 名称 | modulemap name
+pub fn ios_modulemap_name(name : String) -> String {
+  name + ".modulemap"
+}
+
+/// iOS Swift Package.swift 内容 | iOS Swift Package.swift content
+pub fn ios_swift_package_content(name : String) -> String {
+  "// swift-tools-version:5.5\n" +
+  "import PackageDescription\n" +
+  "let package = Package(\n" +
+  "    name: \"" + name + "\",\n" +
+  "    products: [.library(name: \"" + name + "\", targets: [\"" + name + "\"])],\n" +
+  "    targets: [.target(name: \"" + name + "\", path: \"src\")]\n" +
+  ")"
+}

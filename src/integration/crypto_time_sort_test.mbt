@@ -43,7 +43,7 @@ test "crypto_random_bytes_return_type" {
 test "crypto_cross_config" {
   let cfg = @integration.crypto_cross_config()
   assert_eq(cfg.module_path, "moonbitlang/crypto")
-  assert_eq(cfg.targets.length(), 4)
+  assert_eq(cfg.targets.length(), 5)
   assert_eq(cfg.functions.length(), 5)
   assert_eq(cfg.types.length(), 1)
 }
@@ -55,7 +55,7 @@ test "crypto_has_cipher_key_type" {
 test "run_crypto_pipeline" {
   let result = @integration.run_crypto_pipeline()
   assert_eq(result.config.functions.length(), 5)
-  assert_eq(result.platform_specs.length(), 4)
+  assert_eq(result.platform_specs.length(), 5)
   assert_true(result.c_header.contains("moonbitlang_crypto"))
 }
 
@@ -100,7 +100,7 @@ test "time_now_return_type" {
 test "time_cross_config" {
   let cfg = @integration.time_cross_config()
   assert_eq(cfg.module_path, "moonbitlang/time")
-  assert_eq(cfg.targets.length(), 4)
+  assert_eq(cfg.targets.length(), 5)
   assert_eq(cfg.functions.length(), 5)
   assert_eq(cfg.types.length(), 1)
 }
@@ -112,7 +112,7 @@ test "time_has_duration_type" {
 test "run_time_pipeline" {
   let result = @integration.run_time_pipeline()
   assert_eq(result.config.functions.length(), 5)
-  assert_eq(result.platform_specs.length(), 4)
+  assert_eq(result.platform_specs.length(), 5)
   assert_true(result.c_header.contains("moonbitlang_time"))
 }
 
@@ -161,7 +161,7 @@ test "sort_is_sorted_return_type" {
 test "sort_cross_config" {
   let cfg = @integration.sort_cross_config()
   assert_eq(cfg.module_path, "moonbitlang/sort")
-  assert_eq(cfg.targets.length(), 4)
+  assert_eq(cfg.targets.length(), 5)
   assert_eq(cfg.functions.length(), 5)
   assert_eq(cfg.types.length(), 0)
 }
@@ -169,6 +169,6 @@ test "sort_cross_config" {
 test "run_sort_pipeline" {
   let result = @integration.run_sort_pipeline()
   assert_eq(result.config.functions.length(), 5)
-  assert_eq(result.platform_specs.length(), 4)
+  assert_eq(result.platform_specs.length(), 5)
   assert_true(result.c_header.contains("moonbitlang_sort"))
 }

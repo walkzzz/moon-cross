@@ -4,16 +4,16 @@
 
 ### MoonBit 跨平台 Native 框架
 
-> 一次编写，四平台交付 — iOS / Android / Windows / 鸿蒙（HarmonyOS）
+> 一次编写，五平台交付 — iOS / Android / Windows / 鸿蒙（HarmonyOS）/ Linux
 
-[![Version](https://img.shields.io/badge/version-0.3.0-blue.svg)](./docs/changelog.md)
-[![Tests](https://img.shields.io/badge/tests-2002-brightgreen.svg)]()
-[![Packages](https://img.shields.io/badge/packages-70-green.svg)]()
+[![Version](https://img.shields.io/badge/version-0.3.1-blue.svg)](./docs/changelog.md)
+[![Tests](https://img.shields.io/badge/tests-2049-brightgreen.svg)]()
+[![Packages](https://img.shields.io/badge/packages-71-green.svg)]()
 [![Warnings](https://img.shields.io/badge/warnings-0-success.svg)]()
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
 [![MoonBit](https://img.shields.io/badge/MoonBit-0.1.20260920-orange.svg)](https://moonbitlang.com)
 
-**70 packages** · **2002 tests** · **700+ APIs** · **0 warnings** · **26 集成目标**
+**71 packages** · **2049 tests** · **700+ APIs** · **0 warnings** · **26 集成目标**
 
 [English](./README.en.md) · [Changelog](./docs/changelog.md) · [Roadmap](./docs/roadmap.md) · [Architecture](./docs/architecture.md) · [Contributing](./CONTRIBUTING.md)
 

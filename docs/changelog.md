@@ -1,5 +1,41 @@
 # Changelog
 
+## v0.3.1 (2026-10-16) — Linux 平台支持 + iOS/鸿蒙增强
+
+### Highlights
+- 新增 Linux 平台支持（第五平台）
+  - `Platform` 枚举新增 `Linux` 变体
+  - 新增 `src/platform/linux/` 包：gcc 编译配置、交叉编译、pkg-config、动态链接器
+  - 目标三元组：`x86_64-unknown-linux-gnu` / `aarch64-unknown-linux-gnu`
+  - FFI 绑定类型新增 `CffiBinding`（C FFI 直接调用）
+  - 平台规格：compiler=gcc, output_format=.so, ffi_mechanism=cffi
+- iOS 功能增强
+  - bitcode 编译标志（-fembed-bitcode / -fembed-bitcode-marker）
+  - Framework 版本管理、Info.plist 内容生成
+  - Swift Package.swift 内容生成
+  - 优化级别、可用性检查标志
+  - Bridging Header / modulemap 名称生成
+- 鸿蒙功能增强
+  - HAP/HSP 包名生成
+  - Stage 模型标识、bundle 名称、模块类型（entry/feature）
+  - hvigorw 构建命令、签名配置
+  - oh-package.json5 / build-profile.json5 内容生成
+  - 最低 Harmony API 版本（12）
+- 所有 pipeline 验证函数和测试已适配 5 平台
+- 新增 47 个测试（总计 2049 个，全部通过）
+
+### Stats
+- 新增包: src/platform/linux/
+- 新增测试: 47 个（总计 2049 个，全部通过）
+- Warning: 0
+- 总包数: 71
+- 平台数: 5（iOS / Android / Windows / HarmonyOS / Linux）
+
+### Breaking Changes
+- `Platform` 枚举新增 `Linux` 变体（所有 match 表达式已补全）
+- `FfiBindingType` 枚举新增 `CffiBinding` 变体
+- `all_platforms()` 返回 5 个平台（原 4 个）
+
 ## v0.3.0 (2026-10-16) — 参赛发布版
 
 ### Highlights

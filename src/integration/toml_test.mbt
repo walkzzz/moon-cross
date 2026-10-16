@@ -15,7 +15,7 @@ test "toml_type_count" {
 }
 
 test "toml_target_count" {
-  assert_eq(@integration.toml_target_count(), 4)
+  assert_eq(@integration.toml_target_count(), 5)
 }
 
 test "toml_has_parse" {
@@ -111,7 +111,7 @@ test "toml_cross_config_package_name" {
 
 test "toml_cross_config_targets" {
   let cfg = @integration.toml_cross_config()
-  assert_eq(cfg.targets.length(), 4)
+  assert_eq(cfg.targets.length(), 5)
 }
 
 test "toml_cross_config_functions" {
@@ -153,11 +153,11 @@ test "toml_c_export_macro_contains_win32" {
 }
 
 test "toml_platform_specs_count" {
-  assert_eq(@integration.toml_platform_specs().length(), 4)
+  assert_eq(@integration.toml_platform_specs().length(), 5)
 }
 
 test "toml_ffi_bindings_count" {
-  assert_eq(@integration.toml_ffi_bindings().length(), 4)
+  assert_eq(@integration.toml_ffi_bindings().length(), 5)
 }
 
 test "toml_windows_command_contains_dll" {
@@ -213,12 +213,12 @@ test "run_toml_pipeline_c_header" {
 
 test "run_toml_pipeline_platform_specs" {
   let result = @integration.run_toml_pipeline()
-  assert_eq(result.platform_specs.length(), 4)
+  assert_eq(result.platform_specs.length(), 5)
 }
 
 test "run_toml_pipeline_ffi_bindings" {
   let result = @integration.run_toml_pipeline()
-  assert_eq(result.ffi_bindings.length(), 4)
+  assert_eq(result.ffi_bindings.length(), 5)
 }
 
 test "run_toml_pipeline_all_commands" {

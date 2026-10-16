@@ -3,6 +3,7 @@ test "platform_to_id" {
   assert_eq(@core.Platform::Android.to_id(), "android")
   assert_eq(@core.Platform::Windows.to_id(), "windows")
   assert_eq(@core.Platform::Ohos.to_id(), "ohos")
+  assert_eq(@core.Platform::Linux.to_id(), "linux")
 }
 
 test "platform_display_name" {
@@ -10,6 +11,7 @@ test "platform_display_name" {
   assert_eq(@core.Platform::Android.display_name(), "Android")
   assert_eq(@core.Platform::Windows.display_name(), "Windows")
   assert_eq(@core.Platform::Ohos.display_name(), "HarmonyOS")
+  assert_eq(@core.Platform::Linux.display_name(), "Linux")
 }
 
 test "platform_from_id_valid" {
@@ -17,6 +19,7 @@ test "platform_from_id_valid" {
   assert_eq(@core.Platform::from_id("android"), Some(@core.Platform::Android))
   assert_eq(@core.Platform::from_id("windows"), Some(@core.Platform::Windows))
   assert_eq(@core.Platform::from_id("ohos"), Some(@core.Platform::Ohos))
+  assert_eq(@core.Platform::from_id("linux"), Some(@core.Platform::Linux))
 }
 
 test "platform_from_id_invalid" {
@@ -24,7 +27,7 @@ test "platform_from_id_invalid" {
 }
 
 test "all_platforms_count" {
-  assert_eq(@core.all_platforms().length(), 4)
+  assert_eq(@core.all_platforms().length(), 5)
 }
 
 test "arch_to_id" {
@@ -43,6 +46,7 @@ test "platform_default_arch" {
   assert_eq(@core.Platform::Android.default_arch(), @core.Arch::Arm64)
   assert_eq(@core.Platform::Windows.default_arch(), @core.Arch::X86_64)
   assert_eq(@core.Platform::Ohos.default_arch(), @core.Arch::Arm64)
+  assert_eq(@core.Platform::Linux.default_arch(), @core.Arch::X86_64)
 }
 
 test "target_triple_ios_arm64" {
@@ -68,6 +72,16 @@ test "target_triple_windows" {
 test "target_triple_ohos" {
   let tt = @core.make_target_triple(@core.Platform::Ohos, @core.Arch::Arm64)
   assert_eq(tt.triple, "aarch64-linux-ohos")
+}
+
+test "target_triple_linux_x86_64" {
+  let tt = @core.make_target_triple(@core.Platform::Linux, @core.Arch::X86_64)
+  assert_eq(tt.triple, "x86_64-unknown-linux-gnu")
+}
+
+test "target_triple_linux_arm64" {
+  let tt = @core.make_target_triple(@core.Platform::Linux, @core.Arch::Arm64)
+  assert_eq(tt.triple, "aarch64-unknown-linux-gnu")
 }
 
 test "target_triple_fields" {

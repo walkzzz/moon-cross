@@ -25,3 +25,9 @@ test "platform_spec_ohos" {
   let spec = @platform.platform_spec(@core.Platform::Ohos)
   assert_eq(spec.ffi_mechanism, "napi")
 }
+test "platform_spec_linux" {
+  let spec = @platform.platform_spec(@core.Platform::Linux)
+  assert_eq(spec.compiler, "gcc")
+  assert_eq(spec.output_format, ".so")
+  assert_eq(spec.ffi_mechanism, "cffi")
+}

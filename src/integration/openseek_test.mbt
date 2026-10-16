@@ -53,7 +53,7 @@ test "openseek_type_count" {
 }
 
 test "openseek_target_count" {
-  assert_eq(@integration.openseek_target_count(), 4)
+  assert_eq(@integration.openseek_target_count(), 5)
 }
 
 test "openseek_has_chat_message_create" {
@@ -132,7 +132,7 @@ test "openseek_cross_config_package_name" {
 
 test "openseek_cross_config_targets" {
   let cfg = @integration.openseek_cross_config()
-  assert_eq(cfg.targets.length(), 4)
+  assert_eq(cfg.targets.length(), 5)
 }
 
 test "openseek_cross_config_functions" {
@@ -186,11 +186,11 @@ test "openseek_c_export_macro_contains_win32" {
 }
 
 test "openseek_platform_specs_count" {
-  assert_eq(@integration.openseek_platform_specs().length(), 4)
+  assert_eq(@integration.openseek_platform_specs().length(), 5)
 }
 
 test "openseek_ffi_bindings_count" {
-  assert_eq(@integration.openseek_ffi_bindings().length(), 4)
+  assert_eq(@integration.openseek_ffi_bindings().length(), 5)
 }
 
 test "openseek_windows_command_contains_dll" {
@@ -246,12 +246,12 @@ test "run_openseek_pipeline_c_header" {
 
 test "run_openseek_pipeline_platform_specs" {
   let result = @integration.run_openseek_pipeline()
-  assert_eq(result.platform_specs.length(), 4)
+  assert_eq(result.platform_specs.length(), 5)
 }
 
 test "run_openseek_pipeline_ffi_bindings" {
   let result = @integration.run_openseek_pipeline()
-  assert_eq(result.ffi_bindings.length(), 4)
+  assert_eq(result.ffi_bindings.length(), 5)
 }
 
 test "run_openseek_pipeline_all_commands" {

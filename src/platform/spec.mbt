@@ -51,6 +51,15 @@ pub fn platform_spec(platform : @core.Platform) -> PlatformSpec {
         output_format: ".so",
         ffi_mechanism: "napi",
       }
+    @core.Linux =>
+      {
+        platform,
+        compiler: "gcc",
+        target_triple: "x86_64-unknown-linux-gnu",
+        sysroot: "/",
+        output_format: ".so",
+        ffi_mechanism: "cffi",
+      }
   }
 }
 

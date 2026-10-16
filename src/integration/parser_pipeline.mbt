@@ -112,8 +112,8 @@ pub fn validate_parser_pipeline(result : ParserPipelineResult) -> Bool {
   result.config.types.length() > 0 &&
   result.c_header.length() > 0 &&
   result.c_export_macro.length() > 0 &&
-  result.platform_specs.length() == 4 &&
-  result.ffi_bindings.length() == 4 &&
+  result.platform_specs.length() == 5 &&
+  result.ffi_bindings.length() == 5 &&
   result.windows_command.length() > 0 &&
   result.android_command.length() > 0 &&
   result.ios_command.length() > 0 &&

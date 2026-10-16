@@ -15,7 +15,7 @@ test "quickcheck_type_count" {
 }
 
 test "quickcheck_target_count" {
-  assert_eq(@integration.quickcheck_target_count(), 4)
+  assert_eq(@integration.quickcheck_target_count(), 5)
 }
 
 test "quickcheck_has_check" {
@@ -110,7 +110,7 @@ test "quickcheck_cross_config_package_name" {
 
 test "quickcheck_cross_config_targets" {
   let cfg = @integration.quickcheck_cross_config()
-  assert_eq(cfg.targets.length(), 4)
+  assert_eq(cfg.targets.length(), 5)
 }
 
 test "quickcheck_cross_config_functions" {
@@ -160,11 +160,11 @@ test "quickcheck_c_export_macro_contains_win32" {
 }
 
 test "quickcheck_platform_specs_count" {
-  assert_eq(@integration.quickcheck_platform_specs().length(), 4)
+  assert_eq(@integration.quickcheck_platform_specs().length(), 5)
 }
 
 test "quickcheck_ffi_bindings_count" {
-  assert_eq(@integration.quickcheck_ffi_bindings().length(), 4)
+  assert_eq(@integration.quickcheck_ffi_bindings().length(), 5)
 }
 
 test "quickcheck_windows_command_contains_dll" {
@@ -220,12 +220,12 @@ test "run_quickcheck_pipeline_c_header" {
 
 test "run_quickcheck_pipeline_platform_specs" {
   let result = @integration.run_quickcheck_pipeline()
-  assert_eq(result.platform_specs.length(), 4)
+  assert_eq(result.platform_specs.length(), 5)
 }
 
 test "run_quickcheck_pipeline_ffi_bindings" {
   let result = @integration.run_quickcheck_pipeline()
-  assert_eq(result.ffi_bindings.length(), 4)
+  assert_eq(result.ffi_bindings.length(), 5)
 }
 
 test "run_quickcheck_pipeline_all_commands" {

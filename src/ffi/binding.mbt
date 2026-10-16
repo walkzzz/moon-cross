@@ -5,6 +5,7 @@ pub(all) enum FfiBindingType {
   NapiBinding
   DllImportBinding
   SwiftInteropBinding
+  CffiBinding
 } derive(Debug, Eq)
 pub extend FfiBindingType with @moonbitlang/core/debug.Debug::{to_repr}
 pub extend FfiBindingType with Eq::{not_equal, equal}
@@ -33,6 +34,7 @@ pub fn FfiBindingType::to_id(self : FfiBindingType) -> String {
     NapiBinding => "napi"
     DllImportBinding => "dllimport"
     SwiftInteropBinding => "swift-interop"
+    CffiBinding => "cffi"
   }
 }
 
@@ -44,5 +46,6 @@ pub fn ffi_binding_for_platform(platform : @core.Platform) -> FfiBindingType {
     @core.Android => JniBinding
     @core.Windows => DllImportBinding
     @core.Ohos => NapiBinding
+    @core.Linux => CffiBinding
   }
 }

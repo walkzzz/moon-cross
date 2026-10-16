@@ -46,12 +46,12 @@ test "discovery: detect platforms none available" {
     @discovery.make_detection(@core.Platform::Windows, false, None, None),
   ]
   let available = @discovery.detect_platforms(detections)
-  assert_eq(available.length(), 4)
+  assert_eq(available.length(), 5)
 }
 
 test "discovery: smart defaults empty" {
   let defaults = @discovery.smart_defaults([])
-  assert_eq(defaults.length(), 4)
+  assert_eq(defaults.length(), 5)
 }
 
 test "discovery: smart defaults non-empty" {
@@ -62,7 +62,7 @@ test "discovery: smart defaults non-empty" {
 test "discovery: auto generate config" {
   let result = @discovery.auto_generate_config(["func_a"], ["TypeA"], @core.all_platforms())
   assert_true(result.config_generated)
-  assert_eq(result.detected_platforms.length(), 4)
+  assert_eq(result.detected_platforms.length(), 5)
 }
 
 test "discovery: count export functions" {

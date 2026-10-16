@@ -91,7 +91,7 @@ test "zlib_export_types_count" {
 }
 
 test "zlib_target_count" {
-  assert_eq(@integration.zlib_target_count(), 4)
+  assert_eq(@integration.zlib_target_count(), 5)
 }
 
 test "zlib_export_functions_has_compress" {
@@ -174,7 +174,7 @@ test "zlib_cross_config_package_name" {
 
 test "zlib_cross_config_targets" {
   let cfg = @integration.zlib_cross_config()
-  assert_eq(cfg.targets.length(), 4)
+  assert_eq(cfg.targets.length(), 5)
 }
 
 test "zlib_cross_config_functions" {
@@ -239,7 +239,7 @@ test "zlib_c_export_macro_contains_visibility" {
 
 test "zlib_platform_specs_count" {
   let specs = @integration.zlib_platform_specs()
-  assert_eq(specs.length(), 4)
+  assert_eq(specs.length(), 5)
 }
 
 test "zlib_platform_specs_has_ios" {
@@ -292,7 +292,7 @@ test "zlib_platform_specs_ohos_ffi" {
 
 test "zlib_ffi_bindings_count" {
   let bindings = @integration.zlib_ffi_bindings()
-  assert_eq(bindings.length(), 4)
+  assert_eq(bindings.length(), 5)
 }
 
 test "zlib_ffi_bindings_has_jni" {
@@ -426,12 +426,12 @@ test "run_zlib_pipeline_c_export_macro" {
 
 test "run_zlib_pipeline_platform_specs" {
   let result = @integration.run_zlib_pipeline()
-  assert_eq(result.platform_specs.length(), 4)
+  assert_eq(result.platform_specs.length(), 5)
 }
 
 test "run_zlib_pipeline_ffi_bindings" {
   let result = @integration.run_zlib_pipeline()
-  assert_eq(result.ffi_bindings.length(), 4)
+  assert_eq(result.ffi_bindings.length(), 5)
 }
 
 test "run_zlib_pipeline_windows_command" {
@@ -475,7 +475,7 @@ test "zlib_pipeline_all_commands_non_empty" {
 test "zlib_pipeline_config_targets_all_platforms" {
   let result = @integration.run_zlib_pipeline()
   let targets = result.config.targets
-  assert_eq(targets.length(), 4)
+  assert_eq(targets.length(), 5)
 }
 
 test "zlib_pipeline_ffi_bindings_all_types" {

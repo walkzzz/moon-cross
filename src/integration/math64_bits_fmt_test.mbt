@@ -39,7 +39,7 @@ test "math64_compare_return_type" {
 test "math64_cross_config" {
   let cfg = @integration.math64_cross_config()
   assert_eq(cfg.module_path, "moonbitlang/math64")
-  assert_eq(cfg.targets.length(), 4)
+  assert_eq(cfg.targets.length(), 5)
   assert_eq(cfg.functions.length(), 6)
   assert_eq(cfg.types.length(), 1)
 }
@@ -51,7 +51,7 @@ test "math64_has_int64_type" {
 test "run_math64_pipeline" {
   let result = @integration.run_math64_pipeline()
   assert_eq(result.config.functions.length(), 6)
-  assert_eq(result.platform_specs.length(), 4)
+  assert_eq(result.platform_specs.length(), 5)
   assert_true(result.c_header.contains("moonbitlang_math64"))
 }
 
@@ -96,7 +96,7 @@ test "bits_not_return_type" {
 test "bits_cross_config" {
   let cfg = @integration.bits_cross_config()
   assert_eq(cfg.module_path, "moonbitlang/bits")
-  assert_eq(cfg.targets.length(), 4)
+  assert_eq(cfg.targets.length(), 5)
   assert_eq(cfg.functions.length(), 6)
   assert_eq(cfg.types.length(), 1)
 }
@@ -108,7 +108,7 @@ test "bits_has_bitfield_type" {
 test "run_bits_pipeline" {
   let result = @integration.run_bits_pipeline()
   assert_eq(result.config.functions.length(), 6)
-  assert_eq(result.platform_specs.length(), 4)
+  assert_eq(result.platform_specs.length(), 5)
   assert_true(result.c_header.contains("moonbitlang_bits"))
 }
 
@@ -153,7 +153,7 @@ test "fmt_bool_return_type" {
 test "fmt_cross_config" {
   let cfg = @integration.fmt_cross_config()
   assert_eq(cfg.module_path, "moonbitlang/fmt")
-  assert_eq(cfg.targets.length(), 4)
+  assert_eq(cfg.targets.length(), 5)
   assert_eq(cfg.functions.length(), 5)
   assert_eq(cfg.types.length(), 1)
 }
@@ -165,6 +165,6 @@ test "fmt_has_format_spec_type" {
 test "run_fmt_pipeline" {
   let result = @integration.run_fmt_pipeline()
   assert_eq(result.config.functions.length(), 5)
-  assert_eq(result.platform_specs.length(), 4)
+  assert_eq(result.platform_specs.length(), 5)
   assert_true(result.c_header.contains("moonbitlang_fmt"))
 }

@@ -19,7 +19,7 @@ test "default_config_package_name" {
 
 test "default_config_targets_count" {
   let cfg = @config.default_config("my-lib")
-  assert_eq(cfg.targets.length(), 4)
+  assert_eq(cfg.targets.length(), 5)
 }
 
 test "default_config_empty_functions" {

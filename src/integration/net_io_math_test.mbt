@@ -43,7 +43,7 @@ test "net_listen_return_type" {
 test "net_cross_config" {
   let cfg = @integration.net_cross_config()
   assert_eq(cfg.module_path, "moonbitlang/net")
-  assert_eq(cfg.targets.length(), 4)
+  assert_eq(cfg.targets.length(), 5)
   assert_eq(cfg.functions.length(), 5)
   assert_eq(cfg.types.length(), 2)
 }
@@ -59,7 +59,7 @@ test "net_has_address_type" {
 test "run_net_pipeline" {
   let result = @integration.run_net_pipeline()
   assert_eq(result.config.functions.length(), 5)
-  assert_eq(result.platform_specs.length(), 4)
+  assert_eq(result.platform_specs.length(), 5)
   assert_true(result.c_header.contains("moonbitlang_net"))
 }
 
@@ -108,7 +108,7 @@ test "io_read_return_type" {
 test "io_cross_config" {
   let cfg = @integration.io_cross_config()
   assert_eq(cfg.module_path, "moonbitlang/io")
-  assert_eq(cfg.targets.length(), 4)
+  assert_eq(cfg.targets.length(), 5)
   assert_eq(cfg.functions.length(), 5)
   assert_eq(cfg.types.length(), 2)
 }
@@ -124,7 +124,7 @@ test "io_has_buffer_type" {
 test "run_io_pipeline" {
   let result = @integration.run_io_pipeline()
   assert_eq(result.config.functions.length(), 5)
-  assert_eq(result.platform_specs.length(), 4)
+  assert_eq(result.platform_specs.length(), 5)
   assert_true(result.c_header.contains("moonbitlang_io"))
 }
 
@@ -177,7 +177,7 @@ test "math_sin_return_type" {
 test "math_cross_config" {
   let cfg = @integration.math_cross_config()
   assert_eq(cfg.module_path, "moonbitlang/math")
-  assert_eq(cfg.targets.length(), 4)
+  assert_eq(cfg.targets.length(), 5)
   assert_eq(cfg.functions.length(), 8)
   assert_eq(cfg.types.length(), 2)
 }
@@ -193,6 +193,6 @@ test "math_has_vector3_type" {
 test "run_math_pipeline" {
   let result = @integration.run_math_pipeline()
   assert_eq(result.config.functions.length(), 8)
-  assert_eq(result.platform_specs.length(), 4)
+  assert_eq(result.platform_specs.length(), 5)
   assert_true(result.c_header.contains("moonbitlang_math"))
 }

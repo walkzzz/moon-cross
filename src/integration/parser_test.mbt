@@ -15,7 +15,7 @@ test "parser_type_count" {
 }
 
 test "parser_target_count" {
-  assert_eq(@integration.parser_target_count(), 4)
+  assert_eq(@integration.parser_target_count(), 5)
 }
 
 test "parser_has_parse" {
@@ -102,7 +102,7 @@ test "parser_cross_config_package_name" {
 
 test "parser_cross_config_targets" {
   let cfg = @integration.parser_cross_config()
-  assert_eq(cfg.targets.length(), 4)
+  assert_eq(cfg.targets.length(), 5)
 }
 
 test "parser_cross_config_functions" {
@@ -152,11 +152,11 @@ test "parser_c_export_macro_contains_win32" {
 }
 
 test "parser_platform_specs_count" {
-  assert_eq(@integration.parser_platform_specs().length(), 4)
+  assert_eq(@integration.parser_platform_specs().length(), 5)
 }
 
 test "parser_ffi_bindings_count" {
-  assert_eq(@integration.parser_ffi_bindings().length(), 4)
+  assert_eq(@integration.parser_ffi_bindings().length(), 5)
 }
 
 test "parser_windows_command_contains_dll" {
@@ -212,12 +212,12 @@ test "run_parser_pipeline_c_header" {
 
 test "run_parser_pipeline_platform_specs" {
   let result = @integration.run_parser_pipeline()
-  assert_eq(result.platform_specs.length(), 4)
+  assert_eq(result.platform_specs.length(), 5)
 }
 
 test "run_parser_pipeline_ffi_bindings" {
   let result = @integration.run_parser_pipeline()
-  assert_eq(result.ffi_bindings.length(), 4)
+  assert_eq(result.ffi_bindings.length(), 5)
 }
 
 test "run_parser_pipeline_all_commands" {

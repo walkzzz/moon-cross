@@ -14,13 +14,13 @@ test "parallel: disabled config" {
 test "parallel: generate tasks without multi arch" {
   let config = { ..@perf.default_parallel_config(), multi_arch: false }
   let tasks = @perf.generate_all_tasks(config)
-  assert_eq(tasks.length(), 4)
+  assert_eq(tasks.length(), 5)
 }
 
 test "parallel: generate tasks with multi arch" {
   let config = @perf.default_parallel_config()
   let tasks = @perf.generate_all_tasks(config)
-  assert_eq(tasks.length(), 8)
+  assert_eq(tasks.length(), 10)
 }
 
 test "parallel: calculate batches" {
@@ -33,8 +33,8 @@ test "parallel: calculate batches" {
 test "parallel: schedule tasks" {
   let config = @perf.default_parallel_config()
   let schedule = @perf.schedule_tasks(config)
-  assert_eq(schedule.tasks.length(), 8)
-  assert_eq(schedule.batches, 2)
+  assert_eq(schedule.tasks.length(), 10)
+  assert_eq(schedule.batches, 3)
 }
 
 test "parallel: optimal parallelism" {
@@ -172,7 +172,7 @@ test "incremental: affected platforms all" {
   let changes = [@perf.make_file_change("core/types.mbt", @perf.ChangeType::Modified, Some("old"), Some("new"))]
   let cs = @perf.make_change_set(changes, 1)
   let platforms = @perf.affected_platforms(cs)
-  assert_eq(platforms.length(), 4)
+  assert_eq(platforms.length(), 5)
 }
 
 test "incremental: incremental build no changes" {
@@ -191,7 +191,7 @@ test "incremental: incremental build with changes" {
 
 test "incremental: warmup" {
   let cs = @perf.warmup_config()
-  assert_eq(cs.total_files, 4)
+  assert_eq(cs.total_files, 5)
 }
 
 test "incremental: version" {

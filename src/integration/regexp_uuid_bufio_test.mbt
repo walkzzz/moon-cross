@@ -43,7 +43,7 @@ test "regexp_match_params" {
 test "regexp_cross_config" {
   let cfg = @integration.regexp_cross_config()
   assert_eq(cfg.module_path, "moonbitlang/regexp")
-  assert_eq(cfg.targets.length(), 4)
+  assert_eq(cfg.targets.length(), 5)
   assert_eq(cfg.functions.length(), 5)
   assert_eq(cfg.types.length(), 2)
 }
@@ -59,8 +59,8 @@ test "regexp_has_match_result_type" {
 test "run_regexp_pipeline" {
   let result = @integration.run_regexp_pipeline()
   assert_eq(result.config.functions.length(), 5)
-  assert_eq(result.platform_specs.length(), 4)
-  assert_eq(result.ffi_bindings.length(), 4)
+  assert_eq(result.platform_specs.length(), 5)
+  assert_eq(result.ffi_bindings.length(), 5)
   assert_true(result.c_header.contains("moonbitlang_regexp"))
 }
 
@@ -105,7 +105,7 @@ test "uuid_v4_return_type" {
 test "uuid_cross_config" {
   let cfg = @integration.uuid_cross_config()
   assert_eq(cfg.module_path, "moonbitlang/uuid")
-  assert_eq(cfg.targets.length(), 4)
+  assert_eq(cfg.targets.length(), 5)
   assert_eq(cfg.functions.length(), 5)
   assert_eq(cfg.types.length(), 1)
 }
@@ -117,7 +117,7 @@ test "uuid_has_uuid_type" {
 test "run_uuid_pipeline" {
   let result = @integration.run_uuid_pipeline()
   assert_eq(result.config.functions.length(), 5)
-  assert_eq(result.platform_specs.length(), 4)
+  assert_eq(result.platform_specs.length(), 5)
   assert_true(result.c_header.contains("moonbitlang_uuid"))
 }
 
@@ -162,7 +162,7 @@ test "bufio_write_string_return_type" {
 test "bufio_cross_config" {
   let cfg = @integration.bufio_cross_config()
   assert_eq(cfg.module_path, "moonbitlang/bufio")
-  assert_eq(cfg.targets.length(), 4)
+  assert_eq(cfg.targets.length(), 5)
   assert_eq(cfg.functions.length(), 5)
   assert_eq(cfg.types.length(), 1)
 }
@@ -174,6 +174,6 @@ test "bufio_has_buffer_type" {
 test "run_bufio_pipeline" {
   let result = @integration.run_bufio_pipeline()
   assert_eq(result.config.functions.length(), 5)
-  assert_eq(result.platform_specs.length(), 4)
+  assert_eq(result.platform_specs.length(), 5)
   assert_true(result.c_header.contains("moonbitlang_bufio"))
 }

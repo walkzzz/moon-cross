@@ -39,15 +39,15 @@ test "base64_decode_return_type" {
 test "base64_cross_config" {
   let cfg = @integration.base64_cross_config()
   assert_eq(cfg.module_path, "moonbitlang/base64")
-  assert_eq(cfg.targets.length(), 4)
+  assert_eq(cfg.targets.length(), 5)
   assert_eq(cfg.functions.length(), 5)
 }
 
 test "run_base64_pipeline" {
   let result = @integration.run_base64_pipeline()
   assert_eq(result.config.functions.length(), 5)
-  assert_eq(result.platform_specs.length(), 4)
-  assert_eq(result.ffi_bindings.length(), 4)
+  assert_eq(result.platform_specs.length(), 5)
+  assert_eq(result.ffi_bindings.length(), 5)
   assert_true(result.c_header.contains("moonbitlang_base64"))
 }
 
@@ -81,7 +81,7 @@ test "json_parse_return_type" {
 test "json_cross_config" {
   let cfg = @integration.json_cross_config()
   assert_eq(cfg.module_path, "moonbitlang/json")
-  assert_eq(cfg.targets.length(), 4)
+  assert_eq(cfg.targets.length(), 5)
   assert_eq(cfg.functions.length(), 5)
   assert_eq(cfg.types.length(), 2)
 }
@@ -97,7 +97,7 @@ test "json_has_json_error_type" {
 test "run_json_pipeline" {
   let result = @integration.run_json_pipeline()
   assert_eq(result.config.functions.length(), 5)
-  assert_eq(result.platform_specs.length(), 4)
+  assert_eq(result.platform_specs.length(), 5)
   assert_true(result.c_header.contains("moonbitlang_json"))
 }
 
@@ -146,13 +146,13 @@ test "hash_hmac_params" {
 test "hash_cross_config" {
   let cfg = @integration.hash_cross_config()
   assert_eq(cfg.module_path, "moonbitlang/hash")
-  assert_eq(cfg.targets.length(), 4)
+  assert_eq(cfg.targets.length(), 5)
   assert_eq(cfg.functions.length(), 5)
 }
 
 test "run_hash_pipeline" {
   let result = @integration.run_hash_pipeline()
   assert_eq(result.config.functions.length(), 5)
-  assert_eq(result.platform_specs.length(), 4)
+  assert_eq(result.platform_specs.length(), 5)
   assert_true(result.c_header.contains("moonbitlang_hash"))
 }

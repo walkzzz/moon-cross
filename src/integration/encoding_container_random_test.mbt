@@ -43,7 +43,7 @@ test "encoding_validate_return_type" {
 test "encoding_cross_config" {
   let cfg = @integration.encoding_cross_config()
   assert_eq(cfg.module_path, "moonbitlang/encoding")
-  assert_eq(cfg.targets.length(), 4)
+  assert_eq(cfg.targets.length(), 5)
   assert_eq(cfg.functions.length(), 5)
   assert_eq(cfg.types.length(), 1)
 }
@@ -55,7 +55,7 @@ test "encoding_has_scheme_type" {
 test "run_encoding_pipeline" {
   let result = @integration.run_encoding_pipeline()
   assert_eq(result.config.functions.length(), 5)
-  assert_eq(result.platform_specs.length(), 4)
+  assert_eq(result.platform_specs.length(), 5)
   assert_true(result.c_header.contains("moonbitlang_encoding"))
 }
 
@@ -104,7 +104,7 @@ test "container_size_return_type" {
 test "container_cross_config" {
   let cfg = @integration.container_cross_config()
   assert_eq(cfg.module_path, "moonbitlang/container")
-  assert_eq(cfg.targets.length(), 4)
+  assert_eq(cfg.targets.length(), 5)
   assert_eq(cfg.functions.length(), 5)
   assert_eq(cfg.types.length(), 2)
 }
@@ -116,7 +116,7 @@ test "container_has_container_type" {
 test "run_container_pipeline" {
   let result = @integration.run_container_pipeline()
   assert_eq(result.config.functions.length(), 5)
-  assert_eq(result.platform_specs.length(), 4)
+  assert_eq(result.platform_specs.length(), 5)
   assert_true(result.c_header.contains("moonbitlang_container"))
 }
 
@@ -170,7 +170,7 @@ test "random_seed_return_type" {
 test "random_cross_config" {
   let cfg = @integration.random_cross_config()
   assert_eq(cfg.module_path, "moonbitlang/random")
-  assert_eq(cfg.targets.length(), 4)
+  assert_eq(cfg.targets.length(), 5)
   assert_eq(cfg.functions.length(), 5)
   assert_eq(cfg.types.length(), 1)
 }
@@ -182,6 +182,6 @@ test "random_has_rng_state_type" {
 test "run_random_pipeline" {
   let result = @integration.run_random_pipeline()
   assert_eq(result.config.functions.length(), 5)
-  assert_eq(result.platform_specs.length(), 4)
+  assert_eq(result.platform_specs.length(), 5)
   assert_true(result.c_header.contains("moonbitlang_random"))
 }

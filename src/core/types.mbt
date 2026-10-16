@@ -5,6 +5,7 @@ pub(all) enum Platform {
   Android
   Windows
   Ohos
+  Linux
 } derive(Debug, Eq)
 
 pub extend Platform with @moonbitlang/core/debug.Debug::{to_repr}
@@ -39,6 +40,7 @@ pub fn Platform::to_id(self : Platform) -> String {
     Android => "android"
     Windows => "windows"
     Ohos => "ohos"
+    Linux => "linux"
   }
 }
 
@@ -50,6 +52,7 @@ pub fn Platform::display_name(self : Platform) -> String {
     Android => "Android"
     Windows => "Windows"
     Ohos => "HarmonyOS"
+    Linux => "Linux"
   }
 }
 
@@ -61,6 +64,7 @@ pub fn Platform::from_id(s : String) -> Platform? {
     "android" => Some(Android)
     "windows" => Some(Windows)
     "ohos" => Some(Ohos)
+    "linux" => Some(Linux)
     _ => None
   }
 }
@@ -68,7 +72,7 @@ pub fn Platform::from_id(s : String) -> Platform? {
 ///|
 /// 所有平台列表 | All platforms list
 pub fn all_platforms() -> Array[Platform] {
-  [Ios, Android, Windows, Ohos]
+  [Ios, Android, Windows, Ohos, Linux]
 }
 
 ///|
@@ -98,6 +102,7 @@ pub fn Platform::default_arch(self : Platform) -> Arch {
     Android => Arm64
     Windows => X86_64
     Ohos => Arm64
+    Linux => X86_64
   }
 }
 
@@ -113,6 +118,8 @@ pub fn make_target_triple(platform : Platform, arch : Arch) -> TargetTriple {
     (Windows, Arm64) => "aarch64-pc-windows-msvc"
     (Ohos, Arm64) => "aarch64-linux-ohos"
     (Ohos, X86_64) => "x86_64-linux-ohos"
+    (Linux, Arm64) => "aarch64-unknown-linux-gnu"
+    (Linux, X86_64) => "x86_64-unknown-linux-gnu"
   }
   { platform, arch, triple, }
 }

@@ -1,7 +1,7 @@
 test "interactive: default init wizard" {
   let wizard = @interactive.default_init_wizard()
   assert_eq(wizard.project_name, "my-lib")
-  assert_eq(wizard.target_platforms.length(), 4)
+  assert_eq(wizard.target_platforms.length(), 5)
   assert_true(wizard.ffi_enabled)
   assert_eq(wizard.template, "basic-library")
 }

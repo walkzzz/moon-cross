@@ -66,3 +66,63 @@ pub fn ohos_supported_archs() -> Array[@core.Arch] {
 pub fn ohos_min_api_version() -> Int {
   10
 }
+/// 鸿蒙 HAP 包名 | HarmonyOS HAP package name
+pub fn ohos_hap_name(name : String) -> String {
+  name + ".hap"
+}
+
+/// 鸿蒙 HSP 模块名 | HarmonyOS HSP module name
+pub fn ohos_hsp_name(name : String) -> String {
+  name + ".hsp"
+}
+
+/// 鸿蒙 Stage 模型标识 | HarmonyOS Stage model identifier
+pub fn ohos_stage_model() -> String {
+  "stage"
+}
+
+/// 鸿蒙 bundle 名称 | HarmonyOS bundle name
+pub fn ohos_bundle_name(name : String) -> String {
+  "com.example." + name
+}
+
+/// 鸿蒙模块类型 | HarmonyOS module type
+pub fn ohos_module_type(is_entry : Bool) -> String {
+  if is_entry { "entry" } else { "feature" }
+}
+
+/// 鸿蒙构建命令 | HarmonyOS build command
+pub fn ohos_build_command(mode : String) -> String {
+  "hvigorw assembleHap --mode " + mode
+}
+
+/// 鸿蒙最低 Harmony API 版本 | HarmonyOS minimum Harmony API version
+pub fn ohos_min_harmony_api() -> Int {
+  12
+}
+
+/// 鸿蒙签名配置命令 | HarmonyOS signing configuration command
+pub fn ohos_signing_config(profile : String) -> String {
+  "hvigorw signHap --profile " + profile
+}
+
+/// 鸿蒙 oh-package.json5 内容 | HarmonyOS oh-package.json5 content
+pub fn ohos_oh_package_json5(name : String, version : String) -> String {
+  "{\n" +
+  "  \"name\": \"" + name + "\",\n" +
+  "  \"version\": \"" + version + "\"\n" +
+  "}"
+}
+
+/// 鸿蒙 build-profile.json5 内容 | HarmonyOS build-profile.json5 content
+pub fn ohos_build_profile_json5(name : String) -> String {
+  "{\n" +
+  "  \"app\": {\n" +
+  "    \"signingConfigs\": [],\n" +
+  "    \"products\": [{\n" +
+  "      \"name\": \"" + name + "\",\n" +
+  "      \"signingConfig\": \"default\"\n" +
+  "    }]\n" +
+  "  }\n" +
+  "}"
+}

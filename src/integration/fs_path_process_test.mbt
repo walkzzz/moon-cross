@@ -60,7 +60,7 @@ test "fs_stat_return_type" {
 test "fs_cross_config" {
   let cfg = @integration.fs_cross_config()
   assert_eq(cfg.module_path, "moonbitlang/fs")
-  assert_eq(cfg.targets.length(), 4)
+  assert_eq(cfg.targets.length(), 5)
   assert_eq(cfg.functions.length(), 6)
   assert_eq(cfg.types.length(), 1)
 }
@@ -72,7 +72,7 @@ test "fs_has_file_info_type" {
 test "run_fs_pipeline" {
   let result = @integration.run_fs_pipeline()
   assert_eq(result.config.functions.length(), 6)
-  assert_eq(result.platform_specs.length(), 4)
+  assert_eq(result.platform_specs.length(), 5)
   assert_true(result.c_header.contains("moonbitlang_fs"))
 }
 
@@ -121,7 +121,7 @@ test "path_is_absolute_return_type" {
 test "path_cross_config" {
   let cfg = @integration.path_cross_config()
   assert_eq(cfg.module_path, "moonbitlang/path")
-  assert_eq(cfg.targets.length(), 4)
+  assert_eq(cfg.targets.length(), 5)
   assert_eq(cfg.functions.length(), 6)
   assert_eq(cfg.types.length(), 1)
 }
@@ -133,7 +133,7 @@ test "path_has_path_type" {
 test "run_path_pipeline" {
   let result = @integration.run_path_pipeline()
   assert_eq(result.config.functions.length(), 6)
-  assert_eq(result.platform_specs.length(), 4)
+  assert_eq(result.platform_specs.length(), 5)
   assert_true(result.c_header.contains("moonbitlang_path"))
 }
 
@@ -182,7 +182,7 @@ test "process_wait_return_type" {
 test "process_cross_config" {
   let cfg = @integration.process_cross_config()
   assert_eq(cfg.module_path, "moonbitlang/process")
-  assert_eq(cfg.targets.length(), 4)
+  assert_eq(cfg.targets.length(), 5)
   assert_eq(cfg.functions.length(), 5)
   assert_eq(cfg.types.length(), 1)
 }
@@ -194,6 +194,6 @@ test "process_has_process_type" {
 test "run_process_pipeline" {
   let result = @integration.run_process_pipeline()
   assert_eq(result.config.functions.length(), 5)
-  assert_eq(result.platform_specs.length(), 4)
+  assert_eq(result.platform_specs.length(), 5)
   assert_true(result.c_header.contains("moonbitlang_process"))
 }

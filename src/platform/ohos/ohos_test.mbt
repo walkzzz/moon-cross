@@ -113,3 +113,55 @@ test "ohos_compile_config_construction" {
   assert_eq(cfg.arch, @core.Arch::X86_64)
   assert_eq(cfg.output_name, "lib")
 }
+test "ohos_hap_name" {
+  assert_eq(@ohos.ohos_hap_name("myapp"), "myapp.hap")
+}
+
+test "ohos_hsp_name" {
+  assert_eq(@ohos.ohos_hsp_name("mymodule"), "mymodule.hsp")
+}
+
+test "ohos_stage_model" {
+  assert_eq(@ohos.ohos_stage_model(), "stage")
+}
+
+test "ohos_bundle_name" {
+  assert_eq(@ohos.ohos_bundle_name("myapp"), "com.example.myapp")
+}
+
+test "ohos_module_type_entry" {
+  assert_eq(@ohos.ohos_module_type(true), "entry")
+}
+
+test "ohos_module_type_feature" {
+  assert_eq(@ohos.ohos_module_type(false), "feature")
+}
+
+test "ohos_build_command" {
+  let cmd = @ohos.ohos_build_command("release")
+  assert_true(cmd.contains("hvigorw"))
+  assert_true(cmd.contains("assembleHap"))
+  assert_true(cmd.contains("release"))
+}
+
+test "ohos_min_harmony_api" {
+  assert_eq(@ohos.ohos_min_harmony_api(), 12)
+}
+
+test "ohos_signing_config" {
+  let cmd = @ohos.ohos_signing_config("release")
+  assert_true(cmd.contains("signHap"))
+  assert_true(cmd.contains("release"))
+}
+
+test "ohos_oh_package_json5" {
+  let content = @ohos.ohos_oh_package_json5("mylib", "1.0.0")
+  assert_true(content.contains("mylib"))
+  assert_true(content.contains("1.0.0"))
+}
+
+test "ohos_build_profile_json5" {
+  let content = @ohos.ohos_build_profile_json5("myapp")
+  assert_true(content.contains("myapp"))
+  assert_true(content.contains("signingConfigs"))
+}
