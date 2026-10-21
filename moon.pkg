@@ -1,0 +1,8 @@
+import {
+  "walkzzz/moon-cross/src/core" @core,
+  "walkzzz/moon-cross/src/trait" @trait,
+  "walkzzz/moon-cross/src/proof" @proof,
+  "walkzzz/moon-cross/src/mock" @mock,
+  "walkzzz/moon-cross/src/e2e" @e2e,
+  "walkzzz/moon-cross/src/ai_test" @ai_test,
+}

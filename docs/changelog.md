@@ -1,5 +1,30 @@
 # Changelog
 
+## v0.3.4 (2026-10-21) — 根包重导出 + 多手段测试报告（R12/R17 合规）
+
+### Highlights
+- 新增根包重导出（R12 合规）
+  - 根目录 `moon.pkg` + `reexport.mbt`
+  - 重导出 6 个核心包的公共类型和 trait
+  - 对外提供统一入口 `@moon-cross`
+  - 重导出类型：Platform / Arch / TargetTriple / ProofResult / Contract / Invariant / Mock / Stub / Spy / Fake / Step / Scenario / ScenarioResult / E2EReport / TestCase / BoundaryCase / CoverageReport / AITestResult
+  - 重导出 trait：Named / Checkable / Resettable / Verifiable / Runnable / Countable / Describable / Summarizable
+- 新增多手段测试报告（R17 合规）
+  - `docs/arch_test_report.md`：五类多手段测试 + Trait 验证报告
+  - 形式化证明：30 测试 ✅
+  - AI 测试：28 测试 ✅
+  - FAKE 测试：5 测试 ✅
+  - MOCK 测试：24 测试 ✅
+  - E2E 测试：28 测试 ✅
+  - Trait 验证：30 测试 ✅
+  - 总计 145 测试，六维度全覆盖
+
+### Stats
+- 新增文件: moon.pkg + reexport.mbt + docs/arch_test_report.md
+- 包数: 76（不变）
+- 测试: 2170（不变）
+- Warning: 0
+
 ## v0.3.3 (2026-10-21) — Trait 抽象与去重（R18/R19 合规）
 
 ### Highlights
