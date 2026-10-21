@@ -186,6 +186,13 @@ pub fn mock_version() -> String {
 }
 
 ///|
+/// Mock 实现 Checkable trait | Mock implements Checkable (required by Verifiable : Checkable)
+pub impl @trait.Checkable for Mock with check(self) {
+  mock_verify(self)
+}
+pub extend Mock with @trait.Checkable::{check}
+
+///|
 /// Mock 实现 Verifiable trait | Mock implements Verifiable
 pub impl @trait.Verifiable for Mock with verify(self) {
   mock_verify(self)

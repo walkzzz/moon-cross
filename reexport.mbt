@@ -20,6 +20,9 @@ pub using @trait {
   trait Cloneable,
   trait Serializable,
   trait Iterable,
+  trait Versioned,
+  trait Ordered,
+  trait Displayable,
 }
 
 ///|

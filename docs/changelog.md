@@ -1,5 +1,26 @@
 # Changelog
 
+## v0.3.13 (2026-10-21) — Trait 系统重构：子特征 + 新 trait
+
+### Highlights
+- 子特征层次结构（trait hierarchy）
+  - `Verifiable : Checkable`（可验证 ⇒ 可检查）
+  - `Displayable : Named + Describable`（可展示 ⇒ 可命名 + 可描述）
+- 新增 3 个 trait
+  - `Versioned`：有版本类型 `version(Self) -> String`
+  - `Ordered`：可排序类型 `compare(Self, Self) -> Int`
+  - `Displayable`：可展示类型（Named + Describable 子特征）
+- 为 Mock 添加 Checkable 实现（满足 Verifiable : Checkable 约束）
+- 根包重导出更新：新增 Versioned / Ordered / Displayable
+- trait 定义总数：14 个
+
+### Stats
+- 包数: 76（不变）
+- 测试: 2170（不变）
+- trait 定义: 14 个
+- trait 实现: 157 个跨 68 包
+- Warning: 0
+
 ## v0.3.12 (2026-10-21) — Trait 覆盖 89%：156 实现跨 68 包
 
 ### Highlights
