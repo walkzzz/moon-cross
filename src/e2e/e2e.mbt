@@ -207,3 +207,30 @@ pub impl @trait.Summarizable for E2EReport with summary(self) {
   self.passed_scenarios.to_string() + "/" + self.total_scenarios.to_string() + " passed, " + self.failed_scenarios.to_string() + " failed"
 }
 pub extend E2EReport with @trait.Summarizable::{summary}
+///|
+/// Scenario 实现 Iterable trait | Scenario implements Iterable
+pub impl @trait.Iterable for Scenario with iter_count(self) {
+  self.steps.length()
+}
+pub extend Scenario with @trait.Iterable::{iter_count}
+
+///|
+/// E2EReport 实现 Iterable trait | E2EReport implements Iterable
+pub impl @trait.Iterable for E2EReport with iter_count(self) {
+  self.results.length()
+}
+pub extend E2EReport with @trait.Iterable::{iter_count}
+
+///|
+/// Step 实现 Cloneable trait | Step implements Cloneable
+pub impl @trait.Cloneable for Step with clone(self) {
+  { name: self.name, action: self.action, expected: self.expected, }
+}
+pub extend Step with @trait.Cloneable::{clone}
+
+///|
+/// Step 实现 Serializable trait | Step implements Serializable
+pub impl @trait.Serializable for Step with serialize(self) {
+  self.name + ":" + self.action + "->" + self.expected
+}
+pub extend Step with @trait.Serializable::{serialize}

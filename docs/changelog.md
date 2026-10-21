@@ -1,5 +1,26 @@
 # Changelog
 
+## v0.3.10 (2026-10-21) — 新增 3 trait + 126 实现跨 48 包
+
+### Highlights
+- 新增 3 个 pub(open) trait：Cloneable / Serializable / Iterable
+  - Cloneable: clone(Self) -> Self
+  - Serializable: serialize(Self) -> String
+  - Iterable: iter_count(Self) -> Int
+- 新增 16 个 trait 实现
+  - Cloneable: ProofResult, Contract, Invariant, Step, TestCase, BoundaryCase, Fake, Stub
+  - Serializable: ProofResult, Step, TestCase, CoverageReport
+  - Iterable: Scenario, E2EReport, Mock, Spy
+- trait 分布：Named(55) + Describable(16) + Countable(15) + Checkable(14) + Cloneable(8) + Resettable(5) + Summarizable(4) + Serializable(4) + Iterable(4) + Verifiable(1)
+- 根包重导出更新：新增 Cloneable/Serializable/Iterable
+
+### Stats
+- 包数: 76（不变）
+- 测试: 2170（不变）
+- trait 定义: 11 个
+- trait 实现: 126 个跨 48 包
+- Warning: 0
+
 ## v0.3.9 (2026-10-21) — Describable/Resettable 扩展：110 实现跨 48 包
 
 ### Highlights

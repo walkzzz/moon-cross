@@ -6,7 +6,7 @@
 
 > 一次编写，五平台交付 — iOS / Android / Windows / 鸿蒙（HarmonyOS）/ Linux
 
-[![Version](https://img.shields.io/badge/version-0.3.9-blue.svg)](./docs/changelog.md)
+[![Version](https://img.shields.io/badge/version-0.3.10-blue.svg)](./docs/changelog.md)
 [![Tests](https://img.shields.io/badge/tests-2170-brightgreen.svg)]()
 [![Packages](https://img.shields.io/badge/packages-76-green.svg)]()
 [![Warnings](https://img.shields.io/badge/warnings-0-success.svg)]()

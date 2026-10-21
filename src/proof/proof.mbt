@@ -214,3 +214,30 @@ pub impl @trait.Checkable for Invariant with check(self) {
   self.check
 }
 pub extend Invariant with @trait.Checkable::{check}
+///|
+/// ProofResult 实现 Cloneable trait | ProofResult implements Cloneable
+pub impl @trait.Cloneable for ProofResult with clone(self) {
+  { name: self.name, holds: self.holds, message: self.message, }
+}
+pub extend ProofResult with @trait.Cloneable::{clone}
+
+///|
+/// ProofResult 实现 Serializable trait | ProofResult implements Serializable
+pub impl @trait.Serializable for ProofResult with serialize(self) {
+  self.name + ":" + (if self.holds { "true" } else { "false" }) + ":" + self.message
+}
+pub extend ProofResult with @trait.Serializable::{serialize}
+
+///|
+/// Contract 实现 Cloneable trait | Contract implements Cloneable
+pub impl @trait.Cloneable for Contract with clone(self) {
+  { name: self.name, pre_condition: self.pre_condition, post_condition: self.post_condition, }
+}
+pub extend Contract with @trait.Cloneable::{clone}
+
+///|
+/// Invariant 实现 Cloneable trait | Invariant implements Cloneable
+pub impl @trait.Cloneable for Invariant with clone(self) {
+  { name: self.name, description: self.description, check: self.check, }
+}
+pub extend Invariant with @trait.Cloneable::{clone}

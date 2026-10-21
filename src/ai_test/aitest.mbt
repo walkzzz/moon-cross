@@ -222,3 +222,30 @@ pub impl @trait.Summarizable for AITestResult with summary(self) {
   ai_test_summary(self)
 }
 pub extend AITestResult with @trait.Summarizable::{summary}
+///|
+/// TestCase 实现 Cloneable trait | TestCase implements Cloneable
+pub impl @trait.Cloneable for TestCase with clone(self) {
+  { name: self.name, input: self.input, expected: self.expected, category: self.category, }
+}
+pub extend TestCase with @trait.Cloneable::{clone}
+
+///|
+/// TestCase 实现 Serializable trait | TestCase implements Serializable
+pub impl @trait.Serializable for TestCase with serialize(self) {
+  self.name + ":" + self.input + "->" + self.expected + " [" + self.category + "]"
+}
+pub extend TestCase with @trait.Serializable::{serialize}
+
+///|
+/// BoundaryCase 实现 Cloneable trait | BoundaryCase implements Cloneable
+pub impl @trait.Cloneable for BoundaryCase with clone(self) {
+  { name: self.name, value: self.value, boundary_type: self.boundary_type, }
+}
+pub extend BoundaryCase with @trait.Cloneable::{clone}
+
+///|
+/// CoverageReport 实现 Serializable trait | CoverageReport implements Serializable
+pub impl @trait.Serializable for CoverageReport with serialize(self) {
+  self.covered_lines.to_string() + "/" + self.total_lines.to_string() + " (" + self.percentage.to_string() + "%)"
+}
+pub extend CoverageReport with @trait.Serializable::{serialize}

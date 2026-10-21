@@ -17,6 +17,9 @@ pub using @trait {
   trait Countable,
   trait Describable,
   trait Summarizable,
+  trait Cloneable,
+  trait Serializable,
+  trait Iterable,
 }
 
 ///|

@@ -247,3 +247,30 @@ pub impl @trait.Countable for Fake with count(self) {
   self.call_count
 }
 pub extend Fake with @trait.Countable::{count}
+///|
+/// Mock 实现 Iterable trait | Mock implements Iterable
+pub impl @trait.Iterable for Mock with iter_count(self) {
+  self.calls.length()
+}
+pub extend Mock with @trait.Iterable::{iter_count}
+
+///|
+/// Spy 实现 Iterable trait | Spy implements Iterable
+pub impl @trait.Iterable for Spy with iter_count(self) {
+  self.calls.length()
+}
+pub extend Spy with @trait.Iterable::{iter_count}
+
+///|
+/// Fake 实现 Cloneable trait | Fake implements Cloneable
+pub impl @trait.Cloneable for Fake with clone(self) {
+  { name: self.name, behavior: self.behavior, call_count: self.call_count, }
+}
+pub extend Fake with @trait.Cloneable::{clone}
+
+///|
+/// Stub 实现 Cloneable trait | Stub implements Cloneable
+pub impl @trait.Cloneable for Stub with clone(self) {
+  { method_name: self.method_name, return_value: self.return_value, call_count: self.call_count, }
+}
+pub extend Stub with @trait.Cloneable::{clone}

@@ -47,7 +47,25 @@ pub(open) trait Summarizable {
 }
 
 ///|
+/// 可克隆 trait | Cloneable trait: types that can be cloned
+pub(open) trait Cloneable {
+  clone(Self) -> Self
+}
+
+///|
+/// 可序列化 trait | Serializable trait: types that can be serialized to string
+pub(open) trait Serializable {
+  serialize(Self) -> String
+}
+
+///|
+/// 可迭代 trait | Iterable trait: types that can be iterated
+pub(open) trait Iterable {
+  iter_count(Self) -> Int
+}
+
+///|
 /// trait 包版本 | Trait package version
 pub fn trait_version() -> String {
-  "moon-cross trait v0.3.3"
+  "moon-cross trait v0.3.10"
 }
