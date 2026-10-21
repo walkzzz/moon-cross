@@ -287,3 +287,10 @@ pub impl @trait.Named for ValidationRule with name(self) {
   self.name
 }
 pub extend ValidationRule with @trait.Named::{name}
+
+///|
+/// ValidationRule 实现 Describable trait | ValidationRule implements Describable
+pub impl @trait.Describable for ValidationRule with describe(self) {
+  self.description
+}
+pub extend ValidationRule with @trait.Describable::{describe}

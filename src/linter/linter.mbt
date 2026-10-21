@@ -527,3 +527,10 @@ pub impl @trait.Named for LintRule with name(self) {
   self.name
 }
 pub extend LintRule with @trait.Named::{name}
+
+///|
+/// LintRule 实现 Describable trait | LintRule implements Describable
+pub impl @trait.Describable for LintRule with describe(self) {
+  self.description
+}
+pub extend LintRule with @trait.Describable::{describe}

@@ -354,3 +354,17 @@ pub impl @trait.Named for MooncakesMetadata with name(self) {
   self.name
 }
 pub extend MooncakesMetadata with @trait.Named::{name}
+
+///|
+/// PublishConfig 实现 Describable trait | PublishConfig implements Describable
+pub impl @trait.Describable for PublishConfig with describe(self) {
+  self.description
+}
+pub extend PublishConfig with @trait.Describable::{describe}
+
+///|
+/// MooncakesMetadata 实现 Describable trait | MooncakesMetadata implements Describable
+pub impl @trait.Describable for MooncakesMetadata with describe(self) {
+  self.description
+}
+pub extend MooncakesMetadata with @trait.Describable::{describe}

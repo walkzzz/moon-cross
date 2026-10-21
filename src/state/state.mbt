@@ -305,3 +305,10 @@ pub impl @trait.Named for State with name(self) {
   self.name
 }
 pub extend State with @trait.Named::{name}
+
+///|
+/// StateMachine 实现 Resettable trait | StateMachine implements Resettable
+pub impl @trait.Resettable for StateMachine with reset(self) {
+  sm_reset(self)
+}
+pub extend StateMachine with @trait.Resettable::{reset}

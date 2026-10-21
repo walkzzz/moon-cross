@@ -1,5 +1,20 @@
 # Changelog
 
+## v0.3.9 (2026-10-21) — Describable/Resettable 扩展：110 实现跨 48 包
+
+### Highlights
+- 新增 11 个 Describable trait 实现（有 description 字段的类型）
+  - ArgDef, ArgParser, ApiDocEntry, DocSection, FormatRule, LintRule, PluginInfo, TemplateInfo, PublishConfig, MooncakesMetadata, ValidationRule
+- 新增 4 个 Resettable trait 实现（有 reset 方法的类型）
+  - Builder, Arena, StateMachine, StateContext
+- trait 实现总数：110 个跨 48 包（63%）
+
+### Stats
+- 包数: 76（不变）
+- 测试: 2170（不变）
+- trait 实现: 110 个跨 48 包
+- Warning: 0
+
 ## v0.3.8 (2026-10-21) — Checkable/Countable trait 扩展：95 实现跨 47 包
 
 ### Highlights

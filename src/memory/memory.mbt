@@ -283,3 +283,10 @@ pub impl @trait.Named for Arena with name(self) {
   self.name
 }
 pub extend Arena with @trait.Named::{name}
+
+///|
+/// Arena 实现 Resettable trait | Arena implements Resettable
+pub impl @trait.Resettable for Arena with reset(self) {
+  arena_reset(self)
+}
+pub extend Arena with @trait.Resettable::{reset}

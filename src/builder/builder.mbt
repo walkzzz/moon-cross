@@ -118,3 +118,10 @@ pub impl @trait.Named for Builder with name(self) {
   self.name
 }
 pub extend Builder with @trait.Named::{name}
+
+///|
+/// Builder 实现 Resettable trait | Builder implements Resettable
+pub impl @trait.Resettable for Builder with reset(self) {
+  builder_reset(self)
+}
+pub extend Builder with @trait.Resettable::{reset}

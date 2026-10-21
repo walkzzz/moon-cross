@@ -323,3 +323,17 @@ pub impl @trait.Named for ArgParser with name(self) {
   self.name
 }
 pub extend ArgParser with @trait.Named::{name}
+
+///|
+/// ArgDef 实现 Describable trait | ArgDef implements Describable
+pub impl @trait.Describable for ArgDef with describe(self) {
+  self.description
+}
+pub extend ArgDef with @trait.Describable::{describe}
+
+///|
+/// ArgParser 实现 Describable trait | ArgParser implements Describable
+pub impl @trait.Describable for ArgParser with describe(self) {
+  self.description
+}
+pub extend ArgParser with @trait.Describable::{describe}

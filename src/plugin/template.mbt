@@ -167,3 +167,11 @@ pub impl @trait.Named for TemplateInfo with name(self) {
   self.name
 }
 pub extend TemplateInfo with @trait.Named::{name}
+
+
+///|
+/// TemplateInfo 实现 Describable trait | TemplateInfo implements Describable
+pub impl @trait.Describable for TemplateInfo with describe(self) {
+  self.description
+}
+pub extend TemplateInfo with @trait.Describable::{describe}

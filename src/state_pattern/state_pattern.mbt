@@ -82,3 +82,10 @@ pub fn state_is_valid(light : TrafficLight) -> Bool {
 pub fn state_pattern_version() -> String {
   "moon-cross state_pattern v0.3.8"
 }
+
+///|
+/// StateContext 实现 Resettable trait | StateContext implements Resettable
+pub impl @trait.Resettable for StateContext with reset(self) {
+  state_reset(self)
+}
+pub extend StateContext with @trait.Resettable::{reset}

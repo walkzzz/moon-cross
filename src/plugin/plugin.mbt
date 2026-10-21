@@ -177,3 +177,11 @@ pub impl @trait.Named for PluginInfo with name(self) {
   self.name
 }
 pub extend PluginInfo with @trait.Named::{name}
+
+
+///|
+/// PluginInfo 实现 Describable trait | PluginInfo implements Describable
+pub impl @trait.Describable for PluginInfo with describe(self) {
+  self.description
+}
+pub extend PluginInfo with @trait.Describable::{describe}

@@ -338,3 +338,10 @@ pub impl @trait.Named for FormatRule with name(self) {
   self.name
 }
 pub extend FormatRule with @trait.Named::{name}
+
+///|
+/// FormatRule 实现 Describable trait | FormatRule implements Describable
+pub impl @trait.Describable for FormatRule with describe(self) {
+  self.description
+}
+pub extend FormatRule with @trait.Describable::{describe}

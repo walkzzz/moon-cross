@@ -176,3 +176,17 @@ pub impl @trait.Named for ApiDocEntry with name(self) {
   self.name
 }
 pub extend ApiDocEntry with @trait.Named::{name}
+
+///|
+/// ApiDocEntry 实现 Describable trait | ApiDocEntry implements Describable
+pub impl @trait.Describable for ApiDocEntry with describe(self) {
+  self.description
+}
+pub extend ApiDocEntry with @trait.Describable::{describe}
+
+///|
+/// DocSection 实现 Describable trait | DocSection implements Describable
+pub impl @trait.Describable for DocSection with describe(self) {
+  self.description
+}
+pub extend DocSection with @trait.Describable::{describe}
