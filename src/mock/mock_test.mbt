@@ -112,3 +112,50 @@ test "mock_version" {
   let v = @mock.mock_version()
   assert_true(v.contains("mock"))
 }
+test "Mock Verifiable trait" {
+  let m = @mock.mock_create()
+  let m1 = @mock.mock_expect(m, "foo", "bar")
+  let m2 = @mock.mock_record(m1, "foo", "bar")
+  assert_true(@trait.Verifiable::verify(m2))
+}
+
+test "Mock Resettable trait" {
+  let m = @mock.mock_create()
+  let m1 = @mock.mock_record(m, "foo", "")
+  let m2 = @trait.Resettable::reset(m1)
+  assert_eq(@mock.mock_call_count(m2, "foo"), 0)
+}
+
+test "Mock Countable trait" {
+  let m = @mock.mock_create()
+  let m1 = @mock.mock_record(m, "a", "")
+  let m2 = @mock.mock_record(m1, "b", "")
+  assert_eq(@trait.Countable::count(m2), 2)
+}
+
+test "Stub Named trait" {
+  let s = @mock.stub_create("getValue", "42")
+  assert_eq(@trait.Named::name(s), "getValue")
+}
+
+test "Stub Countable trait" {
+  let s = @mock.stub_create("getValue", "42")
+  let (s1, _) = @mock.stub_call(s, "arg")
+  assert_eq(@trait.Countable::count(s1), 1)
+}
+
+test "Spy Named trait" {
+  let s = @mock.spy_create("realService")
+  assert_eq(@trait.Named::name(s), "realService")
+}
+
+test "Fake Named trait" {
+  let f = @mock.fake_create("db", "return []")
+  assert_eq(@trait.Named::name(f), "db")
+}
+
+test "Fake Countable trait" {
+  let f = @mock.fake_create("db", "ok")
+  let (f1, _) = @mock.fake_invoke(f)
+  assert_eq(@trait.Countable::count(f1), 1)
+}

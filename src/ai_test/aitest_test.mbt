@@ -165,5 +165,46 @@ test "merge_results empty" {
 }
 
 test "ai_test_version" {
-  assert_eq(@ai_test.ai_test_version(), "moon-cross ai_test v0.3.2")
+  assert_eq(@ai_test.ai_test_version(), "moon-cross ai_test v0.3.3")
+}
+test "TestCase Named trait" {
+  let tc = @ai_test.test_case_create("add", "1+1", "2", "unit")
+  assert_eq(@trait.Named::name(tc), "add")
+}
+
+test "TestCase Describable trait" {
+  let tc = @ai_test.test_case_create("add", "1+1", "2", "unit")
+  let d = @trait.Describable::describe(tc)
+  assert_true(d.contains("unit"))
+  assert_true(d.contains("1+1"))
+}
+
+test "BoundaryCase Named trait" {
+  let cases = @ai_test.boundary_analyze("range", 0, 100)
+  assert_eq(@trait.Named::name(cases[0]), "range_min")
+}
+
+test "CoverageReport Summarizable trait" {
+  let cr = @ai_test.coverage_report(100, 75)
+  let s = @trait.Summarizable::summary(cr)
+  assert_true(s.contains("75/100"))
+  assert_true(s.contains("75%"))
+}
+
+test "AITestResult Named trait" {
+  let r = @ai_test.run_test_suite("suite1", [], [])
+  assert_eq(@trait.Named::name(r), "suite1")
+}
+
+test "AITestResult Countable trait" {
+  let cases = [@ai_test.test_case_create("a", "1", "2", "g")]
+  let r = @ai_test.run_test_suite("suite1", cases, ["2"])
+  assert_eq(@trait.Countable::count(r), 1)
+}
+
+test "AITestResult Summarizable trait" {
+  let r = @ai_test.run_test_suite("mytest", [@ai_test.test_case_create("a", "1", "2", "g")], ["2"])
+  let s = @trait.Summarizable::summary(r)
+  assert_true(s.contains("mytest"))
+  assert_true(s.contains("100%"))
 }

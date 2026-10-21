@@ -169,3 +169,45 @@ test "proof_version" {
   let v = @proof.proof_version()
   assert_true(v.contains("proof"))
 }
+test "ProofResult Named trait" {
+  let r = @proof.proof_result("test_proof", true, "ok")
+  assert_eq(@trait.Named::name(r), "test_proof")
+  assert_eq(r.name(), "test_proof")
+}
+
+test "ProofResult Checkable trait" {
+  let r1 = @proof.proof_result("p1", true, "holds")
+  let r2 = @proof.proof_result("p2", false, "fails")
+  assert_true(@trait.Checkable::check(r1))
+  assert_false(@trait.Checkable::check(r2))
+}
+
+test "ProofResult Summarizable trait" {
+  let r = @proof.proof_result("proof1", true, "all good")
+  let s = @trait.Summarizable::summary(r)
+  assert_true(s.contains("proof1"))
+  assert_true(s.contains("holds"))
+}
+
+test "Contract Named trait" {
+  let c = @proof.contract_create("add", "x >= 0", "result >= x")
+  assert_eq(@trait.Named::name(c), "add")
+}
+
+test "Contract Describable trait" {
+  let c = @proof.contract_create("add", "x >= 0", "result >= x")
+  let d = @trait.Describable::describe(c)
+  assert_true(d.contains("x >= 0"))
+}
+
+test "Invariant Named trait" {
+  let inv = @proof.invariant_create("sorted", "array is sorted", true)
+  assert_eq(@trait.Named::name(inv), "sorted")
+}
+
+test "Invariant Checkable trait" {
+  let inv1 = @proof.invariant_create("inv1", "holds", true)
+  let inv2 = @proof.invariant_create("inv2", "violated", false)
+  assert_true(@trait.Checkable::check(inv1))
+  assert_false(@trait.Checkable::check(inv2))
+}

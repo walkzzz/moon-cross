@@ -149,5 +149,61 @@ pub fn total_steps(report : E2EReport) -> Int {
 ///|
 /// E2E 包版本 | E2E package version
 pub fn e2e_version() -> String {
-  "moon-cross e2e v0.3.2"
+  "moon-cross e2e v0.3.3"
 }
+
+///|
+/// Step 实现 Named trait | Step implements Named
+pub impl @trait.Named for Step with name(self) {
+  self.name
+}
+pub extend Step with @trait.Named::{name}
+
+///|
+/// Step 实现 Describable trait | Step implements Describable
+pub impl @trait.Describable for Step with describe(self) {
+  self.action + " -> " + self.expected
+}
+pub extend Step with @trait.Describable::{describe}
+
+///|
+/// Scenario 实现 Named trait | Scenario implements Named
+pub impl @trait.Named for Scenario with name(self) {
+  self.name
+}
+pub extend Scenario with @trait.Named::{name}
+
+///|
+/// Scenario 实现 Describable trait | Scenario implements Describable
+pub impl @trait.Describable for Scenario with describe(self) {
+  self.description
+}
+pub extend Scenario with @trait.Describable::{describe}
+
+///|
+/// ScenarioResult 实现 Named trait | ScenarioResult implements Named
+pub impl @trait.Named for ScenarioResult with name(self) {
+  self.scenario_name
+}
+pub extend ScenarioResult with @trait.Named::{name}
+
+///|
+/// ScenarioResult 实现 Checkable trait | ScenarioResult implements Checkable
+pub impl @trait.Checkable for ScenarioResult with check(self) {
+  self.passed
+}
+pub extend ScenarioResult with @trait.Checkable::{check}
+
+///|
+/// E2EReport 实现 Countable trait | E2EReport implements Countable
+pub impl @trait.Countable for E2EReport with count(self) {
+  self.total_scenarios
+}
+pub extend E2EReport with @trait.Countable::{count}
+
+///|
+/// E2EReport 实现 Summarizable trait | E2EReport implements Summarizable
+pub impl @trait.Summarizable for E2EReport with summary(self) {
+  self.passed_scenarios.to_string() + "/" + self.total_scenarios.to_string() + " passed, " + self.failed_scenarios.to_string() + " failed"
+}
+pub extend E2EReport with @trait.Summarizable::{summary}

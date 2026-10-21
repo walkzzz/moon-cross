@@ -1,5 +1,29 @@
 # Changelog
 
+## v0.3.3 (2026-10-21) — Trait 抽象与去重（R18/R19 合规）
+
+### Highlights
+- 新增 `src/trait/` 包，定义 8 个公共行为 trait
+  - `Named`：有名称的类型 `name(Self) -> String`
+  - `Checkable`：可检查的类型 `check(Self) -> Bool`
+  - `Resettable`：可重置的类型 `reset(Self) -> Self`
+  - `Verifiable`：可验证的类型 `verify(Self) -> Bool`
+  - `Runnable`：可运行的类型 `run(Self) -> Bool`
+  - `Countable`：可计数的类型 `count(Self) -> Int`
+  - `Describable`：可描述的类型 `describe(Self) -> String`
+  - `Summarizable`：可摘要的类型 `summary(Self) -> String`
+- 为 proof 包实现 trait（ProofResult: Named/Checkable/Summarizable, Contract: Named/Describable, Invariant: Named/Describable/Checkable）
+- 为 mock 包实现 trait（Mock: Verifiable/Resettable/Countable, Stub: Named/Countable, Spy: Named/Countable, Fake: Named/Countable）
+- 为 e2e 包实现 trait（Step: Named/Describable, Scenario: Named/Describable, ScenarioResult: Named/Checkable, E2EReport: Countable/Summarizable）
+- 为 ai_test 包实现 trait（TestCase: Named/Describable, BoundaryCase: Named, CoverageReport: Summarizable, AITestResult: Named/Countable/Summarizable）
+- 新增 R19 规则：尽可能使用 trait，强制要求新代码优先 trait 化
+- 30 个 trait 测试验证所有实现
+
+### Stats
+- 新增包: src/trait/（1 个）
+- 新增测试: 31 个（总计 2170 个，全部通过）
+- Warning: 0
+
 ## v0.3.2 (2026-10-16) — 形式化证明 + 多手段测试框架
 
 ### Highlights

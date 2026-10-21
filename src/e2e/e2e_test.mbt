@@ -143,5 +143,52 @@ test "total_steps empty" {
 }
 
 test "e2e_version" {
-  assert_eq(@e2e.e2e_version(), "moon-cross e2e v0.3.2")
+  assert_eq(@e2e.e2e_version(), "moon-cross e2e v0.3.3")
+}
+test "Step Named trait" {
+  let s = @e2e.step_create("login", "POST /login", "200 OK")
+  assert_eq(@trait.Named::name(s), "login")
+}
+
+test "Step Describable trait" {
+  let s = @e2e.step_create("ping", "GET /ping", "pong")
+  let d = @trait.Describable::describe(s)
+  assert_true(d.contains("GET /ping"))
+  assert_true(d.contains("pong"))
+}
+
+test "Scenario Named trait" {
+  let sc = @e2e.scenario_create("auth_flow", "user auth")
+  assert_eq(@trait.Named::name(sc), "auth_flow")
+}
+
+test "Scenario Describable trait" {
+  let sc = @e2e.scenario_create("auth_flow", "user auth")
+  assert_eq(@trait.Describable::describe(sc), "user auth")
+}
+
+test "ScenarioResult Named trait" {
+  let sc = @e2e.scenario_create("test_sc", "desc")
+  let r = @e2e.scenario_run(sc, [])
+  assert_eq(@trait.Named::name(r), "test_sc")
+}
+
+test "ScenarioResult Checkable trait" {
+  let sc = @e2e.scenario_create("pass_sc", "desc")
+  let r = @e2e.scenario_run(sc, [])
+  assert_true(@trait.Checkable::check(r))
+}
+
+test "E2EReport Countable trait" {
+  let r1 = @e2e.scenario_run(@e2e.scenario_create("a", "d"), [])
+  let r2 = @e2e.scenario_run(@e2e.scenario_create("b", "d"), [])
+  let report = @e2e.e2e_report([r1, r2])
+  assert_eq(@trait.Countable::count(report), 2)
+}
+
+test "E2EReport Summarizable trait" {
+  let r1 = @e2e.scenario_run(@e2e.scenario_create("a", "d"), [])
+  let report = @e2e.e2e_report([r1])
+  let s = @trait.Summarizable::summary(report)
+  assert_true(s.contains("1/1"))
 }

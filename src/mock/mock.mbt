@@ -182,5 +182,68 @@ pub fn fake_call_count(fake : Fake) -> Int {
 ///|
 /// Mock 包版本 | Mock package version
 pub fn mock_version() -> String {
-  "moon-cross mock v0.3.2"
+  "moon-cross mock v0.3.3"
 }
+
+///|
+/// Mock 实现 Verifiable trait | Mock implements Verifiable
+pub impl @trait.Verifiable for Mock with verify(self) {
+  mock_verify(self)
+}
+pub extend Mock with @trait.Verifiable::{verify}
+
+///|
+/// Mock 实现 Resettable trait | Mock implements Resettable
+pub impl @trait.Resettable for Mock with reset(self) {
+  mock_reset(self)
+}
+pub extend Mock with @trait.Resettable::{reset}
+
+///|
+/// Mock 实现 Countable trait | Mock implements Countable
+pub impl @trait.Countable for Mock with count(self) {
+  self.calls.length()
+}
+pub extend Mock with @trait.Countable::{count}
+
+///|
+/// Stub 实现 Named trait | Stub implements Named
+pub impl @trait.Named for Stub with name(self) {
+  self.method_name
+}
+pub extend Stub with @trait.Named::{name}
+
+///|
+/// Stub 实现 Countable trait | Stub implements Countable
+pub impl @trait.Countable for Stub with count(self) {
+  self.call_count
+}
+pub extend Stub with @trait.Countable::{count}
+
+///|
+/// Spy 实现 Named trait | Spy implements Named
+pub impl @trait.Named for Spy with name(self) {
+  self.wrapped
+}
+pub extend Spy with @trait.Named::{name}
+
+///|
+/// Spy 实现 Countable trait | Spy implements Countable
+pub impl @trait.Countable for Spy with count(self) {
+  self.calls.length()
+}
+pub extend Spy with @trait.Countable::{count}
+
+///|
+/// Fake 实现 Named trait | Fake implements Named
+pub impl @trait.Named for Fake with name(self) {
+  self.name
+}
+pub extend Fake with @trait.Named::{name}
+
+///|
+/// Fake 实现 Countable trait | Fake implements Countable
+pub impl @trait.Countable for Fake with count(self) {
+  self.call_count
+}
+pub extend Fake with @trait.Countable::{count}

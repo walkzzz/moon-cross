@@ -156,5 +156,61 @@ pub fn range_invariant(name : String, x : Int, min_val : Int, max_val : Int) -> 
 ///|
 /// 证明包版本 | Proof package version
 pub fn proof_version() -> String {
-  "moon-cross proof v0.3.2"
+  "moon-cross proof v0.3.3"
 }
+
+///|
+/// ProofResult 实现 Named trait | ProofResult implements Named
+pub impl @trait.Named for ProofResult with name(self) {
+  self.name
+}
+pub extend ProofResult with @trait.Named::{name}
+
+///|
+/// ProofResult 实现 Checkable trait | ProofResult implements Checkable
+pub impl @trait.Checkable for ProofResult with check(self) {
+  self.holds
+}
+pub extend ProofResult with @trait.Checkable::{check}
+
+///|
+/// ProofResult 实现 Summarizable trait | ProofResult implements Summarizable
+pub impl @trait.Summarizable for ProofResult with summary(self) {
+  self.name + ": " + (if self.holds { "holds" } else { "fails" }) + " — " + self.message
+}
+pub extend ProofResult with @trait.Summarizable::{summary}
+
+///|
+/// Contract 实现 Named trait | Contract implements Named
+pub impl @trait.Named for Contract with name(self) {
+  self.name
+}
+pub extend Contract with @trait.Named::{name}
+
+///|
+/// Contract 实现 Describable trait | Contract implements Describable
+pub impl @trait.Describable for Contract with describe(self) {
+  "pre: " + self.pre_condition + ", post: " + self.post_condition
+}
+pub extend Contract with @trait.Describable::{describe}
+
+///|
+/// Invariant 实现 Named trait | Invariant implements Named
+pub impl @trait.Named for Invariant with name(self) {
+  self.name
+}
+pub extend Invariant with @trait.Named::{name}
+
+///|
+/// Invariant 实现 Describable trait | Invariant implements Describable
+pub impl @trait.Describable for Invariant with describe(self) {
+  self.description
+}
+pub extend Invariant with @trait.Describable::{describe}
+
+///|
+/// Invariant 实现 Checkable trait | Invariant implements Checkable
+pub impl @trait.Checkable for Invariant with check(self) {
+  self.check
+}
+pub extend Invariant with @trait.Checkable::{check}

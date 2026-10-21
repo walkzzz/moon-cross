@@ -171,5 +171,54 @@ pub fn merge_results(name : String, results : Array[AITestResult]) -> AITestResu
 ///|
 /// AI 测试包版本 | AI test package version
 pub fn ai_test_version() -> String {
-  "moon-cross ai_test v0.3.2"
+  "moon-cross ai_test v0.3.3"
 }
+
+///|
+/// TestCase 实现 Named trait | TestCase implements Named
+pub impl @trait.Named for TestCase with name(self) {
+  self.name
+}
+pub extend TestCase with @trait.Named::{name}
+
+///|
+/// TestCase 实现 Describable trait | TestCase implements Describable
+pub impl @trait.Describable for TestCase with describe(self) {
+  self.category + ": " + self.input + " -> " + self.expected
+}
+pub extend TestCase with @trait.Describable::{describe}
+
+///|
+/// BoundaryCase 实现 Named trait | BoundaryCase implements Named
+pub impl @trait.Named for BoundaryCase with name(self) {
+  self.name
+}
+pub extend BoundaryCase with @trait.Named::{name}
+
+///|
+/// CoverageReport 实现 Summarizable trait | CoverageReport implements Summarizable
+pub impl @trait.Summarizable for CoverageReport with summary(self) {
+  self.covered_lines.to_string() + "/" + self.total_lines.to_string() + " (" + self.percentage.to_string() + "%)"
+}
+pub extend CoverageReport with @trait.Summarizable::{summary}
+
+///|
+/// AITestResult 实现 Named trait | AITestResult implements Named
+pub impl @trait.Named for AITestResult with name(self) {
+  self.test_name
+}
+pub extend AITestResult with @trait.Named::{name}
+
+///|
+/// AITestResult 实现 Countable trait | AITestResult implements Countable
+pub impl @trait.Countable for AITestResult with count(self) {
+  self.total_cases
+}
+pub extend AITestResult with @trait.Countable::{count}
+
+///|
+/// AITestResult 实现 Summarizable trait | AITestResult implements Summarizable
+pub impl @trait.Summarizable for AITestResult with summary(self) {
+  ai_test_summary(self)
+}
+pub extend AITestResult with @trait.Summarizable::{summary}
