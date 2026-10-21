@@ -116,3 +116,10 @@ pub fn history_clear(_h : CommandHistory) -> CommandHistory {
 pub fn command_version() -> String {
   "moon-cross command v0.3.7"
 }
+
+///|
+/// Command 实现 Named trait | Command implements Named
+pub impl @trait.Named for Command with name(self) {
+  self.name
+}
+pub extend Command with @trait.Named::{name}

@@ -329,3 +329,10 @@ pub fn merge_resource_managers(m1 : ResourceManager, m2 : ResourceManager) -> Re
 pub fn resource_version() -> String {
   "moon-cross resource v0.2.19"
 }
+
+///|
+/// Resource 实现 Named trait | Resource implements Named
+pub impl @trait.Named for Resource with name(self) {
+  self.name
+}
+pub extend Resource with @trait.Named::{name}

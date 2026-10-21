@@ -81,3 +81,10 @@ pub fn visit_aggregate(results : Array[VisitResult]) -> Int {
 pub fn visitor_version() -> String {
   "moon-cross visitor v0.3.9"
 }
+
+///|
+/// Element 实现 Named trait | Element implements Named
+pub impl @trait.Named for Element with name(self) {
+  self.name
+}
+pub extend Element with @trait.Named::{name}

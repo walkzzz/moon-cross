@@ -79,3 +79,10 @@ pub fn chain_remove(chain : HandlerChain, handler_id : Int) -> HandlerChain {
 pub fn chain_version() -> String {
   "moon-cross chain v0.3.8"
 }
+
+///|
+/// Handler 实现 Named trait | Handler implements Named
+pub impl @trait.Named for Handler with name(self) {
+  self.name
+}
+pub extend Handler with @trait.Named::{name}

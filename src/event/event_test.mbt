@@ -196,3 +196,4 @@ test "event_version" {
   let v = @event.event_version()
   assert_true(v.contains("event"))
 }
+

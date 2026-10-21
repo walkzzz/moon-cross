@@ -348,3 +348,10 @@ pub fn merge_signal_managers(m1 : SignalManager, m2 : SignalManager) -> SignalMa
 pub fn signal_version() -> String {
   "moon-cross signal v0.2.16"
 }
+
+///|
+/// Signal 实现 Named trait | Signal implements Named
+pub impl @trait.Named for Signal with name(self) {
+  self.name
+}
+pub extend Signal with @trait.Named::{name}

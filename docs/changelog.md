@@ -1,5 +1,31 @@
 # Changelog
 
+## v0.3.6 (2026-10-21) — Trait 覆盖扩展：15 包 18 类型实现 Named trait
+
+### Highlights
+- 为 15 个包的 18 个类型实现 Named trait（R19 推进）
+  - builder: Builder, Product
+  - command: Command
+  - event: Event, EventHandler
+  - memory: Arena
+  - state: State
+  - timer: Timer
+  - resource: Resource
+  - signal: Signal
+  - visitor: Element, VisitResult
+  - http: HttpHeader
+  - chain: Handler
+  - factory: ProductInfo (type_name → Named)
+  - profiler: ProfileEntry
+  - trace: TraceSpan
+  - dependency: DependencyNode
+- trait 实现总数：31 个类型跨 19 个包实现 trait
+
+### Stats
+- 包数: 76（不变）
+- 测试: 2170（不变）
+- Warning: 0
+
 ## v0.3.5 (2026-10-21) — R3/R4 合规：pub fn 注释 + 子包 README
 
 ### Highlights

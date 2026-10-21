@@ -324,3 +324,10 @@ pub fn merge_requests(r1 : HttpRequest, r2 : HttpRequest) -> HttpRequest {
 pub fn http_version() -> String {
   "moon-cross http v0.2.22"
 }
+
+///|
+/// HttpHeader 实现 Named trait | HttpHeader implements Named
+pub impl @trait.Named for HttpHeader with name(self) {
+  self.name
+}
+pub extend HttpHeader with @trait.Named::{name}

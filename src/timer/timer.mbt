@@ -323,3 +323,10 @@ pub fn merge_timer_managers(m1 : TimerManager, m2 : TimerManager) -> TimerManage
 pub fn timer_version() -> String {
   "moon-cross timer v0.2.17"
 }
+
+///|
+/// Timer 实现 Named trait | Timer implements Named
+pub impl @trait.Named for Timer with name(self) {
+  self.name
+}
+pub extend Timer with @trait.Named::{name}

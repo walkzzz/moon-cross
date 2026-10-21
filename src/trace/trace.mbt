@@ -394,3 +394,10 @@ pub fn total_duration(spans : Array[TraceSpan]) -> Int {
 pub fn has_errors(events : Array[TraceEvent]) -> Bool {
   count_errors(events) > 0
 }
+
+///|
+/// TraceSpan 实现 Named trait | TraceSpan implements Named
+pub impl @trait.Named for TraceSpan with name(self) {
+  self.name
+}
+pub extend TraceSpan with @trait.Named::{name}

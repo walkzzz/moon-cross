@@ -298,3 +298,10 @@ pub fn merge_state_machines(sm1 : StateMachine, sm2 : StateMachine) -> StateMach
 pub fn sm_version() -> String {
   "moon-cross state v0.2.14"
 }
+
+///|
+/// State 实现 Named trait | State implements Named
+pub impl @trait.Named for State with name(self) {
+  self.name
+}
+pub extend State with @trait.Named::{name}

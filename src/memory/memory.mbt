@@ -276,3 +276,10 @@ pub fn gc_record_collect(stats : GcStats, reclaimed : Int, freed_objects : Int) 
 pub fn memory_version() -> String {
   "moon-cross memory v0.2.29"
 }
+
+///|
+/// Arena 实现 Named trait | Arena implements Named
+pub impl @trait.Named for Arena with name(self) {
+  self.name
+}
+pub extend Arena with @trait.Named::{name}

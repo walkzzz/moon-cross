@@ -98,3 +98,10 @@ pub fn factory_unregister(f : Factory, type_name : String) -> Factory {
 pub fn factory_version() -> String {
   "moon-cross factory v0.3.4"
 }
+
+///|
+/// ProductInfo 实现 Named trait | ProductInfo implements Named
+pub impl @trait.Named for ProductInfo with name(self) {
+  self.type_name
+}
+pub extend ProductInfo with @trait.Named::{name}

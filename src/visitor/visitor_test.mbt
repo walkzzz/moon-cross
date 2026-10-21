@@ -96,3 +96,4 @@ test "visitor_version" {
   let v = @visitor.visitor_version()
   assert_true(v.contains("visitor"))
 }
+

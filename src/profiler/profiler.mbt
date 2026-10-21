@@ -290,3 +290,10 @@ pub fn filter_above_threshold(
 pub fn entry_count(report : ProfileReport) -> Int {
   report.entries.length()
 }
+
+///|
+/// ProfileEntry 实现 Named trait | ProfileEntry implements Named
+pub impl @trait.Named for ProfileEntry with name(self) {
+  self.name
+}
+pub extend ProfileEntry with @trait.Named::{name}

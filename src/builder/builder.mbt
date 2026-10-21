@@ -111,3 +111,10 @@ pub fn product_tag_count(p : Product) -> Int {
 pub fn builder_version() -> String {
   "moon-cross builder v0.3.3"
 }
+
+///|
+/// Builder 实现 Named trait | Builder implements Named
+pub impl @trait.Named for Builder with name(self) {
+  self.name
+}
+pub extend Builder with @trait.Named::{name}

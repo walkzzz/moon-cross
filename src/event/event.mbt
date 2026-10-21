@@ -376,3 +376,10 @@ pub fn merge_event_buses(b1 : EventBus, b2 : EventBus) -> EventBus {
 pub fn event_version() -> String {
   "moon-cross event v0.2.13"
 }
+
+///|
+/// Event 实现 Named trait | Event implements Named
+pub impl @trait.Named for Event with name(self) {
+  self.name
+}
+pub extend Event with @trait.Named::{name}

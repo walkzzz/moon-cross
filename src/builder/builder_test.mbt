@@ -98,3 +98,4 @@ test "builder_version" {
   let v = @builder.builder_version()
   assert_true(v.contains("builder"))
 }
+

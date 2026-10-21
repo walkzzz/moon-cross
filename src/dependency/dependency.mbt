@@ -408,3 +408,10 @@ pub fn merge_graphs(
   }
   { nodes, edges }
 }
+
+///|
+/// DependencyNode 实现 Named trait | DependencyNode implements Named
+pub impl @trait.Named for DependencyNode with name(self) {
+  self.name
+}
+pub extend DependencyNode with @trait.Named::{name}
