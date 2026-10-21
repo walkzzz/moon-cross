@@ -74,3 +74,11 @@ pub fn xcframework_create_command(
 pub fn swift_bridging_header(module_name : String) -> String {
   "#import \"" + module_name + ".h\"\n"
 }
+
+
+///|
+/// SwiftBindingConfig 实现 Named trait | SwiftBindingConfig implements Named
+pub impl @trait.Named for SwiftBindingConfig with name(self) {
+  self.module_name
+}
+pub extend SwiftBindingConfig with @trait.Named::{name}

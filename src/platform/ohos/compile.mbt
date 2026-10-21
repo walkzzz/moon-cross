@@ -126,3 +126,11 @@ pub fn ohos_build_profile_json5(name : String) -> String {
   "  }\n" +
   "}"
 }
+
+
+///|
+/// OhosCompileConfig 实现 Named trait | OhosCompileConfig implements Named
+pub impl @trait.Named for OhosCompileConfig with name(self) {
+  self.output_name
+}
+pub extend OhosCompileConfig with @trait.Named::{name}

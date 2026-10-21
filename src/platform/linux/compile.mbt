@@ -74,3 +74,11 @@ pub fn linux_min_glibc_version() -> String {
 pub fn linux_version() -> String {
   "moon-cross linux v0.3.1"
 }
+
+
+///|
+/// LinuxCompileConfig 实现 Named trait | LinuxCompileConfig implements Named
+pub impl @trait.Named for LinuxCompileConfig with name(self) {
+  self.output_name
+}
+pub extend LinuxCompileConfig with @trait.Named::{name}

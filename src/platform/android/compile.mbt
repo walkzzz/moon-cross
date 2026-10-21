@@ -65,3 +65,11 @@ pub fn android_abi(arch : @core.Arch) -> String {
     @core.Arch::X86_64 => "x86_64"
   }
 }
+
+
+///|
+/// AndroidCompileConfig 实现 Named trait | AndroidCompileConfig implements Named
+pub impl @trait.Named for AndroidCompileConfig with name(self) {
+  self.output_name
+}
+pub extend AndroidCompileConfig with @trait.Named::{name}

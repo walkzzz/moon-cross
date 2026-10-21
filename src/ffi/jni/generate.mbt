@@ -91,3 +91,11 @@ pub fn kotlin_file_header(package_name : String) -> String {
 pub fn kotlin_wrapper_file(package_name : String, class_name : String, lib_name : String) -> String {
   kotlin_file_header(package_name) + kotlin_class_skeleton(class_name, lib_name) + "\n"
 }
+
+
+///|
+/// JniBindingConfig 实现 Named trait | JniBindingConfig implements Named
+pub impl @trait.Named for JniBindingConfig with name(self) {
+  self.class_name
+}
+pub extend JniBindingConfig with @trait.Named::{name}

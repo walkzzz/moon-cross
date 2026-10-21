@@ -75,3 +75,11 @@ pub fn arkts_wrapper_file(config : NapiBindingConfig) -> String {
 pub fn generate_module_json(_name : String) -> String {
   "{\n  \"module\": {\n    \"name\": \"entry\",\n    \"type\": \"entry\",\n    \"deviceTypes\": [\"default\"]\n  }\n}\n"
 }
+
+
+///|
+/// NapiBindingConfig 实现 Named trait | NapiBindingConfig implements Named
+pub impl @trait.Named for NapiBindingConfig with name(self) {
+  self.module_name
+}
+pub extend NapiBindingConfig with @trait.Named::{name}

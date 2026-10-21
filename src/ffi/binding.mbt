@@ -50,3 +50,11 @@ pub fn ffi_binding_for_platform(platform : @core.Platform) -> FfiBindingType {
   }
 }
 
+
+
+///|
+/// FfiBindingResult 实现 Named trait | FfiBindingResult implements Named
+pub impl @trait.Named for FfiBindingResult with name(self) {
+  self.filename
+}
+pub extend FfiBindingResult with @trait.Named::{name}

@@ -158,3 +158,11 @@ pub fn ios_swift_package_content(name : String) -> String {
   "    targets: [.target(name: \"" + name + "\", path: \"src\")]\n" +
   ")"
 }
+
+
+///|
+/// IosCompileConfig 实现 Named trait | IosCompileConfig implements Named
+pub impl @trait.Named for IosCompileConfig with name(self) {
+  self.output_name
+}
+pub extend IosCompileConfig with @trait.Named::{name}

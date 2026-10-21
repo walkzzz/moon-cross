@@ -19,3 +19,11 @@ pub fn generate_export_macro() -> String {
   "#ifdef _WIN32\n#define MOONBIT_EXPORT __declspec(dllexport)\n#else\n#define MOONBIT_EXPORT __attribute__((visibility(\"default\")))\n#endif\n"
 }
 
+
+
+///|
+/// CodegenResult 实现 Named trait | CodegenResult implements Named
+pub impl @trait.Named for CodegenResult with name(self) {
+  self.filename
+}
+pub extend CodegenResult with @trait.Named::{name}

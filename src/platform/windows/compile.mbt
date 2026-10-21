@@ -39,3 +39,11 @@ pub fn default_windows_config(
   { arch: @core.X86_64, output_dir, output_name, }
 }
 
+
+
+///|
+/// WindowsCompileConfig 实现 Named trait | WindowsCompileConfig implements Named
+pub impl @trait.Named for WindowsCompileConfig with name(self) {
+  self.output_name
+}
+pub extend WindowsCompileConfig with @trait.Named::{name}

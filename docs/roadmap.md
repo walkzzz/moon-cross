@@ -64,6 +64,7 @@
 | v0.3.8 | ✅ Done | Checkable/Countable扩展：95实现跨47包（62%覆盖） | 2170 |
 | v0.3.9 | ✅ Done | Describable/Resettable扩展：110实现跨48包（63%覆盖） | 2170 |
 | v0.3.10 | ✅ Done | 新增3trait(Cloneable/Serializable/Iterable)：126实现跨48包 | 2170 |
+| v0.3.11 | ✅ Done | Named trait补全：136实现跨58包（76%覆盖） | 2170 |
 
 ## 远期计划预览（v0.2.16 → v1.0.0）
 

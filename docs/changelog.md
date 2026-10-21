@@ -1,5 +1,20 @@
 # Changelog
 
+## v0.3.11 (2026-10-21) — Named trait 补全：136 实现跨 58 包（76% 覆盖）
+
+### Highlights
+- 为 10 个结构体用 xxx_name 字段实现 Named trait
+  - CodegenResult(filename), FfiBindingResult(filename)
+  - JniBindingConfig(class_name), NapiBindingConfig(module_name), SwiftBindingConfig(module_name)
+  - AndroidCompileConfig(output_name), IosCompileConfig(output_name), LinuxCompileConfig(output_name), OhosCompileConfig(output_name), WindowsCompileConfig(output_name)
+- trait 实现总数：136 个跨 58 包（76% 覆盖）
+
+### Stats
+- 包数: 76（不变）
+- 测试: 2170（不变）
+- trait 实现: 136 个跨 58 包
+- Warning: 0
+
 ## v0.3.10 (2026-10-21) — 新增 3 trait + 126 实现跨 48 包
 
 ### Highlights
