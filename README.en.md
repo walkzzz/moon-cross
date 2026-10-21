@@ -6,14 +6,14 @@
 
 > Write once, deliver to five platforms — iOS / Android / Windows / HarmonyOS / Linux
 
-[![Version](https://img.shields.io/badge/version-0.3.13-blue.svg)](./docs/changelog.md)
-[![Tests](https://img.shields.io/badge/tests-2170-brightgreen.svg)]()
-[![Packages](https://img.shields.io/badge/packages-76-green.svg)]()
+[![Version](https://img.shields.io/badge/version-0.3.14-blue.svg)](./docs/changelog.md)
+[![Tests](https://img.shields.io/badge/tests-2193-brightgreen.svg)]()
+[![Packages](https://img.shields.io/badge/packages-77-green.svg)]()
 [![Warnings](https://img.shields.io/badge/warnings-0-success.svg)]()
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
 [![MoonBit](https://img.shields.io/badge/MoonBit-0.1.20260920-orange.svg)](https://moonbitlang.com)
 
-**76 packages** · **2170 tests** · **700+ APIs** · **0 warnings** · **26 integration targets**
+**77 packages** · **2193 tests** · **700+ APIs** · **0 warnings** · **26 integration targets**
 
 [中文](./README.md) · [Changelog](./docs/changelog.md) · [Roadmap](./docs/roadmap.md) · [Architecture](./docs/architecture.md) · [Contributing](./CONTRIBUTING.md)
 

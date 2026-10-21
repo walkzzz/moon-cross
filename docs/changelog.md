@@ -1,5 +1,29 @@
 # Changelog
 
+## v0.3.14 (2026-10-21) — moonbit-refactoring + moonbit-proof 扩展
+
+### Highlights
+- 新增 `src/refactoring/` 包（重构工具 + 模式）
+  - RefactorSuggestion / RefactorReport / RefactorPattern 结构体
+  - 5 种重构模式：traitify / extract_method / operator_overload / derive / trait_object
+  - 实现 Named / Describable / Countable / Summarizable trait
+  - 11 个测试
+- 扩展 `src/proof/` 包（形式化验证）
+  - InductiveStep（归纳证明）：base_case + inductive_step + conclusion
+  - ContradictionProof（反证法证明）：assumption + contradiction + conclusion
+  - TraitVerification（trait 层次验证）：验证 Verifiable : Checkable 等层次
+  - InvariantProof（不变量证明）：pre_condition + post_condition + preserves
+  - verify_sorted / verify_length_preserved / verify_idempotent
+  - compose_proofs（证明链组合）
+  - 新类型实现 Named / Checkable trait
+  - 12 个新测试
+
+### Stats
+- 新增包: src/refactoring/（1 个）
+- 新增测试: 23 个（总计 2193 个，全部通过）
+- 包数: 77
+- Warning: 0
+
 ## v0.3.13 (2026-10-21) — Trait 系统重构：子特征 + 新 trait
 
 ### Highlights

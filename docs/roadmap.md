@@ -67,6 +67,7 @@
 | v0.3.11 | ✅ Done | Named trait补全：136实现跨58包（76%覆盖） | 2170 |
 | v0.3.12 | ✅ Done | Trait覆盖89%：156实现跨68包 | 2170 |
 | v0.3.13 | ✅ Done | Trait系统重构：子特征+3新trait（14定义，157实现） | 2170 |
+| v0.3.14 | ✅ Done | moonbit-refactoring+moonbit-proof扩展（77包，2193测试） | 2193 |
 
 ## 远期计划预览（v0.2.16 → v1.0.0）
 

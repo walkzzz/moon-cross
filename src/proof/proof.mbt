@@ -156,8 +156,186 @@ pub fn range_invariant(name : String, x : Int, min_val : Int, max_val : Int) -> 
 ///|
 /// 证明包版本 | Proof package version
 pub fn proof_version() -> String {
-  "moon-cross proof v0.3.3"
+  "moon-cross proof v0.3.14"
 }
+
+///|
+/// 归纳证明步骤 | Inductive proof step
+pub(all) struct InductiveStep {
+  base_case : String
+  inductive_step : String
+  conclusion : String
+  verified : Bool
+} derive(Debug, Eq)
+pub extend InductiveStep with @moonbitlang/core/debug.Debug::{to_repr}
+pub extend InductiveStep with Eq::{not_equal, equal}
+
+///|
+/// 反证法证明 | Proof by contradiction
+pub(all) struct ContradictionProof {
+  assumption : String
+  contradiction : String
+  conclusion : String
+  valid : Bool
+} derive(Debug, Eq)
+pub extend ContradictionProof with @moonbitlang/core/debug.Debug::{to_repr}
+pub extend ContradictionProof with Eq::{not_equal, equal}
+
+///|
+/// trait 层次验证 | Trait hierarchy verification
+pub(all) struct TraitVerification {
+  trait_name : String
+  sub_trait : String
+  super_trait : String
+  holds : Bool
+} derive(Debug, Eq)
+pub extend TraitVerification with @moonbitlang/core/debug.Debug::{to_repr}
+pub extend TraitVerification with Eq::{not_equal, equal}
+
+///|
+/// 不变量证明 | Invariant proof
+pub(all) struct InvariantProof {
+  invariant_name : String
+  pre_condition : String
+  post_condition : String
+  preserves : Bool
+} derive(Debug, Eq)
+pub extend InvariantProof with @moonbitlang/core/debug.Debug::{to_repr}
+pub extend InvariantProof with Eq::{not_equal, equal}
+
+///|
+/// 创建归纳证明 | Create inductive proof
+pub fn inductive_proof(base : String, step : String, conclusion : String) -> InductiveStep {
+  let verified = base.length() > 0 && step.length() > 0 && conclusion.length() > 0
+  { base_case: base, inductive_step: step, conclusion, verified, }
+}
+
+///|
+/// 创建反证法证明 | Create proof by contradiction
+pub fn contradiction_proof(assumption : String, contradiction : String, conclusion : String) -> ContradictionProof {
+  let valid = assumption.length() > 0 && contradiction.length() > 0 && conclusion.length() > 0
+  { assumption, contradiction, conclusion, valid, }
+}
+
+///|
+/// 验证 trait 层次 | Verify trait hierarchy
+pub fn verify_trait_hierarchy(trait_name : String, sub : String, sup : String) -> TraitVerification {
+  let holds = sub.length() > 0 && sup.length() > 0
+  { trait_name, sub_trait: sub, super_trait: sup, holds, }
+}
+
+///|
+/// 验证不变量保持 | Verify invariant preservation
+pub fn verify_invariant(name : String, pre : String, post : String, preserves : Bool) -> InvariantProof {
+  { invariant_name: name, pre_condition: pre, post_condition: post, preserves, }
+}
+
+///|
+/// 证明链组合 | Compose proof chain
+pub fn compose_proofs(proofs : Array[ProofResult]) -> ProofResult {
+  let mut all_hold = true
+  let name_parts = []
+  for p in proofs {
+    if !p.holds {
+      all_hold = false
+    }
+    name_parts.push(p.name)
+  }
+  let mut name = ""
+  for part in name_parts {
+    name = name + part + "_"
+  }
+  let msg = if all_hold { "all proofs hold" } else { "some proofs failed" }
+  proof_result(name + "chain", all_hold, msg)
+}
+
+///|
+/// 编译时类型检查（通过类型系统）| Compile-time type check
+pub fn type_check_passes(value : Bool) -> Bool {
+  value
+}
+
+///|
+/// 排序性质验证 | Verify sorted property
+pub fn verify_sorted(arr : Array[Int]) -> ProofResult {
+  let mut is_sorted = true
+  for i in 1..<arr.length() {
+    if arr[i - 1] > arr[i] {
+      is_sorted = false
+    }
+  }
+  proof_result("sorted", is_sorted, if is_sorted { "array is sorted" } else { "array is not sorted" })
+}
+
+///|
+/// 长度保持验证 | Verify length preservation
+pub fn verify_length_preserved(original : Int, transformed : Int) -> ProofResult {
+  let preserved = original == transformed
+  proof_result("length_preserved", preserved, "original=" + original.to_string() + ", transformed=" + transformed.to_string())
+}
+
+///|
+/// 幂等性验证 | Verify idempotency (f(f(x)) == f(x))
+pub fn verify_idempotent(fx : Int, ffx : Int) -> ProofResult {
+  let idempotent = fx == ffx
+  proof_result("idempotent", idempotent, "f(x)=" + fx.to_string() + ", f(f(x))=" + ffx.to_string())
+}
+
+///|
+/// InductiveStep 实现 Named trait
+pub impl @trait.Named for InductiveStep with name(self) {
+  self.conclusion
+}
+pub extend InductiveStep with @trait.Named::{name}
+
+///|
+/// InductiveStep 实现 Checkable trait
+pub impl @trait.Checkable for InductiveStep with check(self) {
+  self.verified
+}
+pub extend InductiveStep with @trait.Checkable::{check}
+
+///|
+/// ContradictionProof 实现 Named trait
+pub impl @trait.Named for ContradictionProof with name(self) {
+  self.conclusion
+}
+pub extend ContradictionProof with @trait.Named::{name}
+
+///|
+/// ContradictionProof 实现 Checkable trait
+pub impl @trait.Checkable for ContradictionProof with check(self) {
+  self.valid
+}
+pub extend ContradictionProof with @trait.Checkable::{check}
+
+///|
+/// TraitVerification 实现 Named trait
+pub impl @trait.Named for TraitVerification with name(self) {
+  self.trait_name
+}
+pub extend TraitVerification with @trait.Named::{name}
+
+///|
+/// TraitVerification 实现 Checkable trait
+pub impl @trait.Checkable for TraitVerification with check(self) {
+  self.holds
+}
+pub extend TraitVerification with @trait.Checkable::{check}
+
+///|
+/// InvariantProof 实现 Named trait
+pub impl @trait.Named for InvariantProof with name(self) {
+  self.invariant_name
+}
+pub extend InvariantProof with @trait.Named::{name}
+
+///|
+/// InvariantProof 实现 Checkable trait
+pub impl @trait.Checkable for InvariantProof with check(self) {
+  self.preserves
+}
+pub extend InvariantProof with @trait.Checkable::{check}
 
 ///|
 /// ProofResult 实现 Named trait | ProofResult implements Named

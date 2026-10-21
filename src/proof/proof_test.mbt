@@ -211,3 +211,72 @@ test "Invariant Checkable trait" {
   assert_true(@trait.Checkable::check(inv1))
   assert_false(@trait.Checkable::check(inv2))
 }
+
+test "inductive_proof" {
+  let p = @proof.inductive_proof("base: P(0)", "step: P(n) => P(n+1)", "forall n, P(n)")
+  assert_true(p.verified)
+  assert_eq(p.base_case, "base: P(0)")
+}
+
+test "contradiction_proof" {
+  let p = @proof.contradiction_proof("assume not P", "derive contradiction", "therefore P")
+  assert_true(p.valid)
+  assert_eq(p.conclusion, "therefore P")
+}
+
+test "verify_trait_hierarchy" {
+  let v = @proof.verify_trait_hierarchy("Verifiable", "Verifiable", "Checkable")
+  assert_true(v.holds)
+  assert_eq(v.super_trait, "Checkable")
+}
+
+test "verify_invariant" {
+  let v = @proof.verify_invariant("sorted", "array is sorted", "array remains sorted", true)
+  assert_true(v.preserves)
+}
+
+test "verify_sorted" {
+  let p1 = @proof.verify_sorted([1, 2, 3, 4, 5])
+  assert_true(p1.holds)
+  let p2 = @proof.verify_sorted([3, 1, 2])
+  assert_false(p2.holds)
+}
+
+test "verify_length_preserved" {
+  let p1 = @proof.verify_length_preserved(5, 5)
+  assert_true(p1.holds)
+  let p2 = @proof.verify_length_preserved(5, 3)
+  assert_false(p2.holds)
+}
+
+test "verify_idempotent" {
+  let p1 = @proof.verify_idempotent(42, 42)
+  assert_true(p1.holds)
+  let p2 = @proof.verify_idempotent(42, 43)
+  assert_false(p2.holds)
+}
+
+test "type_check_passes" {
+  assert_true(@proof.type_check_passes(true))
+  assert_false(@proof.type_check_passes(false))
+}
+
+test "InductiveStep Checkable trait" {
+  let p = @proof.inductive_proof("b", "s", "c")
+  assert_true(@trait.Checkable::check(p))
+}
+
+test "ContradictionProof Named trait" {
+  let p = @proof.contradiction_proof("a", "c", "conclusion")
+  assert_eq(@trait.Named::name(p), "conclusion")
+}
+
+test "TraitVerification Checkable trait" {
+  let v = @proof.verify_trait_hierarchy("V", "sub", "sup")
+  assert_true(@trait.Checkable::check(v))
+}
+
+test "InvariantProof Named trait" {
+  let v = @proof.verify_invariant("inv", "pre", "post", true)
+  assert_eq(@trait.Named::name(v), "inv")
+}
