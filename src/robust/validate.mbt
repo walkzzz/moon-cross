@@ -111,3 +111,10 @@ pub fn merge_validation(results : Array[ValidationResult]) -> ValidationResult {
 pub fn validate_version() -> String {
   "moon-cross robust/validate v0.0.8"
 }
+
+///|
+/// ValidationResult 实现 Checkable trait | ValidationResult implements Checkable
+pub impl @trait.Checkable for ValidationResult with check(self) {
+  self.valid
+}
+pub extend ValidationResult with @trait.Checkable::{check}

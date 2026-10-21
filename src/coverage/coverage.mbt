@@ -340,3 +340,10 @@ pub fn missing_lines_summary(entry : CoverageEntry) -> String {
   }
   result
 }
+
+///|
+/// CoverageReport 实现 Countable trait | CoverageReport implements Countable
+pub impl @trait.Countable for CoverageReport with count(self) {
+  self.entries.length()
+}
+pub extend CoverageReport with @trait.Countable::{count}

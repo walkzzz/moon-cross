@@ -108,3 +108,17 @@ pub fn optimal_parallelism(cpu_cores : Int) -> Int {
 pub fn parallel_version() -> String {
   "moon-cross perf/parallel v0.1.0"
 }
+
+///|
+/// ParallelConfig 实现 Checkable trait | ParallelConfig implements Checkable
+pub impl @trait.Checkable for ParallelConfig with check(self) {
+  self.enabled
+}
+pub extend ParallelConfig with @trait.Checkable::{check}
+
+///|
+/// TaskSchedule 实现 Countable trait | TaskSchedule implements Countable
+pub impl @trait.Countable for TaskSchedule with count(self) {
+  self.tasks.length()
+}
+pub extend TaskSchedule with @trait.Countable::{count}

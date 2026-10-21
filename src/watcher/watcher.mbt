@@ -343,3 +343,17 @@ pub fn latest_events(
   }
   result
 }
+
+///|
+/// FileChange 实现 Countable trait | FileChange implements Countable
+pub impl @trait.Countable for FileChange with count(self) {
+  self.size
+}
+pub extend FileChange with @trait.Countable::{count}
+
+///|
+/// WatchResult 实现 Countable trait | WatchResult implements Countable
+pub impl @trait.Countable for WatchResult with count(self) {
+  self.events.length()
+}
+pub extend WatchResult with @trait.Countable::{count}

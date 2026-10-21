@@ -111,3 +111,10 @@ pub fn space_to_reclaim(config : CacheConfig, current_size_bytes : Int) -> Int {
 pub fn cache_version() -> String {
   "moon-cross perf/cache v0.1.0"
 }
+
+///|
+/// CacheConfig 实现 Checkable trait | CacheConfig implements Checkable
+pub impl @trait.Checkable for CacheConfig with check(self) {
+  self.enabled
+}
+pub extend CacheConfig with @trait.Checkable::{check}

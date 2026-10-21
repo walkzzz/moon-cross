@@ -275,3 +275,10 @@ pub fn merge_caches(c1 : Cache, c2 : Cache) -> Cache {
   }
   { entries, config: c1.config, stats: { hits: c1.stats.hits + c2.stats.hits, misses: c1.stats.misses + c2.stats.misses, evictions: c1.stats.evictions + c2.stats.evictions, size: entries.length() } }
 }
+
+///|
+/// CacheStats 实现 Countable trait | CacheStats implements Countable
+pub impl @trait.Countable for CacheStats with count(self) {
+  self.size
+}
+pub extend CacheStats with @trait.Countable::{count}

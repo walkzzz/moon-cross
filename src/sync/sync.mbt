@@ -28,3 +28,11 @@ pub fn sync_success(
 pub fn sync_failure(platform : @core.Platform) -> SyncResult {
   { platform, updated_files: [], success: false, }
 }
+
+
+///|
+/// SyncResult 实现 Checkable trait | SyncResult implements Checkable
+pub impl @trait.Checkable for SyncResult with check(self) {
+  self.success
+}
+pub extend SyncResult with @trait.Checkable::{check}

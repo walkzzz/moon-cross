@@ -1,5 +1,19 @@
 # Changelog
 
+## v0.3.8 (2026-10-21) — Checkable/Countable trait 扩展：95 实现跨 47 包
+
+### Highlights
+- 新增 20 个 Checkable/Countable trait 实现
+  - Checkable: CacheConfig/ParallelConfig/ProxyConfig/AsanConfig/AsanResult/SandboxResult/PlatformCompileResult/RetryResult/ValidationResult/StrategyResult/SyncResult
+  - Countable: CacheStats/Cache/CoverageReport/Graph/Logger/TaskSchedule/CompileSummary/AsanResult/FileChange/WatchResult
+- trait 实现总数：95 个跨 47 包（62%）
+
+### Stats
+- 包数: 76（不变）
+- 测试: 2170（不变）
+- trait 实现: 95 个跨 47 包
+- Warning: 0
+
 ## v0.3.7 (2026-10-21) — Trait 全面覆盖：75 实现跨 36 包
 
 ### Highlights

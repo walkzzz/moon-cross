@@ -205,3 +205,32 @@ pub fn SafetyCheckType::to_string(self : SafetyCheckType) -> String {
 pub fn ffi_safety_version() -> String {
   "moon-cross security/ffi_safety v0.0.9"
 }
+
+
+///|
+/// AsanConfig 实现 Checkable trait | AsanConfig implements Checkable
+pub impl @trait.Checkable for AsanConfig with check(self) {
+  self.enabled
+}
+pub extend AsanConfig with @trait.Checkable::{check}
+
+///|
+/// AsanResult 实现 Checkable trait | AsanResult implements Checkable
+pub impl @trait.Checkable for AsanResult with check(self) {
+  self.passed
+}
+pub extend AsanResult with @trait.Checkable::{check}
+
+///|
+/// AsanResult 实现 Countable trait | AsanResult implements Countable
+pub impl @trait.Countable for AsanResult with count(self) {
+  self.errors.length()
+}
+pub extend AsanResult with @trait.Countable::{count}
+
+///|
+/// SandboxResult 实现 Checkable trait | SandboxResult implements Checkable
+pub impl @trait.Checkable for SandboxResult with check(self) {
+  self.success
+}
+pub extend SandboxResult with @trait.Checkable::{check}

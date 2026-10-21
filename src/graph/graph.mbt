@@ -304,3 +304,10 @@ fn array_contains(arr : Array[String], item : String) -> Bool {
   }
   false
 }
+
+///|
+/// Graph 实现 Countable trait | Graph implements Countable
+pub impl @trait.Countable for Graph with count(self) {
+  self.nodes.length()
+}
+pub extend Graph with @trait.Countable::{count}

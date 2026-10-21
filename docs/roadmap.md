@@ -61,6 +61,7 @@
 | v0.3.5 | ✅ Done | R3/R4合规：pub fn注释+76子包README（76包，2170测试） | 2170 |
 | v0.3.6 | ✅ Done | Trait覆盖扩展：15包18类型实现Named trait（31类型跨19包） | 2170 |
 | v0.3.7 | ✅ Done | Trait全面覆盖：75实现跨36包（Named trait铺开） | 2170 |
+| v0.3.8 | ✅ Done | Checkable/Countable扩展：95实现跨47包（62%覆盖） | 2170 |
 
 ## 远期计划预览（v0.2.16 → v1.0.0）
 

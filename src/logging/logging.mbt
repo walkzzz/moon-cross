@@ -315,3 +315,10 @@ pub fn merge_loggers(l1 : Logger, l2 : Logger) -> Logger {
 pub fn log_version() -> String {
   "moon-cross logging v0.2.18"
 }
+
+///|
+/// Logger 实现 Countable trait | Logger implements Countable
+pub impl @trait.Countable for Logger with count(self) {
+  self.entries.length()
+}
+pub extend Logger with @trait.Countable::{count}

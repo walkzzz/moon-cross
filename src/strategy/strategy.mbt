@@ -119,3 +119,11 @@ pub fn context_switch(_ctx : StrategyContext, new_strategy : String) -> Strategy
 pub fn strategy_version() -> String {
   "moon-cross strategy v0.3.2"
 }
+
+
+///|
+/// StrategyResult 实现 Checkable trait | StrategyResult implements Checkable
+pub impl @trait.Checkable for StrategyResult with check(self) {
+  self.success
+}
+pub extend StrategyResult with @trait.Checkable::{check}

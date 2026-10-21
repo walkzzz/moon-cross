@@ -78,3 +78,10 @@ pub fn total_timeout(config : RetryConfig) -> Int {
 pub fn retry_version() -> String {
   "moon-cross robust/retry v0.0.8"
 }
+
+///|
+/// RetryResult 实现 Checkable trait | RetryResult implements Checkable
+pub impl @trait.Checkable for RetryResult with check(self) {
+  self.success
+}
+pub extend RetryResult with @trait.Checkable::{check}

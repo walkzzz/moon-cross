@@ -101,3 +101,10 @@ pub fn proxy_request(p : ProxyConfig, client : String, key : String) -> String? 
 pub fn proxy_version() -> String {
   "moon-cross proxy v0.3.6"
 }
+
+///|
+/// ProxyConfig 实现 Checkable trait | ProxyConfig implements Checkable
+pub impl @trait.Checkable for ProxyConfig with check(self) {
+  self.enabled
+}
+pub extend ProxyConfig with @trait.Checkable::{check}

@@ -125,3 +125,17 @@ pub fn generate_failure_report(summary : CompileSummary) -> String {
 pub fn recovery_version() -> String {
   "moon-cross robust/recovery v0.0.8"
 }
+
+///|
+/// PlatformCompileResult 实现 Checkable trait | PlatformCompileResult implements Checkable
+pub impl @trait.Checkable for PlatformCompileResult with check(self) {
+  self.success
+}
+pub extend PlatformCompileResult with @trait.Checkable::{check}
+
+///|
+/// CompileSummary 实现 Countable trait | CompileSummary implements Countable
+pub impl @trait.Countable for CompileSummary with count(self) {
+  self.results.length()
+}
+pub extend CompileSummary with @trait.Countable::{count}
