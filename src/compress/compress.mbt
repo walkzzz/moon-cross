@@ -99,3 +99,10 @@ pub fn dict_encode(s : String) -> String {
 pub fn compress_version() -> String {
   "moon-cross compress v0.3.0"
 }
+
+///|
+/// CompressionResult 实现 Countable trait | CompressionResult implements Countable
+pub impl @trait.Countable for CompressionResult with count(self) {
+  self.original_size
+}
+pub extend CompressionResult with @trait.Countable::{count}

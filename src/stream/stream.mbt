@@ -127,3 +127,10 @@ pub fn stream_stats(input : Array[Int], output : Array[Int], ops : Int) -> Strea
 pub fn stream_version() -> String {
   "moon-cross stream v0.3.0"
 }
+
+///|
+/// StreamStats 实现 Countable trait | StreamStats implements Countable
+pub impl @trait.Countable for StreamStats with count(self) {
+  self.input_count
+}
+pub extend StreamStats with @trait.Countable::{count}

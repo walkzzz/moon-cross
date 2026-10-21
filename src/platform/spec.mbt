@@ -68,3 +68,11 @@ pub fn platform_spec(platform : @core.Platform) -> PlatformSpec {
 pub fn platform_spec_version() -> String {
   "moon-cross platform v0.1.0"
 }
+
+
+///|
+/// PlatformSpec 实现 Named trait | PlatformSpec implements Named
+pub impl @trait.Named for PlatformSpec with name(self) {
+  self.target_triple
+}
+pub extend PlatformSpec with @trait.Named::{name}

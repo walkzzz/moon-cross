@@ -110,3 +110,17 @@ pub fn caretaker_position(ck : Caretaker) -> Int {
 pub fn memento_version() -> String {
   "moon-cross memento v0.3.8"
 }
+
+///|
+/// Caretaker 实现 Countable trait | Caretaker implements Countable
+pub impl @trait.Countable for Caretaker with count(self) {
+  self.mementos.length()
+}
+pub extend Caretaker with @trait.Countable::{count}
+
+///|
+/// Caretaker 实现 Iterable trait | Caretaker implements Iterable
+pub impl @trait.Iterable for Caretaker with iter_count(self) {
+  self.mementos.length()
+}
+pub extend Caretaker with @trait.Iterable::{iter_count}

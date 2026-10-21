@@ -1,5 +1,21 @@
 # Changelog
 
+## v0.3.12 (2026-10-21) — Trait 覆盖 89%：156 实现跨 68 包
+
+### Highlights
+- 新增 20 个 trait 实现（Checkable/Countable/Named/Iterable）
+  - Checkable: SearchResult, DiffConfig, PlatformDetection, SourceAnalysis, PoolConfig
+  - Countable: SearchResult, CompressionResult, DiffResult, DiffStats, Caretaker, Pool, PoolStats, StreamStats, TemplateContext
+  - Named: HashConfig, Template, PlatformSpec
+  - Iterable: DiffResult, Caretaker, TemplateContext
+- trait 实现总数：156 个跨 68 包（89% 覆盖）
+
+### Stats
+- 包数: 76（不变）
+- 测试: 2170（不变）
+- trait 实现: 156 个跨 68 包
+- Warning: 0
+
 ## v0.3.11 (2026-10-21) — Named trait 补全：136 实现跨 58 包（76% 覆盖）
 
 ### Highlights

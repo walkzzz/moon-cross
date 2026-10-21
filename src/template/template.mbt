@@ -292,3 +292,24 @@ pub fn template_render(source : String, ctx : TemplateContext) -> String {
 pub fn template_version() -> String {
   "moon-cross template v0.2.25"
 }
+
+///|
+/// TemplateContext 实现 Countable trait | TemplateContext implements Countable
+pub impl @trait.Countable for TemplateContext with count(self) {
+  self.vars.length()
+}
+pub extend TemplateContext with @trait.Countable::{count}
+
+///|
+/// Template 实现 Named trait | Template implements Named
+pub impl @trait.Named for Template with name(self) {
+  self.source
+}
+pub extend Template with @trait.Named::{name}
+
+///|
+/// TemplateContext 实现 Iterable trait | TemplateContext implements Iterable
+pub impl @trait.Iterable for TemplateContext with iter_count(self) {
+  self.vars.length()
+}
+pub extend TemplateContext with @trait.Iterable::{iter_count}

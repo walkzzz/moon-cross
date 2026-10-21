@@ -338,3 +338,24 @@ pub fn merge_pools(p1 : Pool, p2 : Pool) -> Pool {
 pub fn pool_version() -> String {
   "moon-cross pool v0.2.12"
 }
+
+///|
+/// PoolConfig 实现 Checkable trait | PoolConfig implements Checkable
+pub impl @trait.Checkable for PoolConfig with check(self) {
+  self.auto_shrink
+}
+pub extend PoolConfig with @trait.Checkable::{check}
+
+///|
+/// Pool 实现 Countable trait | Pool implements Countable
+pub impl @trait.Countable for Pool with count(self) {
+  self.active_count
+}
+pub extend Pool with @trait.Countable::{count}
+
+///|
+/// PoolStats 实现 Countable trait | PoolStats implements Countable
+pub impl @trait.Countable for PoolStats with count(self) {
+  self.active
+}
+pub extend PoolStats with @trait.Countable::{count}

@@ -235,3 +235,10 @@ pub fn generate_salt(length : Int, seed : Int) -> String {
 pub fn crypto_version() -> String {
   "moon-cross crypto_util v0.2.27"
 }
+
+///|
+/// HashConfig 实现 Named trait | HashConfig implements Named
+pub impl @trait.Named for HashConfig with name(self) {
+  self.algorithm
+}
+pub extend HashConfig with @trait.Named::{name}

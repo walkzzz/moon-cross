@@ -164,3 +164,17 @@ pub fn merge_discovery(results : Array[DiscoveryResult]) -> DiscoveryResult {
 pub fn discovery_version() -> String {
   "moon-cross discovery v0.1.2"
 }
+
+///|
+/// PlatformDetection 实现 Checkable trait | PlatformDetection implements Checkable
+pub impl @trait.Checkable for PlatformDetection with check(self) {
+  self.available
+}
+pub extend PlatformDetection with @trait.Checkable::{check}
+
+///|
+/// SourceAnalysis 实现 Checkable trait | SourceAnalysis implements Checkable
+pub impl @trait.Checkable for SourceAnalysis with check(self) {
+  self.has_pub_fn
+}
+pub extend SourceAnalysis with @trait.Checkable::{check}

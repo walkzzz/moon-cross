@@ -222,3 +222,17 @@ pub fn array_dedup(arr : Array[Int]) -> Array[Int] {
 pub fn algorithm_version() -> String {
   "moon-cross algorithm v0.3.0"
 }
+
+///|
+/// SearchResult 实现 Checkable trait | SearchResult implements Checkable
+pub impl @trait.Checkable for SearchResult with check(self) {
+  self.found
+}
+pub extend SearchResult with @trait.Checkable::{check}
+
+///|
+/// SearchResult 实现 Countable trait | SearchResult implements Countable
+pub impl @trait.Countable for SearchResult with count(self) {
+  self.index
+}
+pub extend SearchResult with @trait.Countable::{count}

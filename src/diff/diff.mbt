@@ -293,3 +293,31 @@ pub fn reverse_diff(result : DiffResult) -> DiffResult {
   }
   { lines, added_count: result.removed_count, removed_count: result.added_count, unchanged_count: result.unchanged_count }
 }
+
+///|
+/// DiffConfig 实现 Checkable trait | DiffConfig implements Checkable
+pub impl @trait.Checkable for DiffConfig with check(self) {
+  self.ignore_whitespace
+}
+pub extend DiffConfig with @trait.Checkable::{check}
+
+///|
+/// DiffResult 实现 Countable trait | DiffResult implements Countable
+pub impl @trait.Countable for DiffResult with count(self) {
+  self.lines.length()
+}
+pub extend DiffResult with @trait.Countable::{count}
+
+///|
+/// DiffStats 实现 Countable trait | DiffStats implements Countable
+pub impl @trait.Countable for DiffStats with count(self) {
+  self.total_lines
+}
+pub extend DiffStats with @trait.Countable::{count}
+
+///|
+/// DiffResult 实现 Iterable trait | DiffResult implements Iterable
+pub impl @trait.Iterable for DiffResult with iter_count(self) {
+  self.lines.length()
+}
+pub extend DiffResult with @trait.Iterable::{iter_count}
