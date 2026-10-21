@@ -328,3 +328,10 @@ pub fn merge_uris(u1 : Uri, u2 : Uri) -> Uri {
 pub fn uri_version() -> String {
   "moon-cross uri v0.2.23"
 }
+
+///|
+/// QueryParam 实现 Named trait | QueryParam implements Named
+pub impl @trait.Named for QueryParam with name(self) {
+  self.name
+}
+pub extend QueryParam with @trait.Named::{name}

@@ -170,3 +170,10 @@ pub fn PluginHook::to_string(self : PluginHook) -> String {
 pub fn plugin_version() -> String {
   "moon-cross plugin v0.1.1"
 }
+
+///|
+/// PluginInfo 实现 Named trait | PluginInfo implements Named
+pub impl @trait.Named for PluginInfo with name(self) {
+  self.name
+}
+pub extend PluginInfo with @trait.Named::{name}

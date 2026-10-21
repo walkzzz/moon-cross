@@ -293,3 +293,10 @@ pub fn task_queue_is_empty(tq : TaskQueue) -> Bool {
 pub fn concurrency_version() -> String {
   "moon-cross concurrency v0.2.28"
 }
+
+///|
+/// Task 实现 Named trait | Task implements Named
+pub impl @trait.Named for Task with name(self) {
+  self.name
+}
+pub extend Task with @trait.Named::{name}

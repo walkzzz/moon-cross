@@ -280,3 +280,10 @@ pub fn batch_validate(
   }
   { valid: errors.length() == 0, errors }
 }
+
+///|
+/// ValidationRule 实现 Named trait | ValidationRule implements Named
+pub impl @trait.Named for ValidationRule with name(self) {
+  self.name
+}
+pub extend ValidationRule with @trait.Named::{name}

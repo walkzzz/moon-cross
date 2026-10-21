@@ -18,3 +18,4 @@ pub fn codegen_version() -> String {
 pub fn generate_export_macro() -> String {
   "#ifdef _WIN32\n#define MOONBIT_EXPORT __declspec(dllexport)\n#else\n#define MOONBIT_EXPORT __attribute__((visibility(\"default\")))\n#endif\n"
 }
+

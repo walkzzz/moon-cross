@@ -119,3 +119,17 @@ pub fn event_create(name : String, data : String, timestamp : Int) -> Event {
 pub fn observer_version() -> String {
   "moon-cross observer v0.3.1"
 }
+
+///|
+/// Observer 实现 Named trait | Observer implements Named
+pub impl @trait.Named for Observer with name(self) {
+  self.name
+}
+pub extend Observer with @trait.Named::{name}
+
+///|
+/// Event 实现 Named trait | Event implements Named
+pub impl @trait.Named for Event with name(self) {
+  self.name
+}
+pub extend Event with @trait.Named::{name}

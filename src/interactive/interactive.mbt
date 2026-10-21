@@ -153,3 +153,11 @@ pub fn is_complete(bar : ProgressBar) -> Bool {
 pub fn interactive_version() -> String {
   "moon-cross interactive v0.1.2"
 }
+
+
+///|
+/// ProgressStep 实现 Named trait | ProgressStep implements Named
+pub impl @trait.Named for ProgressStep with name(self) {
+  self.name
+}
+pub extend ProgressStep with @trait.Named::{name}

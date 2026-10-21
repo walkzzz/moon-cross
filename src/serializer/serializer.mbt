@@ -302,3 +302,10 @@ pub fn field_names(fields : Array[SerializedField]) -> Array[String] {
   }
   result
 }
+
+///|
+/// SerializedField 实现 Named trait | SerializedField implements Named
+pub impl @trait.Named for SerializedField with name(self) {
+  self.name
+}
+pub extend SerializedField with @trait.Named::{name}

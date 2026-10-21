@@ -331,3 +331,10 @@ pub fn count_changes(results : Array[FormatResult]) -> Int {
   }
   count
 }
+
+///|
+/// FormatRule 实现 Named trait | FormatRule implements Named
+pub impl @trait.Named for FormatRule with name(self) {
+  self.name
+}
+pub extend FormatRule with @trait.Named::{name}

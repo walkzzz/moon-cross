@@ -66,3 +66,32 @@ pub fn default_config(name : String) -> CrossConfig {
 pub fn config_version() -> Int {
   1
 }
+
+
+///|
+/// ExportParam 实现 Named trait | ExportParam implements Named
+pub impl @trait.Named for ExportParam with name(self) {
+  self.name
+}
+pub extend ExportParam with @trait.Named::{name}
+
+///|
+/// ExportFunction 实现 Named trait | ExportFunction implements Named
+pub impl @trait.Named for ExportFunction with name(self) {
+  self.name
+}
+pub extend ExportFunction with @trait.Named::{name}
+
+///|
+/// ExportField 实现 Named trait | ExportField implements Named
+pub impl @trait.Named for ExportField with name(self) {
+  self.name
+}
+pub extend ExportField with @trait.Named::{name}
+
+///|
+/// ExportType 实现 Named trait | ExportType implements Named
+pub impl @trait.Named for ExportType with name(self) {
+  self.name
+}
+pub extend ExportType with @trait.Named::{name}

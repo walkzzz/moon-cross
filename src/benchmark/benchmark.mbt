@@ -402,3 +402,24 @@ pub fn find_slowest(suite : BenchmarkSuite) -> BenchmarkResult? {
   }
   Some(slowest)
 }
+
+///|
+/// BenchmarkConfig 实现 Named trait | BenchmarkConfig implements Named
+pub impl @trait.Named for BenchmarkConfig with name(self) {
+  self.name
+}
+pub extend BenchmarkConfig with @trait.Named::{name}
+
+///|
+/// BenchmarkResult 实现 Named trait | BenchmarkResult implements Named
+pub impl @trait.Named for BenchmarkResult with name(self) {
+  self.name
+}
+pub extend BenchmarkResult with @trait.Named::{name}
+
+///|
+/// BenchmarkSuite 实现 Named trait | BenchmarkSuite implements Named
+pub impl @trait.Named for BenchmarkSuite with name(self) {
+  self.name
+}
+pub extend BenchmarkSuite with @trait.Named::{name}

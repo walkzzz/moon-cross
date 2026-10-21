@@ -1,5 +1,19 @@
 # Changelog
 
+## v0.3.7 (2026-10-21) — Trait 全面覆盖：75 实现跨 36 包
+
+### Highlights
+- Named trait 全面铺开：75 个 trait 实现跨 36 个包
+  - 新增 35 个类型的 Named trait 实现（argparse/benchmark/config/diagnostic/docs/ffi/formatter/interactive/linter/observer/plugin/publish/scaffold/scheduler/security/serializer/uri/validator 等）
+  - 移除 18 个无 `name` 字段类型的错误实现
+- trait 覆盖率：36/76 包（47%），75 个类型实现
+
+### Stats
+- 包数: 76（不变）
+- 测试: 2170（不变）
+- trait 实现: 75 个跨 36 包
+- Warning: 0
+
 ## v0.3.6 (2026-10-21) — Trait 覆盖扩展：15 包 18 类型实现 Named trait
 
 ### Highlights

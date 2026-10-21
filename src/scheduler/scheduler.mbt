@@ -103,3 +103,10 @@ pub fn scheduler_cancel(s : Scheduler, task_id : Int) -> Scheduler {
 pub fn scheduler_version() -> String {
   "moon-cross scheduler v0.3.5"
 }
+
+///|
+/// ScheduledTask 实现 Named trait | ScheduledTask implements Named
+pub impl @trait.Named for ScheduledTask with name(self) {
+  self.name
+}
+pub extend ScheduledTask with @trait.Named::{name}

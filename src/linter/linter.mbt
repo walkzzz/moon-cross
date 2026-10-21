@@ -520,3 +520,10 @@ pub fn disable_rule(
   }
   { ..config, rules: new_rules }
 }
+
+///|
+/// LintRule 实现 Named trait | LintRule implements Named
+pub impl @trait.Named for LintRule with name(self) {
+  self.name
+}
+pub extend LintRule with @trait.Named::{name}

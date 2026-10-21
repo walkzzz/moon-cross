@@ -339,3 +339,18 @@ pub fn is_published(result : PublishResult) -> Bool {
 pub fn get_publish_metadata(result : PublishResult) -> MooncakesMetadata? {
   result.metadata
 }
+
+
+///|
+/// PublishCheck 实现 Named trait | PublishCheck implements Named
+pub impl @trait.Named for PublishCheck with name(self) {
+  self.name
+}
+pub extend PublishCheck with @trait.Named::{name}
+
+///|
+/// MooncakesMetadata 实现 Named trait | MooncakesMetadata implements Named
+pub impl @trait.Named for MooncakesMetadata with name(self) {
+  self.name
+}
+pub extend MooncakesMetadata with @trait.Named::{name}

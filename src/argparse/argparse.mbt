@@ -309,3 +309,17 @@ pub fn merge_parsers(p1 : ArgParser, p2 : ArgParser) -> ArgParser {
 pub fn argparse_version() -> String {
   "moon-cross argparse v0.2.21"
 }
+
+///|
+/// ArgDef 实现 Named trait | ArgDef implements Named
+pub impl @trait.Named for ArgDef with name(self) {
+  self.name
+}
+pub extend ArgDef with @trait.Named::{name}
+
+///|
+/// ArgParser 实现 Named trait | ArgParser implements Named
+pub impl @trait.Named for ArgParser with name(self) {
+  self.name
+}
+pub extend ArgParser with @trait.Named::{name}

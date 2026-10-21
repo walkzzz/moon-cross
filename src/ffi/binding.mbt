@@ -49,3 +49,4 @@ pub fn ffi_binding_for_platform(platform : @core.Platform) -> FfiBindingType {
     @core.Linux => CffiBinding
   }
 }
+

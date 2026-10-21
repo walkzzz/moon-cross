@@ -160,3 +160,10 @@ pub fn templates_by_category(category : String) -> Array[TemplateInfo] {
 pub fn template_version() -> String {
   "moon-cross plugin/template v0.1.1"
 }
+
+///|
+/// TemplateInfo 实现 Named trait | TemplateInfo implements Named
+pub impl @trait.Named for TemplateInfo with name(self) {
+  self.name
+}
+pub extend TemplateInfo with @trait.Named::{name}

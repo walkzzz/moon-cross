@@ -120,3 +120,17 @@ pub fn batch_check_dependencies(deps : Array[DependencyInfo]) -> Array[String] {
 pub fn supply_chain_version() -> String {
   "moon-cross security/supply_chain v0.0.9"
 }
+
+///|
+/// DependencyInfo 实现 Named trait | DependencyInfo implements Named
+pub impl @trait.Named for DependencyInfo with name(self) {
+  self.name
+}
+pub extend DependencyInfo with @trait.Named::{name}
+
+///|
+/// LockEntry 实现 Named trait | LockEntry implements Named
+pub impl @trait.Named for LockEntry with name(self) {
+  self.name
+}
+pub extend LockEntry with @trait.Named::{name}

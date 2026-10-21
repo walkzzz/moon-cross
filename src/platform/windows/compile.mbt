@@ -38,3 +38,4 @@ pub fn default_windows_config(
 ) -> WindowsCompileConfig {
   { arch: @core.X86_64, output_dir, output_name, }
 }
+

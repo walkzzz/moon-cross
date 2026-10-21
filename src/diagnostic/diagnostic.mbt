@@ -151,3 +151,10 @@ pub fn DiagStatus::to_string(self : DiagStatus) -> String {
 pub fn diagnostic_version() -> String {
   "moon-cross diagnostic v0.1.2"
 }
+
+///|
+/// DiagCheck 实现 Named trait | DiagCheck implements Named
+pub impl @trait.Named for DiagCheck with name(self) {
+  self.name
+}
+pub extend DiagCheck with @trait.Named::{name}

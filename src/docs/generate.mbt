@@ -169,3 +169,10 @@ pub fn DocFormat::to_string(self : DocFormat) -> String {
 pub fn docs_version() -> String {
   "moon-cross docs v0.1.1"
 }
+
+///|
+/// ApiDocEntry 实现 Named trait | ApiDocEntry implements Named
+pub impl @trait.Named for ApiDocEntry with name(self) {
+  self.name
+}
+pub extend ApiDocEntry with @trait.Named::{name}
