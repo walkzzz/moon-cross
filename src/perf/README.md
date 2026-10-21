@@ -1,0 +1,59 @@
+# perf
+
+## Types
+- `CacheConfig`
+- `CacheEntry`
+- `CacheStats`
+- `ChangeSet`
+- `ChangeType`
+- `FileChange`
+- `IncrementalResult`
+- `OptConfig`
+- `OptLevel`
+- `OptResult`
+- `ParallelConfig`
+- `ParallelTask`
+- `TaskSchedule`
+
+## Public API
+- `OptLevel`
+- `affected_platforms`
+- `cache_exceeds_size`
+- `cache_key`
+- `cache_version`
+- `calculate_batches`
+- `check_cache`
+- `compression_ratio`
+- `dead_code_eliminate`
+- `debug_opt_config`
+- `default_cache_config`
+- `default_opt_config`
+- `default_parallel_config`
+- `detect_changes`
+- `disabled_cache_config`
+- `disabled_parallel_config`
+- `empty_cache_stats`
+- `empty_change_set`
+- `estimate_optimized_size`
+- `generate_all_tasks`
+- `hit_rate`
+- `incremental_build`
+- `incremental_version`
+- `make_cache_entry`
+- `make_change_set`
+- `make_file_change`
+- `make_opt_result`
+- `make_task`
+- `needs_rebuild`
+- `opt_flags`
+- `optimal_parallelism`
+- `optimize_version`
+- `parallel_version`
+- `release_opt_config`
+- `schedule_tasks`
+- `should_inline`
+- `space_to_reclaim`
+- `template_specialize`
+- `warmup_config`
+
+> Part of [moon-cross](../../README.md) — MoonBit cross-platform native framework

@@ -1,5 +1,19 @@
 # Changelog
 
+## v0.3.5 (2026-10-21) — R3/R4 合规：pub fn 注释 + 子包 README
+
+### Highlights
+- R3 合规验证：所有 `pub fn` 均有 `///` 注释（0 缺失）
+- R4 合规：为全部 76 个子包创建 README.md
+  - 每个子包 README 包含：包名、Types 列表、Public API 列表
+  - 链接回根 README
+
+### Stats
+- 新增文件: 76 个子包 README.md
+- 包数: 76（不变）
+- 测试: 2170（不变）
+- Warning: 0
+
 ## v0.3.4 (2026-10-21) — 根包重导出 + 多手段测试报告（R12/R17 合规）
 
 ### Highlights
