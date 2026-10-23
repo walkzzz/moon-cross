@@ -1,5 +1,20 @@
 # Changelog
 
+## v0.3.17 (2026-10-23) — 平铺到根目录：移除 src/ 前缀
+
+### Highlights
+- 将所有包从 `src/` 平铺到根目录，移除 `src/` 前缀
+  - `src/core/core/` → `core/core/`
+  - `src/testing/proof/` → `testing/proof/`
+  - 所有 10 个一级分类目录直接在根目录下
+- 更新 74 个 moon.pkg 导入路径：`walkzzz/moon-cross/src/` → `walkzzz/moon-cross/`
+- 删除 `src/` 目录
+
+### Stats
+- 包数: 79（不变）
+- 测试: 2233（不变）
+- Warning: 0
+
 ## v0.3.16 (2026-10-23) — 多根包重构：79 包 → 10 一级分类
 
 ### Highlights

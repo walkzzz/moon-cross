@@ -1,0 +1,21 @@
+import {
+  "walkzzz/moon-cross/core/core",
+  "walkzzz/moon-cross/codegen/codegen",
+  "walkzzz/moon-cross/platform/platform/android" @platform_android,
+  "walkzzz/moon-cross/platform/platform/ios" @platform_ios,
+  "walkzzz/moon-cross/platform/platform/ohos" @platform_ohos,
+  "walkzzz/moon-cross/codegen/ffi",
+  "walkzzz/moon-cross/codegen/ffi/jni" @ffi_jni,
+  "walkzzz/moon-cross/codegen/ffi/swift" @ffi_swift,
+  "walkzzz/moon-cross/codegen/ffi/napi" @ffi_napi,
+  "walkzzz/moon-cross/tools/scaffold",
+  "walkzzz/moon-cross/runtime/sync",
+  "walkzzz/moon-cross/tools/publish" @publish,
+  "walkzzz/moon-cross/analysis/diagnostic" @diagnostic,
+  "walkzzz/moon-cross/analysis/discovery" @discovery,
+  "walkzzz/moon-cross/tools/interactive" @interactive,
+}
+
+options(
+  "is-main": true,
+)

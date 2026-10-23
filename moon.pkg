@@ -1,8 +1,8 @@
 import {
-  "walkzzz/moon-cross/src/core/core" @core,
-  "walkzzz/moon-cross/src/core/trait" @trait,
-  "walkzzz/moon-cross/src/testing/proof" @proof,
-  "walkzzz/moon-cross/src/testing/mock" @mock,
-  "walkzzz/moon-cross/src/testing/e2e" @e2e,
-  "walkzzz/moon-cross/src/testing/ai_test" @ai_test,
+  "walkzzz/moon-cross/core/core" @core,
+  "walkzzz/moon-cross/core/trait" @trait,
+  "walkzzz/moon-cross/testing/proof" @proof,
+  "walkzzz/moon-cross/testing/mock" @mock,
+  "walkzzz/moon-cross/testing/e2e" @e2e,
+  "walkzzz/moon-cross/testing/ai_test" @ai_test,
 }

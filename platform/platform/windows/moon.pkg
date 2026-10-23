@@ -1,0 +1,5 @@
+import {
+  "moonbitlang/core/debug",
+  "walkzzz/moon-cross/core/core",
+  "walkzzz/moon-cross/core/trait",
+}

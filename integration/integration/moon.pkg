@@ -1,0 +1,13 @@
+import {
+  "moonbitlang/core/debug",
+  "walkzzz/moon-cross/core/core",
+  "walkzzz/moon-cross/core/config",
+  "walkzzz/moon-cross/codegen/codegen",
+  "walkzzz/moon-cross/codegen/codegen/c" @codegen_c,
+  "walkzzz/moon-cross/platform/platform",
+  "walkzzz/moon-cross/platform/platform/windows" @platform_windows,
+  "walkzzz/moon-cross/platform/platform/android" @platform_android,
+  "walkzzz/moon-cross/platform/platform/ios" @platform_ios,
+  "walkzzz/moon-cross/platform/platform/ohos" @platform_ohos,
+  "walkzzz/moon-cross/codegen/ffi",
+}
