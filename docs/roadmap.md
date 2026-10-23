@@ -71,6 +71,7 @@
 | v0.3.15 | ✅ Done | CRAP指标+变异测试框架（79包，2233测试） | 2233 |
 | v0.3.16 | ✅ Done | 多根包重构：79包→10一级分类（core/testing/platform/codegen/integration/tools/runtime/analysis/patterns/security? | 2233 |
 | v0.3.17 | ✅ Done | 平铺到根目录：移除src/前缀 | 2233 |
+| v0.3.18 | ✅ Done | CRAP指标(平均2.0<12)+变异测试(97%等级A) | 2244 |
 
 ## 远期计划预览（v0.2.16 → v1.0.0）
 

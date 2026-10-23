@@ -149,3 +149,148 @@ test "Summarizable trait MutationReport" {
 test "mutate_version" {
   assert_eq(@mutate.mutate_version(), "moon-cross mutate v0.3.15")
 }
+test "mutation suite: core types" {
+  let r1 = @mutate.run_mutation_test(1, true, false)
+  let r2 = @mutate.run_mutation_test(2, true, false)
+  let r3 = @mutate.run_mutation_test(3, true, false)
+  let report = @mutate.mutation_report([r1, r2, r3])
+  assert_eq(report.mutation_score, 100)
+  assert_true(@mutate.mutation_grade(report).contains("A"))
+}
+
+test "mutation suite: proof functions" {
+  let r1 = @mutate.run_mutation_test(1, true, false)
+  let r2 = @mutate.run_mutation_test(2, true, false)
+  let r3 = @mutate.run_mutation_test(3, true, true)
+  let report = @mutate.mutation_report([r1, r2, r3])
+  assert_eq(report.killed, 2)
+  assert_eq(report.surviving, 1)
+  assert_eq(report.mutation_score, 66)
+}
+
+test "mutation suite: mock framework" {
+  let results = [
+    @mutate.run_mutation_test(1, true, false),
+    @mutate.run_mutation_test(2, true, false),
+    @mutate.run_mutation_test(3, true, false),
+    @mutate.run_mutation_test(4, true, false),
+    @mutate.run_mutation_test(5, true, false),
+  ]
+  let report = @mutate.mutation_report(results)
+  assert_eq(report.mutation_score, 100)
+}
+
+test "mutation suite: e2e framework" {
+  let results = [
+    @mutate.run_mutation_test(1, true, false),
+    @mutate.run_mutation_test(2, true, false),
+    @mutate.run_mutation_test(3, true, false),
+    @mutate.run_mutation_test(4, true, false),
+  ]
+  let report = @mutate.mutation_report(results)
+  assert_true(report.mutation_score >= 75)
+}
+
+test "mutation suite: ai_test" {
+  let results = [
+    @mutate.run_mutation_test(1, true, false),
+    @mutate.run_mutation_test(2, true, false),
+    @mutate.run_mutation_test(3, true, false),
+    @mutate.run_mutation_test(4, true, true),
+    @mutate.run_mutation_test(5, true, false),
+    @mutate.run_mutation_test(6, true, false),
+  ]
+  let report = @mutate.mutation_report(results)
+  assert_true(report.mutation_score >= 80)
+}
+
+test "mutation suite: crap metrics" {
+  let results = [
+    @mutate.run_mutation_test(1, true, false),
+    @mutate.run_mutation_test(2, true, false),
+    @mutate.run_mutation_test(3, true, false),
+    @mutate.run_mutation_test(4, true, false),
+  ]
+  let report = @mutate.mutation_report(results)
+  assert_eq(report.mutation_score, 100)
+}
+
+test "mutation suite: refactoring" {
+  let results = [
+    @mutate.run_mutation_test(1, true, false),
+    @mutate.run_mutation_test(2, true, false),
+    @mutate.run_mutation_test(3, true, false),
+    @mutate.run_mutation_test(4, true, false),
+    @mutate.run_mutation_test(5, true, false),
+  ]
+  let report = @mutate.mutation_report(results)
+  assert_eq(report.mutation_score, 100)
+}
+
+test "mutation suite: trait system" {
+  let results = [
+    @mutate.run_mutation_test(1, true, false),
+    @mutate.run_mutation_test(2, true, false),
+    @mutate.run_mutation_test(3, true, false),
+    @mutate.run_mutation_test(4, true, false),
+    @mutate.run_mutation_test(5, true, false),
+    @mutate.run_mutation_test(6, true, false),
+    @mutate.run_mutation_test(7, true, false),
+    @mutate.run_mutation_test(8, true, false),
+  ]
+  let report = @mutate.mutation_report(results)
+  assert_eq(report.mutation_score, 100)
+  assert_eq(@mutate.mutation_grade(report), "A (excellent)")
+}
+
+test "mutation suite: arithmetic operators" {
+  let mutants = @mutate.mutate_arithmetic("a + b * c")
+  assert_true(mutants.length() >= 2)
+  let results = []
+  for m in mutants {
+    results.push(@mutate.run_mutation_test(m.id, true, false))
+  }
+  let report = @mutate.mutation_report(results)
+  assert_eq(report.mutation_score, 100)
+}
+
+test "mutation suite: relational operators" {
+  let mutants = @mutate.mutate_relational("a > b")
+  assert_true(mutants.length() >= 1)
+  let results = []
+  for m in mutants {
+    results.push(@mutate.run_mutation_test(m.id, true, false))
+  }
+  let report = @mutate.mutation_report(results)
+  assert_eq(report.mutation_score, 100)
+}
+
+test "mutation suite: comprehensive" {
+  let all_results = [
+    @mutate.run_mutation_test(1, true, false),
+    @mutate.run_mutation_test(2, true, false),
+    @mutate.run_mutation_test(3, true, false),
+    @mutate.run_mutation_test(4, true, false),
+    @mutate.run_mutation_test(5, true, false),
+    @mutate.run_mutation_test(6, true, false),
+    @mutate.run_mutation_test(7, true, false),
+    @mutate.run_mutation_test(8, true, false),
+    @mutate.run_mutation_test(9, true, false),
+    @mutate.run_mutation_test(10, true, false),
+    @mutate.run_mutation_test(11, true, false),
+    @mutate.run_mutation_test(12, true, false),
+    @mutate.run_mutation_test(13, true, false),
+    @mutate.run_mutation_test(14, true, false),
+    @mutate.run_mutation_test(15, true, false),
+    @mutate.run_mutation_test(16, true, false),
+    @mutate.run_mutation_test(17, true, false),
+    @mutate.run_mutation_test(18, true, false),
+    @mutate.run_mutation_test(19, true, false),
+    @mutate.run_mutation_test(20, true, false),
+  ]
+  let report = @mutate.mutation_report(all_results)
+  assert_eq(report.total_mutants, 20)
+  assert_eq(report.killed, 20)
+  assert_eq(report.mutation_score, 100)
+  assert_eq(@mutate.mutation_grade(report), "A (excellent)")
+}

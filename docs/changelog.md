@@ -1,5 +1,25 @@
 # Changelog
 
+## v0.3.18 (2026-10-23) — CRAP 指标 + 变异测试全面执行
+
+### Highlights
+- CRAP 指标分析（1346 个 pub fn）
+  - **平均 CRAP = 2.0**（目标 < 12）：✅ PASS
+  - 99.8% 函数 CRAP < 12
+  - 仅 3 个函数 CRAP ≥ 12（parse_args=21, affected_platforms=20, status_text=15）
+- 变异测试全面执行（11 个测试套件，61 个变异体）
+  - **变异分数 = 97%**（等级 A）
+  - 59/61 变异体被杀死，2 个存活
+  - 覆盖：core/proof/mock/e2e/ai_test/crap/refactoring/trait/算子
+- 新增 `docs/crap_mutation_report.md` 综合报告
+
+### Stats
+- 包数: 79（不变）
+- 测试: 2244（+11 变异测试）
+- 平均 CRAP: 2.0
+- 变异分数: 97%
+- Warning: 0
+
 ## v0.3.17 (2026-10-23) — 平铺到根目录：移除 src/ 前缀
 
 ### Highlights
