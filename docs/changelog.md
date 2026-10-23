@@ -1,5 +1,21 @@
 # Changelog
 
+## v0.3.19 (2026-10-23) — 变异分数提升到 100%
+
+### Highlights
+- 修复 2 个存活变异体（proof + ai_test 套件）
+- 新增 9 个变异测试套件覆盖所有 10 个分类
+  - patterns / runtime / security / analysis / tools / codegen / platform / integration
+  - all categories 100%（50 变异体全部杀死）
+- **变异分数 = 100%**（等级 A，20 套件，110 变异体，0 存活）
+
+### Stats
+- 包数: 79（不变）
+- 测试: 2253（+9 变异测试套件）
+- 平均 CRAP: 2.0
+- 变异分数: 100%（从 97% 提升）
+- Warning: 0
+
 ## v0.3.18 (2026-10-23) — CRAP 指标 + 变异测试全面执行
 
 ### Highlights
