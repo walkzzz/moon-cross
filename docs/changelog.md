@@ -1,5 +1,22 @@
 # Changelog
 
+## v0.3.21 (2026-10-23) — 所有高 CRAP 函数清零
+
+### Highlights
+- 重构最后一个高 CRAP 函数 `parse_args`（complexity 21→7）
+  - 提取 4 个辅助函数：`match_option_def` / `parse_long_opt` / `parse_short_opt` / `check_required_args`
+- **高复杂度函数(≥12): 1 → 0**（全部清零）
+- **平均 CRAP: 1.9**
+- 更新 AGENTS/AGENTS.md 项目结构（移除 src/ 引用）
+
+### Stats
+- 包数: 79（不变）
+- 测试: 2253（不变）
+- 平均 CRAP: 1.9
+- 高复杂度(≥12): 0
+- 变异分数: 100%
+- Warning: 0
+
 ## v0.3.20 (2026-10-23) — 高 CRAP 函数重构：平均 1.9
 
 ### Highlights

@@ -116,61 +116,59 @@ pub fn make_int_arg(name : String, short : String, long : String, required : Boo
 }
 
 ///|
-/// 解析参数 | Parse arguments
-pub fn parse_args(parser : ArgParser, args : Array[String]) -> ParseResult {
-  let values = []
-  let positional = []
-  let errors = []
-  let mut i = 0
-  while i < args.length() {
-    let arg = args[i]
-    if arg.length() >= 2 && arg[0] == '-' && arg[1] == '-' {
-      let long_name = arg[2:].to_owned()
-      let mut found = false
-      for def in parser.args {
-        if def.long == long_name {
-          found = true
-          if def.typ is Flag {
-            values.push((def.name, "true"))
-          } else {
-            if i + 1 < args.length() {
-              values.push((def.name, args[i + 1]))
-              i = i + 1
-            } else {
-              errors.push("Missing value for --" + long_name)
-            }
-          }
-        }
-      }
-      if !found {
-        errors.push("Unknown option: --" + long_name)
-      }
-    } else if arg.length() >= 1 && arg[0] == '-' {
-      let short_name = arg[1:].to_owned()
-      let mut found = false
-      for def in parser.args {
-        if def.short == short_name {
-          found = true
-          if def.typ is Flag {
-            values.push((def.name, "true"))
-          } else {
-            if i + 1 < args.length() {
-              values.push((def.name, args[i + 1]))
-              i = i + 1
-            } else {
-              errors.push("Missing value for -" + short_name)
-            }
-          }
-        }
-      }
-      if !found {
-        errors.push("Unknown option: -" + short_name)
-      }
-    } else {
-      positional.push(arg)
-    }
-    i = i + 1
+/// 匹配选项定义 | Match option definition
+fn match_option_def(def : ArgDef, args : Array[String], idx : Int, values : Array[(String, String)], errors : Array[String], prefix : String) -> Int {
+  if def.typ is Flag {
+    values.push((def.name, "true"))
+    idx
+  } else if idx + 1 < args.length() {
+    values.push((def.name, args[idx + 1]))
+    idx + 1
+  } else {
+    errors.push("Missing value for " + prefix)
+    idx
   }
+}
+
+///|
+/// 解析长选项 | Parse long option
+fn parse_long_opt(parser : ArgParser, args : Array[String], idx : Int, values : Array[(String, String)], errors : Array[String]) -> Int {
+  let long_name = args[idx][2:].to_owned()
+  let mut found = false
+  let mut next_idx = idx
+  for def in parser.args {
+    if def.long == long_name {
+      found = true
+      next_idx = match_option_def(def, args, idx, values, errors, "--" + long_name)
+    }
+  }
+  if !found {
+    errors.push("Unknown option: --" + long_name)
+  }
+  next_idx
+}
+
+///|
+/// 解析短选项 | Parse short option
+fn parse_short_opt(parser : ArgParser, args : Array[String], idx : Int, values : Array[(String, String)], errors : Array[String]) -> Int {
+  let short_name = args[idx][1:].to_owned()
+  let mut found = false
+  let mut next_idx = idx
+  for def in parser.args {
+    if def.short == short_name {
+      found = true
+      next_idx = match_option_def(def, args, idx, values, errors, "-" + short_name)
+    }
+  }
+  if !found {
+    errors.push("Unknown option: -" + short_name)
+  }
+  next_idx
+}
+
+///|
+/// 检查必需参数 | Check required arguments
+fn check_required_args(parser : ArgParser, values : Array[(String, String)], errors : Array[String]) -> Unit {
   for def in parser.args {
     if def.required {
       let mut found = false
@@ -184,8 +182,30 @@ pub fn parse_args(parser : ArgParser, args : Array[String]) -> ParseResult {
       }
     }
   }
+}
+
+///|
+/// 解析参数 | Parse arguments
+pub fn parse_args(parser : ArgParser, args : Array[String]) -> ParseResult {
+  let values = []
+  let positional = []
+  let errors = []
+  let mut i = 0
+  while i < args.length() {
+    let arg = args[i]
+    if arg.length() >= 2 && arg[0] == '-' && arg[1] == '-' {
+      i = parse_long_opt(parser, args, i, values, errors)
+    } else if arg.length() >= 1 && arg[0] == '-' {
+      i = parse_short_opt(parser, args, i, values, errors)
+    } else {
+      positional.push(arg)
+    }
+    i = i + 1
+  }
+  check_required_args(parser, values, errors)
   { values, positional, errors }
 }
+
 
 ///|
 /// 获取解析值 | Get parsed value

@@ -18,20 +18,16 @@
 ```
 moon-cross/
 ├── moon.mod / moon.pkg / reexport.mbt   # 根包统一入口
-├── src/
-│   ├── core/          # 核心类型（Platform/Arch/TargetTriple）
-│   ├── trait/         # 14 个 pub(open) trait 定义
-│   ├── proof/         # 形式化证明（归纳/反证/不变量/trait验证）
-│   ├── mock/          # Mock/Fake/Stub/Spy 测试框架
-│   ├── e2e/           # E2E 端到端测试框架
-│   ├── ai_test/       # AI 辅助测试工具
-│   ├── refactoring/   # 重构工具+模式（5种重构模式）
-│   ├── platform/      # 5 平台编译配置（ios/android/windows/ohos/linux）
-│   ├── config/        # 跨平台配置
-│   ├── codegen/       # 代码生成引擎
-│   ├── ffi/           # FFI 绑定（jni/napi/swift）
-│   ├── integration/   # 26 集成目标库 pipeline
-│   └── ...            # 其他 60+ 功能包
+├── core/          # 核心类型 + trait + config + typesys
+├── testing/       # proof/mock/e2e/ai_test/crap/mutate/refactoring
+├── platform/      # 5 平台编译配置（ios/android/windows/ohos/linux）
+├── codegen/       # 代码生成引擎 + FFI 绑定
+├── integration/   # 集成目标库 pipeline
+├── tools/         # CLI/scaffold/builder/formatter/linter/docs/publish
+├── runtime/       # cache/pool/timer/event/stream/sync/memory
+├── analysis/      # coverage/profiler/benchmark/diff/discovery/perf
+├── patterns/      # 设计模式（chain/visitor/observer/strategy/state/...）
+├── security/      # security/robust/validator/crypto/algorithm/http/uri
 └── docs/
     ├── rules.md       # R1-R19 规则全集
     ├── roadmap.md     # 迭代路线
