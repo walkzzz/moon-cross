@@ -6,8 +6,8 @@
 
 > Write once, deliver to five platforms — iOS / Android / Windows / HarmonyOS / Linux
 
-[![Version](https://img.shields.io/badge/version-0.3.22-blue.svg)](./docs/changelog.md)
-[![Tests](https://img.shields.io/badge/tests-2261-brightgreen.svg)]()
+[![Version](https://img.shields.io/badge/version-0.3.23-blue.svg)](./docs/changelog.md)
+[![Tests](https://img.shields.io/badge/tests-2269-brightgreen.svg)]()
 [![Packages](https://img.shields.io/badge/packages-80-green.svg)]()
 [![Warnings](https://img.shields.io/badge/warnings-0-success.svg)]()
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)

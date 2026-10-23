@@ -1,5 +1,29 @@
 # Changelog
 
+## v0.3.23 (2026-10-23) — pinyin 1→5 平台 FFI 代码自动生成
+
+### Highlights
+- 扩展 codegen 模块：添加实际跨平台代码生成功能
+  - `ExportFunction` 结构体：导出函数签名
+  - `generate_c_adapter`：生成 C 适配层代码
+  - `generate_swift_interop`：生成 iOS Swift interop 声明
+  - `generate_jni_binding`：生成 Android JNI 声明
+  - `generate_dllimport`：生成 Windows C# DllImport 声明
+  - `generate_napi_binding`：生成鸿蒙 NAPI 声明
+  - `generate_linux_header`：生成 Linux C 头文件
+  - `generate_all_platforms`：一次性生成五平台代码
+  - 类型映射：C/Swift/Kotlin/C#/ArkTS 五平台类型自动映射
+- pinyin 1→5 平台代码生成测试（9 个测试）
+  - 声明 3 个导出函数：pinyin_convert / pinyin_short / pinyin_contains
+  - 自动生成 C 适配层 + iOS Swift + Android JNI + Windows C# + 鸿蒙 NAPI + Linux C
+  - 验证生成代码包含正确的函数声明、类型映射、平台特性
+
+### Stats
+- 包数: 80（不变）
+- 测试: 2269（+8 跨平台代码生成测试）
+- Warning: 0
+- 1→5 平台代码生成：✅
+
 ## v0.3.22 (2026-10-23) — pinyin@0.1.0 集成测试
 
 ### Highlights

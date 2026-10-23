@@ -1,5 +1,5 @@
 test "codegen_version" {
-  assert_eq(@codegen.codegen_version(), "moon-cross codegen v0.1.0")
+  assert_eq(@codegen.codegen_version(), "moon-cross codegen v0.3.22")
 }
 
 test "codegen_result_construction" {

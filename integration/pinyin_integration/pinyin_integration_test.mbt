@@ -40,3 +40,121 @@ test "convert_chinese mixed" {
 test "pinyin_integration_version" {
   assert_eq(@pinyin_integration.pinyin_integration_version(), "moon-cross pinyin_integration v0.3.22")
 }
+test "codegen: generate C adapter for pinyin" {
+  let funcs = [
+    @codegen.ExportFunction::{ name: "pinyin_convert", params: [("input", "String")], return_type: "String" },
+    @codegen.ExportFunction::{ name: "pinyin_short", params: [("input", "String")], return_type: "String" },
+    @codegen.ExportFunction::{ name: "pinyin_contains", params: [("input", "String")], return_type: "Bool" },
+  ]
+  let result = @codegen.generate_c_adapter(funcs, "pinyin")
+  assert_eq(result.filename, "pinyin_adapter.c")
+  assert_true(result.content.contains("MOONBIT_EXPORT"))
+  assert_true(result.content.contains("pinyin_convert"))
+  assert_true(result.content.contains("pinyin_short"))
+  assert_true(result.content.contains("pinyin_contains"))
+}
+
+test "codegen: generate iOS Swift interop" {
+  let funcs = [
+    @codegen.ExportFunction::{ name: "pinyin_convert", params: [("input", "String")], return_type: "String" },
+    @codegen.ExportFunction::{ name: "pinyin_short", params: [("input", "String")], return_type: "String" },
+  ]
+  let result = @codegen.generate_swift_interop(funcs, "pinyin")
+  assert_eq(result.platform, "ios")
+  assert_eq(result.filename, "pinyin.swift")
+  assert_true(result.content.contains("import Foundation"))
+  assert_true(result.content.contains("func pinyin_convert"))
+  assert_true(result.content.contains("func pinyin_short"))
+}
+
+test "codegen: generate Android JNI binding" {
+  let funcs = [
+    @codegen.ExportFunction::{ name: "pinyin_convert", params: [("input", "String")], return_type: "String" },
+    @codegen.ExportFunction::{ name: "pinyin_short", params: [("input", "String")], return_type: "String" },
+  ]
+  let result = @codegen.generate_jni_binding(funcs, "pinyin")
+  assert_eq(result.platform, "android")
+  assert_eq(result.filename, "Pinyin.kt")
+  assert_true(result.content.contains("System.loadLibrary"))
+  assert_true(result.content.contains("native"))
+  assert_true(result.content.contains("pinyin_convert"))
+}
+
+test "codegen: generate Windows DllImport" {
+  let funcs = [
+    @codegen.ExportFunction::{ name: "pinyin_convert", params: [("input", "String")], return_type: "String" },
+    @codegen.ExportFunction::{ name: "pinyin_contains", params: [("input", "String")], return_type: "Bool" },
+  ]
+  let result = @codegen.generate_dllimport(funcs, "pinyin")
+  assert_eq(result.platform, "windows")
+  assert_eq(result.filename, "Pinyin.cs")
+  assert_true(result.content.contains("DllImport"))
+  assert_true(result.content.contains("pinyin.dll"))
+  assert_true(result.content.contains("pinyin_convert"))
+}
+
+test "codegen: generate HarmonyOS NAPI binding" {
+  let funcs = [
+    @codegen.ExportFunction::{ name: "pinyin_convert", params: [("input", "String")], return_type: "String" },
+    @codegen.ExportFunction::{ name: "pinyin_short", params: [("input", "String")], return_type: "String" },
+  ]
+  let result = @codegen.generate_napi_binding(funcs, "pinyin")
+  assert_eq(result.platform, "ohos")
+  assert_eq(result.filename, "pinyin.ts")
+  assert_true(result.content.contains("import native"))
+  assert_true(result.content.contains("pinyin_convert"))
+}
+
+test "codegen: generate Linux C header" {
+  let funcs = [
+    @codegen.ExportFunction::{ name: "pinyin_convert", params: [("input", "String")], return_type: "String" },
+    @codegen.ExportFunction::{ name: "pinyin_short", params: [("input", "String")], return_type: "String" },
+  ]
+  let result = @codegen.generate_linux_header(funcs, "pinyin")
+  assert_eq(result.platform, "linux")
+  assert_eq(result.filename, "pinyin.h")
+  assert_true(result.content.contains("#ifndef PINYIN_H"))
+  assert_true(result.content.contains("#define PINYIN_H"))
+  assert_true(result.content.contains("pinyin_convert"))
+}
+
+test "codegen: generate all 5 platforms at once" {
+  let funcs = [
+    @codegen.ExportFunction::{ name: "pinyin_convert", params: [("input", "String")], return_type: "String" },
+    @codegen.ExportFunction::{ name: "pinyin_short", params: [("input", "String")], return_type: "String" },
+    @codegen.ExportFunction::{ name: "pinyin_contains", params: [("input", "String")], return_type: "Bool" },
+  ]
+  let results = @codegen.generate_all_platforms(funcs, "pinyin")
+  assert_eq(results.length(), 5)
+  assert_eq(results[0].platform, "ios")
+  assert_eq(results[1].platform, "android")
+  assert_eq(results[2].platform, "windows")
+  assert_eq(results[3].platform, "ohos")
+  assert_eq(results[4].platform, "linux")
+  for r in results {
+    assert_true(r.content.length() > 0)
+    assert_true(r.filename.length() > 0)
+  }
+}
+
+test "codegen: pinyin 1-to-5 platform code generation" {
+  let funcs = [
+    @codegen.ExportFunction::{ name: "pinyin_convert", params: [("input", "String")], return_type: "String" },
+    @codegen.ExportFunction::{ name: "pinyin_short", params: [("input", "String")], return_type: "String" },
+    @codegen.ExportFunction::{ name: "pinyin_contains", params: [("input", "String")], return_type: "Bool" },
+  ]
+  let c_adapter = @codegen.generate_c_adapter(funcs, "pinyin")
+  let all_platforms = @codegen.generate_all_platforms(funcs, "pinyin")
+  assert_true(c_adapter.content.contains("pinyin_convert"))
+  assert_eq(all_platforms.length(), 5)
+  let platforms = []
+  for r in all_platforms {
+    platforms.push(r.platform)
+  }
+  assert_eq(platforms.length(), 5)
+  assert_true(platforms[0] == "ios")
+  assert_true(platforms[1] == "android")
+  assert_true(platforms[2] == "windows")
+  assert_true(platforms[3] == "ohos")
+  assert_true(platforms[4] == "linux")
+}
