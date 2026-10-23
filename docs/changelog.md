@@ -1,5 +1,30 @@
 # Changelog
 
+## v0.3.15 (2026-10-23) — CRAP 指标 + 变异测试框架
+
+### Highlights
+- 新增 `src/crap/` 包（CRAP 指标计算）
+  - CRAP = complexity² × (1 − coverage)³ + complexity
+  - FuncComplexity / CoverageInfo / CrapResult / CrapReport 结构体
+  - 复杂度计算、覆盖率计算、CRAP 指标计算
+  - 风险分级：high (>30) / medium (>10) / low
+  - 实现 Named / Countable / Checkable / Summarizable trait
+  - 16 个测试
+- 新增 `src/mutate/` 包（变异测试框架）
+  - 6 种变异算子：AOR / ROR / COR / UOI / ROI / SDL
+  - Mutant / MutantResult / MutationReport 结构体
+  - 变异体生成（算术/关系）、变异测试运行、变异分数计算
+  - 变异分数等级：A(≥90%) / B(≥80%) / C(≥70%) / D(≥60%) / F
+  - 实现 Named / Countable / Checkable / Summarizable trait
+  - 24 个测试
+- 更新 AGENTS.md 为 moon-cross 项目版本
+
+### Stats
+- 新增包: src/crap/ + src/mutate/（2 个）
+- 新增测试: 40 个（总计 2233 个，全部通过）
+- 包数: 79
+- Warning: 0
+
 ## v0.3.14 (2026-10-21) — moonbit-refactoring + moonbit-proof 扩展
 
 ### Highlights
