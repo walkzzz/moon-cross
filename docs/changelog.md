@@ -1,5 +1,28 @@
 # Changelog
 
+## v0.3.16 (2026-10-23) — 多根包重构：79 包 → 10 一级分类
+
+### Highlights
+- 多根包重构：将 79 个平铺包组织为 10 个一级分类目录
+  - `core/` — core, trait, config, typesys（4 包）
+  - `testing/` — proof, mock, e2e, ai_test, crap, mutate, refactoring（7 包）
+  - `platform/` — platform（5 子包）
+  - `codegen/` — codegen, ffi（5 子包）
+  - `integration/` — integration（1 包）
+  - `tools/` — cli, scaffold, builder, formatter, linter, docs, interactive, publish, command, plugin（10 包）
+  - `runtime/` — cache, pool, scheduler, timer, event, signal, stream, sync, concurrency, memory, resource, compress, logging（13 包）
+  - `analysis/` — coverage, profiler, benchmark, diagnostic, diff, discovery, trace, dependency, graph, perf, watcher（11 包）
+  - `patterns/` — chain, visitor, observer, strategy, state, state_pattern, interpreter, memento, factory, proxy（10 包）
+  - `security/` — security, robust, validator, crypto_util, algorithm, regex_enhanced, serializer, uri, http, argparse, template（11 包）
+- 更新 74 个 moon.pkg 导入路径
+- 更新子包路径（codegen/c, platform/*, ffi/*）
+
+### Stats
+- 包数: 79（不变）
+- 测试: 2233（不变）
+- 一级分类: 10
+- Warning: 0
+
 ## v0.3.15 (2026-10-23) — CRAP 指标 + 变异测试框架
 
 ### Highlights
