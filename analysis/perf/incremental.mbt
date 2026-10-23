@@ -102,53 +102,42 @@ pub fn needs_rebuild(change_set : ChangeSet) -> Bool {
 }
 
 ///|
+/// 检查平台是否已在列表中 | Check if platform already exists
+fn platform_exists(platforms : Array[@core.Platform], target : @core.Platform) -> Bool {
+  let target_id = target.to_id()
+  let mut found = false
+  for p in platforms {
+    if p.to_id() == target_id {
+      found = true
+    }
+  }
+  found
+}
+
+///|
+/// 添加平台（如不存在）| Add platform if not exists
+fn add_platform_if_new(platforms : Array[@core.Platform], platform : @core.Platform) -> Unit {
+  if !platform_exists(platforms, platform) {
+    platforms.push(platform)
+  }
+}
+
+///|
 /// 计算受影响的平台 | Calculate affected platforms
 pub fn affected_platforms(change_set : ChangeSet) -> Array[@core.Platform] {
   let platforms = []
   for change in change_set.changes {
-    if change.path.contains("platform/windows") || change.path.contains("windows") {
-      let mut already = false
-      for p in platforms {
-        if p is @core.Platform::Windows {
-          already = true
-        }
-      }
-      if !already {
-        platforms.push(@core.Platform::Windows)
-      }
+    if change.path.contains("windows") {
+      add_platform_if_new(platforms, @core.Platform::Windows)
     }
-    if change.path.contains("platform/android") || change.path.contains("android") {
-      let mut already = false
-      for p in platforms {
-        if p is @core.Platform::Android {
-          already = true
-        }
-      }
-      if !already {
-        platforms.push(@core.Platform::Android)
-      }
+    if change.path.contains("android") {
+      add_platform_if_new(platforms, @core.Platform::Android)
     }
-    if change.path.contains("platform/ios") || change.path.contains("ios") {
-      let mut already = false
-      for p in platforms {
-        if p is @core.Platform::Ios {
-          already = true
-        }
-      }
-      if !already {
-        platforms.push(@core.Platform::Ios)
-      }
+    if change.path.contains("ios") {
+      add_platform_if_new(platforms, @core.Platform::Ios)
     }
-    if change.path.contains("platform/ohos") || change.path.contains("ohos") {
-      let mut already = false
-      for p in platforms {
-        if p is @core.Platform::Ohos {
-          already = true
-        }
-      }
-      if !already {
-        platforms.push(@core.Platform::Ohos)
-      }
+    if change.path.contains("ohos") {
+      add_platform_if_new(platforms, @core.Platform::Ohos)
     }
   }
   if platforms.length() == 0 && change_set.total_files > 0 {

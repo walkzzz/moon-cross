@@ -1,5 +1,24 @@
 # Changelog
 
+## v0.3.20 (2026-10-23) — 高 CRAP 函数重构：平均 1.9
+
+### Highlights
+- 重构 2 个高 CRAP 函数（if-else → match）
+  - `status_text`: complexity 15 → 2（match 替代 14 个 if-else）
+  - `method_from_string`: complexity 7 → 2（match 替代 6 个 if-else）
+- 重构 `affected_platforms`：提取辅助函数消除重复
+  - complexity 20 → 8（提取 `platform_exists` + `add_platform_if_new`）
+- **平均 CRAP: 2.0 → 1.9**
+- 高复杂度函数: 3 → 1（仅剩 `parse_args` = 21）
+- trait 实现: 184 个跨 71 包
+
+### Stats
+- 包数: 79（不变）
+- 测试: 2253（不变）
+- 平均 CRAP: 1.9
+- 变异分数: 100%
+- Warning: 0
+
 ## v0.3.19 (2026-10-23) — 变异分数提升到 100%
 
 ### Highlights

@@ -59,56 +59,36 @@ pub fn method_name(http_method : HttpMethod) -> String {
 ///|
 /// 从字符串创建方法 | Create method from string
 pub fn method_from_string(s : String) -> HttpMethod {
-  if s == "GET" {
-    Get
-  } else if s == "POST" {
-    Post
-  } else if s == "PUT" {
-    Put
-  } else if s == "DELETE" {
-    Delete
-  } else if s == "PATCH" {
-    Patch
-  } else if s == "HEAD" {
-    Head
-  } else {
-    Options
+  match s {
+    "GET" => Get
+    "POST" => Post
+    "PUT" => Put
+    "DELETE" => Delete
+    "PATCH" => Patch
+    "HEAD" => Head
+    _ => Options
   }
 }
 
 ///|
 /// 状态码文本 | Status code text
 pub fn status_text(code : Int) -> String {
-  if code == 200 {
-    "OK"
-  } else if code == 201 {
-    "Created"
-  } else if code == 204 {
-    "No Content"
-  } else if code == 301 {
-    "Moved Permanently"
-  } else if code == 302 {
-    "Found"
-  } else if code == 304 {
-    "Not Modified"
-  } else if code == 400 {
-    "Bad Request"
-  } else if code == 401 {
-    "Unauthorized"
-  } else if code == 403 {
-    "Forbidden"
-  } else if code == 404 {
-    "Not Found"
-  } else if code == 405 {
-    "Method Not Allowed"
-  } else if code == 500 {
-    "Internal Server Error"
-  } else if code == 502 {
-    "Bad Gateway"
-  } else if code == 503 {
-    "Service Unavailable"
-  } else {
-    "Unknown"
+  match code {
+    200 => "OK"
+    201 => "Created"
+    204 => "No Content"
+    301 => "Moved Permanently"
+    302 => "Found"
+    304 => "Not Modified"
+    400 => "Bad Request"
+    401 => "Unauthorized"
+    403 => "Forbidden"
+    404 => "Not Found"
+    405 => "Method Not Allowed"
+    500 => "Internal Server Error"
+    502 => "Bad Gateway"
+    503 => "Service Unavailable"
+    _ => "Unknown"
   }
 }
 
