@@ -1,5 +1,22 @@
 # Changelog
 
+## v0.3.22 (2026-10-23) — pinyin@0.1.0 集成测试
+
+### Highlights
+- 添加 `walkzzz/pinyin@0.1.0` 依赖
+- 新增 `integration/pinyin_integration/` 包（8 个测试）
+  - 中文检测：`contains_chinese` / `is_chinese`
+  - 拼音转换：`convert_chinese` / `convert_with_tone` / `convert_without_tone`
+  - 首字母提取：`get_short_pinyin`
+  - 混合字符串处理：中英文混合
+- 所有测试通过
+
+### Stats
+- 新增包: integration/pinyin_integration/（1 个）
+- 新增测试: 8 个（总计 2261 个，全部通过）
+- 包数: 80
+- Warning: 0
+
 ## v0.3.21 (2026-10-23) — 所有高 CRAP 函数清零
 
 ### Highlights

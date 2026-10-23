@@ -1,6 +1,6 @@
 name = "walkzzz/moon-cross"
 
-version = "0.3.21"
+version = "0.3.22"
 
 readme = "README.md"
 
@@ -21,3 +21,6 @@ keywords = [
   "scaffold",
   "code-generation",
 ]
+import {
+  "walkzzz/pinyin@0.1.0",
+}

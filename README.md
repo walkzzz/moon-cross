@@ -6,9 +6,9 @@
 
 > 一次编写，五平台交付 — iOS / Android / Windows / 鸿蒙（HarmonyOS）/ Linux
 
-[![Version](https://img.shields.io/badge/version-0.3.21-blue.svg)](./docs/changelog.md)
-[![Tests](https://img.shields.io/badge/tests-2253-brightgreen.svg)]()
-[![Packages](https://img.shields.io/badge/packages-79-green.svg)]()
+[![Version](https://img.shields.io/badge/version-0.3.22-blue.svg)](./docs/changelog.md)
+[![Tests](https://img.shields.io/badge/tests-2261-brightgreen.svg)]()
+[![Packages](https://img.shields.io/badge/packages-80-green.svg)]()
 [![Warnings](https://img.shields.io/badge/warnings-0-success.svg)]()
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
 [![MoonBit](https://img.shields.io/badge/MoonBit-0.1.20260920-orange.svg)](https://moonbitlang.com)
