@@ -1,5 +1,24 @@
 # Changelog
 
+## v0.3.24 (2026-10-23) — codegen 全面扩展：构建脚本+工程模板+CI/CD
+
+### Highlights
+- codegen 模块新增 7 个生成函数
+  - `generate_makefile`：跨平台 Makefile（ios/android/windows/ohos/linux + clean）
+  - `generate_github_actions`：GitHub Actions CI/CD（5 平台并行构建）
+  - `generate_swift_package`：iOS Swift Package 配置
+  - `generate_gradle_config`：Android Gradle 配置（NDK + CMake）
+  - `generate_ohos_build_profile`：鸿蒙 build-profile.json5
+  - `generate_project`：一次性生成完整跨平台工程（C+5平台FFI+Makefile+CI+模板）
+  - `generate_readme`：跨平台 README（函数表+平台列表+构建说明）
+- 7 个工程生成测试验证
+
+### Stats
+- 包数: 80（不变）
+- 测试: 2276（+7 工程生成测试）
+- Warning: 0
+- 生成文件类型: C适配层 + Swift + JNI + C# + NAPI + Linux + Makefile + CI/CD + Package + Gradle + OHOS + README
+
 ## v0.3.23 (2026-10-23) — pinyin 1→5 平台 FFI 代码自动生成
 
 ### Highlights

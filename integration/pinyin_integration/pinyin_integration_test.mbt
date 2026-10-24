@@ -158,3 +158,76 @@ test "codegen: pinyin 1-to-5 platform code generation" {
   assert_true(platforms[3] == "ohos")
   assert_true(platforms[4] == "linux")
 }
+
+test "codegen: generate Makefile" {
+  let result = @codegen.generate_makefile("pinyin")
+  assert_eq(result.filename, "Makefile")
+  assert_true(result.content.contains("ios:"))
+  assert_true(result.content.contains("android:"))
+  assert_true(result.content.contains("windows:"))
+  assert_true(result.content.contains("ohos:"))
+  assert_true(result.content.contains("linux:"))
+  assert_true(result.content.contains("clean:"))
+}
+
+test "codegen: generate GitHub Actions" {
+  let result = @codegen.generate_github_actions("pinyin")
+  assert_eq(result.filename, "build.yml")
+  assert_true(result.content.contains("build-ios"))
+  assert_true(result.content.contains("build-android"))
+  assert_true(result.content.contains("build-windows"))
+  assert_true(result.content.contains("build-ohos"))
+  assert_true(result.content.contains("build-linux"))
+}
+
+test "codegen: generate Swift Package" {
+  let result = @codegen.generate_swift_package("pinyin")
+  assert_eq(result.filename, "Package.swift")
+  assert_true(result.content.contains("PackageDescription"))
+  assert_true(result.content.contains("Pinyin"))
+}
+
+test "codegen: generate Gradle config" {
+  let result = @codegen.generate_gradle_config("pinyin")
+  assert_eq(result.filename, "build.gradle.kts")
+  assert_true(result.content.contains("com.android.library"))
+  assert_true(result.content.contains("com.walkzzz.pinyin"))
+}
+
+test "codegen: generate OHOS build profile" {
+  let result = @codegen.generate_ohos_build_profile("pinyin")
+  assert_eq(result.filename, "build-profile.json5")
+  assert_true(result.content.contains("pinyin"))
+}
+
+test "codegen: generate complete project" {
+  let funcs = [
+    @codegen.ExportFunction::{ name: "pinyin_convert", params: [("input", "String")], return_type: "String" },
+    @codegen.ExportFunction::{ name: "pinyin_short", params: [("input", "String")], return_type: "String" },
+    @codegen.ExportFunction::{ name: "pinyin_contains", params: [("input", "String")], return_type: "Bool" },
+  ]
+  let project = @codegen.generate_project(funcs, "pinyin")
+  assert_true(project.length() >= 11)
+  let filenames = []
+  for f in project {
+    filenames.push(f.filename)
+  }
+  assert_true(filenames.length() >= 11)
+}
+
+test "codegen: generate README" {
+  let funcs = [
+    @codegen.ExportFunction::{ name: "pinyin_convert", params: [("input", "String")], return_type: "String" },
+    @codegen.ExportFunction::{ name: "pinyin_short", params: [("input", "String")], return_type: "String" },
+  ]
+  let result = @codegen.generate_readme(funcs, "pinyin")
+  assert_eq(result.filename, "README.md")
+  assert_true(result.content.contains("Pinyin"))
+  assert_true(result.content.contains("pinyin_convert"))
+  assert_true(result.content.contains("pinyin_short"))
+  assert_true(result.content.contains("iOS"))
+  assert_true(result.content.contains("Android"))
+  assert_true(result.content.contains("Windows"))
+  assert_true(result.content.contains("HarmonyOS"))
+  assert_true(result.content.contains("Linux"))
+}
