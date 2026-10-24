@@ -79,6 +79,7 @@
 | v0.3.23 | ✅ Done | pinyin 1→5平台FFI代码自动生成(C/Swift/JNI/C#/NAPI/Linux) | 2269 |
 | v0.3.24 | ✅ Done | codeE codegen全面扩展:构建脚本+工程模板+CI/CD+README生成 | 2276 |
 | v0.3.25 | ✅ Done | codegen trait实现+参赛申报书更新(187实现跨72包) | 2276 |
+| v0.3.26 | ✅ Done | 鲁棒性+稳定性+可靠性全面提升(0 warnings, 2285测试) | 2285 |
 
 ## 远期计划预览（v0.2.16 → v1.0.0）
 

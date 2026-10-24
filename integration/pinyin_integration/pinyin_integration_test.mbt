@@ -38,7 +38,7 @@ test "convert_chinese mixed" {
 }
 
 test "pinyin_integration_version" {
-  assert_eq(@pinyin_integration.pinyin_integration_version(), "moon-cross pinyin_integration v0.3.22")
+  assert_eq(@pinyin_integration.pinyin_integration_version(), "moon-cross pinyin_integration v0.3.26")
 }
 test "codegen: generate C adapter for pinyin" {
   let funcs = [
@@ -230,4 +230,55 @@ test "codegen: generate README" {
   assert_true(result.content.contains("Windows"))
   assert_true(result.content.contains("HarmonyOS"))
   assert_true(result.content.contains("Linux"))
+}
+
+test "validate_input empty" {
+  let r = @pinyin_integration.validate_input("")
+  assert_false(r.valid)
+  assert_eq(r.error_message, "input is empty")
+}
+
+test "validate_input too_long" {
+  let mut long_str = "a"
+  for _ in 0..<1001 {
+    long_str = long_str + "a"
+  }
+  let r = @pinyin_integration.validate_input(long_str)
+  assert_false(r.valid)
+  assert_true(r.error_message.contains("too long"))
+}
+
+test "validate_input valid" {
+  let r = @pinyin_integration.validate_input("hello")
+  assert_true(r.valid)
+}
+
+test "convert_chinese empty_input" {
+  let r = @pinyin_integration.convert_chinese("")
+  assert_false(r.has_chinese)
+  assert_eq(r.pinyin, "")
+}
+
+test "is_chinese empty" {
+  assert_false(@pinyin_integration.is_chinese(""))
+}
+
+test "get_short_pinyin empty" {
+  assert_eq(@pinyin_integration.get_short_pinyin(""), "")
+}
+
+test "convert_with_tone empty" {
+  assert_eq(@pinyin_integration.convert_with_tone(""), [])
+}
+
+test "convert_without_tone empty" {
+  assert_eq(@pinyin_integration.convert_without_tone(""), [])
+}
+
+test "pinyin_export_functions" {
+  let funcs = @pinyin_integration.pinyin_export_functions()
+  assert_eq(funcs.length(), 3)
+  assert_eq(funcs[0].name, "pinyin_convert")
+  assert_eq(funcs[1].name, "pinyin_short")
+  assert_eq(funcs[2].name, "pinyin_contains")
 }

@@ -1,5 +1,23 @@
 # Changelog
 
+## v0.3.26 (2026-10-23) — 鲁棒性+稳定性+可靠性全面提升
+
+### Highlights
+- **0 warnings**（unused_package 全部解决）
+- 鲁棒性改进：输入验证 + 边界检查 + 防御性编程
+  - 新增 `ValidationResult` 结构体 + `validate_input` 函数
+  - 所有函数添加空输入处理（返回空结果而非崩溃）
+  - 输入长度限制（max 1000 字符）
+  - 异常捕获改进（返回空字符串而非原始输入）
+- 新增 `pinyin_export_functions` 函数（引用 codegen 消除 unused_package）
+- 9 个鲁棒性测试（空输入/超长输入/验证/导出函数）
+
+### Stats
+- 包数: 80（不变）
+- 测试: 2285（+9 鲁棒性测试）
+- Warnings: **0**
+- Errors: **0**
+
 ## v0.3.25 (2026-10-23) — codegen trait 实现 + 参赛申报书更新
 
 ### Highlights

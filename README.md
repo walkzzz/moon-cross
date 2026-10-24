@@ -6,8 +6,8 @@
 
 > 一次编写，五平台交付 — iOS / Android / Windows / 鸿蒙（HarmonyOS）/ Linux
 
-[![Version](https://img.shields.io/badge/version-0.3.25-blue.svg)](./docs/changelog.md)
-[![Tests](https://img.shields.io/badge/tests-2276-brightgreen.svg)]()
+[![Version](https://img.shields.io/badge/version-0.3.26-blue.svg)](./docs/changelog.md)
+[![Tests](https://img.shields.io/badge/tests-2285-brightgreen.svg)]()
 [![Packages](https://img.shields.io/badge/packages-80-green.svg)]()
 [![Warnings](https://img.shields.io/badge/warnings-0-success.svg)]()
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
