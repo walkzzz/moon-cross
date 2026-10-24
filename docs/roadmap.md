@@ -77,7 +77,8 @@
 | v0.3.21 | ✅ Done | 所有高CRAP函数清零(平均1.9,高复杂度=0) | 2253 |
 | v0.3.22 | ✅ Done | pinyin@0.1.0集成测试(80包,2261测试) | 2261 |
 | v0.3.23 | ✅ Done | pinyin 1→5平台FFI代码自动生成(C/Swift/JNI/C#/NAPI/Linux) | 2269 |
-| v0.3.24 | ✅ Done | codegen全面扩展:构建脚本+工程模板+CI/CD+README生成 | 2276 |
+| v0.3.24 | ✅ Done | codeE codegen全面扩展:构建脚本+工程模板+CI/CD+README生成 | 2276 |
+| v0.3.25 | ✅ Done | codegen trait实现+参赛申报书更新(187实现跨72包) | 2276 |
 
 ## 远期计划预览（v0.2.16 → v1.0.0）
 

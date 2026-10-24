@@ -1,5 +1,20 @@
 # Changelog
 
+## v0.3.25 (2026-10-23) — codegen trait 实现 + 参赛申报书更新
+
+### Highlights
+- 为 codegen 模块新增结构体实现 trait
+  - ExportFunction: Named + Countable
+  - CrossPlatformCode: Named + Summarizable
+- trait 实现总数：187 个跨 72 包
+- 更新参赛申报书：80 包 / 2276 测试 / 代码生成 12 类文件 / pinyin 集成验证
+
+### Stats
+- 包数: 80（不变）
+- 测试: 2276（不变）
+- trait 实现: 187 个跨 72 包
+- Warning: 0
+
 ## v0.3.24 (2026-10-23) — codegen 全面扩展：构建脚本+工程模板+CI/CD
 
 ### Highlights

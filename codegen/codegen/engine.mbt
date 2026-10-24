@@ -498,3 +498,31 @@ pub impl @trait.Named for CodegenResult with name(self) {
   self.filename
 }
 pub extend CodegenResult with @trait.Named::{name}
+
+///|
+/// ExportFunction 实现 Named trait | ExportFunction implements Named
+pub impl @trait.Named for ExportFunction with name(self) {
+  self.name
+}
+pub extend ExportFunction with @trait.Named::{name}
+
+///|
+/// ExportFunction 实现 Countable trait | ExportFunction implements Countable
+pub impl @trait.Countable for ExportFunction with count(self) {
+  self.params.length()
+}
+pub extend ExportFunction with @trait.Countable::{count}
+
+///|
+/// CrossPlatformCode 实现 Named trait | CrossPlatformCode implements Named
+pub impl @trait.Named for CrossPlatformCode with name(self) {
+  self.filename
+}
+pub extend CrossPlatformCode with @trait.Named::{name}
+
+///|
+/// CrossPlatformCode 实现 Summarizable trait | CrossPlatformCode implements Summarizable
+pub impl @trait.Summarizable for CrossPlatformCode with summary(self) {
+  self.platform + ": " + self.filename
+}
+pub extend CrossPlatformCode with @trait.Summarizable::{summary}
