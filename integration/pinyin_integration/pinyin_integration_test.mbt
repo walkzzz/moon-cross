@@ -282,3 +282,40 @@ test "pinyin_export_functions" {
   assert_eq(funcs[1].name, "pinyin_short")
   assert_eq(funcs[2].name, "pinyin_contains")
 }
+
+test "codegen: generate CMake config" {
+  let result = @codegen.generate_cmake("pinyin")
+  assert_eq(result.filename, "CMakeLists.txt")
+  assert_true(result.content.contains("cmake_minimum_required"))
+  assert_true(result.content.contains("add_library"))
+  assert_true(result.content.contains("pinyin"))
+  assert_true(result.content.contains("ANDROID"))
+}
+
+test "codegen: check type dependencies" {
+  let funcs = [
+    @codegen.ExportFunction::{ name: "f1", params: [("x", "Int"), ("y", "String")], return_type: "Bool" },
+  ]
+  assert_true(@codegen.check_type_dependencies(funcs))
+}
+
+test "codegen: check type dependencies unsupported" {
+  let funcs = [
+    @codegen.ExportFunction::{ name: "f1", params: [("x", "MyCustomType")], return_type: "Int" },
+  ]
+  assert_false(@codegen.check_type_dependencies(funcs))
+}
+
+test "codegen: generate build plan" {
+  let funcs = [
+    @codegen.ExportFunction::{ name: "pinyin_convert", params: [("input", "String")], return_type: "String" },
+    @codegen.ExportFunction::{ name: "pinyin_short", params: [("input", "String")], return_type: "String" },
+  ]
+  let result = @codegen.generate_build_plan(funcs, "pinyin")
+  assert_eq(result.filename, "build_plan.md")
+  assert_true(result.content.contains("pinyin_convert"))
+  assert_true(result.content.contains("pinyin_short"))
+  assert_true(result.content.contains("Build Steps"))
+  assert_true(result.content.contains("iOS"))
+  assert_true(result.content.contains("Android"))
+}

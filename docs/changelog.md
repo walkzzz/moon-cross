@@ -1,5 +1,19 @@
 # Changelog
 
+## v0.3.27 (2026-10-23) — codegen 扩展：CMake+类型依赖检查+构建计划
+
+### Highlights
+- codegen 模块新增 3 个函数
+  - `generate_cmake`：CMake 配置生成（Android NDK 构建）
+  - `check_type_dependencies`：类型依赖检查（验证所有类型受支持）
+  - `generate_build_plan`：构建计划生成（函数列表+类型检查+构建步骤）
+- 4 个新测试验证
+
+### Stats
+- 包数: 80（不变）
+- 测试: 2289（+4）
+- Warnings: 0
+
 ## v0.3.26 (2026-10-23) — 鲁棒性+稳定性+可靠性全面提升
 
 ### Highlights
