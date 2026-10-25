@@ -312,3 +312,10 @@ pub impl @trait.Resettable for StateMachine with reset(self) {
   sm_reset(self)
 }
 pub extend StateMachine with @trait.Resettable::{reset}
+
+///|
+/// State 实现 Hashable trait | State implements Hashable
+pub impl @trait.Hashable for State with hash(self) {
+  @trait.Named::name(self).length()
+}
+pub extend State with @trait.Hashable::{hash}

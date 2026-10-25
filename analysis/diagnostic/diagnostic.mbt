@@ -158,3 +158,10 @@ pub impl @trait.Named for DiagCheck with name(self) {
   self.name
 }
 pub extend DiagCheck with @trait.Named::{name}
+
+///|
+/// DiagCheck 实现 Hashable trait | DiagCheck implements Hashable
+pub impl @trait.Hashable for DiagCheck with hash(self) {
+  @trait.Named::name(self).length()
+}
+pub extend DiagCheck with @trait.Hashable::{hash}

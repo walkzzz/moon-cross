@@ -76,3 +76,10 @@ pub impl @trait.Named for PlatformSpec with name(self) {
   self.target_triple
 }
 pub extend PlatformSpec with @trait.Named::{name}
+
+///|
+/// PlatformSpec 实现 Hashable trait | PlatformSpec implements Hashable
+pub impl @trait.Hashable for PlatformSpec with hash(self) {
+  @trait.Named::name(self).length()
+}
+pub extend PlatformSpec with @trait.Hashable::{hash}

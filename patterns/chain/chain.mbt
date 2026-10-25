@@ -86,3 +86,10 @@ pub impl @trait.Named for Handler with name(self) {
   self.name
 }
 pub extend Handler with @trait.Named::{name}
+
+///|
+/// Handler 实现 Hashable trait | Handler implements Hashable
+pub impl @trait.Hashable for Handler with hash(self) {
+  @trait.Named::name(self).length()
+}
+pub extend Handler with @trait.Hashable::{hash}

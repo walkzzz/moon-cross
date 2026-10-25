@@ -82,7 +82,55 @@ pub(open) trait Ordered {
 pub(open) trait Displayable : Named + Describable {}
 
 ///|
+/// 可哈希 trait; types that can be hashed
+pub(open) trait Hashable {
+  hash(Self) -> Int
+}
+
+///|
+/// 可构建 trait; types that can produce build output
+pub(open) trait Buildable {
+  build(Self) -> String
+}
+
+///|
+/// 可渲染 trait; sub-trait of Displayable, types that can render to formatted output
+pub(open) trait Renderable : Displayable {
+  render(Self) -> String = _
+}
+
+///|
+/// 可配置 trait; types that can be configured with key-value pairs
+pub(open) trait Configurable {
+  configure(Self, String, String) -> Self
+}
+
+///|
+/// 可观察 trait; types that can be observed/monitored
+pub(open) trait Observable {
+  observe(Self) -> String
+}
+
+///|
+/// 可验证输入 trait; sub-trait of Checkable, types with input validation
+pub(open) trait Validatable : Checkable {
+  validate(Self) -> Bool = _
+}
+
+///|
+/// Renderable 默认实现: render = name + ": " + describe
+impl Renderable with render(self) {
+  Named::name(self) + ": " + Describable::describe(self)
+}
+
+///|
+/// Validatable 默认实现@实现: validate = check
+impl Validatable with validate(self) {
+  Checkable::check(self)
+}
+
+///|
 /// trait 包版本 | Trait package version
 pub fn trait_version() -> String {
-  "moon-cross trait v0.3.13"
+  "moon-cross trait v0.3.30"
 }

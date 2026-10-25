@@ -73,3 +73,10 @@ pub impl @trait.Named for AndroidCompileConfig with name(self) {
   self.output_name
 }
 pub extend AndroidCompileConfig with @trait.Named::{name}
+
+///|
+/// AndroidCompileConfig 实现 Hashable trait | AndroidCompileConfig implements Hashable
+pub impl @trait.Hashable for AndroidCompileConfig with hash(self) {
+  @trait.Named::name(self).length()
+}
+pub extend AndroidCompileConfig with @trait.Hashable::{hash}

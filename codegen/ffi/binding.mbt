@@ -58,3 +58,10 @@ pub impl @trait.Named for FfiBindingResult with name(self) {
   self.filename
 }
 pub extend FfiBindingResult with @trait.Named::{name}
+
+///|
+/// FfiBindingResult 实现 Hashable trait | FfiBindingResult implements Hashable
+pub impl @trait.Hashable for FfiBindingResult with hash(self) {
+  @trait.Named::name(self).length()
+}
+pub extend FfiBindingResult with @trait.Hashable::{hash}

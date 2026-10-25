@@ -401,3 +401,10 @@ pub impl @trait.Named for TraceSpan with name(self) {
   self.name
 }
 pub extend TraceSpan with @trait.Named::{name}
+
+///|
+/// TraceSpan 实现 Hashable trait | TraceSpan implements Hashable
+pub impl @trait.Hashable for TraceSpan with hash(self) {
+  @trait.Named::name(self).length()
+}
+pub extend TraceSpan with @trait.Hashable::{hash}

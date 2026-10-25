@@ -23,6 +23,12 @@ pub using @trait {
   trait Versioned,
   trait Ordered,
   trait Displayable,
+  trait Hashable,
+  trait Buildable,
+  trait Renderable,
+  trait Configurable,
+  trait Observable,
+  trait Validatable,
 }
 
 ///|

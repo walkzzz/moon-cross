@@ -83,3 +83,10 @@ pub impl @trait.Named for NapiBindingConfig with name(self) {
   self.module_name
 }
 pub extend NapiBindingConfig with @trait.Named::{name}
+
+///|
+/// NapiBindingConfig 实现 Hashable trait | NapiBindingConfig implements Hashable
+pub impl @trait.Hashable for NapiBindingConfig with hash(self) {
+  @trait.Named::name(self).length()
+}
+pub extend NapiBindingConfig with @trait.Hashable::{hash}

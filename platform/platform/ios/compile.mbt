@@ -166,3 +166,10 @@ pub impl @trait.Named for IosCompileConfig with name(self) {
   self.output_name
 }
 pub extend IosCompileConfig with @trait.Named::{name}
+
+///|
+/// IosCompileConfig 实现 Hashable trait | IosCompileConfig implements Hashable
+pub impl @trait.Hashable for IosCompileConfig with hash(self) {
+  @trait.Named::name(self).length()
+}
+pub extend IosCompileConfig with @trait.Hashable::{hash}

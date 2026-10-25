@@ -47,3 +47,10 @@ pub impl @trait.Named for WindowsCompileConfig with name(self) {
   self.output_name
 }
 pub extend WindowsCompileConfig with @trait.Named::{name}
+
+///|
+/// WindowsCompileConfig 实现 Hashable trait | WindowsCompileConfig implements Hashable
+pub impl @trait.Hashable for WindowsCompileConfig with hash(self) {
+  @trait.Named::name(self).length()
+}
+pub extend WindowsCompileConfig with @trait.Hashable::{hash}

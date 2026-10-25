@@ -423,3 +423,25 @@ pub impl @trait.Named for BenchmarkSuite with name(self) {
   self.name
 }
 pub extend BenchmarkSuite with @trait.Named::{name}
+
+
+///|
+/// BenchmarkConfig 实现 Hashable trait | BenchmarkConfig implements Hashable
+pub impl @trait.Hashable for BenchmarkConfig with hash(self) {
+  @trait.Named::name(self).length()
+}
+pub extend BenchmarkConfig with @trait.Hashable::{hash}
+
+///|
+/// BenchmarkResult 实现 Hashable trait | BenchmarkResult implements Hashable
+pub impl @trait.Hashable for BenchmarkResult with hash(self) {
+  @trait.Named::name(self).length()
+}
+pub extend BenchmarkResult with @trait.Hashable::{hash}
+
+///|
+/// BenchmarkSuite 实现 Hashable trait | BenchmarkSuite implements Hashable
+pub impl @trait.Hashable for BenchmarkSuite with hash(self) {
+  @trait.Named::name(self).length()
+}
+pub extend BenchmarkSuite with @trait.Hashable::{hash}

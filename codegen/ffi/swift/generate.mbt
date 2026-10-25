@@ -82,3 +82,10 @@ pub impl @trait.Named for SwiftBindingConfig with name(self) {
   self.module_name
 }
 pub extend SwiftBindingConfig with @trait.Named::{name}
+
+///|
+/// SwiftBindingConfig 实现 Hashable trait | SwiftBindingConfig implements Hashable
+pub impl @trait.Hashable for SwiftBindingConfig with hash(self) {
+  @trait.Named::name(self).length()
+}
+pub extend SwiftBindingConfig with @trait.Hashable::{hash}

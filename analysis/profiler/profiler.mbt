@@ -297,3 +297,10 @@ pub impl @trait.Named for ProfileEntry with name(self) {
   self.name
 }
 pub extend ProfileEntry with @trait.Named::{name}
+
+///|
+/// ProfileEntry 实现 Hashable trait | ProfileEntry implements Hashable
+pub impl @trait.Hashable for ProfileEntry with hash(self) {
+  @trait.Named::name(self).length()
+}
+pub extend ProfileEntry with @trait.Hashable::{hash}

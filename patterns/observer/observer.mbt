@@ -133,3 +133,17 @@ pub impl @trait.Named for Event with name(self) {
   self.name
 }
 pub extend Event with @trait.Named::{name}
+
+///|
+/// Observer 实现 Hashable trait | Observer implements Hashable
+pub impl @trait.Hashable for Observer with hash(self) {
+  @trait.Named::name(self).length()
+}
+pub extend Observer with @trait.Hashable::{hash}
+
+///|
+/// Event 实现 Hashable trait | Event implements Hashable
+pub impl @trait.Hashable for Event with hash(self) {
+  @trait.Named::name(self).length()
+}
+pub extend Event with @trait.Hashable::{hash}

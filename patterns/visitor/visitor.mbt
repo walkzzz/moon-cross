@@ -88,3 +88,10 @@ pub impl @trait.Named for Element with name(self) {
   self.name
 }
 pub extend Element with @trait.Named::{name}
+
+///|
+/// Element 实现 Hashable trait | Element implements Hashable
+pub impl @trait.Hashable for Element with hash(self) {
+  @trait.Named::name(self).length()
+}
+pub extend Element with @trait.Hashable::{hash}

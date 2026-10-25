@@ -1,6 +1,34 @@
 # Changelog
 
-## v0.3.27 (2026-10-23) — codegen 扩展：CMake+类型依赖检查+构建计划
+## v0.3.30 (2026-10-25) — Trait 系统大幅扩展：20 定义 · 218 实现
+
+### Highlights
+- 新增 6 个 pub(open) trait
+  - `Hashable`：可哈希 `hash(Self) -> Int`
+  - `Buildable`：可构建 `build(Self) -> String`
+  - `Renderable : Displayable`：可渲染（有默认实现 render = name + ": " + describe）
+  - `Configurable`：可配置 `configure(Self, String, String) -> Self`
+  - `Observable`：可观察 `observe(Self) -> String`
+  - `Validatable : Checkable`：可验证输入（有默认实现 validate = check）
+- 子特征层次扩展
+  - `Renderable : Displayable (: Named + Describable)`
+  - `Validatable : Checkable`
+- 默认实现（使用限定语法避免 type_param_method warning）
+  - `Renderable::render = Named::name + ": " + Describable::describe`
+  - `Validatable::validate = Checkable::check`
+- 批量添加 30 个 Hashable 实现
+- 根包重导出更新：新增 6 个 trait
+- trait 定义总数：**20 个**
+- trait 实现总数：**218 个**跨 71 包
+
+### Stats
+- 包数: 80（不变）
+- 测试: 2289（不变）
+- trait 定义: 20 个
+- trait 实现: 218 个跨 71 包
+- Warning: 0
+
+## v0.3.29 (2026-10-23) — 完整性增强
 
 ### Highlights
 - codegen 模块新增 3 个函数

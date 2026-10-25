@@ -95,3 +95,32 @@ pub impl @trait.Named for ExportType with name(self) {
   self.name
 }
 pub extend ExportType with @trait.Named::{name}
+
+
+///|
+/// ExportParam 实现 Hashable trait | ExportParam implements Hashable
+pub impl @trait.Hashable for ExportParam with hash(self) {
+  @trait.Named::name(self).length()
+}
+pub extend ExportParam with @trait.Hashable::{hash}
+
+///|
+/// ExportFunction 实现 Hashable trait | ExportFunction implements Hashable
+pub impl @trait.Hashable for ExportFunction with hash(self) {
+  @trait.Named::name(self).length()
+}
+pub extend ExportFunction with @trait.Hashable::{hash}
+
+///|
+/// ExportField 实现 Hashable trait | ExportField implements Hashable
+pub impl @trait.Hashable for ExportField with hash(self) {
+  @trait.Named::name(self).length()
+}
+pub extend ExportField with @trait.Hashable::{hash}
+
+///|
+/// ExportType 实现 Hashable trait | ExportType implements Hashable
+pub impl @trait.Hashable for ExportType with hash(self) {
+  @trait.Named::name(self).length()
+}
+pub extend ExportType with @trait.Hashable::{hash}

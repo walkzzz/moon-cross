@@ -99,3 +99,10 @@ pub impl @trait.Named for JniBindingConfig with name(self) {
   self.class_name
 }
 pub extend JniBindingConfig with @trait.Named::{name}
+
+///|
+/// JniBindingConfig 实现 Hashable trait | JniBindingConfig implements Hashable
+pub impl @trait.Hashable for JniBindingConfig with hash(self) {
+  @trait.Named::name(self).length()
+}
+pub extend JniBindingConfig with @trait.Hashable::{hash}

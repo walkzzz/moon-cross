@@ -82,3 +82,10 @@ pub impl @trait.Named for LinuxCompileConfig with name(self) {
   self.output_name
 }
 pub extend LinuxCompileConfig with @trait.Named::{name}
+
+///|
+/// LinuxCompileConfig 实现 Hashable trait | LinuxCompileConfig implements Hashable
+pub impl @trait.Hashable for LinuxCompileConfig with hash(self) {
+  @trait.Named::name(self).length()
+}
+pub extend LinuxCompileConfig with @trait.Hashable::{hash}

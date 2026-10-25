@@ -415,3 +415,10 @@ pub impl @trait.Named for DependencyNode with name(self) {
   self.name
 }
 pub extend DependencyNode with @trait.Named::{name}
+
+///|
+/// DependencyNode 实现 Hashable trait | DependencyNode implements Hashable
+pub impl @trait.Hashable for DependencyNode with hash(self) {
+  @trait.Named::name(self).length()
+}
+pub extend DependencyNode with @trait.Hashable::{hash}

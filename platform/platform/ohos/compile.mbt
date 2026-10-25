@@ -134,3 +134,10 @@ pub impl @trait.Named for OhosCompileConfig with name(self) {
   self.output_name
 }
 pub extend OhosCompileConfig with @trait.Named::{name}
+
+///|
+/// OhosCompileConfig 实现 Hashable trait | OhosCompileConfig implements Hashable
+pub impl @trait.Hashable for OhosCompileConfig with hash(self) {
+  @trait.Named::name(self).length()
+}
+pub extend OhosCompileConfig with @trait.Hashable::{hash}

@@ -1,6 +1,6 @@
 name = "walkzzz/moon-cross"
 
-version = "0.3.29"
+version = "0.3.30"
 
 readme = "README.md"
 

@@ -105,3 +105,10 @@ pub impl @trait.Named for ProductInfo with name(self) {
   self.type_name
 }
 pub extend ProductInfo with @trait.Named::{name}
+
+///|
+/// ProductInfo 实现 Hashable trait | ProductInfo implements Hashable
+pub impl @trait.Hashable for ProductInfo with hash(self) {
+  @trait.Named::name(self).length()
+}
+pub extend ProductInfo with @trait.Hashable::{hash}

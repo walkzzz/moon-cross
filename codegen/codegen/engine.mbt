@@ -613,3 +613,24 @@ pub fn generate_build_plan(funcs : Array[ExportFunction], module_name : String) 
   content = content + "7. Generate FFI bindings for all platforms\n"
   { platform: "plan", filename: "build_plan.md", content, }
 }
+
+///|
+/// CodegenResult 实现 Hashable trait | CodegenResult implements Hashable
+pub impl @trait.Hashable for CodegenResult with hash(self) {
+  @trait.Named::name(self).length()
+}
+pub extend CodegenResult with @trait.Hashable::{hash}
+
+///|
+/// ExportFunction 实现 Hashable trait | ExportFunction implements Hashable
+pub impl @trait.Hashable for ExportFunction with hash(self) {
+  @trait.Named::name(self).length()
+}
+pub extend ExportFunction with @trait.Hashable::{hash}
+
+///|
+/// CrossPlatformCode 实现 Hashable trait | CrossPlatformCode implements Hashable
+pub impl @trait.Hashable for CrossPlatformCode with hash(self) {
+  @trait.Named::name(self).length()
+}
+pub extend CrossPlatformCode with @trait.Hashable::{hash}
