@@ -31,17 +31,21 @@ mooncakes 生态调研确认：截至 2026-10-23，**无任何 MoonBit 跨平台
 | 指标 | 数值 |
 |------|------|
 | 包数 | **80** |
-| 测试数 | **2276**（全部通过） |
+| 测试数 | **2289**（全部通过） |
 | Warnings | **0** |
+| Errors | **0** |
 | 一级分类目录 | **10**（core/testing/platform/codegen/integration/tools/runtime/analysis/patterns/security） |
 | trait 定义 | **14 个** `pub(open) trait` |
-| trait 实现 | **187 个**跨 72 包 |
+| trait 实现 | **188 个**跨 71 包 |
 | 平均 CRAP 指标 | **1.9**（目标 < 12） |
 | 高复杂度函数(≥12) | **0** |
 | 变异分数 | **100%**（等级 A，20 套件 110 变异体 0 存活） |
 | 支持平台 | **5**（iOS/Android/Windows/鸿蒙/Linux） |
-| 代码生成 | C适配层+Swift+JNI+C#+NAPI+Linux+Makefile+CI/CD+Package+Gradle+OHOS+README |
+| 代码生成 | C适配层+Swift+JNI+C#+NAPI+Linux+Makefile+CMake+CI/CD+Package+Gradle+OHOS+README+构建计划 |
+| 代码生成函数 | **15 个**（generate_c_adapter/swift_interop/jni_binding/dllimport/napi_binding/linux_header/all_platforms/makefile/github_actions/swift_package/gradle_config/ohos_build_profile/project/readme/cmake/build_plan） |
+| 类型依赖检查 | ✅ 支持 |
 | 第三方库集成 | pinyin@0.1.0（1→5 平台 FFI 自动生成已验证） |
+| 鲁棒性 | 输入验证+边界检查+防御性编程+异常处理 |
 | 规则合规 | R1-R19 全部合规 |
 | 工具链 | MoonBit v0.1.20260920 |
 
