@@ -5,16 +5,24 @@ pub(all) enum TrafficLight {
   Yellow
   Green
 } derive(Debug, Eq)
+
+///|
 pub extend TrafficLight with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend TrafficLight with Eq::{not_equal, equal}
 
 ///|
 /// 状态上下文 | State context
 pub(all) struct StateContext {
   light : TrafficLight
-  transitions : Int
+  transitions : Int32
 } derive(Debug, Eq)
+
+///|
 pub extend StateContext with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend StateContext with Eq::{not_equal, equal}
 
 ///|
@@ -63,7 +71,7 @@ pub fn state_reset(_ctx : StateContext) -> StateContext {
 
 ///|
 /// 转换次数 | Transition count
-pub fn state_transitions_count(ctx : StateContext) -> Int {
+pub fn state_transitions_count(ctx : StateContext) -> Int32 {
   ctx.transitions
 }
 
@@ -85,7 +93,9 @@ pub fn state_pattern_version() -> String {
 
 ///|
 /// StateContext 实现 Resettable trait | StateContext implements Resettable
-pub impl @trait.Resettable for StateContext with reset(self) {
+pub impl @trait.Resettable for StateContext with fn reset(self) {
   state_reset(self)
 }
+
+///|
 pub extend StateContext with @trait.Resettable::{reset}

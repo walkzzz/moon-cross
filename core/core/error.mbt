@@ -11,6 +11,7 @@ pub(all) enum MoonCrossError {
   IoError(String)
 } derive(Debug)
 
+///|
 pub extend MoonCrossError with @moonbitlang/core/debug.Debug::{to_repr}
 
 ///|

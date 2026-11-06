@@ -1,12 +1,15 @@
 ///|
 /// 并行编译配置 | Parallel compilation configuration
 pub(all) struct ParallelConfig {
-  max_parallelism : Int
+  max_parallelism : Int32
   enabled : Bool
   multi_arch : Bool
 } derive(Debug, Eq)
 
+///|
 pub extend ParallelConfig with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend ParallelConfig with Eq::{not_equal, equal}
 
 ///|
@@ -15,39 +18,50 @@ pub(all) struct ParallelTask {
   platform : @core.Platform
   arch : @core.Arch
   command : String
-  priority : Int
+  priority : Int32
 } derive(Debug, Eq)
 
+///|
 pub extend ParallelTask with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend ParallelTask with Eq::{not_equal, equal}
 
 ///|
 /// 任务调度结果 | Task schedule result
 pub(all) struct TaskSchedule {
   tasks : Array[ParallelTask]
-  batches : Int
+  batches : Int32
   estimated_speedup : Double
 } derive(Debug, Eq)
 
+///|
 pub extend TaskSchedule with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend TaskSchedule with Eq::{not_equal, equal}
 
 ///|
 /// 默认并行配置 | Default parallel configuration
 pub fn default_parallel_config() -> ParallelConfig {
-  { max_parallelism: 4, enabled: true, multi_arch: true }
+  { max_parallelism: 4, enabled: true, multi_arch: true, }
 }
 
 ///|
 /// 禁用并行配置 | Disabled parallel configuration
 pub fn disabled_parallel_config() -> ParallelConfig {
-  { max_parallelism: 1, enabled: false, multi_arch: false }
+  { max_parallelism: 1, enabled: false, multi_arch: false, }
 }
 
 ///|
 /// 创建并行任务 | Create parallel task
-pub fn make_task(platform : @core.Platform, arch : @core.Arch, command : String, priority : Int) -> ParallelTask {
-  { platform, arch, command, priority }
+pub fn make_task(
+  platform : @core.Platform,
+  arch : @core.Arch,
+  command : String,
+  priority : Int32,
+) -> ParallelTask {
+  { platform, arch, command, priority, }
 }
 
 ///|
@@ -63,7 +77,14 @@ pub fn generate_all_tasks(config : ParallelConfig) -> Array[ParallelTask] {
         @core.Arch::Arm64 => @core.Arch::X86_64
         @core.Arch::X86_64 => @core.Arch::Arm64
       }
-      tasks.push(make_task(platform, other_arch, "compile-" + platform.to_id() + "-" + other_arch.to_id(), 2))
+      tasks.push(
+        make_task(
+          platform,
+          other_arch,
+          "compile-" + platform.to_id() + "-" + other_arch.to_id(),
+          2,
+        ),
+      )
     }
   }
   tasks
@@ -71,7 +92,7 @@ pub fn generate_all_tasks(config : ParallelConfig) -> Array[ParallelTask] {
 
 ///|
 /// 计算并行批次 | Calculate parallel batches
-pub fn calculate_batches(task_count : Int, max_parallelism : Int) -> Int {
+pub fn calculate_batches(task_count : Int32, max_parallelism : Int32) -> Int32 {
   if max_parallelism <= 0 {
     return task_count
   }
@@ -88,12 +109,12 @@ pub fn schedule_tasks(config : ParallelConfig) -> TaskSchedule {
   } else {
     1.0
   }
-  { tasks, batches: batch_count, estimated_speedup: speedup }
+  { tasks, batches: batch_count, estimated_speedup: speedup, }
 }
 
 ///|
 /// 计算最优并行度 | Calculate optimal parallelism based on CPU cores
-pub fn optimal_parallelism(cpu_cores : Int) -> Int {
+pub fn optimal_parallelism(cpu_cores : Int32) -> Int32 {
   if cpu_cores <= 0 {
     1
   } else if cpu_cores > 8 {
@@ -111,14 +132,18 @@ pub fn parallel_version() -> String {
 
 ///|
 /// ParallelConfig 实现 Checkable trait | ParallelConfig implements Checkable
-pub impl @trait.Checkable for ParallelConfig with check(self) {
+pub impl @trait.Checkable for ParallelConfig with fn check(self) {
   self.enabled
 }
+
+///|
 pub extend ParallelConfig with @trait.Checkable::{check}
 
 ///|
 /// TaskSchedule 实现 Countable trait | TaskSchedule implements Countable
-pub impl @trait.Countable for TaskSchedule with count(self) {
+pub impl @trait.Countable for TaskSchedule with fn count(self) {
   self.tasks.length()
 }
+
+///|
 pub extend TaskSchedule with @trait.Countable::{count}

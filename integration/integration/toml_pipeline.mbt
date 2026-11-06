@@ -11,7 +11,11 @@ pub(all) struct TomlPipelineResult {
   ios_command : String
   ohos_command : String
 } derive(Debug, Eq)
+
+///|
 pub extend TomlPipelineResult with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend TomlPipelineResult with Eq::{not_equal, equal}
 
 ///|

@@ -1,11 +1,15 @@
 ///|
 /// 观察者 | Observer
 pub(all) struct Observer {
-  id : Int
+  id : Int32
   name : String
   active : Bool
 } derive(Debug, Eq)
+
+///|
 pub extend Observer with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend Observer with Eq::{not_equal, equal}
 
 ///|
@@ -13,9 +17,13 @@ pub extend Observer with Eq::{not_equal, equal}
 pub(all) struct Subject {
   observers : Array[Observer]
   state : String
-  next_id : Int
+  next_id : Int32
 } derive(Debug, Eq)
+
+///|
 pub extend Subject with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend Subject with Eq::{not_equal, equal}
 
 ///|
@@ -23,59 +31,70 @@ pub extend Subject with Eq::{not_equal, equal}
 pub(all) struct Event {
   name : String
   data : String
-  timestamp : Int
+  timestamp : Int32
 } derive(Debug, Eq)
+
+///|
 pub extend Event with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend Event with Eq::{not_equal, equal}
 
 ///|
 /// 创建主题 | Create subject
 pub fn subject_create() -> Subject {
-  { observers: [], state: "", next_id: 0 }
+  { observers: [], state: "", next_id: 0, }
 }
 
 ///|
 /// 注册观察者 | Attach observer
 pub fn subject_attach(sub : Subject, name : String) -> (Subject, Observer) {
-  let observer = { id: sub.next_id, name, active: true }
+  let observer = { id: sub.next_id, name, active: true, }
   let new_observers = []
   for o in sub.observers {
     new_observers.push(o)
   }
   new_observers.push(observer)
-  ({ observers: new_observers, state: sub.state, next_id: sub.next_id + 1 }, observer)
+  (
+    { observers: new_observers, state: sub.state, next_id: sub.next_id + 1, },
+    observer,
+  )
 }
 
 ///|
 /// 注销观察者 | Detach observer
-pub fn subject_detach(sub : Subject, observer_id : Int) -> Subject {
+pub fn subject_detach(sub : Subject, observer_id : Int32) -> Subject {
   let new_observers = []
   for o in sub.observers {
     if o.id != observer_id {
       new_observers.push(o)
     }
   }
-  { observers: new_observers, state: sub.state, next_id: sub.next_id }
+  { observers: new_observers, state: sub.state, next_id: sub.next_id, }
 }
 
 ///|
 /// 激活/停用观察者 | Toggle observer
-pub fn subject_set_active(sub : Subject, observer_id : Int, active : Bool) -> Subject {
+pub fn subject_set_active(
+  sub : Subject,
+  observer_id : Int32,
+  active : Bool,
+) -> Subject {
   let new_observers = []
   for o in sub.observers {
     if o.id == observer_id {
-      new_observers.push({ id: o.id, name: o.name, active })
+      new_observers.push({ id: o.id, name: o.name, active, })
     } else {
       new_observers.push(o)
     }
   }
-  { observers: new_observers, state: sub.state, next_id: sub.next_id }
+  { observers: new_observers, state: sub.state, next_id: sub.next_id, }
 }
 
 ///|
 /// 设置状态 | Set state
 pub fn subject_set_state(sub : Subject, state : String) -> Subject {
-  { observers: sub.observers, state, next_id: sub.next_id }
+  { observers: sub.observers, state, next_id: sub.next_id, }
 }
 
 ///|
@@ -92,13 +111,13 @@ pub fn subject_notify(sub : Subject, event : Event) -> Array[(Observer, Event)] 
 
 ///|
 /// 观察者数量 | Observer count
-pub fn subject_observer_count(sub : Subject) -> Int {
+pub fn subject_observer_count(sub : Subject) -> Int32 {
   sub.observers.length()
 }
 
 ///|
 /// 活跃观察者数量 | Active observer count
-pub fn subject_active_count(sub : Subject) -> Int {
+pub fn subject_active_count(sub : Subject) -> Int32 {
   let mut count = 0
   for o in sub.observers {
     if o.active {
@@ -110,8 +129,8 @@ pub fn subject_active_count(sub : Subject) -> Int {
 
 ///|
 /// 创建事件 | Create event
-pub fn event_create(name : String, data : String, timestamp : Int) -> Event {
-  { name, data, timestamp }
+pub fn event_create(name : String, data : String, timestamp : Int32) -> Event {
+  { name, data, timestamp, }
 }
 
 ///|
@@ -122,28 +141,36 @@ pub fn observer_version() -> String {
 
 ///|
 /// Observer 实现 Named trait | Observer implements Named
-pub impl @trait.Named for Observer with name(self) {
+pub impl @trait.Named for Observer with fn name(self) {
   self.name
 }
+
+///|
 pub extend Observer with @trait.Named::{name}
 
 ///|
 /// Event 实现 Named trait | Event implements Named
-pub impl @trait.Named for Event with name(self) {
+pub impl @trait.Named for Event with fn name(self) {
   self.name
 }
+
+///|
 pub extend Event with @trait.Named::{name}
 
 ///|
 /// Observer 实现 Hashable trait | Observer implements Hashable
-pub impl @trait.Hashable for Observer with hash(self) {
+pub impl @trait.Hashable for Observer with fn hash(self) {
   @trait.Named::name(self).length()
 }
+
+///|
 pub extend Observer with @trait.Hashable::{hash}
 
 ///|
 /// Event 实现 Hashable trait | Event implements Hashable
-pub impl @trait.Hashable for Event with hash(self) {
+pub impl @trait.Hashable for Event with fn hash(self) {
   @trait.Named::name(self).length()
 }
+
+///|
 pub extend Event with @trait.Hashable::{hash}

@@ -7,7 +7,10 @@ pub(all) struct DiscoveryResult {
   config_generated : Bool
 } derive(Debug, Eq)
 
+///|
 pub extend DiscoveryResult with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend DiscoveryResult with Eq::{not_equal, equal}
 
 ///|
@@ -19,7 +22,10 @@ pub(all) struct PlatformDetection {
   version : String?
 } derive(Debug, Eq)
 
+///|
 pub extend PlatformDetection with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend PlatformDetection with Eq::{not_equal, equal}
 
 ///|
@@ -32,7 +38,10 @@ pub(all) struct SourceAnalysis {
   has_derive : Bool
 } derive(Debug, Eq)
 
+///|
 pub extend SourceAnalysis with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend SourceAnalysis with Eq::{not_equal, equal}
 
 ///|
@@ -40,8 +49,10 @@ pub extend SourceAnalysis with Eq::{not_equal, equal}
 pub fn analyze_source(source : String) -> SourceAnalysis {
   {
     has_pub_fn: source.contains("pub fn "),
-    has_pub_struct: source.contains("pub(all) struct ") || source.contains("pub struct "),
-    has_pub_enum: source.contains("pub(all) enum ") || source.contains("pub enum "),
+    has_pub_struct: source.contains("pub(all) struct ") ||
+    source.contains("pub struct "),
+    has_pub_enum: source.contains("pub(all) enum ") ||
+    source.contains("pub enum "),
     has_extern: source.contains("extern "),
     has_derive: source.contains("derive("),
   }
@@ -49,13 +60,23 @@ pub fn analyze_source(source : String) -> SourceAnalysis {
 
 ///|
 /// 从函数名列表创建发现结果 | Create discovery result from function name list
-pub fn discover_from_names(function_names : Array[String], type_names : Array[String]) -> DiscoveryResult {
-  { found_functions: function_names, found_types: type_names, detected_platforms: @core.all_platforms(), config_generated: function_names.length() > 0 }
+pub fn discover_from_names(
+  function_names : Array[String],
+  type_names : Array[String],
+) -> DiscoveryResult {
+  {
+    found_functions: function_names,
+    found_types: type_names,
+    detected_platforms: @core.all_platforms(),
+    config_generated: function_names.length() > 0,
+  }
 }
 
 ///|
 /// 检测可用平台 | Detect available platforms
-pub fn detect_platforms(detections : Array[PlatformDetection]) -> Array[@core.Platform] {
+pub fn detect_platforms(
+  detections : Array[PlatformDetection],
+) -> Array[@core.Platform] {
   let available = []
   for detection in detections {
     if detection.available {
@@ -72,13 +93,20 @@ pub fn detect_platforms(detections : Array[PlatformDetection]) -> Array[@core.Pl
 
 ///|
 /// 创建平台检测结果 | Create platform detection result
-pub fn make_detection(platform : @core.Platform, available : Bool, sdk_path : String?, version : String?) -> PlatformDetection {
-  { platform, available, sdk_path, version }
+pub fn make_detection(
+  platform : @core.Platform,
+  available : Bool,
+  sdk_path : String?,
+  version : String?,
+) -> PlatformDetection {
+  { platform, available, sdk_path, version, }
 }
 
 ///|
 /// 智能默认配置 | Smart default configuration
-pub fn smart_defaults(detected_platforms : Array[@core.Platform]) -> Array[@core.Platform] {
+pub fn smart_defaults(
+  detected_platforms : Array[@core.Platform],
+) -> Array[@core.Platform] {
   if detected_platforms.length() == 0 {
     @core.all_platforms()
   } else {
@@ -88,14 +116,23 @@ pub fn smart_defaults(detected_platforms : Array[@core.Platform]) -> Array[@core
 
 ///|
 /// 自动生成配置 | Auto-generate configuration
-pub fn auto_generate_config(functions : Array[String], types : Array[String], platforms : Array[@core.Platform]) -> DiscoveryResult {
+pub fn auto_generate_config(
+  functions : Array[String],
+  types : Array[String],
+  platforms : Array[@core.Platform],
+) -> DiscoveryResult {
   let has_content = functions.length() > 0 || types.length() > 0
-  { found_functions: functions, found_types: types, detected_platforms: platforms, config_generated: has_content }
+  {
+    found_functions: functions,
+    found_types: types,
+    detected_platforms: platforms,
+    config_generated: has_content,
+  }
 }
 
 ///|
 /// 统计源码中的导出函数数量 | Count export functions in source
-pub fn count_export_functions(sources : Array[String]) -> Int {
+pub fn count_export_functions(sources : Array[String]) -> Int32 {
   let mut count = 0
   for source in sources {
     if source.contains("pub fn ") {
@@ -107,7 +144,7 @@ pub fn count_export_functions(sources : Array[String]) -> Int {
 
 ///|
 /// 统计源码中的导出类型数量 | Count export types in source
-pub fn count_export_types(sources : Array[String]) -> Int {
+pub fn count_export_types(sources : Array[String]) -> Int32 {
   let mut count = 0
   for source in sources {
     if source.contains("pub(all) struct ") || source.contains("pub(all) enum ") {
@@ -132,7 +169,12 @@ pub fn needs_ffi(sources : Array[String]) -> Bool {
 ///|
 /// 创建空发现结果 | Create empty discovery result
 pub fn empty_discovery() -> DiscoveryResult {
-  { found_functions: [], found_types: [], detected_platforms: [], config_generated: false }
+  {
+    found_functions: [],
+    found_types: [],
+    detected_platforms: [],
+    config_generated: false,
+  }
 }
 
 ///|
@@ -156,7 +198,12 @@ pub fn merge_discovery(results : Array[DiscoveryResult]) -> DiscoveryResult {
       generated = true
     }
   }
-  { found_functions: all_functions, found_types: all_types, detected_platforms: all_platforms, config_generated: generated }
+  {
+    found_functions: all_functions,
+    found_types: all_types,
+    detected_platforms: all_platforms,
+    config_generated: generated,
+  }
 }
 
 ///|
@@ -167,14 +214,18 @@ pub fn discovery_version() -> String {
 
 ///|
 /// PlatformDetection 实现 Checkable trait | PlatformDetection implements Checkable
-pub impl @trait.Checkable for PlatformDetection with check(self) {
+pub impl @trait.Checkable for PlatformDetection with fn check(self) {
   self.available
 }
+
+///|
 pub extend PlatformDetection with @trait.Checkable::{check}
 
 ///|
 /// SourceAnalysis 实现 Checkable trait | SourceAnalysis implements Checkable
-pub impl @trait.Checkable for SourceAnalysis with check(self) {
+pub impl @trait.Checkable for SourceAnalysis with fn check(self) {
   self.has_pub_fn
 }
+
+///|
 pub extend SourceAnalysis with @trait.Checkable::{check}

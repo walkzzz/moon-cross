@@ -1,4 +1,6 @@
 import {
   "moonbitlang/core/debug",
   "walkzzz/moon-cross/core/trait",
+  "walkzzz/moon-cross/codegen/codegen",
+  "walkzzz/moon-cross/platform/platform",
 }

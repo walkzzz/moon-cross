@@ -4,7 +4,11 @@ pub(all) struct MockCall {
   method_name : String
   args : String
 } derive(Debug, Eq)
+
+///|
 pub extend MockCall with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend MockCall with Eq::{not_equal, equal}
 
 ///|
@@ -13,7 +17,11 @@ pub(all) struct Mock {
   calls : Array[MockCall]
   expectations : Array[MockCall]
 } derive(Debug, Eq)
+
+///|
 pub extend Mock with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend Mock with Eq::{not_equal, equal}
 
 ///|
@@ -21,9 +29,13 @@ pub extend Mock with Eq::{not_equal, equal}
 pub(all) struct Stub {
   method_name : String
   return_value : String
-  call_count : Int
+  call_count : Int32
 } derive(Debug, Eq)
+
+///|
 pub extend Stub with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend Stub with Eq::{not_equal, equal}
 
 ///|
@@ -32,7 +44,11 @@ pub(all) struct Spy {
   calls : Array[MockCall]
   wrapped : String
 } derive(Debug, Eq)
+
+///|
 pub extend Spy with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend Spy with Eq::{not_equal, equal}
 
 ///|
@@ -40,9 +56,13 @@ pub extend Spy with Eq::{not_equal, equal}
 pub(all) struct Fake {
   name : String
   behavior : String
-  call_count : Int
+  call_count : Int32
 } derive(Debug, Eq)
+
+///|
 pub extend Fake with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend Fake with Eq::{not_equal, equal}
 
 ///|
@@ -92,7 +112,7 @@ pub fn mock_verify(mock : Mock) -> Bool {
 
 ///|
 /// 获取调用次数 | Get call count for method
-pub fn mock_call_count(mock : Mock, method_name : String) -> Int {
+pub fn mock_call_count(mock : Mock, method_name : String) -> Int32 {
   let mut count = 0
   for c in mock.calls {
     if c.method_name == method_name {
@@ -123,7 +143,14 @@ pub fn stub_create(method_name : String, return_value : String) -> Stub {
 ///|
 /// 调用 Stub | Call stub
 pub fn stub_call(stub : Stub, _args : String) -> (Stub, String) {
-  ({ method_name: stub.method_name, return_value: stub.return_value, call_count: stub.call_count + 1, }, stub.return_value)
+  (
+    {
+      method_name: stub.method_name,
+      return_value: stub.return_value,
+      call_count: stub.call_count + 1,
+    },
+    stub.return_value,
+  )
 }
 
 ///|
@@ -145,7 +172,7 @@ pub fn spy_record(spy : Spy, method_name : String, args : String) -> Spy {
 
 ///|
 /// Spy 调用次数 | Spy call count
-pub fn spy_call_count(spy : Spy, method_name : String) -> Int {
+pub fn spy_call_count(spy : Spy, method_name : String) -> Int32 {
   let mut count = 0
   for c in spy.calls {
     if c.method_name == method_name {
@@ -170,12 +197,19 @@ pub fn fake_create(name : String, behavior : String) -> Fake {
 ///|
 /// 调用 Fake | Invoke fake
 pub fn fake_invoke(fake : Fake) -> (Fake, String) {
-  ({ name: fake.name, behavior: fake.behavior, call_count: fake.call_count + 1, }, fake.behavior)
+  (
+    {
+      name: fake.name,
+      behavior: fake.behavior,
+      call_count: fake.call_count + 1,
+    },
+    fake.behavior,
+  )
 }
 
 ///|
 /// Fake 调用次数 | Fake call count
-pub fn fake_call_count(fake : Fake) -> Int {
+pub fn fake_call_count(fake : Fake) -> Int32 {
   fake.call_count
 }
 
@@ -187,97 +221,130 @@ pub fn mock_version() -> String {
 
 ///|
 /// Mock 实现 Checkable trait | Mock implements Checkable (required by Verifiable : Checkable)
-pub impl @trait.Checkable for Mock with check(self) {
+pub impl @trait.Checkable for Mock with fn check(self) {
   mock_verify(self)
 }
+
+///|
 pub extend Mock with @trait.Checkable::{check}
 
 ///|
 /// Mock 实现 Verifiable trait | Mock implements Verifiable
-pub impl @trait.Verifiable for Mock with verify(self) {
+pub impl @trait.Verifiable for Mock with fn verify(self) {
   mock_verify(self)
 }
+
+///|
 pub extend Mock with @trait.Verifiable::{verify}
 
 ///|
 /// Mock 实现 Resettable trait | Mock implements Resettable
-pub impl @trait.Resettable for Mock with reset(self) {
+pub impl @trait.Resettable for Mock with fn reset(self) {
   mock_reset(self)
 }
+
+///|
 pub extend Mock with @trait.Resettable::{reset}
 
 ///|
 /// Mock 实现 Countable trait | Mock implements Countable
-pub impl @trait.Countable for Mock with count(self) {
+pub impl @trait.Countable for Mock with fn count(self) {
   self.calls.length()
 }
+
+///|
 pub extend Mock with @trait.Countable::{count}
 
 ///|
 /// Stub 实现 Named trait | Stub implements Named
-pub impl @trait.Named for Stub with name(self) {
+pub impl @trait.Named for Stub with fn name(self) {
   self.method_name
 }
+
+///|
 pub extend Stub with @trait.Named::{name}
 
 ///|
 /// Stub 实现 Countable trait | Stub implements Countable
-pub impl @trait.Countable for Stub with count(self) {
+pub impl @trait.Countable for Stub with fn count(self) {
   self.call_count
 }
+
+///|
 pub extend Stub with @trait.Countable::{count}
 
 ///|
 /// Spy 实现 Named trait | Spy implements Named
-pub impl @trait.Named for Spy with name(self) {
+pub impl @trait.Named for Spy with fn name(self) {
   self.wrapped
 }
+
+///|
 pub extend Spy with @trait.Named::{name}
 
 ///|
 /// Spy 实现 Countable trait | Spy implements Countable
-pub impl @trait.Countable for Spy with count(self) {
+pub impl @trait.Countable for Spy with fn count(self) {
   self.calls.length()
 }
+
+///|
 pub extend Spy with @trait.Countable::{count}
 
 ///|
 /// Fake 实现 Named trait | Fake implements Named
-pub impl @trait.Named for Fake with name(self) {
+pub impl @trait.Named for Fake with fn name(self) {
   self.name
 }
+
+///|
 pub extend Fake with @trait.Named::{name}
 
 ///|
 /// Fake 实现 Countable trait | Fake implements Countable
-pub impl @trait.Countable for Fake with count(self) {
+pub impl @trait.Countable for Fake with fn count(self) {
   self.call_count
 }
+
+///|
 pub extend Fake with @trait.Countable::{count}
+
 ///|
 /// Mock 实现 Iterable trait | Mock implements Iterable
-pub impl @trait.Iterable for Mock with iter_count(self) {
+pub impl @trait.Iterable for Mock with fn iter_count(self) {
   self.calls.length()
 }
+
+///|
 pub extend Mock with @trait.Iterable::{iter_count}
 
 ///|
 /// Spy 实现 Iterable trait | Spy implements Iterable
-pub impl @trait.Iterable for Spy with iter_count(self) {
+pub impl @trait.Iterable for Spy with fn iter_count(self) {
   self.calls.length()
 }
+
+///|
 pub extend Spy with @trait.Iterable::{iter_count}
 
 ///|
 /// Fake 实现 Cloneable trait | Fake implements Cloneable
-pub impl @trait.Cloneable for Fake with clone(self) {
+pub impl @trait.Cloneable for Fake with fn clone(self) {
   { name: self.name, behavior: self.behavior, call_count: self.call_count, }
 }
+
+///|
 pub extend Fake with @trait.Cloneable::{clone}
 
 ///|
 /// Stub 实现 Cloneable trait | Stub implements Cloneable
-pub impl @trait.Cloneable for Stub with clone(self) {
-  { method_name: self.method_name, return_value: self.return_value, call_count: self.call_count, }
+pub impl @trait.Cloneable for Stub with fn clone(self) {
+  {
+    method_name: self.method_name,
+    return_value: self.return_value,
+    call_count: self.call_count,
+  }
 }
+
+///|
 pub extend Stub with @trait.Cloneable::{clone}

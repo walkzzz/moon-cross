@@ -5,7 +5,11 @@ pub(all) struct ValidationError {
   message : String
   code : String
 } derive(Debug, Eq)
+
+///|
 pub extend ValidationError with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend ValidationError with Eq::{not_equal, equal}
 
 ///|
@@ -14,7 +18,11 @@ pub(all) struct ValidationResult {
   valid : Bool
   errors : Array[ValidationError]
 } derive(Debug, Eq)
+
+///|
 pub extend ValidationResult with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend ValidationResult with Eq::{not_equal, equal}
 
 ///|
@@ -23,7 +31,11 @@ pub(all) struct ValidationConfig {
   strict : Bool
   stop_on_first_error : Bool
 } derive(Debug, Eq)
+
+///|
 pub extend ValidationConfig with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend ValidationConfig with Eq::{not_equal, equal}
 
 ///|
@@ -33,13 +45,17 @@ pub(all) struct ValidationRule {
   description : String
   enabled : Bool
 } derive(Debug, Eq)
+
+///|
 pub extend ValidationRule with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend ValidationRule with Eq::{not_equal, equal}
 
 ///|
 /// 默认验证配置 | Default validation configuration
 pub fn default_validation_config() -> ValidationConfig {
-  { strict: false, stop_on_first_error: false }
+  { strict: false, stop_on_first_error: false, }
 }
 
 ///|
@@ -49,19 +65,19 @@ pub fn make_error(
   message : String,
   code : String,
 ) -> ValidationError {
-  { field, message, code }
+  { field, message, code, }
 }
 
 ///|
 /// 创建验证结果 | Create validation result
 pub fn create_result(errors : Array[ValidationError]) -> ValidationResult {
-  { valid: errors.length() == 0, errors }
+  { valid: errors.length() == 0, errors, }
 }
 
 ///|
 /// 有效结果 | Valid result
 pub fn valid_result() -> ValidationResult {
-  { valid: true, errors: [] }
+  { valid: true, errors: [], }
 }
 
 ///|
@@ -72,7 +88,7 @@ pub fn is_valid(result : ValidationResult) -> Bool {
 
 ///|
 /// 错误数 | Error count
-pub fn error_count(result : ValidationResult) -> Int {
+pub fn error_count(result : ValidationResult) -> Int32 {
   result.errors.length()
 }
 
@@ -80,7 +96,11 @@ pub fn error_count(result : ValidationResult) -> Int {
 /// 验证必填 | Validate required
 pub fn validate_required(value : String) -> ValidationError? {
   if value.length() == 0 {
-    return Some({ field: "value", message: "Value is required", code: "REQUIRED" })
+    return Some({
+      field: "value",
+      message: "Value is required",
+      code: "REQUIRED",
+    })
   }
   None
 }
@@ -92,7 +112,7 @@ pub fn validate_required_field(
   value : String,
 ) -> ValidationError? {
   if value.length() == 0 {
-    return Some({ field, message: field + " is required", code: "REQUIRED" })
+    return Some({ field, message: field + " is required", code: "REQUIRED", })
   }
   None
 }
@@ -102,10 +122,14 @@ pub fn validate_required_field(
 pub fn validate_min_length(
   field : String,
   value : String,
-  min : Int,
+  min : Int32,
 ) -> ValidationError? {
   if value.length() < min {
-    return Some({ field, message: field + " must be at least " + min.to_string() + " characters", code: "MIN_LENGTH" })
+    return Some({
+      field,
+      message: field + " must be at least " + min.to_string() + " characters",
+      code: "MIN_LENGTH",
+    })
   }
   None
 }
@@ -115,10 +139,14 @@ pub fn validate_min_length(
 pub fn validate_max_length(
   field : String,
   value : String,
-  max : Int,
+  max : Int32,
 ) -> ValidationError? {
   if value.length() > max {
-    return Some({ field, message: field + " must be at most " + max.to_string() + " characters", code: "MAX_LENGTH" })
+    return Some({
+      field,
+      message: field + " must be at most " + max.to_string() + " characters",
+      code: "MAX_LENGTH",
+    })
   }
   None
 }
@@ -127,11 +155,15 @@ pub fn validate_max_length(
 /// 验证最小值 | Validate min value
 pub fn validate_min_value(
   field : String,
-  value : Int,
-  min : Int,
+  value : Int32,
+  min : Int32,
 ) -> ValidationError? {
   if value < min {
-    return Some({ field, message: field + " must be at least " + min.to_string(), code: "MIN_VALUE" })
+    return Some({
+      field,
+      message: field + " must be at least " + min.to_string(),
+      code: "MIN_VALUE",
+    })
   }
   None
 }
@@ -140,11 +172,15 @@ pub fn validate_min_value(
 /// 验证最大值 | Validate max value
 pub fn validate_max_value(
   field : String,
-  value : Int,
-  max : Int,
+  value : Int32,
+  max : Int32,
 ) -> ValidationError? {
   if value > max {
-    return Some({ field, message: field + " must be at most " + max.to_string(), code: "MAX_VALUE" })
+    return Some({
+      field,
+      message: field + " must be at most " + max.to_string(),
+      code: "MAX_VALUE",
+    })
   }
   None
 }
@@ -156,7 +192,11 @@ pub fn validate_not_empty(
   value : Array[String],
 ) -> ValidationError? {
   if value.length() == 0 {
-    return Some({ field, message: field + " must not be empty", code: "NOT_EMPTY" })
+    return Some({
+      field,
+      message: field + " must not be empty",
+      code: "NOT_EMPTY",
+    })
   }
   None
 }
@@ -174,7 +214,7 @@ pub fn merge_results(
   for e in r2.errors {
     errors.push(e)
   }
-  { valid: errors.length() == 0, errors }
+  { valid: errors.length() == 0, errors, }
 }
 
 ///|
@@ -182,7 +222,14 @@ pub fn merge_results(
 pub fn format_errors(errors : Array[ValidationError]) -> String {
   let mut result = ""
   for error in errors {
-    result = result + "[" + error.code + "] " + error.field + ": " + error.message + "\n"
+    result = result +
+      "[" +
+      error.code +
+      "] " +
+      error.field +
+      ": " +
+      error.message +
+      "\n"
   }
   result
 }
@@ -255,22 +302,20 @@ pub fn validator_version() -> String {
 /// 内置验证规则 | Built-in validation rules
 pub fn builtin_rules() -> Array[ValidationRule] {
   [
-    { name: "required", description: "Field is required", enabled: true },
-    { name: "min-length", description: "Minimum length check", enabled: true },
-    { name: "max-length", description: "Maximum length check", enabled: true },
-    { name: "min-value", description: "Minimum value check", enabled: true },
-    { name: "max-value", description: "Maximum value check", enabled: true },
-    { name: "not-empty", description: "Non-empty check", enabled: true },
-    { name: "pattern", description: "Pattern match check", enabled: true },
-    { name: "email", description: "Email format check", enabled: true },
+    { name: "required", description: "Field is required", enabled: true, },
+    { name: "min-length", description: "Minimum length check", enabled: true, },
+    { name: "max-length", description: "Maximum length check", enabled: true, },
+    { name: "min-value", description: "Minimum value check", enabled: true, },
+    { name: "max-value", description: "Maximum value check", enabled: true, },
+    { name: "not-empty", description: "Non-empty check", enabled: true, },
+    { name: "pattern", description: "Pattern match check", enabled: true, },
+    { name: "email", description: "Email format check", enabled: true, },
   ]
 }
 
 ///|
 /// 批量验证 | Batch validate
-pub fn batch_validate(
-  checks : Array[ValidationError?],
-) -> ValidationResult {
+pub fn batch_validate(checks : Array[ValidationError?]) -> ValidationResult {
   let errors = []
   for check in checks {
     match check {
@@ -278,19 +323,23 @@ pub fn batch_validate(
       None => continue
     }
   }
-  { valid: errors.length() == 0, errors }
+  { valid: errors.length() == 0, errors, }
 }
 
 ///|
 /// ValidationRule 实现 Named trait | ValidationRule implements Named
-pub impl @trait.Named for ValidationRule with name(self) {
+pub impl @trait.Named for ValidationRule with fn name(self) {
   self.name
 }
+
+///|
 pub extend ValidationRule with @trait.Named::{name}
 
 ///|
 /// ValidationRule 实现 Describable trait | ValidationRule implements Describable
-pub impl @trait.Describable for ValidationRule with describe(self) {
+pub impl @trait.Describable for ValidationRule with fn describe(self) {
   self.description
 }
+
+///|
 pub extend ValidationRule with @trait.Describable::{describe}

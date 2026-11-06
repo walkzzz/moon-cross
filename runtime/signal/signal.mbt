@@ -7,44 +7,60 @@ pub(all) enum SignalType {
   Error
   Custom
 } derive(Debug, Eq)
+
+///|
 pub extend SignalType with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend SignalType with Eq::{not_equal, equal}
 
 ///|
 /// 信号 | Signal
 pub(all) struct Signal {
-  id : Int
+  id : Int32
   name : String
   typ : SignalType
   data : String
-  timestamp : Int
-  priority : Int
+  timestamp : Int32
+  priority : Int32
 } derive(Debug, Eq)
+
+///|
 pub extend Signal with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend Signal with Eq::{not_equal, equal}
 
 ///|
 /// 信号处理器 | Signal handler
 pub(all) struct SignalHandler {
-  id : Int
+  id : Int32
   signal_name : String
   handler_name : String
-  priority : Int
+  priority : Int32
   active : Bool
-  call_count : Int
+  call_count : Int32
 } derive(Debug, Eq)
+
+///|
 pub extend SignalHandler with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend SignalHandler with Eq::{not_equal, equal}
 
 ///|
 /// 信号统计 | Signal statistics
 pub(all) struct SignalStats {
-  total_sent : Int
-  total_handled : Int
-  total_dropped : Int
-  handler_count : Int
+  total_sent : Int32
+  total_handled : Int32
+  total_dropped : Int32
+  handler_count : Int32
 } derive(Debug, Eq)
+
+///|
 pub extend SignalStats with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend SignalStats with Eq::{not_equal, equal}
 
 ///|
@@ -54,7 +70,11 @@ pub(all) struct SignalManager {
   history : Array[Signal]
   stats : SignalStats
 } derive(Debug, Eq)
+
+///|
 pub extend SignalManager with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend SignalManager with Eq::{not_equal, equal}
 
 ///|
@@ -71,39 +91,61 @@ pub fn signal_type_name(typ : SignalType) -> String {
 
 ///|
 /// 创建信号 | Create signal
-pub fn make_signal(id : Int, name : String, typ : SignalType, data : String, timestamp : Int) -> Signal {
-  { id, name, typ, data, timestamp, priority: 0 }
+pub fn make_signal(
+  id : Int32,
+  name : String,
+  typ : SignalType,
+  data : String,
+  timestamp : Int32,
+) -> Signal {
+  { id, name, typ, data, timestamp, priority: 0, }
 }
 
 ///|
 /// 创建带优先级的信号 | Create signal with priority
 pub fn make_signal_with_priority(
-  id : Int,
+  id : Int32,
   name : String,
   typ : SignalType,
   data : String,
-  timestamp : Int,
-  priority : Int,
+  timestamp : Int32,
+  priority : Int32,
 ) -> Signal {
-  { id, name, typ, data, timestamp, priority }
+  { id, name, typ, data, timestamp, priority, }
 }
 
 ///|
 /// 创建信号管理器 | Create signal manager
 pub fn create_signal_manager() -> SignalManager {
-  { handlers: [], history: [], stats: { total_sent: 0, total_handled: 0, total_dropped: 0, handler_count: 0 } }
+  {
+    handlers: [],
+    history: [],
+    stats: {
+      total_sent: 0,
+      total_handled: 0,
+      total_dropped: 0,
+      handler_count: 0,
+    },
+  }
 }
 
 ///|
 /// 注册处理器 | Register handler
 pub fn signal_register(
   mgr : SignalManager,
-  id : Int,
+  id : Int32,
   signal_name : String,
   handler_name : String,
-  priority : Int,
+  priority : Int32,
 ) -> SignalManager {
-  let handler = { id, signal_name, handler_name, priority, active: true, call_count: 0 }
+  let handler = {
+    id,
+    signal_name,
+    handler_name,
+    priority,
+    active: true,
+    call_count: 0,
+  }
   let new_handlers = []
   for h in mgr.handlers {
     new_handlers.push(h)
@@ -123,7 +165,7 @@ pub fn signal_register(
 
 ///|
 /// 注销处理器 | Unregister handler
-pub fn signal_unregister(mgr : SignalManager, id : Int) -> SignalManager {
+pub fn signal_unregister(mgr : SignalManager, id : Int32) -> SignalManager {
   let remaining = []
   let mut removed = 0
   for h in mgr.handlers {
@@ -153,7 +195,7 @@ pub fn signal_send(mgr : SignalManager, signal : Signal) -> SignalManager {
   for h in mgr.handlers {
     if h.active && h.signal_name == signal.name {
       handled = handled + 1
-      new_handlers.push({ ..h, call_count: h.call_count + 1 })
+      new_handlers.push({ ..h, call_count: h.call_count + 1, })
     } else {
       new_handlers.push(h)
     }
@@ -178,7 +220,10 @@ pub fn signal_send(mgr : SignalManager, signal : Signal) -> SignalManager {
 
 ///|
 /// 批量发送信号 | Batch send signals
-pub fn signal_batch_send(mgr : SignalManager, signals : Array[Signal]) -> SignalManager {
+pub fn signal_batch_send(
+  mgr : SignalManager,
+  signals : Array[Signal],
+) -> SignalManager {
   let mut current = mgr
   for s in signals {
     current = signal_send(current, s)
@@ -188,41 +233,41 @@ pub fn signal_batch_send(mgr : SignalManager, signals : Array[Signal]) -> Signal
 
 ///|
 /// 禁用处理器 | Disable handler
-pub fn signal_disable_handler(mgr : SignalManager, id : Int) -> SignalManager {
+pub fn signal_disable_handler(mgr : SignalManager, id : Int32) -> SignalManager {
   let new_handlers = []
   for h in mgr.handlers {
     if h.id == id {
-      new_handlers.push({ ..h, active: false })
+      new_handlers.push({ ..h, active: false, })
     } else {
       new_handlers.push(h)
     }
   }
-  { ..mgr, handlers: new_handlers }
+  { ..mgr, handlers: new_handlers, }
 }
 
 ///|
 /// 启用处理器 | Enable handler
-pub fn signal_enable_handler(mgr : SignalManager, id : Int) -> SignalManager {
+pub fn signal_enable_handler(mgr : SignalManager, id : Int32) -> SignalManager {
   let new_handlers = []
   for h in mgr.handlers {
     if h.id == id {
-      new_handlers.push({ ..h, active: true })
+      new_handlers.push({ ..h, active: true, })
     } else {
       new_handlers.push(h)
     }
   }
-  { ..mgr, handlers: new_handlers }
+  { ..mgr, handlers: new_handlers, }
 }
 
 ///|
 /// 处理器数量 | Handler count
-pub fn signal_handler_count(mgr : SignalManager) -> Int {
+pub fn signal_handler_count(mgr : SignalManager) -> Int32 {
   mgr.handlers.length()
 }
 
 ///|
 /// 活跃处理器数量 | Active handler count
-pub fn signal_active_handler_count(mgr : SignalManager) -> Int {
+pub fn signal_active_handler_count(mgr : SignalManager) -> Int32 {
   let mut count = 0
   for h in mgr.handlers {
     if h.active {
@@ -251,13 +296,16 @@ pub fn signal_history(mgr : SignalManager) -> Array[Signal] {
 
 ///|
 /// 历史数量 | History count
-pub fn signal_history_count(mgr : SignalManager) -> Int {
+pub fn signal_history_count(mgr : SignalManager) -> Int32 {
   mgr.history.length()
 }
 
 ///|
 /// 按名称过滤历史 | Filter history by name
-pub fn signal_filter_by_name(mgr : SignalManager, name : String) -> Array[Signal] {
+pub fn signal_filter_by_name(
+  mgr : SignalManager,
+  name : String,
+) -> Array[Signal] {
   let result = []
   for s in mgr.history {
     if s.name == name {
@@ -269,7 +317,10 @@ pub fn signal_filter_by_name(mgr : SignalManager, name : String) -> Array[Signal
 
 ///|
 /// 按类型过滤历史 | Filter history by type
-pub fn signal_filter_by_type(mgr : SignalManager, typ : SignalType) -> Array[Signal] {
+pub fn signal_filter_by_type(
+  mgr : SignalManager,
+  typ : SignalType,
+) -> Array[Signal] {
   let result = []
   for s in mgr.history {
     if s.typ == typ {
@@ -282,7 +333,7 @@ pub fn signal_filter_by_type(mgr : SignalManager, typ : SignalType) -> Array[Sig
 ///|
 /// 清空历史 | Clear history
 pub fn signal_clear_history(mgr : SignalManager) -> SignalManager {
-  { ..mgr, history: [] }
+  { ..mgr, history: [], }
 }
 
 ///|
@@ -293,7 +344,7 @@ pub fn signal_stats(mgr : SignalManager) -> SignalStats {
 
 ///|
 /// 获取处理器的调用次数 | Get handler call count
-pub fn signal_handler_call_count(mgr : SignalManager, id : Int) -> Int {
+pub fn signal_handler_call_count(mgr : SignalManager, id : Int32) -> Int32 {
   for h in mgr.handlers {
     if h.id == id {
       return h.call_count
@@ -304,7 +355,10 @@ pub fn signal_handler_call_count(mgr : SignalManager, id : Int) -> Int {
 
 ///|
 /// 获取信号名称的处理器 | Get handlers for signal name
-pub fn signal_handlers_for(mgr : SignalManager, signal_name : String) -> Array[SignalHandler] {
+pub fn signal_handlers_for(
+  mgr : SignalManager,
+  signal_name : String,
+) -> Array[SignalHandler] {
   let result = []
   for h in mgr.handlers {
     if h.signal_name == signal_name {
@@ -316,7 +370,10 @@ pub fn signal_handlers_for(mgr : SignalManager, signal_name : String) -> Array[S
 
 ///|
 /// 合并信号管理器 | Merge signal managers
-pub fn merge_signal_managers(m1 : SignalManager, m2 : SignalManager) -> SignalManager {
+pub fn merge_signal_managers(
+  m1 : SignalManager,
+  m2 : SignalManager,
+) -> SignalManager {
   let new_handlers = []
   for h in m1.handlers {
     new_handlers.push(h)
@@ -351,7 +408,9 @@ pub fn signal_version() -> String {
 
 ///|
 /// Signal 实现 Named trait | Signal implements Named
-pub impl @trait.Named for Signal with name(self) {
+pub impl @trait.Named for Signal with fn name(self) {
   self.name
 }
+
+///|
 pub extend Signal with @trait.Named::{name}

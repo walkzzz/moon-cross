@@ -8,7 +8,10 @@ pub(all) struct PluginInfo {
   enabled : Bool
 } derive(Debug, Eq)
 
+///|
 pub extend PluginInfo with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend PluginInfo with Eq::{not_equal, equal}
 
 ///|
@@ -22,7 +25,10 @@ pub(all) enum PluginHook {
   PostFfi
 } derive(Debug, Eq)
 
+///|
 pub extend PluginHook with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend PluginHook with Eq::{not_equal, equal}
 
 ///|
@@ -30,10 +36,13 @@ pub extend PluginHook with Eq::{not_equal, equal}
 pub(all) struct PluginEntry {
   info : PluginInfo
   hooks : Array[PluginHook]
-  priority : Int
+  priority : Int32
 } derive(Debug, Eq)
 
+///|
 pub extend PluginEntry with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend PluginEntry with Eq::{not_equal, equal}
 
 ///|
@@ -45,24 +54,39 @@ pub(all) struct HookResult {
   message : String
 } derive(Debug, Eq)
 
+///|
 pub extend HookResult with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend HookResult with Eq::{not_equal, equal}
 
 ///|
 /// 创建插件信息 | Create plugin information
-pub fn make_plugin_info(name : String, version : String, author : String, description : String) -> PluginInfo {
-  { name, version, author, description, enabled: true }
+pub fn make_plugin_info(
+  name : String,
+  version : String,
+  author : String,
+  description : String,
+) -> PluginInfo {
+  { name, version, author, description, enabled: true, }
 }
 
 ///|
 /// 创建插件注册条目 | Create plugin registry entry
-pub fn make_plugin_entry(info : PluginInfo, hooks : Array[PluginHook], priority : Int) -> PluginEntry {
-  { info, hooks, priority }
+pub fn make_plugin_entry(
+  info : PluginInfo,
+  hooks : Array[PluginHook],
+  priority : Int32,
+) -> PluginEntry {
+  { info, hooks, priority, }
 }
 
 ///|
 /// 注册插件 | Register plugin
-pub fn register_plugin(registry : Array[PluginEntry], entry : PluginEntry) -> Array[PluginEntry] {
+pub fn register_plugin(
+  registry : Array[PluginEntry],
+  entry : PluginEntry,
+) -> Array[PluginEntry] {
   let mut already_exists = false
   for existing in registry {
     if existing.info.name == entry.info.name {
@@ -77,7 +101,10 @@ pub fn register_plugin(registry : Array[PluginEntry], entry : PluginEntry) -> Ar
 
 ///|
 /// 注销插件 | Unregister plugin
-pub fn unregister_plugin(registry : Array[PluginEntry], name : String) -> Array[PluginEntry] {
+pub fn unregister_plugin(
+  registry : Array[PluginEntry],
+  name : String,
+) -> Array[PluginEntry] {
   let result = []
   for entry in registry {
     if entry.info.name != name {
@@ -99,7 +126,10 @@ pub fn list_plugins(registry : Array[PluginEntry]) -> Array[PluginInfo] {
 
 ///|
 /// 查找支持指定钩子的插件 | Find plugins supporting a specific hook
-pub fn find_plugins_for_hook(registry : Array[PluginEntry], hook : PluginHook) -> Array[PluginEntry] {
+pub fn find_plugins_for_hook(
+  registry : Array[PluginEntry],
+  hook : PluginHook,
+) -> Array[PluginEntry] {
   let result = []
   for entry in registry {
     if entry.info.enabled {
@@ -115,22 +145,37 @@ pub fn find_plugins_for_hook(registry : Array[PluginEntry], hook : PluginHook) -
 
 ///|
 /// 执行钩子 | Execute hook
-pub fn execute_hook(registry : Array[PluginEntry], hook : PluginHook) -> Array[HookResult] {
+pub fn execute_hook(
+  registry : Array[PluginEntry],
+  hook : PluginHook,
+) -> Array[HookResult] {
   let results = []
   let plugins = find_plugins_for_hook(registry, hook)
   for plugin in plugins {
-    results.push({ hook, plugin_name: plugin.info.name, success: true, message: "hook executed" })
+    results.push({
+      hook,
+      plugin_name: plugin.info.name,
+      success: true,
+      message: "hook executed",
+    })
   }
   results
 }
 
 ///|
 /// 启用插件 | Enable plugin
-pub fn enable_plugin(registry : Array[PluginEntry], name : String) -> Array[PluginEntry] {
+pub fn enable_plugin(
+  registry : Array[PluginEntry],
+  name : String,
+) -> Array[PluginEntry] {
   let result = []
   for entry in registry {
     if entry.info.name == name {
-      result.push({ info: { ..entry.info, enabled: true }, hooks: entry.hooks, priority: entry.priority })
+      result.push({
+        info: { ..entry.info, enabled: true, },
+        hooks: entry.hooks,
+        priority: entry.priority,
+      })
     } else {
       result.push(entry)
     }
@@ -140,11 +185,18 @@ pub fn enable_plugin(registry : Array[PluginEntry], name : String) -> Array[Plug
 
 ///|
 /// 禁用插件 | Disable plugin
-pub fn disable_plugin(registry : Array[PluginEntry], name : String) -> Array[PluginEntry] {
+pub fn disable_plugin(
+  registry : Array[PluginEntry],
+  name : String,
+) -> Array[PluginEntry] {
   let result = []
   for entry in registry {
     if entry.info.name == name {
-      result.push({ info: { ..entry.info, enabled: false }, hooks: entry.hooks, priority: entry.priority })
+      result.push({
+        info: { ..entry.info, enabled: false, },
+        hooks: entry.hooks,
+        priority: entry.priority,
+      })
     } else {
       result.push(entry)
     }
@@ -173,15 +225,18 @@ pub fn plugin_version() -> String {
 
 ///|
 /// PluginInfo 实现 Named trait | PluginInfo implements Named
-pub impl @trait.Named for PluginInfo with name(self) {
+pub impl @trait.Named for PluginInfo with fn name(self) {
   self.name
 }
-pub extend PluginInfo with @trait.Named::{name}
 
+///|
+pub extend PluginInfo with @trait.Named::{name}
 
 ///|
 /// PluginInfo 实现 Describable trait | PluginInfo implements Describable
-pub impl @trait.Describable for PluginInfo with describe(self) {
+pub impl @trait.Describable for PluginInfo with fn describe(self) {
   self.description
 }
+
+///|
 pub extend PluginInfo with @trait.Describable::{describe}

@@ -5,7 +5,11 @@ pub(all) struct WindowsCompileConfig {
   output_dir : String
   output_name : String
 } derive(Debug, Eq)
+
+///|
 pub extend WindowsCompileConfig with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend WindowsCompileConfig with Eq::{not_equal, equal}
 
 ///|
@@ -39,18 +43,20 @@ pub fn default_windows_config(
   { arch: @core.X86_64, output_dir, output_name, }
 }
 
-
-
 ///|
 /// WindowsCompileConfig 实现 Named trait | WindowsCompileConfig implements Named
-pub impl @trait.Named for WindowsCompileConfig with name(self) {
+pub impl @trait.Named for WindowsCompileConfig with fn name(self) {
   self.output_name
 }
+
+///|
 pub extend WindowsCompileConfig with @trait.Named::{name}
 
 ///|
 /// WindowsCompileConfig 实现 Hashable trait | WindowsCompileConfig implements Hashable
-pub impl @trait.Hashable for WindowsCompileConfig with hash(self) {
+pub impl @trait.Hashable for WindowsCompileConfig with fn hash(self) {
   @trait.Named::name(self).length()
 }
+
+///|
 pub extend WindowsCompileConfig with @trait.Hashable::{hash}

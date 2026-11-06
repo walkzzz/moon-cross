@@ -1,14 +1,17 @@
+///|
 test "proxy_create" {
   let p = @proxy.proxy_create()
   assert_true(p.enabled)
 }
 
+///|
 test "proxy_grant" {
   let p = @proxy.proxy_create()
   let p1 = @proxy.proxy_grant(p, "client1")
   assert_true(@proxy.proxy_can_access(p1, "client1"))
 }
 
+///|
 test "proxy_revoke" {
   let p = @proxy.proxy_create()
   let p1 = @proxy.proxy_grant(p, "client1")
@@ -16,11 +19,13 @@ test "proxy_revoke" {
   assert_false(@proxy.proxy_can_access(p2, "client1"))
 }
 
+///|
 test "proxy_can_access_no_grant" {
   let p = @proxy.proxy_create()
   assert_false(@proxy.proxy_can_access(p, "anyone"))
 }
 
+///|
 test "proxy_disabled" {
   let p = @proxy.proxy_create()
   let p1 = @proxy.proxy_grant(p, "client1")
@@ -28,6 +33,7 @@ test "proxy_disabled" {
   assert_false(@proxy.proxy_can_access(p2, "client1"))
 }
 
+///|
 test "proxy_cache_set_get" {
   let p = @proxy.proxy_create()
   let p1 = @proxy.proxy_cache_set(p, "key1", "value1")
@@ -38,11 +44,13 @@ test "proxy_cache_set_get" {
   }
 }
 
+///|
 test "proxy_cache_get_missing" {
   let p = @proxy.proxy_create()
   assert_true(@proxy.proxy_cache_get(p, "missing") is None)
 }
 
+///|
 test "proxy_cache_overwrite" {
   let p = @proxy.proxy_create()
   let p1 = @proxy.proxy_cache_set(p, "k", "v1")
@@ -54,6 +62,7 @@ test "proxy_cache_overwrite" {
   }
 }
 
+///|
 test "proxy_request_allowed" {
   let p = @proxy.proxy_create()
   let p1 = @proxy.proxy_grant(p, "client")
@@ -65,12 +74,14 @@ test "proxy_request_allowed" {
   }
 }
 
+///|
 test "proxy_request_denied" {
   let p = @proxy.proxy_create()
   let p1 = @proxy.proxy_cache_set(p, "data", "result")
   assert_true(@proxy.proxy_request(p1, "unknown", "data") is None)
 }
 
+///|
 test "proxy_request_disabled" {
   let p = @proxy.proxy_create()
   let p1 = @proxy.proxy_grant(p, "client")
@@ -79,12 +90,14 @@ test "proxy_request_disabled" {
   assert_true(@proxy.proxy_request(p3, "client", "data") is None)
 }
 
+///|
 test "proxy_request_cache_miss" {
   let p = @proxy.proxy_create()
   let p1 = @proxy.proxy_grant(p, "client")
   assert_true(@proxy.proxy_request(p1, "client", "missing") is None)
 }
 
+///|
 test "proxy_version" {
   let v = @proxy.proxy_version()
   assert_true(v.contains("proxy"))

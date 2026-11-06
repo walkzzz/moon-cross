@@ -1,8 +1,10 @@
+///|
 test "mutex_create" {
   let m = @concurrency.mutex_create()
   assert_false(m.locked)
 }
 
+///|
 test "mutex_lock_unlock" {
   let m = @concurrency.mutex_create()
   let locked = @concurrency.mutex_lock(m, "thread1")
@@ -16,6 +18,7 @@ test "mutex_lock_unlock" {
   }
 }
 
+///|
 test "mutex_double_lock" {
   let m = @concurrency.mutex_create()
   let locked1 = @concurrency.mutex_lock(m, "thread1")
@@ -28,6 +31,7 @@ test "mutex_double_lock" {
   }
 }
 
+///|
 test "mutex_try_lock" {
   let m = @concurrency.mutex_create()
   let locked = @concurrency.mutex_try_lock(m, "owner")
@@ -36,12 +40,14 @@ test "mutex_try_lock" {
   assert_eq(locked2.owner, "owner")
 }
 
+///|
 test "semaphore_create" {
   let sem = @concurrency.semaphore_create(3)
   assert_eq(sem.count, 3)
   assert_eq(sem.max, 3)
 }
 
+///|
 test "semaphore_acquire" {
   let sem = @concurrency.semaphore_create(2)
   let acquired = @concurrency.semaphore_acquire(sem)
@@ -52,6 +58,7 @@ test "semaphore_acquire" {
   }
 }
 
+///|
 test "semaphore_acquire_exhausted" {
   let sem = @concurrency.semaphore_create(1)
   let a1 = @concurrency.semaphore_acquire(sem)
@@ -64,6 +71,7 @@ test "semaphore_acquire_exhausted" {
   }
 }
 
+///|
 test "semaphore_release" {
   let sem = @concurrency.semaphore_create(2)
   let a = @concurrency.semaphore_acquire(sem)
@@ -76,12 +84,14 @@ test "semaphore_release" {
   }
 }
 
+///|
 test "channel_create" {
   let ch = @concurrency.channel_create(3)
   assert_eq(ch.capacity, 3)
   assert_false(ch.closed)
 }
 
+///|
 test "channel_send_receive" {
   let ch = @concurrency.channel_create(3)
   let sent = @concurrency.channel_send(ch, "hello")
@@ -98,6 +108,7 @@ test "channel_send_receive" {
   }
 }
 
+///|
 test "channel_full" {
   let ch = @concurrency.channel_create(1)
   let sent1 = @concurrency.channel_send(ch, "a")
@@ -110,6 +121,7 @@ test "channel_full" {
   }
 }
 
+///|
 test "channel_close" {
   let ch = @concurrency.channel_create(3)
   let closed = @concurrency.channel_close(ch)
@@ -118,17 +130,20 @@ test "channel_close" {
   assert_true(sent is None)
 }
 
+///|
 test "channel_receive_empty" {
   let ch = @concurrency.channel_create(3)
   let (_, val) = @concurrency.channel_receive(ch)
   assert_true(val is None)
 }
 
+///|
 test "future_create" {
   let f = @concurrency.future_create()
   assert_false(@concurrency.future_is_complete(f))
 }
 
+///|
 test "future_complete" {
   let f = @concurrency.future_create()
   let completed = @concurrency.future_complete(f, "result")
@@ -140,17 +155,20 @@ test "future_complete" {
   }
 }
 
+///|
 test "future_get_incomplete" {
   let f = @concurrency.future_create()
   let val = @concurrency.future_get(f)
   assert_true(val is None)
 }
 
+///|
 test "atomic_create" {
   let ac = @concurrency.atomic_create()
   assert_eq(@concurrency.atomic_get(ac), 0)
 }
 
+///|
 test "atomic_increment" {
   let ac = @concurrency.atomic_create()
   let ac1 = @concurrency.atomic_increment(ac)
@@ -159,29 +177,34 @@ test "atomic_increment" {
   assert_eq(@concurrency.atomic_get(ac2), 2)
 }
 
+///|
 test "atomic_decrement" {
   let ac = @concurrency.atomic_create()
   let ac1 = @concurrency.atomic_decrement(ac)
   assert_eq(@concurrency.atomic_get(ac1), -1)
 }
 
+///|
 test "atomic_add" {
   let ac = @concurrency.atomic_create()
   let ac1 = @concurrency.atomic_add(ac, 10)
   assert_eq(@concurrency.atomic_get(ac1), 10)
 }
 
+///|
 test "atomic_set" {
   let ac = @concurrency.atomic_create()
   let ac1 = @concurrency.atomic_set(ac, 42)
   assert_eq(@concurrency.atomic_get(ac1), 42)
 }
 
+///|
 test "task_queue_create" {
   let tq = @concurrency.task_queue_create()
   assert_true(@concurrency.task_queue_is_empty(tq))
 }
 
+///|
 test "task_enqueue_dequeue" {
   let tq = @concurrency.task_queue_create()
   let tq1 = @concurrency.task_enqueue(tq, "task1", 1)
@@ -194,6 +217,7 @@ test "task_enqueue_dequeue" {
   assert_true(@concurrency.task_queue_is_empty(tq2))
 }
 
+///|
 test "task_priority_order" {
   let tq = @concurrency.task_queue_create()
   let tq1 = @concurrency.task_enqueue(tq, "low", 1)
@@ -206,12 +230,14 @@ test "task_priority_order" {
   }
 }
 
+///|
 test "task_dequeue_empty" {
   let tq = @concurrency.task_queue_create()
   let (_, task) = @concurrency.task_dequeue(tq)
   assert_true(task is None)
 }
 
+///|
 test "concurrency_version" {
   let v = @concurrency.concurrency_version()
   assert_true(v.contains("concurrency"))

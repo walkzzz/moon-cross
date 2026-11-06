@@ -7,43 +7,59 @@ pub(all) enum ResourceType {
   Handle
   Custom
 } derive(Debug, Eq)
+
+///|
 pub extend ResourceType with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend ResourceType with Eq::{not_equal, equal}
 
 ///|
 /// 资源 | Resource
 pub(all) struct Resource {
-  id : Int
+  id : Int32
   name : String
   typ : ResourceType
-  size : Int
-  acquired_at : Int
-  released_at : Int
+  size : Int32
+  acquired_at : Int32
+  released_at : Int32
   active : Bool
 } derive(Debug, Eq)
+
+///|
 pub extend Resource with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend Resource with Eq::{not_equal, equal}
 
 ///|
 /// 资源配置 | Resource configuration
 pub(all) struct ResourceConfig {
-  max_resources : Int
+  max_resources : Int32
   track_size : Bool
   leak_detection : Bool
 } derive(Debug, Eq)
+
+///|
 pub extend ResourceConfig with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend ResourceConfig with Eq::{not_equal, equal}
 
 ///|
 /// 资源统计 | Resource statistics
 pub(all) struct ResourceStats {
-  total_acquired : Int
-  total_released : Int
-  total_leaked : Int
-  active_count : Int
-  total_size : Int
+  total_acquired : Int32
+  total_released : Int32
+  total_leaked : Int32
+  active_count : Int32
+  total_size : Int32
 } derive(Debug, Eq)
+
+///|
 pub extend ResourceStats with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend ResourceStats with Eq::{not_equal, equal}
 
 ///|
@@ -53,7 +69,11 @@ pub(all) struct ResourceManager {
   config : ResourceConfig
   stats : ResourceStats
 } derive(Debug, Eq)
+
+///|
 pub extend ResourceManager with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend ResourceManager with Eq::{not_equal, equal}
 
 ///|
@@ -71,7 +91,7 @@ pub fn resource_type_name(typ : ResourceType) -> String {
 ///|
 /// 默认配置 | Default config
 pub fn default_resource_config() -> ResourceConfig {
-  { max_resources: 100, track_size: true, leak_detection: true }
+  { max_resources: 100, track_size: true, leak_detection: true, }
 }
 
 ///|
@@ -80,7 +100,13 @@ pub fn create_resource_manager(config : ResourceConfig) -> ResourceManager {
   {
     resources: [],
     config,
-    stats: { total_acquired: 0, total_released: 0, total_leaked: 0, active_count: 0, total_size: 0 },
+    stats: {
+      total_acquired: 0,
+      total_released: 0,
+      total_leaked: 0,
+      active_count: 0,
+      total_size: 0,
+    },
   }
 }
 
@@ -88,16 +114,24 @@ pub fn create_resource_manager(config : ResourceConfig) -> ResourceManager {
 /// 获取资源 | Acquire resource
 pub fn resource_acquire(
   mgr : ResourceManager,
-  id : Int,
+  id : Int32,
   name : String,
   typ : ResourceType,
-  size : Int,
-  timestamp : Int,
+  size : Int32,
+  timestamp : Int32,
 ) -> ResourceManager {
   if mgr.resources.length() >= mgr.config.max_resources {
     return mgr
   }
-  let resource = { id, name, typ, size, acquired_at: timestamp, released_at: 0, active: true }
+  let resource = {
+    id,
+    name,
+    typ,
+    size,
+    acquired_at: timestamp,
+    released_at: 0,
+    active: true,
+  }
   let new_resources = []
   for r in mgr.resources {
     new_resources.push(r)
@@ -118,13 +152,17 @@ pub fn resource_acquire(
 
 ///|
 /// 释放资源 | Release resource
-pub fn resource_release(mgr : ResourceManager, id : Int, timestamp : Int) -> ResourceManager {
+pub fn resource_release(
+  mgr : ResourceManager,
+  id : Int32,
+  timestamp : Int32,
+) -> ResourceManager {
   let new_resources = []
   let mut released_size = 0
   let mut released = 0
   for r in mgr.resources {
     if r.id == id && r.active {
-      new_resources.push({ ..r, active: false, released_at: timestamp })
+      new_resources.push({ ..r, active: false, released_at: timestamp, })
       released_size = r.size
       released = released + 1
     } else {
@@ -146,7 +184,7 @@ pub fn resource_release(mgr : ResourceManager, id : Int, timestamp : Int) -> Res
 
 ///|
 /// 获取资源 | Get resource
-pub fn resource_get(mgr : ResourceManager, id : Int) -> Resource? {
+pub fn resource_get(mgr : ResourceManager, id : Int32) -> Resource? {
   for r in mgr.resources {
     if r.id == id {
       return Some(r)
@@ -157,7 +195,7 @@ pub fn resource_get(mgr : ResourceManager, id : Int) -> Resource? {
 
 ///|
 /// 活跃资源数量 | Active resource count
-pub fn resource_active_count(mgr : ResourceManager) -> Int {
+pub fn resource_active_count(mgr : ResourceManager) -> Int32 {
   let mut count = 0
   for r in mgr.resources {
     if r.active {
@@ -169,13 +207,13 @@ pub fn resource_active_count(mgr : ResourceManager) -> Int {
 
 ///|
 /// 资源总数 | Total resource count
-pub fn resource_total_count(mgr : ResourceManager) -> Int {
+pub fn resource_total_count(mgr : ResourceManager) -> Int32 {
   mgr.resources.length()
 }
 
 ///|
 /// 活跃资源总大小 | Total active size
-pub fn resource_total_size(mgr : ResourceManager) -> Int {
+pub fn resource_total_size(mgr : ResourceManager) -> Int32 {
   let mut total = 0
   for r in mgr.resources {
     if r.active {
@@ -199,7 +237,7 @@ pub fn resource_check_leaks(mgr : ResourceManager) -> Array[Resource] {
 
 ///|
 /// 泄漏数量 | Leak count
-pub fn resource_leak_count(mgr : ResourceManager) -> Int {
+pub fn resource_leak_count(mgr : ResourceManager) -> Int32 {
   let mut count = 0
   for r in mgr.resources {
     if r.active {
@@ -211,7 +249,10 @@ pub fn resource_leak_count(mgr : ResourceManager) -> Int {
 
 ///|
 /// 按类型过滤 | Filter by type
-pub fn resource_filter_by_type(mgr : ResourceManager, typ : ResourceType) -> Array[Resource] {
+pub fn resource_filter_by_type(
+  mgr : ResourceManager,
+  typ : ResourceType,
+) -> Array[Resource] {
   let result = []
   for r in mgr.resources {
     if r.typ == typ {
@@ -247,7 +288,7 @@ pub fn resource_filter_released(mgr : ResourceManager) -> Array[Resource] {
 
 ///|
 /// 是否存在资源 | Has resource
-pub fn resource_has(mgr : ResourceManager, id : Int) -> Bool {
+pub fn resource_has(mgr : ResourceManager, id : Int32) -> Bool {
   for r in mgr.resources {
     if r.id == id {
       return true
@@ -258,7 +299,7 @@ pub fn resource_has(mgr : ResourceManager, id : Int) -> Bool {
 
 ///|
 /// 资源是否活跃 | Is resource active
-pub fn resource_is_active(mgr : ResourceManager, id : Int) -> Bool {
+pub fn resource_is_active(mgr : ResourceManager, id : Int32) -> Bool {
   for r in mgr.resources {
     if r.id == id && r.active {
       return true
@@ -275,13 +316,16 @@ pub fn resource_stats(mgr : ResourceManager) -> ResourceStats {
 
 ///|
 /// 强制释放所有活跃资源 | Force release all active resources
-pub fn resource_release_all(mgr : ResourceManager, timestamp : Int) -> ResourceManager {
+pub fn resource_release_all(
+  mgr : ResourceManager,
+  timestamp : Int32,
+) -> ResourceManager {
   let new_resources = []
   let mut released = 0
   let mut released_size = 0
   for r in mgr.resources {
     if r.active {
-      new_resources.push({ ..r, active: false, released_at: timestamp })
+      new_resources.push({ ..r, active: false, released_at: timestamp, })
       released = released + 1
       released_size = released_size + r.size
     } else {
@@ -303,7 +347,10 @@ pub fn resource_release_all(mgr : ResourceManager, timestamp : Int) -> ResourceM
 
 ///|
 /// 合并资源管理器 | Merge resource managers
-pub fn merge_resource_managers(m1 : ResourceManager, m2 : ResourceManager) -> ResourceManager {
+pub fn merge_resource_managers(
+  m1 : ResourceManager,
+  m2 : ResourceManager,
+) -> ResourceManager {
   let new_resources = []
   for r in m1.resources {
     new_resources.push(r)
@@ -332,7 +379,9 @@ pub fn resource_version() -> String {
 
 ///|
 /// Resource 实现 Named trait | Resource implements Named
-pub impl @trait.Named for Resource with name(self) {
+pub impl @trait.Named for Resource with fn name(self) {
   self.name
 }
+
+///|
 pub extend Resource with @trait.Named::{name}

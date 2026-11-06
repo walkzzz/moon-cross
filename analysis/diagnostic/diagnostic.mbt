@@ -7,7 +7,10 @@ pub(all) enum DiagStatus {
   NotFound
 } derive(Debug, Eq)
 
+///|
 pub extend DiagStatus with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend DiagStatus with Eq::{not_equal, equal}
 
 ///|
@@ -19,26 +22,37 @@ pub(all) struct DiagCheck {
   fix_hint : String?
 } derive(Debug, Eq)
 
+///|
 pub extend DiagCheck with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend DiagCheck with Eq::{not_equal, equal}
 
 ///|
 /// 诊断结果 | Diagnostic result
 pub(all) struct DiagResult {
   checks : Array[DiagCheck]
-  total : Int
-  passed : Int
-  warnings : Int
-  errors : Int
+  total : Int32
+  passed : Int32
+  warnings : Int32
+  errors : Int32
 } derive(Debug, Eq)
 
+///|
 pub extend DiagResult with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend DiagResult with Eq::{not_equal, equal}
 
 ///|
 /// 创建诊断检查项 | Create diagnostic check item
-pub fn make_check(name : String, status : DiagStatus, message : String, fix_hint : String?) -> DiagCheck {
-  { name, status, message, fix_hint }
+pub fn make_check(
+  name : String,
+  status : DiagStatus,
+  message : String,
+  fix_hint : String?,
+) -> DiagCheck {
+  { name, status, message, fix_hint, }
 }
 
 ///|
@@ -56,21 +70,35 @@ pub fn run_doctor(checks : Array[DiagCheck]) -> DiagResult {
       NotFound => errors = errors + 1
     }
   }
-  { checks, total, passed, warnings, errors }
+  { checks, total, passed, warnings, errors, }
 }
 
 ///|
 /// 检查 MoonBit 工具链 | Check MoonBit toolchain
 pub fn check_moonbit(version : String?) -> DiagCheck {
   match version {
-    Some(v) => {
+    Some(v) =>
       if v.length() > 0 {
         make_check("moonbit", Ok, "MoonBit \{v} found", None)
       } else {
-        make_check("moonbit", Error, "MoonBit version is empty", Some("install MoonBit: curl -fsSL https://cli.moonbitlang.com/install/unix.sh | bash"))
+        make_check(
+          "moonbit",
+          Error,
+          "MoonBit version is empty",
+          Some(
+            "install MoonBit: curl -fsSL https://cli.moonbitlang.com/install/unix.sh | bash",
+          ),
+        )
       }
-    }
-    None => make_check("moonbit", NotFound, "MoonBit not found", Some("install MoonBit: curl -fsSL https://cli.moonbitlang.com/install/unix.sh | bash"))
+    None =>
+      make_check(
+        "moonbit",
+        NotFound,
+        "MoonBit not found",
+        Some(
+          "install MoonBit: curl -fsSL https://cli.moonbitlang.com/install/unix.sh | bash",
+        ),
+      )
   }
 }
 
@@ -78,14 +106,24 @@ pub fn check_moonbit(version : String?) -> DiagCheck {
 /// 检查 Android NDK | Check Android NDK
 pub fn check_ndk(ndk_path : String?) -> DiagCheck {
   match ndk_path {
-    Some(path) => {
+    Some(path) =>
       if path.length() > 0 {
         make_check("android-ndk", Ok, "NDK found at \{path}", None)
       } else {
-        make_check("android-ndk", Warning, "NDK path is empty", Some("set ANDROID_NDK_HOME environment variable"))
+        make_check(
+          "android-ndk",
+          Warning,
+          "NDK path is empty",
+          Some("set ANDROID_NDK_HOME environment variable"),
+        )
       }
-    }
-    None => make_check("android-ndk", Warning, "ANDROID_NDK_HOME not set", Some("install Android NDK and set ANDROID_NDK_HOME"))
+    None =>
+      make_check(
+        "android-ndk",
+        Warning,
+        "ANDROID_NDK_HOME not set",
+        Some("install Android NDK and set ANDROID_NDK_HOME"),
+      )
   }
 }
 
@@ -94,7 +132,13 @@ pub fn check_ndk(ndk_path : String?) -> DiagCheck {
 pub fn check_xcode(xcode_path : String?) -> DiagCheck {
   match xcode_path {
     Some(path) => make_check("xcode", Ok, "Xcode found at \{path}", None)
-    None => make_check("xcode", Warning, "Xcode not found", Some("install Xcode from App Store"))
+    None =>
+      make_check(
+        "xcode",
+        Warning,
+        "Xcode not found",
+        Some("install Xcode from App Store"),
+      )
   }
 }
 
@@ -103,7 +147,13 @@ pub fn check_xcode(xcode_path : String?) -> DiagCheck {
 pub fn check_ohos_sdk(sdk_path : String?) -> DiagCheck {
   match sdk_path {
     Some(path) => make_check("ohos-sdk", Ok, "OHOS SDK found at \{path}", None)
-    None => make_check("ohos-sdk", Warning, "OHOS SDK not found", Some("install DevEco Studio"))
+    None =>
+      make_check(
+        "ohos-sdk",
+        Warning,
+        "OHOS SDK not found",
+        Some("install DevEco Studio"),
+      )
   }
 }
 
@@ -125,7 +175,8 @@ pub fn generate_report(result : DiagResult) -> String {
       None => ()
     }
   }
-  report = report + "\nSummary: \{result.passed} passed, \{result.warnings} warnings, \{result.errors} errors\n"
+  report = report +
+    "\nSummary: \{result.passed} passed, \{result.warnings} warnings, \{result.errors} errors\n"
   report
 }
 
@@ -154,14 +205,18 @@ pub fn diagnostic_version() -> String {
 
 ///|
 /// DiagCheck 实现 Named trait | DiagCheck implements Named
-pub impl @trait.Named for DiagCheck with name(self) {
+pub impl @trait.Named for DiagCheck with fn name(self) {
   self.name
 }
+
+///|
 pub extend DiagCheck with @trait.Named::{name}
 
 ///|
 /// DiagCheck 实现 Hashable trait | DiagCheck implements Hashable
-pub impl @trait.Hashable for DiagCheck with hash(self) {
+pub impl @trait.Hashable for DiagCheck with fn hash(self) {
   @trait.Named::name(self).length()
 }
+
+///|
 pub extend DiagCheck with @trait.Hashable::{hash}

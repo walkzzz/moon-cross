@@ -6,23 +6,31 @@ pub(all) struct RegexPattern {
   has_end_anchor : Bool
   core : String
 } derive(Debug, Eq)
+
+///|
 pub extend RegexPattern with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend RegexPattern with Eq::{not_equal, equal}
 
 ///|
 /// 正则匹配结果 | Regex match result
 pub(all) struct RegexMatch {
   matched : String
-  start : Int
-  end : Int
+  start : Int32
+  end : Int32
 } derive(Debug, Eq)
+
+///|
 pub extend RegexMatch with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend RegexMatch with Eq::{not_equal, equal}
 
 ///|
 /// 核心匹配（递归） | Core match (recursive)
 /// 返回匹配结束位置，-1 表示不匹配 | Returns end position, -1 for no match
-fn match_at(pattern : String, input : String, pi : Int, si : Int) -> Int {
+fn match_at(pattern : String, input : String, pi : Int32, si : Int32) -> Int32 {
   let plen = pattern.length()
   let slen = input.length()
   if pi >= plen {
@@ -76,7 +84,7 @@ pub fn compile_pattern(pattern : String) -> RegexPattern {
     core_end = core_end - 1
   }
   let core = pattern[core_start:core_end].to_owned()
-  { pattern, has_start_anchor: has_start, has_end_anchor: has_end, core }
+  { pattern, has_start_anchor: has_start, has_end_anchor: has_end, core, }
 }
 
 ///|
@@ -90,7 +98,7 @@ pub fn regex_match(pattern : RegexPattern, input : String) -> RegexMatch? {
         return None
       }
       let matched = input[0:end_pos].to_owned()
-      return Some({ matched, start: 0, end: end_pos })
+      return Some({ matched, start: 0, end: end_pos, })
     }
     return None
   }
@@ -102,7 +110,7 @@ pub fn regex_match(pattern : RegexPattern, input : String) -> RegexMatch? {
         start = start + 1
       } else {
         let matched = input[start:end_pos].to_owned()
-        return Some({ matched, start, end: end_pos })
+        return Some({ matched, start, end: end_pos, })
       }
     } else {
       start = start + 1
@@ -113,7 +121,10 @@ pub fn regex_match(pattern : RegexPattern, input : String) -> RegexMatch? {
 
 ///|
 /// 查找所有匹配 | Find all matches
-pub fn regex_find_all(pattern : RegexPattern, input : String) -> Array[RegexMatch] {
+pub fn regex_find_all(
+  pattern : RegexPattern,
+  input : String,
+) -> Array[RegexMatch] {
   let result = []
   let ilen = input.length()
   let mut start = 0
@@ -124,7 +135,7 @@ pub fn regex_find_all(pattern : RegexPattern, input : String) -> Array[RegexMatc
         start = start + 1
       } else {
         let matched = input[start:end_pos].to_owned()
-        result.push({ matched, start, end: end_pos })
+        result.push({ matched, start, end: end_pos, })
         if end_pos == start {
           start = start + 1
         } else {
@@ -140,7 +151,11 @@ pub fn regex_find_all(pattern : RegexPattern, input : String) -> Array[RegexMatc
 
 ///|
 /// 正则替换 | Regex replace
-pub fn regex_replace(pattern : RegexPattern, input : String, replacement : String) -> String {
+pub fn regex_replace(
+  pattern : RegexPattern,
+  input : String,
+  replacement : String,
+) -> String {
   let matches = regex_find_all(pattern, input)
   if matches.length() == 0 {
     return input

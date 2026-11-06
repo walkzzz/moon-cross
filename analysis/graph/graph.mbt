@@ -4,7 +4,11 @@ pub(all) enum GraphType {
   Directed
   Undirected
 } derive(Debug, Eq)
+
+///|
 pub extend GraphType with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend GraphType with Eq::{not_equal, equal}
 
 ///|
@@ -12,9 +16,13 @@ pub extend GraphType with Eq::{not_equal, equal}
 pub(all) struct GraphEdge {
   from : String
   to : String
-  weight : Int
+  weight : Int32
 } derive(Debug, Eq)
+
+///|
 pub extend GraphEdge with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend GraphEdge with Eq::{not_equal, equal}
 
 ///|
@@ -24,13 +32,17 @@ pub(all) struct Graph {
   edges : Array[GraphEdge]
   graph_type : GraphType
 } derive(Debug, Eq)
+
+///|
 pub extend Graph with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend Graph with Eq::{not_equal, equal}
 
 ///|
 /// 创建边 | Create edge
 pub fn make_edge(from : String, to : String) -> GraphEdge {
-  { from, to, weight: 1 }
+  { from, to, weight: 1, }
 }
 
 ///|
@@ -38,9 +50,9 @@ pub fn make_edge(from : String, to : String) -> GraphEdge {
 pub fn make_weighted_edge(
   from : String,
   to : String,
-  weight : Int,
+  weight : Int32,
 ) -> GraphEdge {
-  { from, to, weight }
+  { from, to, weight, }
 }
 
 ///|
@@ -50,15 +62,12 @@ pub fn build_graph(
   nodes : Array[String],
   edges : Array[GraphEdge],
 ) -> Graph {
-  { nodes, edges, graph_type }
+  { nodes, edges, graph_type, }
 }
 
 ///|
 /// 获取邻居 | Get neighbors
-pub fn neighbors(
-  graph : Graph,
-  node : String,
-) -> Array[String] {
+pub fn neighbors(graph : Graph, node : String) -> Array[String] {
   let result = []
   for edge in graph.edges {
     if edge.from == node {
@@ -108,11 +117,7 @@ pub fn dfs(graph : Graph, start : String) -> Array[String] {
 
 ///|
 /// DFS 辅助函数 | DFS helper
-fn dfs_helper(
-  graph : Graph,
-  node : String,
-  visited : Array[String],
-) -> Unit {
+fn dfs_helper(graph : Graph, node : String, visited : Array[String]) -> Unit {
   visited.push(node)
   for nb in neighbors(graph, node) {
     if !array_contains(visited, nb) {
@@ -123,11 +128,7 @@ fn dfs_helper(
 
 ///|
 /// 是否有路径 | Check if path exists
-pub fn has_path(
-  graph : Graph,
-  from : String,
-  to : String,
-) -> Bool {
+pub fn has_path(graph : Graph, from : String, to : String) -> Bool {
   if from == to {
     return true
   }
@@ -219,13 +220,13 @@ pub fn is_connected(graph : Graph) -> Bool {
 
 ///|
 /// 节点数 | Node count
-pub fn node_count(graph : Graph) -> Int {
+pub fn node_count(graph : Graph) -> Int32 {
   graph.nodes.length()
 }
 
 ///|
 /// 边数 | Edge count
-pub fn edge_count(graph : Graph) -> Int {
+pub fn edge_count(graph : Graph) -> Int32 {
   graph.edges.length()
 }
 
@@ -240,7 +241,7 @@ pub fn add_node(graph : Graph, node : String) -> Graph {
     nodes.push(n)
   }
   nodes.push(node)
-  { ..graph, nodes }
+  { ..graph, nodes, }
 }
 
 ///|
@@ -251,13 +252,13 @@ pub fn add_edge(graph : Graph, edge : GraphEdge) -> Graph {
     edges.push(e)
   }
   edges.push(edge)
-  { ..graph, edges }
+  { ..graph, edges, }
 }
 
 ///|
 /// 空图 | Empty graph
 pub fn empty_graph(graph_type : GraphType) -> Graph {
-  { nodes: [], edges: [], graph_type }
+  { nodes: [], edges: [], graph_type, }
 }
 
 ///|
@@ -268,7 +269,7 @@ pub fn graph_version() -> String {
 
 ///|
 /// 度数 | Degree of node
-pub fn degree(graph : Graph, node : String) -> Int {
+pub fn degree(graph : Graph, node : String) -> Int32 {
   neighbors(graph, node).length()
 }
 
@@ -289,7 +290,14 @@ pub fn format_graph(graph : Graph) -> String {
   result = result + "Nodes: " + graph.nodes.length().to_string() + "\n"
   result = result + "Edges: " + graph.edges.length().to_string() + "\n"
   for edge in graph.edges {
-    result = result + "  " + edge.from + " -> " + edge.to + " (w: " + edge.weight.to_string() + ")\n"
+    result = result +
+      "  " +
+      edge.from +
+      " -> " +
+      edge.to +
+      " (w: " +
+      edge.weight.to_string() +
+      ")\n"
   }
   result
 }
@@ -307,7 +315,9 @@ fn array_contains(arr : Array[String], item : String) -> Bool {
 
 ///|
 /// Graph 实现 Countable trait | Graph implements Countable
-pub impl @trait.Countable for Graph with count(self) {
+pub impl @trait.Countable for Graph with fn count(self) {
   self.nodes.length()
 }
+
+///|
 pub extend Graph with @trait.Countable::{count}

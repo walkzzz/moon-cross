@@ -1,23 +1,31 @@
 ///|
 /// 内存块 | Memory block
 pub(all) struct MemoryBlock {
-  id : Int
-  size : Int
+  id : Int32
+  size : Int32
   tag : String
   freed : Bool
 } derive(Debug, Eq)
+
+///|
 pub extend MemoryBlock with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend MemoryBlock with Eq::{not_equal, equal}
 
 ///|
 /// 内存追踪器 | Memory tracker
 pub(all) struct MemoryTracker {
   blocks : Array[MemoryBlock]
-  total_allocated : Int
-  total_freed : Int
-  next_id : Int
+  total_allocated : Int32
+  total_freed : Int32
+  next_id : Int32
 } derive(Debug, Eq)
+
+///|
 pub extend MemoryTracker with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend MemoryTracker with Eq::{not_equal, equal}
 
 ///|
@@ -25,53 +33,73 @@ pub extend MemoryTracker with Eq::{not_equal, equal}
 pub(all) struct Arena {
   name : String
   blocks : Array[MemoryBlock]
-  total_size : Int
-  next_id : Int
+  total_size : Int32
+  next_id : Int32
 } derive(Debug, Eq)
+
+///|
 pub extend Arena with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend Arena with Eq::{not_equal, equal}
 
 ///|
 /// 引用计数器 | Reference counter
 pub(all) struct RefCounter {
-  count : Int
+  count : Int32
   value : String
 } derive(Debug, Eq)
+
+///|
 pub extend RefCounter with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend RefCounter with Eq::{not_equal, equal}
 
 ///|
 /// 内存池 | Memory pool
 pub(all) struct MemoryPool {
-  block_size : Int
-  free_count : Int
-  allocated_count : Int
-  total_capacity : Int
+  block_size : Int32
+  free_count : Int32
+  allocated_count : Int32
+  total_capacity : Int32
 } derive(Debug, Eq)
+
+///|
 pub extend MemoryPool with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend MemoryPool with Eq::{not_equal, equal}
 
 ///|
 /// GC 统计 | GC statistics
 pub(all) struct GcStats {
-  collections : Int
-  reclaimed_bytes : Int
-  live_objects : Int
-  total_allocated : Int
+  collections : Int32
+  reclaimed_bytes : Int32
+  live_objects : Int32
+  total_allocated : Int32
 } derive(Debug, Eq)
+
+///|
 pub extend GcStats with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend GcStats with Eq::{not_equal, equal}
 
 ///|
 /// 创建内存追踪器 | Create memory tracker
 pub fn tracker_create() -> MemoryTracker {
-  { blocks: [], total_allocated: 0, total_freed: 0, next_id: 0 }
+  { blocks: [], total_allocated: 0, total_freed: 0, next_id: 0, }
 }
 
 ///|
 /// 分配内存块 | Allocate memory block
-pub fn tracker_allocate(tracker : MemoryTracker, size : Int, tag : String) -> (MemoryTracker, MemoryBlock) {
-  let block = { id: tracker.next_id, size, tag, freed: false }
+pub fn tracker_allocate(
+  tracker : MemoryTracker,
+  size : Int32,
+  tag : String,
+) -> (MemoryTracker, MemoryBlock) {
+  let block = { id: tracker.next_id, size, tag, freed: false, }
   let new_blocks = []
   for b in tracker.blocks {
     new_blocks.push(b)
@@ -88,12 +116,12 @@ pub fn tracker_allocate(tracker : MemoryTracker, size : Int, tag : String) -> (M
 
 ///|
 /// 释放内存块 | Free memory block
-pub fn tracker_free(tracker : MemoryTracker, block_id : Int) -> MemoryTracker {
+pub fn tracker_free(tracker : MemoryTracker, block_id : Int32) -> MemoryTracker {
   let new_blocks = []
   let mut freed_size = 0
   for b in tracker.blocks {
     if b.id == block_id && !b.freed {
-      new_blocks.push({ id: b.id, size: b.size, tag: b.tag, freed: true })
+      new_blocks.push({ id: b.id, size: b.size, tag: b.tag, freed: true, })
       freed_size = b.size
     } else {
       new_blocks.push(b)
@@ -109,7 +137,7 @@ pub fn tracker_free(tracker : MemoryTracker, block_id : Int) -> MemoryTracker {
 
 ///|
 /// 获取活跃块数 | Get live block count
-pub fn tracker_live_count(tracker : MemoryTracker) -> Int {
+pub fn tracker_live_count(tracker : MemoryTracker) -> Int32 {
   let mut count = 0
   for b in tracker.blocks {
     if !b.freed {
@@ -121,7 +149,7 @@ pub fn tracker_live_count(tracker : MemoryTracker) -> Int {
 
 ///|
 /// 获取活跃字节数 | Get live bytes
-pub fn tracker_live_bytes(tracker : MemoryTracker) -> Int {
+pub fn tracker_live_bytes(tracker : MemoryTracker) -> Int32 {
   let mut total = 0
   for b in tracker.blocks {
     if !b.freed {
@@ -140,13 +168,17 @@ pub fn tracker_has_leaks(tracker : MemoryTracker) -> Bool {
 ///|
 /// 创建竞技场 | Create arena
 pub fn arena_create(name : String) -> Arena {
-  { name, blocks: [], total_size: 0, next_id: 0 }
+  { name, blocks: [], total_size: 0, next_id: 0, }
 }
 
 ///|
 /// 竞技场分配 | Arena allocate
-pub fn arena_alloc(arena : Arena, size : Int, tag : String) -> (Arena, MemoryBlock) {
-  let block = { id: arena.next_id, size, tag, freed: false }
+pub fn arena_alloc(
+  arena : Arena,
+  size : Int32,
+  tag : String,
+) -> (Arena, MemoryBlock) {
+  let block = { id: arena.next_id, size, tag, freed: false, }
   let new_blocks = []
   for b in arena.blocks {
     new_blocks.push(b)
@@ -164,31 +196,31 @@ pub fn arena_alloc(arena : Arena, size : Int, tag : String) -> (Arena, MemoryBlo
 ///|
 /// 竞技场重置 | Arena reset
 pub fn arena_reset(_arena : Arena) -> Arena {
-  { name: _arena.name, blocks: [], total_size: 0, next_id: _arena.next_id }
+  { name: _arena.name, blocks: [], total_size: 0, next_id: _arena.next_id, }
 }
 
 ///|
 /// 竞技场块数 | Arena block count
-pub fn arena_block_count(arena : Arena) -> Int {
+pub fn arena_block_count(arena : Arena) -> Int32 {
   arena.blocks.length()
 }
 
 ///|
 /// 创建引用计数器 | Create reference counter
 pub fn refcount_create(value : String) -> RefCounter {
-  { count: 1, value }
+  { count: 1, value, }
 }
 
 ///|
 /// 增加引用 | Increment reference
 pub fn refcount_increment(rc : RefCounter) -> RefCounter {
-  { count: rc.count + 1, value: rc.value }
+  { count: rc.count + 1, value: rc.value, }
 }
 
 ///|
 /// 减少引用 | Decrement reference
 pub fn refcount_decrement(rc : RefCounter) -> RefCounter {
-  { count: rc.count - 1, value: rc.value }
+  { count: rc.count - 1, value: rc.value, }
 }
 
 ///|
@@ -199,8 +231,13 @@ pub fn refcount_is_zero(rc : RefCounter) -> Bool {
 
 ///|
 /// 创建内存池 | Create memory pool
-pub fn pool_create(block_size : Int, capacity : Int) -> MemoryPool {
-  { block_size, free_count: capacity, allocated_count: 0, total_capacity: capacity }
+pub fn pool_create(block_size : Int32, capacity : Int32) -> MemoryPool {
+  {
+    block_size,
+    free_count: capacity,
+    allocated_count: 0,
+    total_capacity: capacity,
+  }
 }
 
 ///|
@@ -235,23 +272,23 @@ pub fn pool_deallocate(pool : MemoryPool) -> MemoryPool {
 
 ///|
 /// 池使用率 | Pool usage rate
-pub fn pool_usage(pool : MemoryPool) -> Int {
+pub fn pool_usage(pool : MemoryPool) -> Int32 {
   if pool.total_capacity == 0 {
     0
   } else {
-    (pool.allocated_count * 100) / pool.total_capacity
+    pool.allocated_count * 100 / pool.total_capacity
   }
 }
 
 ///|
 /// 创建 GC 统计 | Create GC stats
 pub fn gc_stats_create() -> GcStats {
-  { collections: 0, reclaimed_bytes: 0, live_objects: 0, total_allocated: 0 }
+  { collections: 0, reclaimed_bytes: 0, live_objects: 0, total_allocated: 0, }
 }
 
 ///|
 /// GC 记录分配 | GC record allocation
-pub fn gc_record_alloc(stats : GcStats, size : Int) -> GcStats {
+pub fn gc_record_alloc(stats : GcStats, size : Int32) -> GcStats {
   {
     collections: stats.collections,
     reclaimed_bytes: stats.reclaimed_bytes,
@@ -262,7 +299,11 @@ pub fn gc_record_alloc(stats : GcStats, size : Int) -> GcStats {
 
 ///|
 /// GC 记录回收 | GC record collection
-pub fn gc_record_collect(stats : GcStats, reclaimed : Int, freed_objects : Int) -> GcStats {
+pub fn gc_record_collect(
+  stats : GcStats,
+  reclaimed : Int32,
+  freed_objects : Int32,
+) -> GcStats {
   {
     collections: stats.collections + 1,
     reclaimed_bytes: stats.reclaimed_bytes + reclaimed,
@@ -279,14 +320,18 @@ pub fn memory_version() -> String {
 
 ///|
 /// Arena 实现 Named trait | Arena implements Named
-pub impl @trait.Named for Arena with name(self) {
+pub impl @trait.Named for Arena with fn name(self) {
   self.name
 }
+
+///|
 pub extend Arena with @trait.Named::{name}
 
 ///|
 /// Arena 实现 Resettable trait | Arena implements Resettable
-pub impl @trait.Resettable for Arena with reset(self) {
+pub impl @trait.Resettable for Arena with fn reset(self) {
   arena_reset(self)
 }
+
+///|
 pub extend Arena with @trait.Resettable::{reset}

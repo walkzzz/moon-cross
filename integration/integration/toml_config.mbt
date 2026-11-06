@@ -16,67 +16,67 @@ pub fn toml_export_functions() -> Array[@config.ExportFunction] {
   [
     {
       name: "toml_parse",
-      params: [{ name: "input", typ: "String" }],
+      params: [{ name: "input", typ: "String", }],
       return_type: "TomlValue",
     },
     {
       name: "toml_to_string",
-      params: [{ name: "value", typ: "TomlValue" }],
+      params: [{ name: "value", typ: "TomlValue", }],
       return_type: "String",
     },
     {
       name: "toml_get",
       params: [
-        { name: "table", typ: "TomlValue" },
-        { name: "key", typ: "String" },
+        { name: "table", typ: "TomlValue", },
+        { name: "key", typ: "String", },
       ],
       return_type: "TomlValue",
     },
     {
       name: "toml_get_string",
       params: [
-        { name: "table", typ: "TomlValue" },
-        { name: "key", typ: "String" },
+        { name: "table", typ: "TomlValue", },
+        { name: "key", typ: "String", },
       ],
       return_type: "String",
     },
     {
       name: "toml_get_int",
       params: [
-        { name: "table", typ: "TomlValue" },
-        { name: "key", typ: "String" },
+        { name: "table", typ: "TomlValue", },
+        { name: "key", typ: "String", },
       ],
       return_type: "Int",
     },
     {
       name: "toml_get_double",
       params: [
-        { name: "table", typ: "TomlValue" },
-        { name: "key", typ: "String" },
+        { name: "table", typ: "TomlValue", },
+        { name: "key", typ: "String", },
       ],
       return_type: "Double",
     },
     {
       name: "toml_get_bool",
       params: [
-        { name: "table", typ: "TomlValue" },
-        { name: "key", typ: "String" },
+        { name: "table", typ: "TomlValue", },
+        { name: "key", typ: "String", },
       ],
       return_type: "Bool",
     },
     {
       name: "toml_value_type",
-      params: [{ name: "value", typ: "TomlValue" }],
+      params: [{ name: "value", typ: "TomlValue", }],
       return_type: "String",
     },
     {
       name: "toml_table_keys",
-      params: [{ name: "table", typ: "TomlValue" }],
+      params: [{ name: "table", typ: "TomlValue", }],
       return_type: "Array",
     },
     {
       name: "toml_array_length",
-      params: [{ name: "array", typ: "TomlValue" }],
+      params: [{ name: "array", typ: "TomlValue", }],
       return_type: "Int",
     },
   ]
@@ -89,22 +89,22 @@ pub fn toml_export_types() -> Array[@config.ExportType] {
     {
       name: "TomlValue",
       fields: [
-        { name: "Table", typ: "Unit" },
-        { name: "Array", typ: "Unit" },
-        { name: "String", typ: "Unit" },
-        { name: "Int", typ: "Unit" },
-        { name: "Double", typ: "Unit" },
-        { name: "Bool", typ: "Unit" },
-        { name: "Datetime", typ: "Unit" },
-        { name: "Null", typ: "Unit" },
+        { name: "Table", typ: "Unit", },
+        { name: "Array", typ: "Unit", },
+        { name: "String", typ: "Unit", },
+        { name: "Int", typ: "Unit", },
+        { name: "Double", typ: "Unit", },
+        { name: "Bool", typ: "Unit", },
+        { name: "Datetime", typ: "Unit", },
+        { name: "Null", typ: "Unit", },
       ],
     },
     {
       name: "TomlError",
       fields: [
-        { name: "ParseError", typ: "String" },
-        { name: "TypeError", typ: "String" },
-        { name: "KeyError", typ: "String" },
+        { name: "ParseError", typ: "String", },
+        { name: "TypeError", typ: "String", },
+        { name: "KeyError", typ: "String", },
       ],
     },
   ]
@@ -125,18 +125,18 @@ pub fn toml_cross_config() -> @config.CrossConfig {
 
 ///|
 /// toml 导出函数数量 | toml export function count
-pub fn toml_function_count() -> Int {
+pub fn toml_function_count() -> Int32 {
   toml_export_functions().length()
 }
 
 ///|
 /// toml 导出类型数量 | toml export type count
-pub fn toml_type_count() -> Int {
+pub fn toml_type_count() -> Int32 {
   toml_export_types().length()
 }
 
 ///|
 /// toml 目标平台数量 | toml target platform count
-pub fn toml_target_count() -> Int {
+pub fn toml_target_count() -> Int32 {
   toml_cross_config().targets.length()
 }

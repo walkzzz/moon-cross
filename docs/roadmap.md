@@ -82,6 +82,9 @@
 | v0.3.26 | ✅ Done | 鲁棒性+稳定性+可靠性全面提升(0 warnings, 2285测试) | 2285 |
 | v0.3.27 | ✅ Done | codegen扩展:CMake+类型依赖检查+构建计划(2289测试) | 2289 |
 | v0.3.30 | ✅ Done | Trait系统大幅扩展:20定义218实现(+6trait+30Hashable) | 2289 |
+| v0.3.31 | ✅ Done | codegen实质深度提升+CLI命令分发+typesys完善+诚实命名(评审迭代) | 2317 |
+| v0.3.32 | ✅ Done | P2编译执行器+P3验证框架+Swift/NAPI真实函数体+generate_c_adapter真实marshalling | 2351 |
+| v0.3.33 | ✅ Done | P4包分类+CLI增强(has_flag/--example)+generate_example_project+集成测试连接compilation_verify | 2364 |
 
 ## 远期计划预览（v0.2.16 → v1.0.0）
 

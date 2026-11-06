@@ -5,29 +5,41 @@ pub(all) enum LineStatus {
   Uncovered
   Partial
 } derive(Debug, Eq)
+
+///|
 pub extend LineStatus with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend LineStatus with Eq::{not_equal, equal}
 
 ///|
 /// 覆盖率条目 | Coverage entry
 pub(all) struct CoverageEntry {
   file : String
-  total_lines : Int
-  covered_lines : Int
-  missed_lines : Array[Int]
+  total_lines : Int32
+  covered_lines : Int32
+  missed_lines : Array[Int32]
 } derive(Debug, Eq)
+
+///|
 pub extend CoverageEntry with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend CoverageEntry with Eq::{not_equal, equal}
 
 ///|
 /// 覆盖率报告 | Coverage report
 pub(all) struct CoverageReport {
   entries : Array[CoverageEntry]
-  total_lines : Int
-  covered_lines : Int
-  missed_lines : Int
+  total_lines : Int32
+  covered_lines : Int32
+  missed_lines : Int32
 } derive(Debug, Eq)
+
+///|
 pub extend CoverageReport with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend CoverageReport with Eq::{not_equal, equal}
 
 ///|
@@ -38,41 +50,50 @@ pub(all) struct CoverageConfig {
   show_missing : Bool
   sort_descending : Bool
 } derive(Debug, Eq)
+
+///|
 pub extend CoverageConfig with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend CoverageConfig with Eq::{not_equal, equal}
 
 ///|
 /// 默认覆盖率配置 | Default coverage configuration
 pub fn default_coverage_config() -> CoverageConfig {
-  { min_threshold: 80.0, fail_below: true, show_missing: true, sort_descending: true }
+  {
+    min_threshold: 80.0,
+    fail_below: true,
+    show_missing: true,
+    sort_descending: true,
+  }
 }
 
 ///|
 /// 创建覆盖率条目 | Create coverage entry
 pub fn make_entry(
   file : String,
-  total_lines : Int,
-  covered_lines : Int,
+  total_lines : Int32,
+  covered_lines : Int32,
 ) -> CoverageEntry {
-  let missed : Array[Int] = []
+  let missed : Array[Int32] = []
   let upper = total_lines + 1
   for i in 1..<upper {
     if i > covered_lines {
       missed.push(i)
     }
   }
-  { file, total_lines, covered_lines, missed_lines: missed }
+  { file, total_lines, covered_lines, missed_lines: missed, }
 }
 
 ///|
 /// 创建带缺失行的覆盖率条目 | Create coverage entry with missed lines
 pub fn make_entry_with_missed(
   file : String,
-  total_lines : Int,
-  covered_lines : Int,
-  missed_lines : Array[Int],
+  total_lines : Int32,
+  covered_lines : Int32,
+  missed_lines : Array[Int32],
 ) -> CoverageEntry {
-  { file, total_lines, covered_lines, missed_lines }
+  { file, total_lines, covered_lines, missed_lines, }
 }
 
 ///|
@@ -86,7 +107,7 @@ pub fn entry_percentage(entry : CoverageEntry) -> Double {
 
 ///|
 /// 条目缺失行数 | Entry missed line count
-pub fn missed_lines_count(entry : CoverageEntry) -> Int {
+pub fn missed_lines_count(entry : CoverageEntry) -> Int32 {
   entry.total_lines - entry.covered_lines
 }
 
@@ -99,7 +120,12 @@ pub fn merge_entries(entries : Array[CoverageEntry]) -> CoverageReport {
     total = total + entry.total_lines
     covered = covered + entry.covered_lines
   }
-  { entries, total_lines: total, covered_lines: covered, missed_lines: total - covered }
+  {
+    entries,
+    total_lines: total,
+    covered_lines: covered,
+    missed_lines: total - covered,
+  }
 }
 
 ///|
@@ -113,16 +139,13 @@ pub fn coverage_percentage(report : CoverageReport) -> Double {
 
 ///|
 /// 报告文件数 | Report file count
-pub fn count_files(report : CoverageReport) -> Int {
+pub fn count_files(report : CoverageReport) -> Int32 {
   report.entries.length()
 }
 
 ///|
 /// 是否通过阈值 | Check if passing threshold
-pub fn is_passing(
-  report : CoverageReport,
-  threshold : Double,
-) -> Bool {
+pub fn is_passing(report : CoverageReport, threshold : Double) -> Bool {
   coverage_percentage(report) >= threshold
 }
 
@@ -209,19 +232,21 @@ pub(all) struct CoverageStats {
   min : Double
   max : Double
   mean : Double
-  files : Int
+  files : Int32
 } derive(Debug, Eq)
+
+///|
 pub extend CoverageStats with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend CoverageStats with Eq::{not_equal, equal}
 
 ///|
 /// 计算覆盖率统计 | Compute coverage statistics
-pub fn coverage_summary_stats(
-  report : CoverageReport,
-) -> CoverageStats {
+pub fn coverage_summary_stats(report : CoverageReport) -> CoverageStats {
   let n = report.entries.length()
   if n == 0 {
-    return { min: 0.0, max: 0.0, mean: 0.0, files: 0 }
+    return { min: 0.0, max: 0.0, mean: 0.0, files: 0, }
   }
   let mut min_val = entry_percentage(report.entries[0])
   let mut max_val = min_val
@@ -236,7 +261,7 @@ pub fn coverage_summary_stats(
     }
     sum = sum + p
   }
-  { min: min_val, max: max_val, mean: sum / n.to_double(), files: n }
+  { min: min_val, max: max_val, mean: sum / n.to_double(), files: n, }
 }
 
 ///|
@@ -254,7 +279,16 @@ pub fn format_report_text(report : CoverageReport) -> String {
   result = result + "\nPer-file:\n"
   for entry in report.entries {
     let ep = entry_percentage(entry)
-    result = result + "  " + entry.file + ": " + ep.to_string() + "% (" + entry.covered_lines.to_string() + "/" + entry.total_lines.to_string() + ")\n"
+    result = result +
+      "  " +
+      entry.file +
+      ": " +
+      ep.to_string() +
+      "% (" +
+      entry.covered_lines.to_string() +
+      "/" +
+      entry.total_lines.to_string() +
+      ")\n"
   }
   result
 }
@@ -265,8 +299,14 @@ pub fn format_report_json(report : CoverageReport) -> String {
   let mut result = "{\"coverage\": {"
   result = result + "\"files\": " + count_files(report).to_string() + ", "
   result = result + "\"total_lines\": " + report.total_lines.to_string() + ", "
-  result = result + "\"covered_lines\": " + report.covered_lines.to_string() + ", "
-  result = result + "\"missed_lines\": " + report.missed_lines.to_string() + ", "
+  result = result +
+    "\"covered_lines\": " +
+    report.covered_lines.to_string() +
+    ", "
+  result = result +
+    "\"missed_lines\": " +
+    report.missed_lines.to_string() +
+    ", "
   result = result + "\"percentage\": " + coverage_percentage(report).to_string()
   result = result + "}}"
   result
@@ -281,7 +321,7 @@ pub fn coverage_version() -> String {
 ///|
 /// 空报告 | Empty report
 pub fn empty_report() -> CoverageReport {
-  { entries: [], total_lines: 0, covered_lines: 0, missed_lines: 0 }
+  { entries: [], total_lines: 0, covered_lines: 0, missed_lines: 0, }
 }
 
 ///|
@@ -307,10 +347,7 @@ pub fn merge_reports(
 
 ///|
 /// 行状态判断 | Determine line status
-pub fn line_status(
-  entry : CoverageEntry,
-  line : Int,
-) -> LineStatus {
+pub fn line_status(entry : CoverageEntry, line : Int32) -> LineStatus {
   if line > entry.total_lines {
     return Uncovered
   }
@@ -343,7 +380,9 @@ pub fn missing_lines_summary(entry : CoverageEntry) -> String {
 
 ///|
 /// CoverageReport 实现 Countable trait | CoverageReport implements Countable
-pub impl @trait.Countable for CoverageReport with count(self) {
+pub impl @trait.Countable for CoverageReport with fn count(self) {
   self.entries.length()
 }
+
+///|
 pub extend CoverageReport with @trait.Countable::{count}

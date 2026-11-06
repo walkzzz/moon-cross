@@ -6,7 +6,11 @@ pub(all) struct PinyinResult {
   short_pinyin : String
   has_chinese : Bool
 } derive(Debug, Eq)
+
+///|
 pub extend PinyinResult with Debug::{to_repr}
+
+///|
 pub extend PinyinResult with Eq::{not_equal, equal}
 
 ///|
@@ -15,7 +19,11 @@ pub(all) struct ValidationResult {
   valid : Bool
   error_message : String
 } derive(Debug, Eq)
+
+///|
 pub extend ValidationResult with Debug::{to_repr}
+
+///|
 pub extend ValidationResult with Eq::{not_equal, equal}
 
 ///|
@@ -24,7 +32,7 @@ pub fn validate_input(input : String) -> ValidationResult {
   if input.length() == 0 {
     { valid: false, error_message: "input is empty", }
   } else if input.length() > 1000 {
-   { valid: false, error_message: "input too long (max 1000)", }
+    { valid: false, error_message: "input too long (max 1000)", }
   } else {
     { valid: true, error_message: "", }
   }
@@ -38,14 +46,14 @@ pub fn convert_chinese(input : String) -> PinyinResult {
     return { input, pinyin: "", short_pinyin: "", has_chinese: false, }
   }
   let has_chinese = @pinyin.ChineseHelper::contains_chinese(input)
-  let pinyin = try {
-    @pinyin.PinyinHelper::convert_to_pinyin_string(input, " ", format=@pinyin.PinyinFormat::WithoutTone)
-  } catch {
+  let pinyin = @pinyin.PinyinHelper::convert_to_pinyin_string(
+    input,
+    " ",
+    format=@pinyin.PinyinFormat::WithoutTone,
+  ) catch {
     _ => ""
   }
-  let short_pinyin = try {
-    @pinyin.PinyinHelper::get_short_pinyin(input)
-  } catch {
+  let short_pinyin = @pinyin.PinyinHelper::get_short_pinyin(input) catch {
     _ => ""
   }
   { input, pinyin, short_pinyin, has_chinese, }
@@ -67,9 +75,7 @@ pub fn get_short_pinyin(input : String) -> String {
   if input.length() == 0 {
     ""
   } else {
-    try {
-     @pinyin.PinyinHelper::get_short_pinyin(input)
-    } catch {
+    @pinyin.PinyinHelper::get_short_pinyin(input) catch {
       _ => ""
     }
   }
@@ -99,9 +105,21 @@ pub fn convert_without_tone(input : String) -> Array[String] {
 /// 生成跨平台导出函数声明 | Generate cross-platform export functions
 pub fn pinyin_export_functions() -> Array[@codegen.ExportFunction] {
   [
-    @codegen.ExportFunction::{ name: "pinyin_convert", params: [("input", "String")], return_type: "String" },
-    @codegen.ExportFunction::{ name: "pinyin_short", params: [("input", "String")], return_type: "String" },
-    @codegen.ExportFunction::{ name: "pinyin_contains", params: [("input", "String")], return_type: "Bool" },
+    @codegen.ExportFunction::{
+      name: "pinyin_convert",
+      params: [("input", "String")],
+      return_type: "String",
+    },
+    @codegen.ExportFunction::{
+      name: "pinyin_short",
+      params: [("input", "String")],
+      return_type: "String",
+    },
+    @codegen.ExportFunction::{
+      name: "pinyin_contains",
+      params: [("input", "String")],
+      return_type: "Bool",
+    },
   ]
 }
 

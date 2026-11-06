@@ -1,3 +1,4 @@
+///|
 test "tracker_create" {
   let t = @memory.tracker_create()
   assert_eq(@memory.tracker_live_count(t), 0)
@@ -5,6 +6,7 @@ test "tracker_create" {
   assert_false(@memory.tracker_has_leaks(t))
 }
 
+///|
 test "tracker_allocate" {
   let t = @memory.tracker_create()
   let (t1, block) = @memory.tracker_allocate(t, 100, "test")
@@ -15,6 +17,7 @@ test "tracker_allocate" {
   assert_false(block.freed)
 }
 
+///|
 test "tracker_free" {
   let t = @memory.tracker_create()
   let (t1, block) = @memory.tracker_allocate(t, 50, "temp")
@@ -24,6 +27,7 @@ test "tracker_free" {
   assert_eq(t2.total_freed, 50)
 }
 
+///|
 test "tracker_multiple" {
   let t = @memory.tracker_create()
   let (t1, _) = @memory.tracker_allocate(t, 100, "a")
@@ -33,12 +37,14 @@ test "tracker_multiple" {
   assert_eq(@memory.tracker_live_bytes(t3), 600)
 }
 
+///|
 test "tracker_has_leaks" {
   let t = @memory.tracker_create()
   let (t1, _) = @memory.tracker_allocate(t, 100, "leak")
   assert_true(@memory.tracker_has_leaks(t1))
 }
 
+///|
 test "tracker_no_leaks" {
   let t = @memory.tracker_create()
   let (t1, block) = @memory.tracker_allocate(t, 100, "temp")
@@ -46,12 +52,14 @@ test "tracker_no_leaks" {
   assert_false(@memory.tracker_has_leaks(t2))
 }
 
+///|
 test "arena_create" {
   let a = @memory.arena_create("test_arena")
   assert_eq(a.name, "test_arena")
   assert_eq(@memory.arena_block_count(a), 0)
 }
 
+///|
 test "arena_alloc" {
   let a = @memory.arena_create("test")
   let (a1, block) = @memory.arena_alloc(a, 64, "data")
@@ -60,6 +68,7 @@ test "arena_alloc" {
   assert_eq(block.size, 64)
 }
 
+///|
 test "arena_multiple_alloc" {
   let a = @memory.arena_create("test")
   let (a1, _) = @memory.arena_alloc(a, 32, "x")
@@ -68,6 +77,7 @@ test "arena_multiple_alloc" {
   assert_eq(a2.total_size, 96)
 }
 
+///|
 test "arena_reset" {
   let a = @memory.arena_create("test")
   let (a1, _) = @memory.arena_alloc(a, 100, "temp")
@@ -76,18 +86,21 @@ test "arena_reset" {
   assert_eq(a2.total_size, 0)
 }
 
+///|
 test "refcount_create" {
   let rc = @memory.refcount_create("value")
   assert_eq(rc.count, 1)
   assert_false(@memory.refcount_is_zero(rc))
 }
 
+///|
 test "refcount_increment" {
   let rc = @memory.refcount_create("value")
   let rc1 = @memory.refcount_increment(rc)
   assert_eq(rc1.count, 2)
 }
 
+///|
 test "refcount_decrement" {
   let rc = @memory.refcount_create("value")
   let rc1 = @memory.refcount_increment(rc)
@@ -95,12 +108,14 @@ test "refcount_decrement" {
   assert_eq(rc2.count, 1)
 }
 
+///|
 test "refcount_zero" {
   let rc = @memory.refcount_create("value")
   let rc1 = @memory.refcount_decrement(rc)
   assert_true(@memory.refcount_is_zero(rc1))
 }
 
+///|
 test "pool_create" {
   let p = @memory.pool_create(64, 10)
   assert_eq(p.block_size, 64)
@@ -108,6 +123,7 @@ test "pool_create" {
   assert_eq(p.allocated_count, 0)
 }
 
+///|
 test "pool_allocate" {
   let p = @memory.pool_create(64, 2)
   let allocated = @memory.pool_allocate(p)
@@ -118,6 +134,7 @@ test "pool_allocate" {
   }
 }
 
+///|
 test "pool_allocate_full" {
   let p = @memory.pool_create(64, 1)
   let a1 = @memory.pool_allocate(p)
@@ -130,6 +147,7 @@ test "pool_allocate_full" {
   }
 }
 
+///|
 test "pool_deallocate" {
   let p = @memory.pool_create(64, 2)
   let a = @memory.pool_allocate(p)
@@ -142,6 +160,7 @@ test "pool_deallocate" {
   }
 }
 
+///|
 test "pool_usage" {
   let p = @memory.pool_create(64, 10)
   let a = @memory.pool_allocate(p)
@@ -151,12 +170,14 @@ test "pool_usage" {
   }
 }
 
+///|
 test "gc_stats_create" {
   let s = @memory.gc_stats_create()
   assert_eq(s.collections, 0)
   assert_eq(s.live_objects, 0)
 }
 
+///|
 test "gc_record_alloc" {
   let s = @memory.gc_stats_create()
   let s1 = @memory.gc_record_alloc(s, 100)
@@ -164,6 +185,7 @@ test "gc_record_alloc" {
   assert_eq(s1.total_allocated, 100)
 }
 
+///|
 test "gc_record_collect" {
   let s = @memory.gc_stats_create()
   let s1 = @memory.gc_record_alloc(s, 100)
@@ -173,6 +195,7 @@ test "gc_record_collect" {
   assert_eq(s2.live_objects, 0)
 }
 
+///|
 test "memory_version" {
   let v = @memory.memory_version()
   assert_true(v.contains("memory"))

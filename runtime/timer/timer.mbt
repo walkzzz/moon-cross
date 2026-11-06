@@ -4,42 +4,58 @@ pub(all) enum TimerType {
   OneShot
   Periodic
 } derive(Debug, Eq)
+
+///|
 pub extend TimerType with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend TimerType with Eq::{not_equal, equal}
 
 ///|
 /// 定时器配置 | Timer configuration
 pub(all) struct TimerConfig {
-  interval_ms : Int
+  interval_ms : Int32
   timer_type : TimerType
   auto_start : Bool
 } derive(Debug, Eq)
+
+///|
 pub extend TimerConfig with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend TimerConfig with Eq::{not_equal, equal}
 
 ///|
 /// 定时器 | Timer
 pub(all) struct Timer {
-  id : Int
+  id : Int32
   name : String
   config : TimerConfig
-  created_at : Int
-  last_fired : Int
-  fire_count : Int
+  created_at : Int32
+  last_fired : Int32
+  fire_count : Int32
   active : Bool
 } derive(Debug, Eq)
+
+///|
 pub extend Timer with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend Timer with Eq::{not_equal, equal}
 
 ///|
 /// 定时器统计 | Timer statistics
 pub(all) struct TimerStats {
-  total_created : Int
-  total_fired : Int
-  total_cancelled : Int
-  active_count : Int
+  total_created : Int32
+  total_fired : Int32
+  total_cancelled : Int32
+  active_count : Int32
 } derive(Debug, Eq)
+
+///|
 pub extend TimerStats with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend TimerStats with Eq::{not_equal, equal}
 
 ///|
@@ -48,7 +64,11 @@ pub(all) struct TimerManager {
   timers : Array[Timer]
   stats : TimerStats
 } derive(Debug, Eq)
+
+///|
 pub extend TimerManager with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend TimerManager with Eq::{not_equal, equal}
 
 ///|
@@ -63,25 +83,41 @@ pub fn timer_type_name(typ : TimerType) -> String {
 ///|
 /// 默认配置 | Default config
 pub fn default_timer_config() -> TimerConfig {
-  { interval_ms: 1000, timer_type: Periodic, auto_start: true }
+  { interval_ms: 1000, timer_type: Periodic, auto_start: true, }
 }
 
 ///|
 /// 创建定时器管理器 | Create timer manager
 pub fn create_timer_manager() -> TimerManager {
-  { timers: [], stats: { total_created: 0, total_fired: 0, total_cancelled: 0, active_count: 0 } }
+  {
+    timers: [],
+    stats: {
+      total_created: 0,
+      total_fired: 0,
+      total_cancelled: 0,
+      active_count: 0,
+    },
+  }
 }
 
 ///|
 /// 添加定时器 | Add timer
 pub fn timer_add(
   mgr : TimerManager,
-  id : Int,
+  id : Int32,
   name : String,
   config : TimerConfig,
-  created_at : Int,
+  created_at : Int32,
 ) -> TimerManager {
-  let timer = { id, name, config, created_at, last_fired: 0, fire_count: 0, active: config.auto_start }
+  let timer = {
+    id,
+    name,
+    config,
+    created_at,
+    last_fired: 0,
+    fire_count: 0,
+    active: config.auto_start,
+  }
   let new_timers = []
   for t in mgr.timers {
     new_timers.push(t)
@@ -101,7 +137,7 @@ pub fn timer_add(
 
 ///|
 /// 移除定时器 | Remove timer
-pub fn timer_remove(mgr : TimerManager, id : Int) -> TimerManager {
+pub fn timer_remove(mgr : TimerManager, id : Int32) -> TimerManager {
   let remaining = []
   let mut removed_active = 0
   for t in mgr.timers {
@@ -126,12 +162,12 @@ pub fn timer_remove(mgr : TimerManager, id : Int) -> TimerManager {
 
 ///|
 /// 启动定时器 | Start timer
-pub fn timer_start(mgr : TimerManager, id : Int) -> TimerManager {
+pub fn timer_start(mgr : TimerManager, id : Int32) -> TimerManager {
   let new_timers = []
   let mut activated = 0
   for t in mgr.timers {
     if t.id == id && !t.active {
-      new_timers.push({ ..t, active: true })
+      new_timers.push({ ..t, active: true, })
       activated = activated + 1
     } else {
       new_timers.push(t)
@@ -139,18 +175,18 @@ pub fn timer_start(mgr : TimerManager, id : Int) -> TimerManager {
   }
   {
     timers: new_timers,
-    stats: { ..mgr.stats, active_count: mgr.stats.active_count + activated },
+    stats: { ..mgr.stats, active_count: mgr.stats.active_count + activated, },
   }
 }
 
 ///|
 /// 停止定时器 | Stop timer
-pub fn timer_stop(mgr : TimerManager, id : Int) -> TimerManager {
+pub fn timer_stop(mgr : TimerManager, id : Int32) -> TimerManager {
   let new_timers = []
   let mut deactivated = 0
   for t in mgr.timers {
     if t.id == id && t.active {
-      new_timers.push({ ..t, active: false })
+      new_timers.push({ ..t, active: false, })
       deactivated = deactivated + 1
     } else {
       new_timers.push(t)
@@ -158,20 +194,24 @@ pub fn timer_stop(mgr : TimerManager, id : Int) -> TimerManager {
   }
   {
     timers: new_timers,
-    stats: { ..mgr.stats, active_count: mgr.stats.active_count - deactivated },
+    stats: { ..mgr.stats, active_count: mgr.stats.active_count - deactivated, },
   }
 }
 
 ///|
 /// 触发定时器 | Fire timer
-pub fn timer_fire(mgr : TimerManager, id : Int, timestamp : Int) -> TimerManager {
+pub fn timer_fire(
+  mgr : TimerManager,
+  id : Int32,
+  timestamp : Int32,
+) -> TimerManager {
   let new_timers = []
   let mut fired = 0
   for t in mgr.timers {
     if t.id == id && t.active {
-      let new_t = { ..t, last_fired: timestamp, fire_count: t.fire_count + 1 }
+      let new_t = { ..t, last_fired: timestamp, fire_count: t.fire_count + 1, }
       if t.config.timer_type is OneShot {
-        new_timers.push({ ..new_t, active: false })
+        new_timers.push({ ..new_t, active: false, })
       } else {
         new_timers.push(new_t)
       }
@@ -187,7 +227,11 @@ pub fn timer_fire(mgr : TimerManager, id : Int, timestamp : Int) -> TimerManager
         is_oneshot = true
       }
     }
-    if is_oneshot { 1 } else { 0 }
+    if is_oneshot {
+      1
+    } else {
+      0
+    }
   } else {
     0
   }
@@ -204,27 +248,27 @@ pub fn timer_fire(mgr : TimerManager, id : Int, timestamp : Int) -> TimerManager
 
 ///|
 /// 重置定时器 | Reset timer
-pub fn timer_reset(mgr : TimerManager, id : Int) -> TimerManager {
+pub fn timer_reset(mgr : TimerManager, id : Int32) -> TimerManager {
   let new_timers = []
   for t in mgr.timers {
     if t.id == id {
-      new_timers.push({ ..t, fire_count: 0, last_fired: 0 })
+      new_timers.push({ ..t, fire_count: 0, last_fired: 0, })
     } else {
       new_timers.push(t)
     }
   }
-  { ..mgr, timers: new_timers }
+  { ..mgr, timers: new_timers, }
 }
 
 ///|
 /// 定时器数量 | Timer count
-pub fn timer_count(mgr : TimerManager) -> Int {
+pub fn timer_count(mgr : TimerManager) -> Int32 {
   mgr.timers.length()
 }
 
 ///|
 /// 活跃定时器数量 | Active timer count
-pub fn timer_active_count(mgr : TimerManager) -> Int {
+pub fn timer_active_count(mgr : TimerManager) -> Int32 {
   let mut count = 0
   for t in mgr.timers {
     if t.active {
@@ -236,7 +280,7 @@ pub fn timer_active_count(mgr : TimerManager) -> Int {
 
 ///|
 /// 是否存在定时器 | Has timer
-pub fn timer_has(mgr : TimerManager, id : Int) -> Bool {
+pub fn timer_has(mgr : TimerManager, id : Int32) -> Bool {
   for t in mgr.timers {
     if t.id == id {
       return true
@@ -247,7 +291,7 @@ pub fn timer_has(mgr : TimerManager, id : Int) -> Bool {
 
 ///|
 /// 获取定时器 | Get timer
-pub fn timer_get(mgr : TimerManager, id : Int) -> Timer? {
+pub fn timer_get(mgr : TimerManager, id : Int32) -> Timer? {
   for t in mgr.timers {
     if t.id == id {
       return Some(t)
@@ -258,7 +302,7 @@ pub fn timer_get(mgr : TimerManager, id : Int) -> Timer? {
 
 ///|
 /// 获取触发次数 | Get fire count
-pub fn timer_fire_count(mgr : TimerManager, id : Int) -> Int {
+pub fn timer_fire_count(mgr : TimerManager, id : Int32) -> Int32 {
   for t in mgr.timers {
     if t.id == id {
       return t.fire_count
@@ -269,7 +313,11 @@ pub fn timer_fire_count(mgr : TimerManager, id : Int) -> Int {
 
 ///|
 /// 是否应该触发 | Should fire
-pub fn timer_should_fire(mgr : TimerManager, id : Int, current_time : Int) -> Bool {
+pub fn timer_should_fire(
+  mgr : TimerManager,
+  id : Int32,
+  current_time : Int32,
+) -> Bool {
   for t in mgr.timers {
     if t.id == id && t.active {
       if t.last_fired == 0 {
@@ -299,7 +347,10 @@ pub fn timer_names(mgr : TimerManager) -> Array[String] {
 
 ///|
 /// 合并定时器管理器 | Merge timer managers
-pub fn merge_timer_managers(m1 : TimerManager, m2 : TimerManager) -> TimerManager {
+pub fn merge_timer_managers(
+  m1 : TimerManager,
+  m2 : TimerManager,
+) -> TimerManager {
   let new_timers = []
   for t in m1.timers {
     new_timers.push(t)
@@ -326,7 +377,9 @@ pub fn timer_version() -> String {
 
 ///|
 /// Timer 实现 Named trait | Timer implements Named
-pub impl @trait.Named for Timer with name(self) {
+pub impl @trait.Named for Timer with fn name(self) {
   self.name
 }
+
+///|
 pub extend Timer with @trait.Named::{name}

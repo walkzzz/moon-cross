@@ -7,7 +7,11 @@ pub(all) enum FfiBindingType {
   SwiftInteropBinding
   CffiBinding
 } derive(Debug, Eq)
+
+///|
 pub extend FfiBindingType with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend FfiBindingType with Eq::{not_equal, equal}
 
 ///|
@@ -17,7 +21,11 @@ pub(all) struct FfiBindingResult {
   filename : String
   content : String
 } derive(Debug, Eq)
+
+///|
 pub extend FfiBindingResult with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend FfiBindingResult with Eq::{not_equal, equal}
 
 ///|
@@ -50,18 +58,20 @@ pub fn ffi_binding_for_platform(platform : @core.Platform) -> FfiBindingType {
   }
 }
 
-
-
 ///|
 /// FfiBindingResult 实现 Named trait | FfiBindingResult implements Named
-pub impl @trait.Named for FfiBindingResult with name(self) {
+pub impl @trait.Named for FfiBindingResult with fn name(self) {
   self.filename
 }
+
+///|
 pub extend FfiBindingResult with @trait.Named::{name}
 
 ///|
 /// FfiBindingResult 实现 Hashable trait | FfiBindingResult implements Hashable
-pub impl @trait.Hashable for FfiBindingResult with hash(self) {
+pub impl @trait.Hashable for FfiBindingResult with fn hash(self) {
   @trait.Named::name(self).length()
 }
+
+///|
 pub extend FfiBindingResult with @trait.Hashable::{hash}

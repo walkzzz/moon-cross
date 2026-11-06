@@ -6,7 +6,11 @@ pub(all) struct EncodingPipelineResult {
   platform_specs : Array[@platform.PlatformSpec]
   ffi_bindings : Array[@ffi.FfiBindingType]
 } derive(Debug, Eq)
+
+///|
 pub extend EncodingPipelineResult with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend EncodingPipelineResult with Eq::{not_equal, equal}
 
 ///|
@@ -20,7 +24,12 @@ pub fn run_encoding_pipeline() -> EncodingPipelineResult {
   for p in @core.all_platforms() {
     bindings.push(@ffi.ffi_binding_for_platform(p))
   }
-  { config: encoding_cross_config(), c_header: @codegen_c.generate_header(encoding_module_name()), platform_specs: specs, ffi_bindings: bindings }
+  {
+    config: encoding_cross_config(),
+    c_header: @codegen_c.generate_header(encoding_module_name()),
+    platform_specs: specs,
+    ffi_bindings: bindings,
+  }
 }
 
 ///|
@@ -31,7 +40,11 @@ pub(all) struct ContainerPipelineResult {
   platform_specs : Array[@platform.PlatformSpec]
   ffi_bindings : Array[@ffi.FfiBindingType]
 } derive(Debug, Eq)
+
+///|
 pub extend ContainerPipelineResult with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend ContainerPipelineResult with Eq::{not_equal, equal}
 
 ///|
@@ -45,7 +58,12 @@ pub fn run_container_pipeline() -> ContainerPipelineResult {
   for p in @core.all_platforms() {
     bindings.push(@ffi.ffi_binding_for_platform(p))
   }
-  { config: container_cross_config(), c_header: @codegen_c.generate_header(container_module_name()), platform_specs: specs, ffi_bindings: bindings }
+  {
+    config: container_cross_config(),
+    c_header: @codegen_c.generate_header(container_module_name()),
+    platform_specs: specs,
+    ffi_bindings: bindings,
+  }
 }
 
 ///|
@@ -56,7 +74,11 @@ pub(all) struct RandomPipelineResult {
   platform_specs : Array[@platform.PlatformSpec]
   ffi_bindings : Array[@ffi.FfiBindingType]
 } derive(Debug, Eq)
+
+///|
 pub extend RandomPipelineResult with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend RandomPipelineResult with Eq::{not_equal, equal}
 
 ///|
@@ -70,5 +92,10 @@ pub fn run_random_pipeline() -> RandomPipelineResult {
   for p in @core.all_platforms() {
     bindings.push(@ffi.ffi_binding_for_platform(p))
   }
-  { config: random_cross_config(), c_header: @codegen_c.generate_header(random_module_name()), platform_specs: specs, ffi_bindings: bindings }
+  {
+    config: random_cross_config(),
+    c_header: @codegen_c.generate_header(random_module_name()),
+    platform_specs: specs,
+    ffi_bindings: bindings,
+  }
 }

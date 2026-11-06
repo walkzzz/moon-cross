@@ -1,16 +1,18 @@
 ///|
 /// 表达式 | Expression
 pub(all) enum Expr {
-  Num(Int)
+  Num(Int32)
   Add(Expr, Expr)
   Sub(Expr, Expr)
   Mul(Expr, Expr)
 } derive(Debug)
+
+///|
 pub extend Expr with @moonbitlang/core/debug.Debug::{to_repr}
 
 ///|
 /// 求值 | Evaluate expression
-pub fn eval(e : Expr) -> Int {
+pub fn eval(e : Expr) -> Int32 {
   match e {
     Num(n) => n
     Add(a, b) => eval(a) + eval(b)
@@ -32,7 +34,7 @@ pub fn expr_to_string(e : Expr) -> String {
 
 ///|
 /// 表达式深度 | Expression depth
-pub fn expr_depth(e : Expr) -> Int {
+pub fn expr_depth(e : Expr) -> Int32 {
   match e {
     Num(_) => 1
     Add(a, b) => 1 + max_int(expr_depth(a), expr_depth(b))
@@ -43,7 +45,7 @@ pub fn expr_depth(e : Expr) -> Int {
 
 ///|
 /// 表达式节点数 | Expression node count
-pub fn expr_size(e : Expr) -> Int {
+pub fn expr_size(e : Expr) -> Int32 {
   match e {
     Num(_) => 1
     Add(a, b) => 1 + expr_size(a) + expr_size(b)
@@ -54,8 +56,12 @@ pub fn expr_size(e : Expr) -> Int {
 
 ///|
 /// 最大值 | Max of two ints
-fn max_int(a : Int, b : Int) -> Int {
-  if a > b { a } else { b }
+fn max_int(a : Int32, b : Int32) -> Int32 {
+  if a > b {
+    a
+  } else {
+    b
+  }
 }
 
 ///|

@@ -7,7 +7,10 @@ pub(all) struct AsanConfig {
   detect_stack_use_after_return : Bool
 } derive(Debug, Eq)
 
+///|
 pub extend AsanConfig with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend AsanConfig with Eq::{not_equal, equal}
 
 ///|
@@ -16,22 +19,35 @@ pub(all) struct AsanResult {
   passed : Bool
   errors : Array[String]
   warnings : Array[String]
-  duration_ms : Int
+  duration_ms : Int32
 } derive(Debug, Eq)
 
+///|
 pub extend AsanResult with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend AsanResult with Eq::{not_equal, equal}
 
 ///|
 /// 默认 ASAN 配置 | Default ASAN configuration
 pub fn default_asan_config() -> AsanConfig {
-  { enabled: true, detect_leaks: true, detect_undefined_behavior: true, detect_stack_use_after_return: false }
+  {
+    enabled: true,
+    detect_leaks: true,
+    detect_undefined_behavior: true,
+    detect_stack_use_after_return: false,
+  }
 }
 
 ///|
 /// 禁用 ASAN 配置 | Disabled ASAN configuration
 pub fn disabled_asan_config() -> AsanConfig {
-  { enabled: false, detect_leaks: false, detect_undefined_behavior: false, detect_stack_use_after_return: false }
+  {
+    enabled: false,
+    detect_leaks: false,
+    detect_undefined_behavior: false,
+    detect_stack_use_after_return: false,
+  }
 }
 
 ///|
@@ -103,19 +119,19 @@ pub fn analyze_asan_output(output : String) -> AsanResult {
   if output.contains("memory leak") {
     warnings.push("memory leak detected")
   }
-  { passed: errors.length() == 0, errors, warnings, duration_ms: 0 }
+  { passed: errors.length() == 0, errors, warnings, duration_ms: 0, }
 }
 
 ///|
 /// 创建 ASAN 通过结果 | Create ASAN pass result
-pub fn asan_passed(duration_ms : Int) -> AsanResult {
-  { passed: true, errors: [], warnings: [], duration_ms }
+pub fn asan_passed(duration_ms : Int32) -> AsanResult {
+  { passed: true, errors: [], warnings: [], duration_ms, }
 }
 
 ///|
 /// 创建 ASAN 失败结果 | Create ASAN fail result
-pub fn asan_failed(errors : Array[String], duration_ms : Int) -> AsanResult {
-  { passed: false, errors, warnings: [], duration_ms }
+pub fn asan_failed(errors : Array[String], duration_ms : Int32) -> AsanResult {
+  { passed: false, errors, warnings: [], duration_ms, }
 }
 
 ///|

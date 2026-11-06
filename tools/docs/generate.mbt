@@ -6,7 +6,10 @@ pub(all) enum DocFormat {
   Html
 } derive(Debug, Eq)
 
+///|
 pub extend DocFormat with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend DocFormat with Eq::{not_equal, equal}
 
 ///|
@@ -19,7 +22,10 @@ pub(all) struct ApiDocEntry {
   platform_support : Array[@core.Platform]
 } derive(Debug, Eq)
 
+///|
 pub extend ApiDocEntry with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend ApiDocEntry with Eq::{not_equal, equal}
 
 ///|
@@ -30,7 +36,10 @@ pub(all) struct DocSection {
   entries : Array[ApiDocEntry]
 } derive(Debug, Eq)
 
+///|
 pub extend DocSection with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend DocSection with Eq::{not_equal, equal}
 
 ///|
@@ -42,13 +51,21 @@ pub(all) struct DocConfig {
   include_examples : Bool
 } derive(Debug, Eq)
 
+///|
 pub extend DocConfig with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend DocConfig with Eq::{not_equal, equal}
 
 ///|
 /// 默认文档配置 | Default documentation configuration
 pub fn default_doc_config() -> DocConfig {
-  { format: Markdown, output_dir: "docs/api", include_private: false, include_examples: true }
+  {
+    format: Markdown,
+    output_dir: "docs/api",
+    include_private: false,
+    include_examples: true,
+  }
 }
 
 ///|
@@ -60,18 +77,24 @@ pub fn make_doc_entry(
   examples : Array[String],
   platform_support : Array[@core.Platform],
 ) -> ApiDocEntry {
-  { name, signature, description, examples, platform_support }
+  { name, signature, description, examples, platform_support, }
 }
 
 ///|
 /// 创建文档章节 | Create documentation section
-pub fn make_doc_section(title : String, description : String, entries : Array[ApiDocEntry]) -> DocSection {
-  { title, description, entries }
+pub fn make_doc_section(
+  title : String,
+  description : String,
+  entries : Array[ApiDocEntry],
+) -> DocSection {
+  { title, description, entries, }
 }
 
 ///|
 /// 从导出函数生成 API 文档 | Generate API documentation from export functions
-pub fn generate_api_doc(functions : Array[@config.ExportFunction]) -> Array[ApiDocEntry] {
+pub fn generate_api_doc(
+  functions : Array[@config.ExportFunction],
+) -> Array[ApiDocEntry] {
   let entries = []
   for func in functions {
     let mut param_str = ""
@@ -138,13 +161,15 @@ pub fn generate_json(sections : Array[DocSection]) -> String {
     if !first_section {
       json = json + ",\n"
     }
-    json = json + "    {\n      \"title\": \"\{section.title}\",\n      \"entries\": [\n"
+    json = json +
+      "    {\n      \"title\": \"\{section.title}\",\n      \"entries\": [\n"
     let mut first_entry = true
     for entry in section.entries {
       if !first_entry {
         json = json + ",\n"
       }
-      json = json + "        {\"name\": \"\{entry.name}\", \"signature\": \"\{entry.signature}\"}"
+      json = json +
+        "        {\"name\": \"\{entry.name}\", \"signature\": \"\{entry.signature}\"}"
       first_entry = false
     }
     json = json + "\n      ]\n    }"
@@ -172,21 +197,27 @@ pub fn docs_version() -> String {
 
 ///|
 /// ApiDocEntry 实现 Named trait | ApiDocEntry implements Named
-pub impl @trait.Named for ApiDocEntry with name(self) {
+pub impl @trait.Named for ApiDocEntry with fn name(self) {
   self.name
 }
+
+///|
 pub extend ApiDocEntry with @trait.Named::{name}
 
 ///|
 /// ApiDocEntry 实现 Describable trait | ApiDocEntry implements Describable
-pub impl @trait.Describable for ApiDocEntry with describe(self) {
+pub impl @trait.Describable for ApiDocEntry with fn describe(self) {
   self.description
 }
+
+///|
 pub extend ApiDocEntry with @trait.Describable::{describe}
 
 ///|
 /// DocSection 实现 Describable trait | DocSection implements Describable
-pub impl @trait.Describable for DocSection with describe(self) {
+pub impl @trait.Describable for DocSection with fn describe(self) {
   self.description
 }
+
+///|
 pub extend DocSection with @trait.Describable::{describe}

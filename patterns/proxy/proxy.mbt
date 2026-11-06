@@ -5,13 +5,17 @@ pub(all) struct ProxyConfig {
   access_list : Array[String]
   cache : Array[(String, String)]
 } derive(Debug, Eq)
+
+///|
 pub extend ProxyConfig with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend ProxyConfig with Eq::{not_equal, equal}
 
 ///|
 /// 创建代理 | Create proxy
 pub fn proxy_create() -> ProxyConfig {
-  { enabled: true, access_list: [], cache: [] }
+  { enabled: true, access_list: [], cache: [], }
 }
 
 ///|
@@ -22,7 +26,7 @@ pub fn proxy_grant(p : ProxyConfig, name : String) -> ProxyConfig {
     new_list.push(n)
   }
   new_list.push(name)
-  { enabled: p.enabled, access_list: new_list, cache: p.cache }
+  { enabled: p.enabled, access_list: new_list, cache: p.cache, }
 }
 
 ///|
@@ -34,7 +38,7 @@ pub fn proxy_revoke(p : ProxyConfig, name : String) -> ProxyConfig {
       new_list.push(n)
     }
   }
-  { enabled: p.enabled, access_list: new_list, cache: p.cache }
+  { enabled: p.enabled, access_list: new_list, cache: p.cache, }
 }
 
 ///|
@@ -64,7 +68,11 @@ pub fn proxy_cache_get(p : ProxyConfig, key : String) -> String? {
 
 ///|
 /// 缓存设置 | Cache set
-pub fn proxy_cache_set(p : ProxyConfig, key : String, value : String) -> ProxyConfig {
+pub fn proxy_cache_set(
+  p : ProxyConfig,
+  key : String,
+  value : String,
+) -> ProxyConfig {
   let new_cache = []
   let mut found = false
   for c in p.cache {
@@ -78,13 +86,13 @@ pub fn proxy_cache_set(p : ProxyConfig, key : String, value : String) -> ProxyCo
   if !found {
     new_cache.push((key, value))
   }
-  { enabled: p.enabled, access_list: p.access_list, cache: new_cache }
+  { enabled: p.enabled, access_list: p.access_list, cache: new_cache, }
 }
 
 ///|
 /// 启用/禁用 | Enable/disable
 pub fn proxy_set_enabled(p : ProxyConfig, enabled : Bool) -> ProxyConfig {
-  { enabled, access_list: p.access_list, cache: p.cache }
+  { enabled, access_list: p.access_list, cache: p.cache, }
 }
 
 ///|
@@ -104,7 +112,9 @@ pub fn proxy_version() -> String {
 
 ///|
 /// ProxyConfig 实现 Checkable trait | ProxyConfig implements Checkable
-pub impl @trait.Checkable for ProxyConfig with check(self) {
+pub impl @trait.Checkable for ProxyConfig with fn check(self) {
   self.enabled
 }
+
+///|
 pub extend ProxyConfig with @trait.Checkable::{check}

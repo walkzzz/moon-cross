@@ -6,7 +6,11 @@ pub(all) enum DiffLineType {
   Unchanged
   Context
 } derive(Debug, Eq)
+
+///|
 pub extend DiffLineType with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend DiffLineType with Eq::{not_equal, equal}
 
 ///|
@@ -14,49 +18,65 @@ pub extend DiffLineType with Eq::{not_equal, equal}
 pub(all) struct DiffLine {
   content : String
   line_type : DiffLineType
-  old_line_num : Int
-  new_line_num : Int
+  old_line_num : Int32
+  new_line_num : Int32
 } derive(Debug, Eq)
+
+///|
 pub extend DiffLine with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend DiffLine with Eq::{not_equal, equal}
 
 ///|
 /// 差异结果 | Diff result
 pub(all) struct DiffResult {
   lines : Array[DiffLine]
-  added_count : Int
-  removed_count : Int
-  unchanged_count : Int
+  added_count : Int32
+  removed_count : Int32
+  unchanged_count : Int32
 } derive(Debug, Eq)
+
+///|
 pub extend DiffResult with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend DiffResult with Eq::{not_equal, equal}
 
 ///|
 /// 差异配置 | Diff configuration
 pub(all) struct DiffConfig {
-  context_lines : Int
+  context_lines : Int32
   ignore_whitespace : Bool
-  max_diff_lines : Int
+  max_diff_lines : Int32
 } derive(Debug, Eq)
+
+///|
 pub extend DiffConfig with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend DiffConfig with Eq::{not_equal, equal}
 
 ///|
 /// 差异统计 | Diff statistics
 pub(all) struct DiffStats {
-  total_lines : Int
+  total_lines : Int32
   change_ratio : Double
-  added : Int
-  removed : Int
-  unchanged : Int
+  added : Int32
+  removed : Int32
+  unchanged : Int32
 } derive(Debug, Eq)
+
+///|
 pub extend DiffStats with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend DiffStats with Eq::{not_equal, equal}
 
 ///|
 /// 默认差异配置 | Default diff configuration
 pub fn default_diff_config() -> DiffConfig {
-  { context_lines: 3, ignore_whitespace: false, max_diff_lines: 1000 }
+  { context_lines: 3, ignore_whitespace: false, max_diff_lines: 1000, }
 }
 
 ///|
@@ -86,10 +106,10 @@ pub fn line_type_name(t : DiffLineType) -> String {
 pub fn make_diff_line(
   content : String,
   line_type : DiffLineType,
-  old_num : Int,
-  new_num : Int,
+  old_num : Int32,
+  new_num : Int32,
 ) -> DiffLine {
-  { content, line_type, old_line_num: old_num, new_line_num: new_num }
+  { content, line_type, old_line_num: old_num, new_line_num: new_num, }
 }
 
 ///|
@@ -115,11 +135,9 @@ fn split_lines(text : String) -> Array[String] {
 
 ///|
 
+///|
 /// 计算行差异 | Diff line arrays
-pub fn diff_lines(
-  old : Array[String],
-  new : Array[String],
-) -> DiffResult {
+pub fn diff_lines(old : Array[String], new : Array[String]) -> DiffResult {
   let lines : Array[DiffLine] = []
   let mut added = 0
   let mut removed = 0
@@ -129,32 +147,59 @@ pub fn diff_lines(
   let min_len = if old_len < new_len { old_len } else { new_len }
   for i in 0..<min_len {
     if old[i] == new[i] {
-      lines.push({ content: old[i], line_type: Unchanged, old_line_num: i + 1, new_line_num: i + 1 })
+      lines.push({
+        content: old[i],
+        line_type: Unchanged,
+        old_line_num: i + 1,
+        new_line_num: i + 1,
+      })
       unchanged = unchanged + 1
     } else {
-      lines.push({ content: old[i], line_type: Removed, old_line_num: i + 1, new_line_num: 0 })
+      lines.push({
+        content: old[i],
+        line_type: Removed,
+        old_line_num: i + 1,
+        new_line_num: 0,
+      })
       removed = removed + 1
-      lines.push({ content: new[i], line_type: Added, old_line_num: 0, new_line_num: i + 1 })
+      lines.push({
+        content: new[i],
+        line_type: Added,
+        old_line_num: 0,
+        new_line_num: i + 1,
+      })
       added = added + 1
     }
   }
   for i in min_len..<old_len {
-    lines.push({ content: old[i], line_type: Removed, old_line_num: i + 1, new_line_num: 0 })
+    lines.push({
+      content: old[i],
+      line_type: Removed,
+      old_line_num: i + 1,
+      new_line_num: 0,
+    })
     removed = removed + 1
   }
   for i in min_len..<new_len {
-    lines.push({ content: new[i], line_type: Added, old_line_num: 0, new_line_num: i + 1 })
+    lines.push({
+      content: new[i],
+      line_type: Added,
+      old_line_num: 0,
+      new_line_num: i + 1,
+    })
     added = added + 1
   }
-  { lines, added_count: added, removed_count: removed, unchanged_count: unchanged }
+  {
+    lines,
+    added_count: added,
+    removed_count: removed,
+    unchanged_count: unchanged,
+  }
 }
 
 ///|
 /// 计算文本差异 | Diff text
-pub fn diff_text(
-  old : String,
-  new : String,
-) -> DiffResult {
+pub fn diff_text(old : String, new : String) -> DiffResult {
   diff_lines(split_lines(old), split_lines(new))
 }
 
@@ -178,7 +223,13 @@ pub fn has_changes(result : DiffResult) -> Bool {
 ///|
 /// 差异摘要 | Diff summary
 pub fn diff_summary(result : DiffResult) -> String {
-  "Diff: +" + result.added_count.to_string() + " -" + result.removed_count.to_string() + " " + result.unchanged_count.to_string() + " unchanged"
+  "Diff: +" +
+  result.added_count.to_string() +
+  " -" +
+  result.removed_count.to_string() +
+  " " +
+  result.unchanged_count.to_string() +
+  " unchanged"
 }
 
 ///|
@@ -186,7 +237,11 @@ pub fn diff_summary(result : DiffResult) -> String {
 pub fn format_diff(result : DiffResult) -> String {
   let mut output = ""
   for line in result.lines {
-    output = output + line_type_to_string(line.line_type) + " " + line.content + "\n"
+    output = output +
+      line_type_to_string(line.line_type) +
+      " " +
+      line.content +
+      "\n"
   }
   output
 }
@@ -229,10 +284,7 @@ pub fn filter_unchanged(result : DiffResult) -> Array[DiffLine] {
 
 ///|
 /// 合并差异 | Merge diffs
-pub fn merge_diffs(
-  d1 : DiffResult,
-  d2 : DiffResult,
-) -> DiffResult {
+pub fn merge_diffs(d1 : DiffResult, d2 : DiffResult) -> DiffResult {
   let lines = []
   for l in d1.lines {
     lines.push(l)
@@ -257,13 +309,19 @@ pub fn diff_stats(result : DiffResult) -> DiffStats {
   } else {
     (result.added_count + result.removed_count).to_double() / total.to_double()
   }
-  { total_lines: total, change_ratio: ratio, added: result.added_count, removed: result.removed_count, unchanged: result.unchanged_count }
+  {
+    total_lines: total,
+    change_ratio: ratio,
+    added: result.added_count,
+    removed: result.removed_count,
+    unchanged: result.unchanged_count,
+  }
 }
 
 ///|
 /// 空差异 | Empty diff
 pub fn empty_diff() -> DiffResult {
-  { lines: [], added_count: 0, removed_count: 0, unchanged_count: 0 }
+  { lines: [], added_count: 0, removed_count: 0, unchanged_count: 0, }
 }
 
 ///|
@@ -274,7 +332,7 @@ pub fn diff_version() -> String {
 
 ///|
 /// 统计差异行总数 | Count total diff lines
-pub fn total_lines(result : DiffResult) -> Int {
+pub fn total_lines(result : DiffResult) -> Int32 {
   result.lines.length()
 }
 
@@ -289,35 +347,53 @@ pub fn reverse_diff(result : DiffResult) -> DiffResult {
       Unchanged => Unchanged
       Context => Context
     }
-    lines.push({ content: line.content, line_type: new_type, old_line_num: line.new_line_num, new_line_num: line.old_line_num })
+    lines.push({
+      content: line.content,
+      line_type: new_type,
+      old_line_num: line.new_line_num,
+      new_line_num: line.old_line_num,
+    })
   }
-  { lines, added_count: result.removed_count, removed_count: result.added_count, unchanged_count: result.unchanged_count }
+  {
+    lines,
+    added_count: result.removed_count,
+    removed_count: result.added_count,
+    unchanged_count: result.unchanged_count,
+  }
 }
 
 ///|
 /// DiffConfig 实现 Checkable trait | DiffConfig implements Checkable
-pub impl @trait.Checkable for DiffConfig with check(self) {
+pub impl @trait.Checkable for DiffConfig with fn check(self) {
   self.ignore_whitespace
 }
+
+///|
 pub extend DiffConfig with @trait.Checkable::{check}
 
 ///|
 /// DiffResult 实现 Countable trait | DiffResult implements Countable
-pub impl @trait.Countable for DiffResult with count(self) {
+pub impl @trait.Countable for DiffResult with fn count(self) {
   self.lines.length()
 }
+
+///|
 pub extend DiffResult with @trait.Countable::{count}
 
 ///|
 /// DiffStats 实现 Countable trait | DiffStats implements Countable
-pub impl @trait.Countable for DiffStats with count(self) {
+pub impl @trait.Countable for DiffStats with fn count(self) {
   self.total_lines
 }
+
+///|
 pub extend DiffStats with @trait.Countable::{count}
 
 ///|
 /// DiffResult 实现 Iterable trait | DiffResult implements Iterable
-pub impl @trait.Iterable for DiffResult with iter_count(self) {
+pub impl @trait.Iterable for DiffResult with fn iter_count(self) {
   self.lines.length()
 }
+
+///|
 pub extend DiffResult with @trait.Iterable::{iter_count}

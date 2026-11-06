@@ -16,52 +16,52 @@ pub fn zlib_export_functions() -> Array[@config.ExportFunction] {
   [
     {
       name: "zlib_compress",
-      params: [{ name: "data", typ: "Bytes" }],
+      params: [{ name: "data", typ: "Bytes", }],
       return_type: "Bytes",
     },
     {
       name: "zlib_decompress",
-      params: [{ name: "data", typ: "Bytes" }],
+      params: [{ name: "data", typ: "Bytes", }],
       return_type: "Bytes",
     },
     {
       name: "zlib_compress_stored",
-      params: [{ name: "data", typ: "Bytes" }],
+      params: [{ name: "data", typ: "Bytes", }],
       return_type: "Bytes",
     },
     {
       name: "zlib_decompress_stored",
-      params: [{ name: "data", typ: "Bytes" }],
+      params: [{ name: "data", typ: "Bytes", }],
       return_type: "Bytes",
     },
     {
       name: "deflate_compress",
-      params: [{ name: "data", typ: "Bytes" }],
+      params: [{ name: "data", typ: "Bytes", }],
       return_type: "Bytes",
     },
     {
       name: "deflate_decompress",
-      params: [{ name: "data", typ: "Bytes" }],
+      params: [{ name: "data", typ: "Bytes", }],
       return_type: "Bytes",
     },
     {
       name: "gzip_compress",
-      params: [{ name: "data", typ: "Bytes" }],
+      params: [{ name: "data", typ: "Bytes", }],
       return_type: "Bytes",
     },
     {
       name: "gzip_decompress",
-      params: [{ name: "data", typ: "Bytes" }],
+      params: [{ name: "data", typ: "Bytes", }],
       return_type: "Bytes",
     },
     {
       name: "adler32",
-      params: [{ name: "data", typ: "Bytes" }],
+      params: [{ name: "data", typ: "Bytes", }],
       return_type: "Int",
     },
     {
       name: "crc32",
-      params: [{ name: "data", typ: "Bytes" }],
+      params: [{ name: "data", typ: "Bytes", }],
       return_type: "UInt",
     },
   ]
@@ -74,8 +74,8 @@ pub fn zlib_export_types() -> Array[@config.ExportType] {
     {
       name: "ZlibError",
       fields: [
-        { name: "InvalidData", typ: "String" },
-        { name: "OutputTooLarge", typ: "String" },
+        { name: "InvalidData", typ: "String", },
+        { name: "OutputTooLarge", typ: "String", },
       ],
     },
   ]
@@ -96,18 +96,18 @@ pub fn zlib_cross_config() -> @config.CrossConfig {
 
 ///|
 /// zlib 导出函数数量 | zlib export function count
-pub fn zlib_function_count() -> Int {
+pub fn zlib_function_count() -> Int32 {
   zlib_export_functions().length()
 }
 
 ///|
 /// zlib 导出类型数量 | zlib export type count
-pub fn zlib_type_count() -> Int {
+pub fn zlib_type_count() -> Int32 {
   zlib_export_types().length()
 }
 
 ///|
 /// zlib 目标平台数量 | zlib target platform count
-pub fn zlib_target_count() -> Int {
+pub fn zlib_target_count() -> Int32 {
   zlib_cross_config().targets.length()
 }

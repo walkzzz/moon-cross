@@ -1,3 +1,4 @@
+///|
 test "method_name" {
   assert_eq(@http.method_name(@http.HttpMethod::Get), "GET")
   assert_eq(@http.method_name(@http.HttpMethod::Post), "POST")
@@ -8,6 +9,7 @@ test "method_name" {
   assert_eq(@http.method_name(@http.HttpMethod::Options), "OPTIONS")
 }
 
+///|
 test "method_from_string" {
   assert_eq(@http.method_from_string("GET"), @http.HttpMethod::Get)
   assert_eq(@http.method_from_string("POST"), @http.HttpMethod::Post)
@@ -15,6 +17,7 @@ test "method_from_string" {
   assert_eq(@http.method_from_string("DELETE"), @http.HttpMethod::Delete)
 }
 
+///|
 test "status_text" {
   assert_eq(@http.status_text(200), "OK")
   assert_eq(@http.status_text(201), "Created")
@@ -23,6 +26,7 @@ test "status_text" {
   assert_eq(@http.status_text(999), "Unknown")
 }
 
+///|
 test "is_success_code" {
   assert_true(@http.is_success_code(200))
   assert_true(@http.is_success_code(204))
@@ -30,6 +34,7 @@ test "is_success_code" {
   assert_false(@http.is_success_code(404))
 }
 
+///|
 test "is_redirect_code" {
   assert_true(@http.is_redirect_code(301))
   assert_true(@http.is_redirect_code(302))
@@ -37,6 +42,7 @@ test "is_redirect_code" {
   assert_false(@http.is_redirect_code(404))
 }
 
+///|
 test "is_error_code" {
   assert_true(@http.is_error_code(400))
   assert_true(@http.is_error_code(500))
@@ -44,6 +50,7 @@ test "is_error_code" {
   assert_false(@http.is_error_code(302))
 }
 
+///|
 test "is_client_error" {
   assert_true(@http.is_client_error(404))
   assert_true(@http.is_client_error(400))
@@ -51,6 +58,7 @@ test "is_client_error" {
   assert_false(@http.is_client_error(200))
 }
 
+///|
 test "is_server_error" {
   assert_true(@http.is_server_error(500))
   assert_true(@http.is_server_error(503))
@@ -58,6 +66,7 @@ test "is_server_error" {
   assert_false(@http.is_server_error(200))
 }
 
+///|
 test "make_request" {
   let req = @http.make_request(@http.HttpMethod::Get, "/api/users")
   assert_eq(req.url, "/api/users")
@@ -65,17 +74,20 @@ test "make_request" {
   assert_eq(req.body, "")
 }
 
+///|
 test "make_get_request" {
   let req = @http.make_get_request("/api/users")
   assert_eq(req.http_method, @http.HttpMethod::Get)
 }
 
+///|
 test "make_post_request" {
   let req = @http.make_post_request("/api/users", "{\"name\":\"test\"}")
   assert_eq(req.http_method, @http.HttpMethod::Post)
   assert_eq(req.body, "{\"name\":\"test\"}")
 }
 
+///|
 test "request_add_header" {
   let req = @http.make_get_request("/api")
   let req1 = @http.request_add_header(req, "Content-Type", "application/json")
@@ -83,6 +95,7 @@ test "request_add_header" {
   assert_true(@http.request_has_header(req1, "Content-Type"))
 }
 
+///|
 test "request_get_header" {
   let req = @http.make_get_request("/api")
   let req1 = @http.request_add_header(req, "Accept", "text/html")
@@ -95,17 +108,20 @@ test "request_get_header" {
   assert_eq(v, "text/html")
 }
 
+///|
 test "request_get_header_not_found" {
   let req = @http.make_get_request("/api")
   assert_true(@http.request_get_header(req, "Nonexistent") is None)
 }
 
+///|
 test "request_set_body" {
   let req = @http.make_get_request("/api")
   let req1 = @http.request_set_body(req, "request body")
   assert_eq(req1.body, "request body")
 }
 
+///|
 test "format_request" {
   let req = @http.make_get_request("/api/users")
   let req1 = @http.request_add_header(req, "Host", "example.com")
@@ -114,6 +130,7 @@ test "format_request" {
   assert_true(formatted.contains("Host: example.com"))
 }
 
+///|
 test "format_request_with_body" {
   let req = @http.make_post_request("/api", "body data")
   let formatted = @http.format_request(req)
@@ -121,24 +138,30 @@ test "format_request_with_body" {
   assert_true(formatted.contains("body data"))
 }
 
+///|
 test "make_response" {
   let resp = @http.make_response(200)
   assert_eq(resp.status_code, 200)
   assert_eq(resp.body, "")
 }
 
+///|
 test "make_response_with_body" {
   let resp = @http.make_response_with_body(200, "response body")
   assert_eq(resp.body, "response body")
 }
 
+///|
 test "response_add_header" {
   let resp = @http.make_response(200)
-  let resp1 = @http.response_add_header(resp, "Content-Type", "application/json")
+  let resp1 = @http.response_add_header(
+    resp, "Content-Type", "application/json",
+  )
   assert_eq(@http.response_header_count(resp1), 1)
   assert_true(@http.response_has_header(resp1, "Content-Type"))
 }
 
+///|
 test "response_get_header" {
   let resp = @http.make_response(200)
   let resp1 = @http.response_add_header(resp, "X-Custom", "value")
@@ -146,6 +169,7 @@ test "response_get_header" {
   assert_true(val is Some(_))
 }
 
+///|
 test "response_is_success" {
   let resp = @http.make_response(200)
   assert_true(@http.response_is_success(resp))
@@ -153,6 +177,7 @@ test "response_is_success" {
   assert_false(@http.response_is_success(resp2))
 }
 
+///|
 test "response_is_error" {
   let resp = @http.make_response(404)
   assert_true(@http.response_is_error(resp))
@@ -160,6 +185,7 @@ test "response_is_error" {
   assert_false(@http.response_is_error(resp2))
 }
 
+///|
 test "format_response" {
   let resp = @http.make_response(200)
   let resp1 = @http.response_add_header(resp, "Content-Type", "text/plain")
@@ -168,6 +194,7 @@ test "format_response" {
   assert_true(formatted.contains("Content-Type: text/plain"))
 }
 
+///|
 test "format_response_with_body" {
   let resp = @http.make_response_with_body(404, "Not Found")
   let formatted = @http.format_response(resp)
@@ -175,6 +202,7 @@ test "format_response_with_body" {
   assert_true(formatted.contains("Not Found"))
 }
 
+///|
 test "merge_requests" {
   let r1 = @http.make_get_request("/api")
   let r1a = @http.request_add_header(r1, "A", "1")
@@ -184,6 +212,7 @@ test "merge_requests" {
   assert_eq(@http.request_header_count(merged), 2)
 }
 
+///|
 test "http_version" {
   let v = @http.http_version()
   assert_true(v.contains("http"))

@@ -11,7 +11,13 @@ pub(all) struct QuickcheckPipelineResult {
   ios_command : String
   ohos_command : String
 } derive(Debug, Eq)
-pub extend QuickcheckPipelineResult with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
+pub extend QuickcheckPipelineResult with @moonbitlang/core/debug.Debug::{
+  to_repr,
+}
+
+///|
 pub extend QuickcheckPipelineResult with Eq::{not_equal, equal}
 
 ///|

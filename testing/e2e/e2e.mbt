@@ -5,7 +5,11 @@ pub(all) struct Step {
   action : String
   expected : String
 } derive(Debug, Eq)
+
+///|
 pub extend Step with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend Step with Eq::{not_equal, equal}
 
 ///|
@@ -16,7 +20,11 @@ pub(all) struct StepResult {
   actual : String
   expected : String
 } derive(Debug, Eq)
+
+///|
 pub extend StepResult with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend StepResult with Eq::{not_equal, equal}
 
 ///|
@@ -26,7 +34,11 @@ pub(all) struct Scenario {
   description : String
   steps : Array[Step]
 } derive(Debug, Eq)
+
+///|
 pub extend Scenario with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend Scenario with Eq::{not_equal, equal}
 
 ///|
@@ -36,18 +48,26 @@ pub(all) struct ScenarioResult {
   step_results : Array[StepResult]
   passed : Bool
 } derive(Debug, Eq)
+
+///|
 pub extend ScenarioResult with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend ScenarioResult with Eq::{not_equal, equal}
 
 ///|
 /// E2E 报告 | E2E report
 pub(all) struct E2EReport {
-  total_scenarios : Int
-  passed_scenarios : Int
-  failed_scenarios : Int
+  total_scenarios : Int32
+  passed_scenarios : Int32
+  failed_scenarios : Int32
   results : Array[ScenarioResult]
 } derive(Debug, Eq)
+
+///|
 pub extend E2EReport with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend E2EReport with Eq::{not_equal, equal}
 
 ///|
@@ -82,7 +102,10 @@ pub fn scenario_add_step(scenario : Scenario, step : Step) -> Scenario {
 
 ///|
 /// 运行场景 | Run scenario with actual outputs
-pub fn scenario_run(scenario : Scenario, actuals : Array[String]) -> ScenarioResult {
+pub fn scenario_run(
+  scenario : Scenario,
+  actuals : Array[String],
+) -> ScenarioResult {
   let step_results = []
   let mut all_passed = true
   let mut idx = 0
@@ -92,7 +115,12 @@ pub fn scenario_run(scenario : Scenario, actuals : Array[String]) -> ScenarioRes
     if !passed {
       all_passed = false
     }
-    step_results.push({ step_name: s.name, passed, actual, expected: s.expected, })
+    step_results.push({
+      step_name: s.name,
+      passed,
+      actual,
+      expected: s.expected,
+    })
     idx = idx + 1
   }
   { scenario_name: scenario.name, step_results, passed: all_passed, }
@@ -111,7 +139,12 @@ pub fn e2e_report(results : Array[ScenarioResult]) -> E2EReport {
       failed = failed + 1
     }
   }
-  { total_scenarios: total, passed_scenarios: passed, failed_scenarios: failed, results, }
+  {
+    total_scenarios: total,
+    passed_scenarios: passed,
+    failed_scenarios: failed,
+    results,
+  }
 }
 
 ///|
@@ -120,7 +153,12 @@ pub fn scenario_pass_rate(report : E2EReport) -> String {
   if report.total_scenarios == 0 {
     "0/0 (100%)"
   } else {
-    report.passed_scenarios.to_string() + "/" + report.total_scenarios.to_string() + " (" + (report.passed_scenarios * 100 / report.total_scenarios).to_string() + "%)"
+    report.passed_scenarios.to_string() +
+    "/" +
+    report.total_scenarios.to_string() +
+    " (" +
+    (report.passed_scenarios * 100 / report.total_scenarios).to_string() +
+    "%)"
   }
 }
 
@@ -138,7 +176,7 @@ pub fn failed_scenarios(report : E2EReport) -> Array[String] {
 
 ///|
 /// 步骤总数 | Total steps across all scenarios
-pub fn total_steps(report : E2EReport) -> Int {
+pub fn total_steps(report : E2EReport) -> Int32 {
   let mut count = 0
   for r in report.results {
     count = count + r.step_results.length()
@@ -154,83 +192,113 @@ pub fn e2e_version() -> String {
 
 ///|
 /// Step 实现 Named trait | Step implements Named
-pub impl @trait.Named for Step with name(self) {
+pub impl @trait.Named for Step with fn name(self) {
   self.name
 }
+
+///|
 pub extend Step with @trait.Named::{name}
 
 ///|
 /// Step 实现 Describable trait | Step implements Describable
-pub impl @trait.Describable for Step with describe(self) {
+pub impl @trait.Describable for Step with fn describe(self) {
   self.action + " -> " + self.expected
 }
+
+///|
 pub extend Step with @trait.Describable::{describe}
 
 ///|
 /// Scenario 实现 Named trait | Scenario implements Named
-pub impl @trait.Named for Scenario with name(self) {
+pub impl @trait.Named for Scenario with fn name(self) {
   self.name
 }
+
+///|
 pub extend Scenario with @trait.Named::{name}
 
 ///|
 /// Scenario 实现 Describable trait | Scenario implements Describable
-pub impl @trait.Describable for Scenario with describe(self) {
+pub impl @trait.Describable for Scenario with fn describe(self) {
   self.description
 }
+
+///|
 pub extend Scenario with @trait.Describable::{describe}
 
 ///|
 /// ScenarioResult 实现 Named trait | ScenarioResult implements Named
-pub impl @trait.Named for ScenarioResult with name(self) {
+pub impl @trait.Named for ScenarioResult with fn name(self) {
   self.scenario_name
 }
+
+///|
 pub extend ScenarioResult with @trait.Named::{name}
 
 ///|
 /// ScenarioResult 实现 Checkable trait | ScenarioResult implements Checkable
-pub impl @trait.Checkable for ScenarioResult with check(self) {
+pub impl @trait.Checkable for ScenarioResult with fn check(self) {
   self.passed
 }
+
+///|
 pub extend ScenarioResult with @trait.Checkable::{check}
 
 ///|
 /// E2EReport 实现 Countable trait | E2EReport implements Countable
-pub impl @trait.Countable for E2EReport with count(self) {
+pub impl @trait.Countable for E2EReport with fn count(self) {
   self.total_scenarios
 }
+
+///|
 pub extend E2EReport with @trait.Countable::{count}
 
 ///|
 /// E2EReport 实现 Summarizable trait | E2EReport implements Summarizable
-pub impl @trait.Summarizable for E2EReport with summary(self) {
-  self.passed_scenarios.to_string() + "/" + self.total_scenarios.to_string() + " passed, " + self.failed_scenarios.to_string() + " failed"
+pub impl @trait.Summarizable for E2EReport with fn summary(self) {
+  self.passed_scenarios.to_string() +
+  "/" +
+  self.total_scenarios.to_string() +
+  " passed, " +
+  self.failed_scenarios.to_string() +
+  " failed"
 }
+
+///|
 pub extend E2EReport with @trait.Summarizable::{summary}
+
 ///|
 /// Scenario 实现 Iterable trait | Scenario implements Iterable
-pub impl @trait.Iterable for Scenario with iter_count(self) {
+pub impl @trait.Iterable for Scenario with fn iter_count(self) {
   self.steps.length()
 }
+
+///|
 pub extend Scenario with @trait.Iterable::{iter_count}
 
 ///|
 /// E2EReport 实现 Iterable trait | E2EReport implements Iterable
-pub impl @trait.Iterable for E2EReport with iter_count(self) {
+pub impl @trait.Iterable for E2EReport with fn iter_count(self) {
   self.results.length()
 }
+
+///|
 pub extend E2EReport with @trait.Iterable::{iter_count}
 
 ///|
 /// Step 实现 Cloneable trait | Step implements Cloneable
-pub impl @trait.Cloneable for Step with clone(self) {
+pub impl @trait.Cloneable for Step with fn clone(self) {
   { name: self.name, action: self.action, expected: self.expected, }
 }
+
+///|
 pub extend Step with @trait.Cloneable::{clone}
 
 ///|
 /// Step 实现 Serializable trait | Step implements Serializable
-pub impl @trait.Serializable for Step with serialize(self) {
+pub impl @trait.Serializable for Step with fn serialize(self) {
   self.name + ":" + self.action + "->" + self.expected
 }
+
+///|
 pub extend Step with @trait.Serializable::{serialize}

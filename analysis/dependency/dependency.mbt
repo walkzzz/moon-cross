@@ -4,7 +4,11 @@ pub(all) struct DependencyEdge {
   from : String
   to : String
 } derive(Debug, Eq)
+
+///|
 pub extend DependencyEdge with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend DependencyEdge with Eq::{not_equal, equal}
 
 ///|
@@ -14,7 +18,11 @@ pub(all) struct DependencyNode {
   dependencies : Array[String]
   dependents : Array[String]
 } derive(Debug, Eq)
+
+///|
 pub extend DependencyNode with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend DependencyNode with Eq::{not_equal, equal}
 
 ///|
@@ -23,7 +31,11 @@ pub(all) struct DependencyGraph {
   nodes : Array[DependencyNode]
   edges : Array[DependencyEdge]
 } derive(Debug, Eq)
+
+///|
 pub extend DependencyGraph with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend DependencyGraph with Eq::{not_equal, equal}
 
 ///|
@@ -31,21 +43,25 @@ pub extend DependencyGraph with Eq::{not_equal, equal}
 pub(all) struct DependencyConfig {
   include_dev : Bool
   include_transitive : Bool
-  max_depth : Int
+  max_depth : Int32
 } derive(Debug, Eq)
+
+///|
 pub extend DependencyConfig with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend DependencyConfig with Eq::{not_equal, equal}
 
 ///|
 /// 默认依赖配置 | Default dependency configuration
 pub fn default_dependency_config() -> DependencyConfig {
-  { include_dev: false, include_transitive: true, max_depth: 100 }
+  { include_dev: false, include_transitive: true, max_depth: 100, }
 }
 
 ///|
 /// 创建依赖边 | Create dependency edge
 pub fn make_edge(from : String, to : String) -> DependencyEdge {
-  { from, to }
+  { from, to, }
 }
 
 ///|
@@ -66,17 +82,14 @@ pub fn build_graph(
         dependents.push(edge.from)
       }
     }
-    nodes.push({ name: pkg, dependencies: deps, dependents })
+    nodes.push({ name: pkg, dependencies: deps, dependents, })
   }
-  { nodes, edges }
+  { nodes, edges, }
 }
 
 ///|
 /// 查找节点 | Find node by name
-pub fn find_node(
-  graph : DependencyGraph,
-  name : String,
-) -> DependencyNode? {
+pub fn find_node(graph : DependencyGraph, name : String) -> DependencyNode? {
   for node in graph.nodes {
     if node.name == name {
       return Some(node)
@@ -87,10 +100,7 @@ pub fn find_node(
 
 ///|
 /// 获取直接依赖 | Get direct dependencies
-pub fn direct_deps(
-  graph : DependencyGraph,
-  pkg : String,
-) -> Array[String] {
+pub fn direct_deps(graph : DependencyGraph, pkg : String) -> Array[String] {
   match find_node(graph, pkg) {
     Some(node) => node.dependencies
     None => []
@@ -111,10 +121,7 @@ pub fn direct_dependents(
 
 ///|
 /// 传递依赖 | Transitive dependencies
-pub fn transitive_deps(
-  graph : DependencyGraph,
-  pkg : String,
-) -> Array[String] {
+pub fn transitive_deps(graph : DependencyGraph, pkg : String) -> Array[String] {
   let result : Array[String] = []
   let visited : Array[String] = []
   collect_transitive_deps(graph, pkg, result, visited)
@@ -134,14 +141,13 @@ fn collect_transitive_deps(
   }
   visited.push(pkg)
   match find_node(graph, pkg) {
-    Some(node) => {
+    Some(node) =>
       for dep in node.dependencies {
         if !array_contains(result, dep) {
           result.push(dep)
         }
         collect_transitive_deps(graph, dep, result, visited)
       }
-    }
     None => return
   }
 }
@@ -171,24 +177,20 @@ fn collect_transitive_dependents(
   }
   visited.push(pkg)
   match find_node(graph, pkg) {
-    Some(node) => {
+    Some(node) =>
       for dep in node.dependents {
         if !array_contains(result, dep) {
           result.push(dep)
         }
         collect_transitive_dependents(graph, dep, result, visited)
       }
-    }
     None => return
   }
 }
 
 ///|
 /// 是否为叶子节点 | Check if leaf node
-pub fn is_leaf(
-  graph : DependencyGraph,
-  pkg : String,
-) -> Bool {
+pub fn is_leaf(graph : DependencyGraph, pkg : String) -> Bool {
   match find_node(graph, pkg) {
     Some(node) => node.dependencies.length() == 0
     None => false
@@ -197,10 +199,7 @@ pub fn is_leaf(
 
 ///|
 /// 是否为根节点 | Check if root node
-pub fn is_root(
-  graph : DependencyGraph,
-  pkg : String,
-) -> Bool {
+pub fn is_root(graph : DependencyGraph, pkg : String) -> Bool {
   match find_node(graph, pkg) {
     Some(node) => node.dependents.length() == 0
     None => false
@@ -209,10 +208,7 @@ pub fn is_root(
 
 ///|
 /// 依赖深度 | Dependency depth
-pub fn dependency_depth(
-  graph : DependencyGraph,
-  pkg : String,
-) -> Int {
+pub fn dependency_depth(graph : DependencyGraph, pkg : String) -> Int32 {
   let node = find_node(graph, pkg)
   match node {
     Some(n) => {
@@ -262,13 +258,12 @@ fn detect_cycle_dfs(
   visited.push(pkg)
   stack.push(pkg)
   match find_node(graph, pkg) {
-    Some(node) => {
+    Some(node) =>
       for dep in node.dependencies {
         if detect_cycle_dfs(graph, dep, visited, stack) {
           return true
         }
       }
-    }
     None => return false
   }
   let stack_len = stack.length()
@@ -278,9 +273,7 @@ fn detect_cycle_dfs(
 
 ///|
 /// 拓扑排序 | Topological sort
-pub fn topological_sort(
-  graph : DependencyGraph,
-) -> Array[String]? {
+pub fn topological_sort(graph : DependencyGraph) -> Array[String]? {
   if has_cycle(graph) {
     return None
   }
@@ -305,11 +298,10 @@ fn topo_dfs(
   }
   visited.push(pkg)
   match find_node(graph, pkg) {
-    Some(node) => {
+    Some(node) =>
       for dep in node.dependencies {
         topo_dfs(graph, dep, visited, result)
       }
-    }
     None => return
   }
   result.push(pkg)
@@ -348,18 +340,18 @@ pub fn dependency_version() -> String {
 ///|
 /// 空依赖图 | Empty dependency graph
 pub fn empty_graph() -> DependencyGraph {
-  { nodes: [], edges: [] }
+  { nodes: [], edges: [], }
 }
 
 ///|
 /// 节点数 | Node count
-pub fn node_count(graph : DependencyGraph) -> Int {
+pub fn node_count(graph : DependencyGraph) -> Int32 {
   graph.nodes.length()
 }
 
 ///|
 /// 边数 | Edge count
-pub fn edge_count(graph : DependencyGraph) -> Int {
+pub fn edge_count(graph : DependencyGraph) -> Int32 {
   graph.edges.length()
 }
 
@@ -406,19 +398,23 @@ pub fn merge_graphs(
   for e in g2.edges {
     edges.push(e)
   }
-  { nodes, edges }
+  { nodes, edges, }
 }
 
 ///|
 /// DependencyNode 实现 Named trait | DependencyNode implements Named
-pub impl @trait.Named for DependencyNode with name(self) {
+pub impl @trait.Named for DependencyNode with fn name(self) {
   self.name
 }
+
+///|
 pub extend DependencyNode with @trait.Named::{name}
 
 ///|
 /// DependencyNode 实现 Hashable trait | DependencyNode implements Hashable
-pub impl @trait.Hashable for DependencyNode with hash(self) {
+pub impl @trait.Hashable for DependencyNode with fn hash(self) {
   @trait.Named::name(self).length()
 }
+
+///|
 pub extend DependencyNode with @trait.Hashable::{hash}

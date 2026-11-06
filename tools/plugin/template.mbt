@@ -4,10 +4,13 @@ pub(all) struct TemplateInfo {
   name : String
   description : String
   category : String
-  file_count : Int
+  file_count : Int32
 } derive(Debug, Eq)
 
+///|
 pub extend TemplateInfo with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend TemplateInfo with Eq::{not_equal, equal}
 
 ///|
@@ -18,7 +21,10 @@ pub(all) struct TemplateFile {
   is_binary : Bool
 } derive(Debug, Eq)
 
+///|
 pub extend TemplateFile with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend TemplateFile with Eq::{not_equal, equal}
 
 ///|
@@ -30,46 +36,129 @@ pub(all) struct TemplateParams {
   author : String
 } derive(Debug, Eq)
 
+///|
 pub extend TemplateParams with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend TemplateParams with Eq::{not_equal, equal}
 
 ///|
 /// 内置模板列表 | Built-in template list
 pub fn builtin_templates() -> Array[TemplateInfo] {
   [
-    { name: "basic-library", description: "Basic cross-platform library template", category: "library", file_count: 5 },
-    { name: "ffi-wrapper", description: "FFI wrapper library template", category: "ffi", file_count: 8 },
-    { name: "full-application", description: "Full cross-platform application template", category: "application", file_count: 12 },
-    { name: "plugin-template", description: "Plugin development template", category: "plugin", file_count: 6 },
+    {
+      name: "basic-library",
+      description: "Basic cross-platform library template",
+      category: "library",
+      file_count: 5,
+    },
+    {
+      name: "ffi-wrapper",
+      description: "FFI wrapper library template",
+      category: "ffi",
+      file_count: 8,
+    },
+    {
+      name: "full-application",
+      description: "Full cross-platform application template",
+      category: "application",
+      file_count: 12,
+    },
+    {
+      name: "plugin-template",
+      description: "Plugin development template",
+      category: "plugin",
+      file_count: 6,
+    },
   ]
 }
 
 ///|
 /// 创建模板参数 | Create template parameters
-pub fn make_template_params(project_name : String, target_platforms : Array[String], ffi_enabled : Bool, author : String) -> TemplateParams {
-  { project_name, target_platforms, ffi_enabled, author }
+pub fn make_template_params(
+  project_name : String,
+  target_platforms : Array[String],
+  ffi_enabled : Bool,
+  author : String,
+) -> TemplateParams {
+  { project_name, target_platforms, ffi_enabled, author, }
 }
 
 ///|
 /// 生成模板文件 | Generate template files
-pub fn generate_template_files(template_name : String, params : TemplateParams) -> Array[TemplateFile] {
+pub fn generate_template_files(
+  template_name : String,
+  params : TemplateParams,
+) -> Array[TemplateFile] {
   let files = []
   if template_name == "basic-library" {
-    files.push({ path: "moon.mod", content: generate_moon_mod(params), is_binary: false })
-    files.push({ path: "src/lib.mbt", content: generate_lib_source(params), is_binary: false })
-    files.push({ path: "src/lib_test.mbt", content: generate_lib_test(params), is_binary: false })
-    files.push({ path: "README.md", content: generate_readme(params), is_binary: false })
-    files.push({ path: "moon-cross.json", content: generate_cross_config(params), is_binary: false })
+    files.push({
+      path: "moon.mod",
+      content: generate_moon_mod(params),
+      is_binary: false,
+    })
+    files.push({
+      path: "src/lib.mbt",
+      content: generate_lib_source(params),
+      is_binary: false,
+    })
+    files.push({
+      path: "src/lib_test.mbt",
+      content: generate_lib_test(params),
+      is_binary: false,
+    })
+    files.push({
+      path: "README.md",
+      content: generate_readme(params),
+      is_binary: false,
+    })
+    files.push({
+      path: "moon-cross.json",
+      content: generate_cross_config(params),
+      is_binary: false,
+    })
   }
   if template_name == "ffi-wrapper" {
-    files.push({ path: "moon.mod", content: generate_moon_mod(params), is_binary: false })
-    files.push({ path: "src/lib.mbt", content: generate_lib_source(params), is_binary: false })
-    files.push({ path: "src/lib_test.mbt", content: generate_lib_test(params), is_binary: false })
-    files.push({ path: "src/c_wrapper.h", content: generate_c_header(params), is_binary: false })
-    files.push({ path: "src/c_wrapper.c", content: generate_c_source(params), is_binary: false })
-    files.push({ path: "README.md", content: generate_readme(params), is_binary: false })
-    files.push({ path: "moon-cross.json", content: generate_cross_config(params), is_binary: false })
-    files.push({ path: "Makefile", content: generate_makefile(params), is_binary: false })
+    files.push({
+      path: "moon.mod",
+      content: generate_moon_mod(params),
+      is_binary: false,
+    })
+    files.push({
+      path: "src/lib.mbt",
+      content: generate_lib_source(params),
+      is_binary: false,
+    })
+    files.push({
+      path: "src/lib_test.mbt",
+      content: generate_lib_test(params),
+      is_binary: false,
+    })
+    files.push({
+      path: "src/c_wrapper.h",
+      content: generate_c_header(params),
+      is_binary: false,
+    })
+    files.push({
+      path: "src/c_wrapper.c",
+      content: generate_c_source(params),
+      is_binary: false,
+    })
+    files.push({
+      path: "README.md",
+      content: generate_readme(params),
+      is_binary: false,
+    })
+    files.push({
+      path: "moon-cross.json",
+      content: generate_cross_config(params),
+      is_binary: false,
+    })
+    files.push({
+      path: "Makefile",
+      content: generate_makefile(params),
+      is_binary: false,
+    })
   }
   files
 }
@@ -163,15 +252,18 @@ pub fn template_version() -> String {
 
 ///|
 /// TemplateInfo 实现 Named trait | TemplateInfo implements Named
-pub impl @trait.Named for TemplateInfo with name(self) {
+pub impl @trait.Named for TemplateInfo with fn name(self) {
   self.name
 }
-pub extend TemplateInfo with @trait.Named::{name}
 
+///|
+pub extend TemplateInfo with @trait.Named::{name}
 
 ///|
 /// TemplateInfo 实现 Describable trait | TemplateInfo implements Describable
-pub impl @trait.Describable for TemplateInfo with describe(self) {
+pub impl @trait.Describable for TemplateInfo with fn describe(self) {
   self.description
 }
+
+///|
 pub extend TemplateInfo with @trait.Describable::{describe}

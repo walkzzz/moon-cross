@@ -1,4 +1,4 @@
 import {
-  "walkzzz/pinyin" @pinyin,
-  "walkzzz/moon-cross/codegen/codegen" @codegen,
+  "walkzzz/pinyin",
+  "walkzzz/moon-cross/codegen/codegen",
 }

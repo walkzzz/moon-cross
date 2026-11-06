@@ -1,16 +1,20 @@
 ///|
 /// 流操作统计 | Stream operation stats
 pub(all) struct StreamStats {
-  input_count : Int
-  output_count : Int
-  operations : Int
+  input_count : Int32
+  output_count : Int32
+  operations : Int32
 } derive(Debug, Eq)
+
+///|
 pub extend StreamStats with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend StreamStats with Eq::{not_equal, equal}
 
 ///|
 /// 映射操作 | Map operation
-pub fn stream_map(arr : Array[Int], f : (Int) -> Int) -> Array[Int] {
+pub fn stream_map(arr : Array[Int32], f : (Int32) -> Int32) -> Array[Int32] {
   let result = []
   for item in arr {
     result.push(f(item))
@@ -20,7 +24,10 @@ pub fn stream_map(arr : Array[Int], f : (Int) -> Int) -> Array[Int] {
 
 ///|
 /// 过滤操作 | Filter operation
-pub fn stream_filter(arr : Array[Int], pred : (Int) -> Bool) -> Array[Int] {
+pub fn stream_filter(
+  arr : Array[Int32],
+  pred : (Int32) -> Bool,
+) -> Array[Int32] {
   let result = []
   for item in arr {
     if pred(item) {
@@ -32,7 +39,11 @@ pub fn stream_filter(arr : Array[Int], pred : (Int) -> Bool) -> Array[Int] {
 
 ///|
 /// 归约操作 | Reduce operation
-pub fn stream_reduce(arr : Array[Int], initial : Int, f : (Int, Int) -> Int) -> Int {
+pub fn stream_reduce(
+  arr : Array[Int32],
+  initial : Int32,
+  f : (Int32, Int32) -> Int32,
+) -> Int32 {
   let mut acc = initial
   for item in arr {
     acc = f(acc, item)
@@ -42,7 +53,7 @@ pub fn stream_reduce(arr : Array[Int], initial : Int, f : (Int, Int) -> Int) -> 
 
 ///|
 /// 取前n个 | Take first n
-pub fn stream_take(arr : Array[Int], n : Int) -> Array[Int] {
+pub fn stream_take(arr : Array[Int32], n : Int32) -> Array[Int32] {
   let result = []
   let limit = if n < arr.length() { n } else { arr.length() }
   let mut i = 0
@@ -55,7 +66,7 @@ pub fn stream_take(arr : Array[Int], n : Int) -> Array[Int] {
 
 ///|
 /// 跳过前n个 | Drop first n
-pub fn stream_drop(arr : Array[Int], n : Int) -> Array[Int] {
+pub fn stream_drop(arr : Array[Int32], n : Int32) -> Array[Int32] {
   let result = []
   let start = if n < 0 { 0 } else { n }
   let mut i = start
@@ -68,7 +79,11 @@ pub fn stream_drop(arr : Array[Int], n : Int) -> Array[Int] {
 
 ///|
 /// 链式操作 | Chain operations
-pub fn stream_chain(arr : Array[Int], f : (Int) -> Int, pred : (Int) -> Bool) -> Array[Int] {
+pub fn stream_chain(
+  arr : Array[Int32],
+  f : (Int32) -> Int32,
+  pred : (Int32) -> Bool,
+) -> Array[Int32] {
   let result = []
   for item in arr {
     let mapped = f(item)
@@ -81,9 +96,16 @@ pub fn stream_chain(arr : Array[Int], f : (Int) -> Int, pred : (Int) -> Bool) ->
 
 ///|
 /// 拉链操作 | Zip operation
-pub fn stream_zip(arr1 : Array[Int], arr2 : Array[Int]) -> Array[(Int, Int)] {
+pub fn stream_zip(
+  arr1 : Array[Int32],
+  arr2 : Array[Int32],
+) -> Array[(Int32, Int32)] {
   let result = []
-  let min_len = if arr1.length() < arr2.length() { arr1.length() } else { arr2.length() }
+  let min_len = if arr1.length() < arr2.length() {
+    arr1.length()
+  } else {
+    arr2.length()
+  }
   let mut i = 0
   while i < min_len {
     result.push((arr1[i], arr2[i]))
@@ -94,7 +116,7 @@ pub fn stream_zip(arr1 : Array[Int], arr2 : Array[Int]) -> Array[(Int, Int)] {
 
 ///|
 /// 展平操作 | Flatten operation
-pub fn stream_flatten(arr : Array[Array[Int]]) -> Array[Int] {
+pub fn stream_flatten(arr : Array[Array[Int32]]) -> Array[Int32] {
   let result = []
   for sub in arr {
     for item in sub {
@@ -106,7 +128,7 @@ pub fn stream_flatten(arr : Array[Array[Int]]) -> Array[Int] {
 
 ///|
 /// 枚举操作 | Enumerate operation
-pub fn stream_enumerate(arr : Array[Int]) -> Array[(Int, Int)] {
+pub fn stream_enumerate(arr : Array[Int32]) -> Array[(Int32, Int32)] {
   let result = []
   let mut i = 0
   while i < arr.length() {
@@ -118,8 +140,16 @@ pub fn stream_enumerate(arr : Array[Int]) -> Array[(Int, Int)] {
 
 ///|
 /// 流统计 | Stream stats
-pub fn stream_stats(input : Array[Int], output : Array[Int], ops : Int) -> StreamStats {
-  { input_count: input.length(), output_count: output.length(), operations: ops }
+pub fn stream_stats(
+  input : Array[Int32],
+  output : Array[Int32],
+  ops : Int32,
+) -> StreamStats {
+  {
+    input_count: input.length(),
+    output_count: output.length(),
+    operations: ops,
+  }
 }
 
 ///|
@@ -130,7 +160,9 @@ pub fn stream_version() -> String {
 
 ///|
 /// StreamStats 实现 Countable trait | StreamStats implements Countable
-pub impl @trait.Countable for StreamStats with count(self) {
+pub impl @trait.Countable for StreamStats with fn count(self) {
   self.input_count
 }
+
+///|
 pub extend StreamStats with @trait.Countable::{count}

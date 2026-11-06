@@ -1,8 +1,10 @@
+///|
 test "factory_create" {
   let f = @factory.factory_create()
   assert_eq(@factory.factory_type_count(f), 0)
 }
 
+///|
 test "factory_register" {
   let f = @factory.factory_create()
   let f1 = @factory.factory_register(f, "widget", "widget_creator")
@@ -10,6 +12,7 @@ test "factory_register" {
   assert_true(@factory.factory_has_type(f1, "widget"))
 }
 
+///|
 test "factory_register_multiple" {
   let f = @factory.factory_create()
   let f1 = @factory.factory_register(f, "a", "creator_a")
@@ -18,6 +21,7 @@ test "factory_register_multiple" {
   assert_eq(@factory.factory_type_count(f3), 3)
 }
 
+///|
 test "factory_make" {
   let f = @factory.factory_create()
   let f1 = @factory.factory_register(f, "widget", "creator")
@@ -32,16 +36,20 @@ test "factory_make" {
   }
 }
 
+///|
 test "factory_make_unregistered" {
   let f = @factory.factory_create()
   let product = @factory.factory_make(f, "unknown", "1.0")
   assert_true(product is None)
 }
 
+///|
 test "factory_make_with_attrs" {
   let f = @factory.factory_create()
   let f1 = @factory.factory_register(f, "gadget", "creator")
-  let product = @factory.factory_make_with_attrs(f1, "gadget", "2.0", ["red", "small"])
+  let product = @factory.factory_make_with_attrs(f1, "gadget", "2.0", [
+    "red", "small",
+  ])
   match product {
     Some(p) => {
       assert_eq(p.type_name, "gadget")
@@ -52,6 +60,7 @@ test "factory_make_with_attrs" {
   }
 }
 
+///|
 test "factory_has_type" {
   let f = @factory.factory_create()
   let f1 = @factory.factory_register(f, "widget", "creator")
@@ -59,6 +68,7 @@ test "factory_has_type" {
   assert_false(@factory.factory_has_type(f1, "missing"))
 }
 
+///|
 test "factory_unregister" {
   let f = @factory.factory_create()
   let f1 = @factory.factory_register(f, "a", "ca")
@@ -69,6 +79,7 @@ test "factory_unregister" {
   assert_true(@factory.factory_has_type(f3, "b"))
 }
 
+///|
 test "factory_unregister_not_found" {
   let f = @factory.factory_create()
   let f1 = @factory.factory_register(f, "a", "ca")
@@ -76,6 +87,7 @@ test "factory_unregister_not_found" {
   assert_eq(@factory.factory_type_count(f2), 1)
 }
 
+///|
 test "factory_make_after_unregister" {
   let f = @factory.factory_create()
   let f1 = @factory.factory_register(f, "widget", "creator")
@@ -83,6 +95,7 @@ test "factory_make_after_unregister" {
   assert_true(@factory.factory_make(f2, "widget", "1.0") is None)
 }
 
+///|
 test "factory_version" {
   let v = @factory.factory_version()
   assert_true(v.contains("factory"))

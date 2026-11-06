@@ -2,29 +2,33 @@
 /// 搜索结果 | Search result
 pub(all) struct SearchResult {
   found : Bool
-  index : Int
-  comparisons : Int
+  index : Int32
+  comparisons : Int32
 } derive(Debug, Eq)
+
+///|
 pub extend SearchResult with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend SearchResult with Eq::{not_equal, equal}
 
 ///|
 /// 线性搜索 | Linear search
-pub fn linear_search(arr : Array[Int], target : Int) -> SearchResult {
+pub fn linear_search(arr : Array[Int32], target : Int32) -> SearchResult {
   let len = arr.length()
   let mut i = 0
   while i < len {
     if arr[i] == target {
-      return { found: true, index: i, comparisons: i + 1 }
+      return { found: true, index: i, comparisons: i + 1, }
     }
     i = i + 1
   }
-  { found: false, index: -1, comparisons: len }
+  { found: false, index: -1, comparisons: len, }
 }
 
 ///|
 /// 二分搜索 | Binary search
-pub fn binary_search(arr : Array[Int], target : Int) -> SearchResult {
+pub fn binary_search(arr : Array[Int32], target : Int32) -> SearchResult {
   let mut lo = 0
   let mut hi = arr.length() - 1
   let mut comparisons = 0
@@ -32,7 +36,7 @@ pub fn binary_search(arr : Array[Int], target : Int) -> SearchResult {
     comparisons = comparisons + 1
     let mid = lo + (hi - lo) / 2
     if arr[mid] == target {
-      return { found: true, index: mid, comparisons }
+      return { found: true, index: mid, comparisons, }
     }
     if arr[mid] < target {
       lo = mid + 1
@@ -40,12 +44,12 @@ pub fn binary_search(arr : Array[Int], target : Int) -> SearchResult {
       hi = mid - 1
     }
   }
-  { found: false, index: -1, comparisons }
+  { found: false, index: -1, comparisons, }
 }
 
 ///|
 /// 冒泡排序 | Bubble sort
-pub fn bubble_sort(arr : Array[Int]) -> Array[Int] {
+pub fn bubble_sort(arr : Array[Int32]) -> Array[Int32] {
   let result = []
   for item in arr {
     result.push(item)
@@ -69,7 +73,7 @@ pub fn bubble_sort(arr : Array[Int]) -> Array[Int] {
 
 ///|
 /// 插入排序 | Insertion sort
-pub fn insertion_sort(arr : Array[Int]) -> Array[Int] {
+pub fn insertion_sort(arr : Array[Int32]) -> Array[Int32] {
   let result = []
   for item in arr {
     result.push(item)
@@ -91,7 +95,7 @@ pub fn insertion_sort(arr : Array[Int]) -> Array[Int] {
 
 ///|
 /// 选择排序 | Selection sort
-pub fn selection_sort(arr : Array[Int]) -> Array[Int] {
+pub fn selection_sort(arr : Array[Int32]) -> Array[Int32] {
   let result = []
   for item in arr {
     result.push(item)
@@ -119,7 +123,7 @@ pub fn selection_sort(arr : Array[Int]) -> Array[Int] {
 
 ///|
 /// 快速排序 | Quick sort
-pub fn quick_sort(arr : Array[Int]) -> Array[Int] {
+pub fn quick_sort(arr : Array[Int32]) -> Array[Int32] {
   if arr.length() <= 1 {
     let result = []
     for item in arr {
@@ -154,7 +158,7 @@ pub fn quick_sort(arr : Array[Int]) -> Array[Int] {
 
 ///|
 /// 数组最小值 | Array minimum
-pub fn array_min(arr : Array[Int]) -> Int? {
+pub fn array_min(arr : Array[Int32]) -> Int32? {
   if arr.length() == 0 {
     return None
   }
@@ -171,7 +175,7 @@ pub fn array_min(arr : Array[Int]) -> Int? {
 
 ///|
 /// 数组最大值 | Array maximum
-pub fn array_max(arr : Array[Int]) -> Int? {
+pub fn array_max(arr : Array[Int32]) -> Int32? {
   if arr.length() == 0 {
     return None
   }
@@ -188,7 +192,7 @@ pub fn array_max(arr : Array[Int]) -> Int? {
 
 ///|
 /// 数组反转 | Array reverse
-pub fn array_reverse(arr : Array[Int]) -> Array[Int] {
+pub fn array_reverse(arr : Array[Int32]) -> Array[Int32] {
   let result = []
   let n = arr.length()
   let mut i = n - 1
@@ -201,7 +205,7 @@ pub fn array_reverse(arr : Array[Int]) -> Array[Int] {
 
 ///|
 /// 数组去重 | Array deduplicate
-pub fn array_dedup(arr : Array[Int]) -> Array[Int] {
+pub fn array_dedup(arr : Array[Int32]) -> Array[Int32] {
   let result = []
   for item in arr {
     let mut found = false
@@ -225,14 +229,18 @@ pub fn algorithm_version() -> String {
 
 ///|
 /// SearchResult 实现 Checkable trait | SearchResult implements Checkable
-pub impl @trait.Checkable for SearchResult with check(self) {
+pub impl @trait.Checkable for SearchResult with fn check(self) {
   self.found
 }
+
+///|
 pub extend SearchResult with @trait.Checkable::{check}
 
 ///|
 /// SearchResult 实现 Countable trait | SearchResult implements Countable
-pub impl @trait.Countable for SearchResult with count(self) {
+pub impl @trait.Countable for SearchResult with fn count(self) {
   self.index
 }
+
+///|
 pub extend SearchResult with @trait.Countable::{count}

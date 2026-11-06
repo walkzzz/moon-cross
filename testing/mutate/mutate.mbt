@@ -1,49 +1,65 @@
 ///|
 /// 变异算子类型 | Mutation operator type
 pub(all) enum MutOperator {
-  AOR    // 算术运算符替换 | Arithmetic Operator Replacement
-  ROR    // 关系运算符替换 | Relational Operator Replacement
-  COR    // 条件运算符替换 | Conditional Operator Replacement
-  UOI    // 一元运算符插入 | Unary Operator Insertion
-  ROI    // 返回值修改 | Return Operator Insertion
-  SDL    // 语句删除 | Statement Deletion
+  AOR // 算术运算符替换 | Arithmetic Operator Replacement
+  ROR // 关系运算符替换 | Relational Operator Replacement
+  COR // 条件运算符替换 | Conditional Operator Replacement
+  UOI // 一元运算符插入 | Unary Operator Insertion
+  ROI // 返回值修改 | Return Operator Insertion
+  SDL // 语句删除 | Statement Deletion
 } derive(Debug, Eq)
+
+///|
 pub extend MutOperator with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend MutOperator with Eq::{not_equal, equal}
 
 ///|
 /// 变异体 | Mutant
 pub(all) struct Mutant {
-  id : Int
+  id : Int32
   operator : MutOperator
   original : String
   mutated : String
   location : String
 } derive(Debug, Eq)
+
+///|
 pub extend Mutant with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend Mutant with Eq::{not_equal, equal}
 
 ///|
 /// 变异测试结果 | Mutation test result
 pub(all) struct MutantResult {
-  mutant_id : Int
+  mutant_id : Int32
   killed : Bool
   surviving : Bool
   test_that_killed : String
 } derive(Debug, Eq)
+
+///|
 pub extend MutantResult with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend MutantResult with Eq::{not_equal, equal}
 
 ///|
 /// 变异测试报告 | Mutation testing report
 pub(all) struct MutationReport {
-  total_mutants : Int
-  killed : Int
-  surviving : Int
-  mutation_score : Int
+  total_mutants : Int32
+  killed : Int32
+  surviving : Int32
+  mutation_score : Int32
   results : Array[MutantResult]
 } derive(Debug, Eq)
+
+///|
 pub extend MutationReport with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend MutationReport with Eq::{not_equal, equal}
 
 ///|
@@ -74,7 +90,13 @@ pub fn operator_description(op : MutOperator) -> String {
 
 ///|
 /// 创建变异体 | Create mutant
-pub fn mutant_create(id : Int, operator : MutOperator, original : String, mutated : String, location : String) -> Mutant {
+pub fn mutant_create(
+  id : Int32,
+  operator : MutOperator,
+  original : String,
+  mutated : String,
+  location : String,
+) -> Mutant {
   { id, operator, original, mutated, location, }
 }
 
@@ -84,13 +106,19 @@ pub fn mutate_arithmetic(original : String) -> Array[Mutant] {
   let mutants = []
   let id = 0
   if has_char(original, '+') {
-    mutants.push(mutant_create(id, AOR, original, original + " [+->-]", "arithmetic"))
+    mutants.push(
+      mutant_create(id, AOR, original, original + " [+->-]", "arithmetic"),
+    )
   }
   if has_char(original, '-') {
-    mutants.push(mutant_create(id + 1, AOR, original, original + " [- -> +]", "arithmetic"))
+    mutants.push(
+      mutant_create(id + 1, AOR, original, original + " [- -> +]", "arithmetic"),
+    )
   }
   if has_char(original, '*') {
-    mutants.push(mutant_create(id + 2, AOR, original, original + " [* -> /]", "arithmetic"))
+    mutants.push(
+      mutant_create(id + 2, AOR, original, original + " [* -> /]", "arithmetic"),
+    )
   }
   mutants
 }
@@ -101,19 +129,36 @@ pub fn mutate_relational(original : String) -> Array[Mutant] {
   let mutants = []
   let id = 0
   if has_char(original, '>') {
-    mutants.push(mutant_create(id, ROR, original, original + " [> -> <]", "relational"))
+    mutants.push(
+      mutant_create(id, ROR, original, original + " [> -> <]", "relational"),
+    )
   }
   if has_char(original, '<') {
-    mutants.push(mutant_create(id + 1, ROR, original, original + " [< -> >]", "relational"))
+    mutants.push(
+      mutant_create(id + 1, ROR, original, original + " [< -> >]", "relational"),
+    )
   }
   mutants
 }
 
 ///|
 /// 运行变异测试 | Run mutation test
-pub fn run_mutation_test(mutant_id : Int, original_passes : Bool, mutated_passes : Bool) -> MutantResult {
+pub fn run_mutation_test(
+  mutant_id : Int32,
+  original_passes : Bool,
+  mutated_passes : Bool,
+) -> MutantResult {
   let killed = original_passes && !mutated_passes
-  { mutant_id, killed, surviving: !killed, test_that_killed: if killed { "test detected mutation" } else { "" }, }
+  {
+    mutant_id,
+    killed,
+    surviving: !killed,
+    test_that_killed: if killed {
+      "test detected mutation"
+    } else {
+      ""
+    },
+  }
 }
 
 ///|
@@ -152,7 +197,7 @@ pub fn mutation_grade(report : MutationReport) -> String {
 
 ///|
 /// 提取存活变异体 | Extract surviving mutants
-pub fn surviving_mutants(report : MutationReport) -> Array[Int] {
+pub fn surviving_mutants(report : MutationReport) -> Array[Int32] {
   let ids = []
   for r in report.results {
     if r.surviving {
@@ -165,49 +210,69 @@ pub fn surviving_mutants(report : MutationReport) -> Array[Int] {
 ///|
 /// 变异报告摘要 | Mutation report summary
 pub fn mutation_report_summary(report : MutationReport) -> String {
-  "Mutation: " + report.killed.to_string() + "/" + report.total_mutants.to_string() + " killed, score=" + report.mutation_score.to_string() + "% (" + mutation_grade(report) + ")"
+  "Mutation: " +
+  report.killed.to_string() +
+  "/" +
+  report.total_mutants.to_string() +
+  " killed, score=" +
+  report.mutation_score.to_string() +
+  "% (" +
+  mutation_grade(report) +
+  ")"
 }
 
 ///|
 /// Mutant 实现 Named trait
-pub impl @trait.Named for Mutant with name(self) {
+pub impl @trait.Named for Mutant with fn name(self) {
   "mutant_" + self.id.to_string()
 }
+
+///|
 pub extend Mutant with @trait.Named::{name}
 
 ///|
 /// Mutant 实现 Countable trait
-pub impl @trait.Countable for Mutant with count(self) {
+pub impl @trait.Countable for Mutant with fn count(self) {
   self.id
 }
+
+///|
 pub extend Mutant with @trait.Countable::{count}
 
 ///|
 /// MutantResult 实现 Checkable trait
-pub impl @trait.Checkable for MutantResult with check(self) {
+pub impl @trait.Checkable for MutantResult with fn check(self) {
   self.killed
 }
+
+///|
 pub extend MutantResult with @trait.Checkable::{check}
 
 ///|
 /// MutantResult 实现 Named trait
-pub impl @trait.Named for MutantResult with name(self) {
+pub impl @trait.Named for MutantResult with fn name(self) {
   "mutant_" + self.mutant_id.to_string()
 }
+
+///|
 pub extend MutantResult with @trait.Named::{name}
 
 ///|
 /// MutationReport 实现 Countable trait
-pub impl @trait.Countable for MutationReport with count(self) {
+pub impl @trait.Countable for MutationReport with fn count(self) {
   self.total_mutants
 }
+
+///|
 pub extend MutationReport with @trait.Countable::{count}
 
 ///|
 /// MutationReport 实现 Summarizable trait
-pub impl @trait.Summarizable for MutationReport with summary(self) {
+pub impl @trait.Summarizable for MutationReport with fn summary(self) {
   mutation_report_summary(self)
 }
+
+///|
 pub extend MutationReport with @trait.Summarizable::{summary}
 
 ///|

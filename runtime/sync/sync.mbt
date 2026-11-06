@@ -5,7 +5,11 @@ pub(all) struct SyncResult {
   updated_files : Array[String]
   success : Bool
 } derive(Debug, Eq)
+
+///|
 pub extend SyncResult with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend SyncResult with Eq::{not_equal, equal}
 
 ///|
@@ -29,10 +33,11 @@ pub fn sync_failure(platform : @core.Platform) -> SyncResult {
   { platform, updated_files: [], success: false, }
 }
 
-
 ///|
 /// SyncResult 实现 Checkable trait | SyncResult implements Checkable
-pub impl @trait.Checkable for SyncResult with check(self) {
+pub impl @trait.Checkable for SyncResult with fn check(self) {
   self.success
 }
+
+///|
 pub extend SyncResult with @trait.Checkable::{check}

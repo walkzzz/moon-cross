@@ -17,64 +17,61 @@ pub fn quickcheck_export_functions() -> Array[@config.ExportFunction] {
     {
       name: "quickcheck_check",
       params: [
-        { name: "property", typ: "Property" },
-        { name: "iterations", typ: "Int" },
+        { name: "property", typ: "Property", },
+        { name: "iterations", typ: "Int", },
       ],
       return_type: "QuickCheckResult",
     },
     {
       name: "quickcheck_for_all_int",
-      params: [{ name: "property", typ: "Property" }],
+      params: [{ name: "property", typ: "Property", }],
       return_type: "QuickCheckResult",
     },
     {
       name: "quickcheck_for_all_bool",
-      params: [{ name: "property", typ: "Property" }],
+      params: [{ name: "property", typ: "Property", }],
       return_type: "QuickCheckResult",
     },
     {
       name: "quickcheck_for_all_string",
-      params: [{ name: "property", typ: "Property" }],
+      params: [{ name: "property", typ: "Property", }],
       return_type: "QuickCheckResult",
     },
     {
       name: "quickcheck_arbitrary_int",
-      params: [{ name: "seed", typ: "UInt" }],
+      params: [{ name: "seed", typ: "UInt", }],
       return_type: "Int",
     },
     {
       name: "quickcheck_arbitrary_bool",
-      params: [{ name: "seed", typ: "UInt" }],
+      params: [{ name: "seed", typ: "UInt", }],
       return_type: "Bool",
     },
     {
       name: "quickcheck_arbitrary_string",
-      params: [
-        { name: "seed", typ: "UInt" },
-        { name: "max_len", typ: "Int" },
-      ],
+      params: [{ name: "seed", typ: "UInt", }, { name: "max_len", typ: "Int", }],
       return_type: "String",
     },
     {
       name: "quickcheck_with_seed",
       params: [
-        { name: "property", typ: "Property" },
-        { name: "seed", typ: "UInt" },
-        { name: "iterations", typ: "Int" },
+        { name: "property", typ: "Property", },
+        { name: "seed", typ: "UInt", },
+        { name: "iterations", typ: "Int", },
       ],
       return_type: "QuickCheckResult",
     },
     {
       name: "quickcheck_minimize",
       params: [
-        { name: "result", typ: "QuickCheckResult" },
-        { name: "property", typ: "Property" },
+        { name: "result", typ: "QuickCheckResult", },
+        { name: "property", typ: "Property", },
       ],
       return_type: "QuickCheckResult",
     },
     {
       name: "quickcheck_result_passed",
-      params: [{ name: "result", typ: "QuickCheckResult" }],
+      params: [{ name: "result", typ: "QuickCheckResult", }],
       return_type: "Bool",
     },
   ]
@@ -87,31 +84,28 @@ pub fn quickcheck_export_types() -> Array[@config.ExportType] {
     {
       name: "Property",
       fields: [
-        { name: "name", typ: "String" },
-        { name: "iterations", typ: "Int" },
+        { name: "name", typ: "String", },
+        { name: "iterations", typ: "Int", },
       ],
     },
     {
       name: "Arbitrary",
-      fields: [
-        { name: "seed", typ: "UInt" },
-        { name: "size", typ: "Int" },
-      ],
+      fields: [{ name: "seed", typ: "UInt", }, { name: "size", typ: "Int", }],
     },
     {
       name: "QuickCheckResult",
       fields: [
-        { name: "passed", typ: "Bool" },
-        { name: "iterations", typ: "Int" },
-        { name: "counterexample", typ: "String" },
+        { name: "passed", typ: "Bool", },
+        { name: "iterations", typ: "Int", },
+        { name: "counterexample", typ: "String", },
       ],
     },
     {
       name: "QuickCheckError",
       fields: [
-        { name: "NoCounterexample", typ: "String" },
-        { name: "PropertyFailed", typ: "String" },
-        { name: "GenerationError", typ: "String" },
+        { name: "NoCounterexample", typ: "String", },
+        { name: "PropertyFailed", typ: "String", },
+        { name: "GenerationError", typ: "String", },
       ],
     },
   ]
@@ -132,18 +126,18 @@ pub fn quickcheck_cross_config() -> @config.CrossConfig {
 
 ///|
 /// quickcheck 导出函数数量 | quickcheck export function count
-pub fn quickcheck_function_count() -> Int {
+pub fn quickcheck_function_count() -> Int32 {
   quickcheck_export_functions().length()
 }
 
 ///|
 /// quickcheck 导出类型数量 | quickcheck export type count
-pub fn quickcheck_type_count() -> Int {
+pub fn quickcheck_type_count() -> Int32 {
   quickcheck_export_types().length()
 }
 
 ///|
 /// quickcheck 目标平台数量 | quickcheck target platform count
-pub fn quickcheck_target_count() -> Int {
+pub fn quickcheck_target_count() -> Int32 {
   quickcheck_cross_config().targets.length()
 }

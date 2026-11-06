@@ -1,16 +1,37 @@
+///|
 test "operator_description" {
-  assert_true(@mutate.operator_description(@mutate.MutOperator::AOR).contains("Arithmetic"))
-  assert_true(@mutate.operator_description(@mutate.MutOperator::ROR).contains("Relational"))
-  assert_true(@mutate.operator_description(@mutate.MutOperator::COR).contains("Conditional"))
+  assert_true(
+    @mutate.operator_description(@mutate.MutOperator::AOR).contains(
+      "Arithmetic",
+    ),
+  )
+  assert_true(
+    @mutate.operator_description(@mutate.MutOperator::ROR).contains(
+      "Relational",
+    ),
+  )
+  assert_true(
+    @mutate.operator_description(@mutate.MutOperator::COR).contains(
+      "Conditional",
+    ),
+  )
 }
 
+///|
 test "mutant_create" {
-  let m = @mutate.mutant_create(1, @mutate.MutOperator::AOR, "a + b", "a - b", "line 10")
+  let m = @mutate.mutant_create(
+    1,
+    @mutate.MutOperator::AOR,
+    "a + b",
+    "a - b",
+    "line 10",
+  )
   assert_eq(m.id, 1)
   assert_eq(m.original, "a + b")
   assert_eq(m.mutated, "a - b")
 }
 
+///|
 test "mutate_arithmetic plus" {
   let mutants = @mutate.mutate_arithmetic("a + b")
   assert_true(mutants.length() >= 1)
@@ -18,51 +39,60 @@ test "mutate_arithmetic plus" {
   assert_true(mutants[0].mutated.contains("+->-"))
 }
 
+///|
 test "mutate_arithmetic minus" {
   let mutants = @mutate.mutate_arithmetic("a - b")
   assert_true(mutants.length() >= 1)
 }
 
+///|
 test "mutate_arithmetic multiply" {
   let mutants = @mutate.mutate_arithmetic("a * b")
   assert_true(mutants.length() >= 1)
   assert_true(mutants[0].mutated.contains("* -> /"))
 }
 
+///|
 test "mutate_arithmetic no_match" {
   let mutants = @mutate.mutate_arithmetic("foo bar")
   assert_eq(mutants.length(), 0)
 }
 
+///|
 test "mutate_relational gt" {
   let mutants = @mutate.mutate_relational("a > b")
   assert_true(mutants.length() >= 1)
   assert_true(mutants[0].mutated.contains("> -> <"))
 }
 
+///|
 test "mutate_relational lt" {
   let mutants = @mutate.mutate_relational("a < b")
   assert_true(mutants.length() >= 1)
 }
 
+///|
 test "run_mutation_test killed" {
   let r = @mutate.run_mutation_test(1, true, false)
   assert_true(r.killed)
   assert_false(r.surviving)
 }
 
+///|
 test "run_mutation_test survived" {
   let r = @mutate.run_mutation_test(1, true, true)
   assert_false(r.killed)
   assert_true(r.surviving)
 }
 
+///|
 test "run_mutation_test original_fails" {
   let r = @mutate.run_mutation_test(1, false, false)
   assert_false(r.killed)
   assert_true(r.surviving)
 }
 
+///|
 test "mutation_report all_killed" {
   let r1 = @mutate.run_mutation_test(1, true, false)
   let r2 = @mutate.run_mutation_test(2, true, false)
@@ -73,6 +103,7 @@ test "mutation_report all_killed" {
   assert_eq(report.mutation_score, 100)
 }
 
+///|
 test "mutation_report all_survived" {
   let r1 = @mutate.run_mutation_test(1, true, true)
   let r2 = @mutate.run_mutation_test(2, true, true)
@@ -82,6 +113,7 @@ test "mutation_report all_survived" {
   assert_eq(report.mutation_score, 0)
 }
 
+///|
 test "mutation_report mixed" {
   let r1 = @mutate.run_mutation_test(1, true, false)
   let r2 = @mutate.run_mutation_test(2, true, true)
@@ -91,12 +123,14 @@ test "mutation_report mixed" {
   assert_eq(report.mutation_score, 50)
 }
 
+///|
 test "mutation_report empty" {
   let report = @mutate.mutation_report([])
   assert_eq(report.total_mutants, 0)
   assert_eq(report.mutation_score, 0)
 }
 
+///|
 test "mutation_grade" {
   let r1 = @mutate.run_mutation_test(1, true, false)
   let r2 = @mutate.run_mutation_test(2, true, false)
@@ -105,6 +139,7 @@ test "mutation_grade" {
   assert_true(grade.contains("A"))
 }
 
+///|
 test "surviving_mutants" {
   let r1 = @mutate.run_mutation_test(1, true, false)
   let r2 = @mutate.run_mutation_test(2, true, true)
@@ -114,6 +149,7 @@ test "surviving_mutants" {
   assert_eq(surviving[0], 2)
 }
 
+///|
 test "mutation_report_summary" {
   let r = @mutate.run_mutation_test(1, true, false)
   let report = @mutate.mutation_report([r])
@@ -122,16 +158,19 @@ test "mutation_report_summary" {
   assert_true(s.contains("100%"))
 }
 
+///|
 test "Named trait Mutant" {
   let m = @mutate.mutant_create(42, @mutate.MutOperator::AOR, "a", "b", "loc")
   assert_eq(@trait.Named::name(m), "mutant_42")
 }
 
+///|
 test "Checkable trait MutantResult" {
   let r = @mutate.run_mutation_test(1, true, false)
   assert_true(@trait.Checkable::check(r))
 }
 
+///|
 test "Countable trait MutationReport" {
   let r1 = @mutate.run_mutation_test(1, true, false)
   let r2 = @mutate.run_mutation_test(2, true, false)
@@ -139,6 +178,7 @@ test "Countable trait MutationReport" {
   assert_eq(@trait.Countable::count(report), 2)
 }
 
+///|
 test "Summarizable trait MutationReport" {
   let r = @mutate.run_mutation_test(1, true, false)
   let report = @mutate.mutation_report([r])
@@ -146,9 +186,12 @@ test "Summarizable trait MutationReport" {
   assert_true(s.contains("Mutation"))
 }
 
+///|
 test "mutate_version" {
   assert_eq(@mutate.mutate_version(), "moon-cross mutate v0.3.15")
 }
+
+///|
 test "mutation suite: core types" {
   let r1 = @mutate.run_mutation_test(1, true, false)
   let r2 = @mutate.run_mutation_test(2, true, false)
@@ -158,6 +201,7 @@ test "mutation suite: core types" {
   assert_true(@mutate.mutation_grade(report).contains("A"))
 }
 
+///|
 test "mutation suite: proof functions" {
   let r1 = @mutate.run_mutation_test(1, true, false)
   let r2 = @mutate.run_mutation_test(2, true, false)
@@ -168,6 +212,7 @@ test "mutation suite: proof functions" {
   assert_eq(report.mutation_score, 100)
 }
 
+///|
 test "mutation suite: mock framework" {
   let results = [
     @mutate.run_mutation_test(1, true, false),
@@ -180,6 +225,7 @@ test "mutation suite: mock framework" {
   assert_eq(report.mutation_score, 100)
 }
 
+///|
 test "mutation suite: e2e framework" {
   let results = [
     @mutate.run_mutation_test(1, true, false),
@@ -191,6 +237,7 @@ test "mutation suite: e2e framework" {
   assert_true(report.mutation_score >= 75)
 }
 
+///|
 test "mutation suite: ai_test" {
   let results = [
     @mutate.run_mutation_test(1, true, false),
@@ -204,6 +251,7 @@ test "mutation suite: ai_test" {
   assert_eq(report.mutation_score, 100)
 }
 
+///|
 test "mutation suite: crap metrics" {
   let results = [
     @mutate.run_mutation_test(1, true, false),
@@ -215,6 +263,7 @@ test "mutation suite: crap metrics" {
   assert_eq(report.mutation_score, 100)
 }
 
+///|
 test "mutation suite: refactoring" {
   let results = [
     @mutate.run_mutation_test(1, true, false),
@@ -227,6 +276,7 @@ test "mutation suite: refactoring" {
   assert_eq(report.mutation_score, 100)
 }
 
+///|
 test "mutation suite: trait system" {
   let results = [
     @mutate.run_mutation_test(1, true, false),
@@ -243,6 +293,7 @@ test "mutation suite: trait system" {
   assert_eq(@mutate.mutation_grade(report), "A (excellent)")
 }
 
+///|
 test "mutation suite: arithmetic operators" {
   let mutants = @mutate.mutate_arithmetic("a + b * c")
   assert_true(mutants.length() >= 2)
@@ -254,6 +305,7 @@ test "mutation suite: arithmetic operators" {
   assert_eq(report.mutation_score, 100)
 }
 
+///|
 test "mutation suite: relational operators" {
   let mutants = @mutate.mutate_relational("a > b")
   assert_true(mutants.length() >= 1)
@@ -265,6 +317,7 @@ test "mutation suite: relational operators" {
   assert_eq(report.mutation_score, 100)
 }
 
+///|
 test "mutation suite: comprehensive" {
   let all_results = [
     @mutate.run_mutation_test(1, true, false),
@@ -295,6 +348,7 @@ test "mutation suite: comprehensive" {
   assert_eq(@mutate.mutation_grade(report), "A (excellent)")
 }
 
+///|
 test "mutation suite: patterns" {
   let results = [
     @mutate.run_mutation_test(1, true, false),
@@ -307,6 +361,7 @@ test "mutation suite: patterns" {
   assert_eq(report.mutation_score, 100)
 }
 
+///|
 test "mutation suite: runtime" {
   let results = [
     @mutate.run_mutation_test(1, true, false),
@@ -320,6 +375,7 @@ test "mutation suite: runtime" {
   assert_eq(report.mutation_score, 100)
 }
 
+///|
 test "mutation suite: security" {
   let results = [
     @mutate.run_mutation_test(1, true, false),
@@ -334,6 +390,7 @@ test "mutation suite: security" {
   assert_eq(report.mutation_score, 100)
 }
 
+///|
 test "mutation suite: analysis" {
   let results = [
     @mutate.run_mutation_test(1, true, false),
@@ -346,6 +403,7 @@ test "mutation suite: analysis" {
   assert_eq(report.mutation_score, 100)
 }
 
+///|
 test "mutation suite: tools" {
   let results = [
     @mutate.run_mutation_test(1, true, false),
@@ -358,6 +416,7 @@ test "mutation suite: tools" {
   assert_eq(report.mutation_score, 100)
 }
 
+///|
 test "mutation suite: codegen" {
   let results = [
     @mutate.run_mutation_test(1, true, false),
@@ -368,6 +427,7 @@ test "mutation suite: codegen" {
   assert_eq(report.mutation_score, 100)
 }
 
+///|
 test "mutation suite: platform" {
   let results = [
     @mutate.run_mutation_test(1, true, false),
@@ -379,6 +439,7 @@ test "mutation suite: platform" {
   assert_eq(report.mutation_score, 100)
 }
 
+///|
 test "mutation suite: integration" {
   let results = [
     @mutate.run_mutation_test(1, true, false),
@@ -391,6 +452,7 @@ test "mutation suite: integration" {
   assert_eq(report.mutation_score, 100)
 }
 
+///|
 test "mutation suite: all categories 100%" {
   let all_results = [
     @mutate.run_mutation_test(1, true, false),

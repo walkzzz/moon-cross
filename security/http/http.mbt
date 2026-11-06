@@ -9,7 +9,11 @@ pub(all) enum HttpMethod {
   Head
   Options
 } derive(Debug, Eq)
+
+///|
 pub extend HttpMethod with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend HttpMethod with Eq::{not_equal, equal}
 
 ///|
@@ -18,7 +22,11 @@ pub(all) struct HttpHeader {
   name : String
   value : String
 } derive(Debug, Eq)
+
+///|
 pub extend HttpHeader with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend HttpHeader with Eq::{not_equal, equal}
 
 ///|
@@ -29,17 +37,25 @@ pub(all) struct HttpRequest {
   headers : Array[HttpHeader]
   body : String
 } derive(Debug, Eq)
+
+///|
 pub extend HttpRequest with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend HttpRequest with Eq::{not_equal, equal}
 
 ///|
 /// HTTP 响应 | HTTP response
 pub(all) struct HttpResponse {
-  status_code : Int
+  status_code : Int32
   headers : Array[HttpHeader]
   body : String
 } derive(Debug, Eq)
+
+///|
 pub extend HttpResponse with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend HttpResponse with Eq::{not_equal, equal}
 
 ///|
@@ -72,7 +88,7 @@ pub fn method_from_string(s : String) -> HttpMethod {
 
 ///|
 /// 状态码文本 | Status code text
-pub fn status_text(code : Int) -> String {
+pub fn status_text(code : Int32) -> String {
   match code {
     200 => "OK"
     201 => "Created"
@@ -94,44 +110,44 @@ pub fn status_text(code : Int) -> String {
 
 ///|
 /// 是否成功状态码 | Is success status code
-pub fn is_success_code(code : Int) -> Bool {
+pub fn is_success_code(code : Int32) -> Bool {
   code >= 200 && code < 300
 }
 
 ///|
 /// 是否重定向状态码 | Is redirect status code
-pub fn is_redirect_code(code : Int) -> Bool {
+pub fn is_redirect_code(code : Int32) -> Bool {
   code >= 300 && code < 400
 }
 
 ///|
 /// 是否错误状态码 | Is error status code
-pub fn is_error_code(code : Int) -> Bool {
+pub fn is_error_code(code : Int32) -> Bool {
   code >= 400
 }
 
 ///|
 /// 是否客户端错误 | Is client error
-pub fn is_client_error(code : Int) -> Bool {
+pub fn is_client_error(code : Int32) -> Bool {
   code >= 400 && code < 500
 }
 
 ///|
 /// 是否服务器错误 | Is server error
-pub fn is_server_error(code : Int) -> Bool {
+pub fn is_server_error(code : Int32) -> Bool {
   code >= 500
 }
 
 ///|
 /// 创建头部 | Create header
 pub fn make_header(name : String, value : String) -> HttpHeader {
-  { name, value }
+  { name, value, }
 }
 
 ///|
 /// 创建请求 | Create request
 pub fn make_request(http_method : HttpMethod, url : String) -> HttpRequest {
-  { http_method, url, headers: [], body: "" }
+  { http_method, url, headers: [], body: "", }
 }
 
 ///|
@@ -143,18 +159,22 @@ pub fn make_get_request(url : String) -> HttpRequest {
 ///|
 /// 创建 POST 请求 | Create POST request
 pub fn make_post_request(url : String, body : String) -> HttpRequest {
-  { http_method: Post, url, headers: [], body }
+  { http_method: Post, url, headers: [], body, }
 }
 
 ///|
 /// 添加请求头部 | Add request header
-pub fn request_add_header(req : HttpRequest, name : String, value : String) -> HttpRequest {
+pub fn request_add_header(
+  req : HttpRequest,
+  name : String,
+  value : String,
+) -> HttpRequest {
   let new_headers = []
   for h in req.headers {
     new_headers.push(h)
   }
-  new_headers.push({ name, value })
-  { ..req, headers: new_headers }
+  new_headers.push({ name, value, })
+  { ..req, headers: new_headers, }
 }
 
 ///|
@@ -181,20 +201,23 @@ pub fn request_has_header(req : HttpRequest, name : String) -> Bool {
 
 ///|
 /// 请求头部数量 | Request header count
-pub fn request_header_count(req : HttpRequest) -> Int {
+pub fn request_header_count(req : HttpRequest) -> Int32 {
   req.headers.length()
 }
 
 ///|
 /// 设置请求体 | Set request body
 pub fn request_set_body(req : HttpRequest, body : String) -> HttpRequest {
-  { ..req, body }
+  { ..req, body, }
 }
 
 ///|
 /// 格式化请求 | Format request
 pub fn format_request(req : HttpRequest) -> String {
-  let mut result = method_name(req.http_method) + " " + req.url + " HTTP/1.1\r\n"
+  let mut result = method_name(req.http_method) +
+    " " +
+    req.url +
+    " HTTP/1.1\r\n"
   for h in req.headers {
     result = result + h.name + ": " + h.value + "\r\n"
   }
@@ -208,25 +231,32 @@ pub fn format_request(req : HttpRequest) -> String {
 
 ///|
 /// 创建响应 | Create response
-pub fn make_response(status_code : Int) -> HttpResponse {
-  { status_code, headers: [], body: "" }
+pub fn make_response(status_code : Int32) -> HttpResponse {
+  { status_code, headers: [], body: "", }
 }
 
 ///|
 /// 创建带体的响应 | Create response with body
-pub fn make_response_with_body(status_code : Int, body : String) -> HttpResponse {
-  { status_code, headers: [], body }
+pub fn make_response_with_body(
+  status_code : Int32,
+  body : String,
+) -> HttpResponse {
+  { status_code, headers: [], body, }
 }
 
 ///|
 /// 添加响应头部 | Add response header
-pub fn response_add_header(resp : HttpResponse, name : String, value : String) -> HttpResponse {
+pub fn response_add_header(
+  resp : HttpResponse,
+  name : String,
+  value : String,
+) -> HttpResponse {
   let new_headers = []
   for h in resp.headers {
     new_headers.push(h)
   }
-  new_headers.push({ name, value })
-  { ..resp, headers: new_headers }
+  new_headers.push({ name, value, })
+  { ..resp, headers: new_headers, }
 }
 
 ///|
@@ -253,7 +283,7 @@ pub fn response_has_header(resp : HttpResponse, name : String) -> Bool {
 
 ///|
 /// 响应头部数量 | Response header count
-pub fn response_header_count(resp : HttpResponse) -> Int {
+pub fn response_header_count(resp : HttpResponse) -> Int32 {
   resp.headers.length()
 }
 
@@ -296,7 +326,12 @@ pub fn merge_requests(r1 : HttpRequest, r2 : HttpRequest) -> HttpRequest {
   for h in r2.headers {
     new_headers.push(h)
   }
-  { http_method: r1.http_method, url: r1.url, headers: new_headers, body: r1.body }
+  {
+    http_method: r1.http_method,
+    url: r1.url,
+    headers: new_headers,
+    body: r1.body,
+  }
 }
 
 ///|
@@ -307,7 +342,9 @@ pub fn http_version() -> String {
 
 ///|
 /// HttpHeader 实现 Named trait | HttpHeader implements Named
-pub impl @trait.Named for HttpHeader with name(self) {
+pub impl @trait.Named for HttpHeader with fn name(self) {
   self.name
 }
+
+///|
 pub extend HttpHeader with @trait.Named::{name}

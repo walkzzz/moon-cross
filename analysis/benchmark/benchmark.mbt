@@ -2,26 +2,34 @@
 /// 基准测试配置 | Benchmark configuration
 pub(all) struct BenchmarkConfig {
   name : String
-  iterations : Int
-  warmup_runs : Int
-  timeout_ms : Int
+  iterations : Int32
+  warmup_runs : Int32
+  timeout_ms : Int32
 } derive(Debug, Eq)
+
+///|
 pub extend BenchmarkConfig with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend BenchmarkConfig with Eq::{not_equal, equal}
 
 ///|
 /// 单次基准测试结果 | Single benchmark result
 pub(all) struct BenchmarkResult {
   name : String
-  iterations : Int
-  total_time_ms : Int
-  avg_time_ns : Int
-  min_time_ns : Int
-  max_time_ns : Int
-  median_time_ns : Int
-  ops_per_second : Int
+  iterations : Int32
+  total_time_ms : Int32
+  avg_time_ns : Int32
+  min_time_ns : Int32
+  max_time_ns : Int32
+  median_time_ns : Int32
+  ops_per_second : Int32
 } derive(Debug, Eq)
+
+///|
 pub extend BenchmarkResult with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend BenchmarkResult with Eq::{not_equal, equal}
 
 ///|
@@ -31,7 +39,11 @@ pub(all) struct BenchmarkSuite {
   configs : Array[BenchmarkConfig]
   results : Array[BenchmarkResult]
 } derive(Debug, Eq)
+
+///|
 pub extend BenchmarkSuite with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend BenchmarkSuite with Eq::{not_equal, equal}
 
 ///|
@@ -46,7 +58,11 @@ pub(all) struct StatsSummary {
   p95 : Double
   p99 : Double
 } derive(Debug, Eq)
+
+///|
 pub extend StatsSummary with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend StatsSummary with Eq::{not_equal, equal}
 
 ///|
@@ -58,30 +74,34 @@ pub(all) struct ComparisonResult {
   improvement_pct : Double
   significant : Bool
 } derive(Debug, Eq)
+
+///|
 pub extend ComparisonResult with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend ComparisonResult with Eq::{not_equal, equal}
 
 ///|
 /// 默认基准测试配置 | Default benchmark configuration
 pub fn default_benchmark_config(name : String) -> BenchmarkConfig {
-  { name, iterations: 1000, warmup_runs: 10, timeout_ms: 30000 }
+  { name, iterations: 1000, warmup_runs: 10, timeout_ms: 30000, }
 }
 
 ///|
 /// 快速基准测试配置 | Quick benchmark configuration
 pub fn quick_benchmark_config(name : String) -> BenchmarkConfig {
-  { name, iterations: 100, warmup_runs: 5, timeout_ms: 5000 }
+  { name, iterations: 100, warmup_runs: 5, timeout_ms: 5000, }
 }
 
 ///|
 /// 精确基准测试配置 | Precise benchmark configuration
 pub fn precise_benchmark_config(name : String) -> BenchmarkConfig {
-  { name, iterations: 10000, warmup_runs: 100, timeout_ms: 120000 }
+  { name, iterations: 10000, warmup_runs: 100, timeout_ms: 120000, }
 }
 
 ///|
 /// 计算平均值 | Calculate mean
-pub fn calculate_mean(values : Array[Int]) -> Double {
+pub fn calculate_mean(values : Array[Int32]) -> Double {
   if values.length() == 0 {
     return 0.0
   }
@@ -94,7 +114,7 @@ pub fn calculate_mean(values : Array[Int]) -> Double {
 
 ///|
 /// 计算中位数 | Calculate median
-pub fn calculate_median(values : Array[Int]) -> Double {
+pub fn calculate_median(values : Array[Int32]) -> Double {
   if values.length() == 0 {
     return 0.0
   }
@@ -109,7 +129,7 @@ pub fn calculate_median(values : Array[Int]) -> Double {
 
 ///|
 /// 简单排序（冒泡排序） | Simple sort (bubble sort)
-fn sort_ints(values : Array[Int]) -> Array[Int] {
+fn sort_ints(values : Array[Int32]) -> Array[Int32] {
   let result = []
   for v in values {
     result.push(v)
@@ -129,7 +149,7 @@ fn sort_ints(values : Array[Int]) -> Array[Int] {
 
 ///|
 /// 计算最小值 | Calculate minimum
-pub fn calculate_min(values : Array[Int]) -> Double {
+pub fn calculate_min(values : Array[Int32]) -> Double {
   if values.length() == 0 {
     return 0.0
   }
@@ -144,7 +164,7 @@ pub fn calculate_min(values : Array[Int]) -> Double {
 
 ///|
 /// 计算最大值 | Calculate maximum
-pub fn calculate_max(values : Array[Int]) -> Double {
+pub fn calculate_max(values : Array[Int32]) -> Double {
   if values.length() == 0 {
     return 0.0
   }
@@ -159,7 +179,7 @@ pub fn calculate_max(values : Array[Int]) -> Double {
 
 ///|
 /// 计算方差 | Calculate variance
-pub fn calculate_variance(values : Array[Int]) -> Double {
+pub fn calculate_variance(values : Array[Int32]) -> Double {
   if values.length() == 0 {
     return 0.0
   }
@@ -174,7 +194,7 @@ pub fn calculate_variance(values : Array[Int]) -> Double {
 
 ///|
 /// 计算标准差 | Calculate standard deviation
-pub fn calculate_std_dev(values : Array[Int]) -> Double {
+pub fn calculate_std_dev(values : Array[Int32]) -> Double {
   let variance = calculate_variance(values)
   sqrt(variance)
 }
@@ -195,14 +215,14 @@ fn sqrt(x : Double) -> Double {
 ///|
 /// 计算百分位数 | Calculate percentile
 pub fn calculate_percentile(
-  values : Array[Int],
+  values : Array[Int32],
   percentile : Double,
 ) -> Double {
   if values.length() == 0 {
     return 0.0
   }
   let sorted = sort_ints(values)
-  let idx = (percentile / 100.0 * sorted.length().to_double())
+  let idx = percentile / 100.0 * sorted.length().to_double()
   let i = idx.to_int()
   if i >= sorted.length() {
     sorted[sorted.length() - 1].to_double()
@@ -213,7 +233,7 @@ pub fn calculate_percentile(
 
 ///|
 /// 生成统计摘要 | Generate statistics summary
-pub fn generate_stats(values : Array[Int]) -> StatsSummary {
+pub fn generate_stats(values : Array[Int32]) -> StatsSummary {
   let mean = calculate_mean(values)
   let median = calculate_median(values)
   let min_val = calculate_min(values)
@@ -222,14 +242,14 @@ pub fn generate_stats(values : Array[Int]) -> StatsSummary {
   let std_dev = sqrt(variance)
   let p95 = calculate_percentile(values, 95.0)
   let p99 = calculate_percentile(values, 99.0)
-  { mean, median, min_val, max_val, variance, std_dev, p95, p99 }
+  { mean, median, min_val, max_val, variance, std_dev, p95, p99, }
 }
 
 ///|
 /// 模拟运行基准测试 | Simulate running benchmark
 pub fn simulate_benchmark(
   config : BenchmarkConfig,
-  timings : Array[Int],
+  timings : Array[Int32],
 ) -> BenchmarkResult {
   let stats = generate_stats(timings)
   let total = {
@@ -239,16 +259,8 @@ pub fn simulate_benchmark(
     }
     s
   }
-  let avg = if timings.length() > 0 {
-    total / timings.length()
-  } else {
-    0
-  }
-  let ops = if total > 0 {
-    timings.length() * 1000 / total
-  } else {
-    0
-  }
+  let avg = if timings.length() > 0 { total / timings.length() } else { 0 }
+  let ops = if total > 0 { timings.length() * 1000 / total } else { 0 }
   {
     name: config.name,
     iterations: config.iterations,
@@ -267,7 +279,7 @@ pub fn create_suite(
   name : String,
   configs : Array[BenchmarkConfig],
 ) -> BenchmarkSuite {
-  { name, configs, results: [] }
+  { name, configs, results: [], }
 }
 
 ///|
@@ -281,7 +293,7 @@ pub fn add_result(
     new_results.push(r)
   }
   new_results.push(result)
-  { ..suite, results: new_results }
+  { ..suite, results: new_results, }
 }
 
 ///|
@@ -317,12 +329,30 @@ pub fn compare_results(
 pub fn format_result(result : BenchmarkResult) -> String {
   let mut output = "Benchmark: " + result.name + "\n"
   output = output + "  Iterations:     " + result.iterations.to_string() + "\n"
-  output = output + "  Total time:     " + result.total_time_ms.to_string() + " ms\n"
-  output = output + "  Avg time:       " + result.avg_time_ns.to_string() + " ns\n"
-  output = output + "  Min time:       " + result.min_time_ns.to_string() + " ns\n"
-  output = output + "  Max time:       " + result.max_time_ns.to_string() + " ns\n"
-  output = output + "  Median time:    " + result.median_time_ns.to_string() + " ns\n"
-  output = output + "  Ops/sec:        " + result.ops_per_second.to_string() + "\n"
+  output = output +
+    "  Total time:     " +
+    result.total_time_ms.to_string() +
+    " ms\n"
+  output = output +
+    "  Avg time:       " +
+    result.avg_time_ns.to_string() +
+    " ns\n"
+  output = output +
+    "  Min time:       " +
+    result.min_time_ns.to_string() +
+    " ns\n"
+  output = output +
+    "  Max time:       " +
+    result.max_time_ns.to_string() +
+    " ns\n"
+  output = output +
+    "  Median time:    " +
+    result.median_time_ns.to_string() +
+    " ns\n"
+  output = output +
+    "  Ops/sec:        " +
+    result.ops_per_second.to_string() +
+    "\n"
   output
 }
 
@@ -343,14 +373,17 @@ pub fn format_stats(stats : StatsSummary) -> String {
 ///|
 /// 格式化比较结果 | Format comparison result
 pub fn format_comparison(comp : ComparisonResult) -> String {
-  let mut output = "Comparison: " + comp.baseline_name + " vs " + comp.candidate_name + "\n"
+  let mut output = "Comparison: " +
+    comp.baseline_name +
+    " vs " +
+    comp.candidate_name +
+    "\n"
   output = output + "  Speedup:       " + comp.speedup.to_string() + "x\n"
-  output = output + "  Improvement:   " + comp.improvement_pct.to_string() + "%\n"
-  let sig = if comp.significant {
-    "yes"
-  } else {
-    "no"
-  }
+  output = output +
+    "  Improvement:   " +
+    comp.improvement_pct.to_string() +
+    "%\n"
+  let sig = if comp.significant { "yes" } else { "no" }
   output = output + "  Significant:   " + sig + "\n"
   output
 }
@@ -369,7 +402,7 @@ pub fn is_empty_suite(suite : BenchmarkSuite) -> Bool {
 
 ///|
 /// 套件结果计数 | Count suite results
-pub fn suite_result_count(suite : BenchmarkSuite) -> Int {
+pub fn suite_result_count(suite : BenchmarkSuite) -> Int32 {
   suite.results.length()
 }
 
@@ -405,43 +438,54 @@ pub fn find_slowest(suite : BenchmarkSuite) -> BenchmarkResult? {
 
 ///|
 /// BenchmarkConfig 实现 Named trait | BenchmarkConfig implements Named
-pub impl @trait.Named for BenchmarkConfig with name(self) {
+pub impl @trait.Named for BenchmarkConfig with fn name(self) {
   self.name
 }
+
+///|
 pub extend BenchmarkConfig with @trait.Named::{name}
 
 ///|
 /// BenchmarkResult 实现 Named trait | BenchmarkResult implements Named
-pub impl @trait.Named for BenchmarkResult with name(self) {
+pub impl @trait.Named for BenchmarkResult with fn name(self) {
   self.name
 }
+
+///|
 pub extend BenchmarkResult with @trait.Named::{name}
 
 ///|
 /// BenchmarkSuite 实现 Named trait | BenchmarkSuite implements Named
-pub impl @trait.Named for BenchmarkSuite with name(self) {
+pub impl @trait.Named for BenchmarkSuite with fn name(self) {
   self.name
 }
-pub extend BenchmarkSuite with @trait.Named::{name}
 
+///|
+pub extend BenchmarkSuite with @trait.Named::{name}
 
 ///|
 /// BenchmarkConfig 实现 Hashable trait | BenchmarkConfig implements Hashable
-pub impl @trait.Hashable for BenchmarkConfig with hash(self) {
+pub impl @trait.Hashable for BenchmarkConfig with fn hash(self) {
   @trait.Named::name(self).length()
 }
+
+///|
 pub extend BenchmarkConfig with @trait.Hashable::{hash}
 
 ///|
 /// BenchmarkResult 实现 Hashable trait | BenchmarkResult implements Hashable
-pub impl @trait.Hashable for BenchmarkResult with hash(self) {
+pub impl @trait.Hashable for BenchmarkResult with fn hash(self) {
   @trait.Named::name(self).length()
 }
+
+///|
 pub extend BenchmarkResult with @trait.Hashable::{hash}
 
 ///|
 /// BenchmarkSuite 实现 Hashable trait | BenchmarkSuite implements Hashable
-pub impl @trait.Hashable for BenchmarkSuite with hash(self) {
+pub impl @trait.Hashable for BenchmarkSuite with fn hash(self) {
   @trait.Named::name(self).length()
 }
+
+///|
 pub extend BenchmarkSuite with @trait.Hashable::{hash}

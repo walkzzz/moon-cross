@@ -6,7 +6,11 @@ pub(all) struct FsPipelineResult {
   platform_specs : Array[@platform.PlatformSpec]
   ffi_bindings : Array[@ffi.FfiBindingType]
 } derive(Debug, Eq)
+
+///|
 pub extend FsPipelineResult with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend FsPipelineResult with Eq::{not_equal, equal}
 
 ///|
@@ -20,7 +24,12 @@ pub fn run_fs_pipeline() -> FsPipelineResult {
   for p in @core.all_platforms() {
     bindings.push(@ffi.ffi_binding_for_platform(p))
   }
-  { config: fs_cross_config(), c_header: @codegen_c.generate_header(fs_module_name()), platform_specs: specs, ffi_bindings: bindings }
+  {
+    config: fs_cross_config(),
+    c_header: @codegen_c.generate_header(fs_module_name()),
+    platform_specs: specs,
+    ffi_bindings: bindings,
+  }
 }
 
 ///|
@@ -31,7 +40,11 @@ pub(all) struct PathPipelineResult {
   platform_specs : Array[@platform.PlatformSpec]
   ffi_bindings : Array[@ffi.FfiBindingType]
 } derive(Debug, Eq)
+
+///|
 pub extend PathPipelineResult with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend PathPipelineResult with Eq::{not_equal, equal}
 
 ///|
@@ -45,7 +58,12 @@ pub fn run_path_pipeline() -> PathPipelineResult {
   for p in @core.all_platforms() {
     bindings.push(@ffi.ffi_binding_for_platform(p))
   }
-  { config: path_cross_config(), c_header: @codegen_c.generate_header(path_module_name()), platform_specs: specs, ffi_bindings: bindings }
+  {
+    config: path_cross_config(),
+    c_header: @codegen_c.generate_header(path_module_name()),
+    platform_specs: specs,
+    ffi_bindings: bindings,
+  }
 }
 
 ///|
@@ -56,7 +74,11 @@ pub(all) struct ProcessPipelineResult {
   platform_specs : Array[@platform.PlatformSpec]
   ffi_bindings : Array[@ffi.FfiBindingType]
 } derive(Debug, Eq)
+
+///|
 pub extend ProcessPipelineResult with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend ProcessPipelineResult with Eq::{not_equal, equal}
 
 ///|
@@ -70,5 +92,10 @@ pub fn run_process_pipeline() -> ProcessPipelineResult {
   for p in @core.all_platforms() {
     bindings.push(@ffi.ffi_binding_for_platform(p))
   }
-  { config: process_cross_config(), c_header: @codegen_c.generate_header(process_module_name()), platform_specs: specs, ffi_bindings: bindings }
+  {
+    config: process_cross_config(),
+    c_header: @codegen_c.generate_header(process_module_name()),
+    platform_specs: specs,
+    ffi_bindings: bindings,
+  }
 }

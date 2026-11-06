@@ -1,3 +1,4 @@
+///|
 test "docs: default config" {
   let config = @docs.default_doc_config()
   assert_eq(config.format, @docs.DocFormat::Markdown)
@@ -6,6 +7,7 @@ test "docs: default config" {
   assert_true(config.include_examples)
 }
 
+///|
 test "docs: make doc entry" {
   let entry = @docs.make_doc_entry(
     "my_func",
@@ -19,6 +21,7 @@ test "docs: make doc entry" {
   assert_eq(entry.platform_support.length(), 1)
 }
 
+///|
 test "docs: make doc section" {
   let entry = @docs.make_doc_entry("func1", "fn func1() -> int", "desc", [], [])
   let section = @docs.make_doc_section("Core API", "Core functions", [entry])
@@ -26,6 +29,7 @@ test "docs: make doc section" {
   assert_eq(section.entries.length(), 1)
 }
 
+///|
 test "docs: generate markdown" {
   let entry = @docs.make_doc_entry(
     "my_func",
@@ -42,6 +46,7 @@ test "docs: generate markdown" {
   assert_true(markdown.contains("iOS"))
 }
 
+///|
 test "docs: generate markdown with examples" {
   let entry = @docs.make_doc_entry(
     "my_func",
@@ -56,6 +61,7 @@ test "docs: generate markdown with examples" {
   assert_true(markdown.contains("my_func()"))
 }
 
+///|
 test "docs: generate json" {
   let entry = @docs.make_doc_entry("func1", "fn func1() -> int", "", [], [])
   let section = @docs.make_doc_section("API", "", [entry])
@@ -64,12 +70,14 @@ test "docs: generate json" {
   assert_true(json.contains("func1"))
 }
 
+///|
 test "docs: doc format to string" {
   assert_eq(@docs.DocFormat::Markdown.to_string(), "markdown")
   assert_eq(@docs.DocFormat::Json.to_string(), "json")
   assert_eq(@docs.DocFormat::Html.to_string(), "html")
 }
 
+///|
 test "docs: version" {
   assert_true(@docs.docs_version().contains("v0.1.1"))
 }

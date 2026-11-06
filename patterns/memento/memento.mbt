@@ -2,38 +2,50 @@
 /// 备忘录 | Memento
 pub(all) struct Memento {
   state : String
-  value : Int
+  value : Int32
 } derive(Debug, Eq)
+
+///|
 pub extend Memento with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend Memento with Eq::{not_equal, equal}
 
 ///|
 /// 原发器 | Originator
 pub(all) struct Originator {
   state : String
-  value : Int
+  value : Int32
 } derive(Debug, Eq)
+
+///|
 pub extend Originator with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend Originator with Eq::{not_equal, equal}
 
 ///|
 /// 管理者 | Caretaker
 pub(all) struct Caretaker {
   mementos : Array[Memento]
-  current : Int
+  current : Int32
 } derive(Debug, Eq)
+
+///|
 pub extend Caretaker with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend Caretaker with Eq::{not_equal, equal}
 
 ///|
 /// 创建备忘录 | Create memento
-pub fn memento_create(state : String, value : Int) -> Memento {
+pub fn memento_create(state : String, value : Int32) -> Memento {
   { state, value, }
 }
 
 ///|
 /// 创建原发器 | Create originator
-pub fn originator_create(state : String, value : Int) -> Originator {
+pub fn originator_create(state : String, value : Int32) -> Originator {
   { state, value, }
 }
 
@@ -59,7 +71,7 @@ pub fn caretaker_create() -> Caretaker {
 /// 保存备忘录 | Save memento
 pub fn caretaker_save(ck : Caretaker, m : Memento) -> Caretaker {
   let mementos = []
-  for i in 0..=ck.current {
+  for i in 0..<=ck.current {
     mementos.push(ck.mementos[i])
   }
   mementos.push(m)
@@ -95,13 +107,13 @@ pub fn caretaker_current(ck : Caretaker) -> Memento? {
 
 ///|
 /// 备忘录数量 | Memento count
-pub fn caretaker_size(ck : Caretaker) -> Int {
+pub fn caretaker_size(ck : Caretaker) -> Int32 {
   ck.mementos.length()
 }
 
 ///|
 /// 当前位置 | Current position
-pub fn caretaker_position(ck : Caretaker) -> Int {
+pub fn caretaker_position(ck : Caretaker) -> Int32 {
   ck.current
 }
 
@@ -113,14 +125,18 @@ pub fn memento_version() -> String {
 
 ///|
 /// Caretaker 实现 Countable trait | Caretaker implements Countable
-pub impl @trait.Countable for Caretaker with count(self) {
+pub impl @trait.Countable for Caretaker with fn count(self) {
   self.mementos.length()
 }
+
+///|
 pub extend Caretaker with @trait.Countable::{count}
 
 ///|
 /// Caretaker 实现 Iterable trait | Caretaker implements Iterable
-pub impl @trait.Iterable for Caretaker with iter_count(self) {
+pub impl @trait.Iterable for Caretaker with fn iter_count(self) {
   self.mementos.length()
 }
+
+///|
 pub extend Caretaker with @trait.Iterable::{iter_count}

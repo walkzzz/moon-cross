@@ -2,56 +2,78 @@
 /// 性能分析条目 | Profile entry
 pub(all) struct ProfileEntry {
   name : String
-  call_count : Int
-  total_time_ns : Int
-  min_time_ns : Int
-  max_time_ns : Int
+  call_count : Int32
+  total_time_ns : Int32
+  min_time_ns : Int32
+  max_time_ns : Int32
 } derive(Debug, Eq)
+
+///|
 pub extend ProfileEntry with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend ProfileEntry with Eq::{not_equal, equal}
 
 ///|
 /// 性能分析配置 | Profiler configuration
 pub(all) struct ProfilerConfig {
   enabled : Bool
-  sample_rate : Int
-  max_entries : Int
+  sample_rate : Int32
+  max_entries : Int32
   track_memory : Bool
 } derive(Debug, Eq)
+
+///|
 pub extend ProfilerConfig with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend ProfilerConfig with Eq::{not_equal, equal}
 
 ///|
 /// 性能分析统计 | Profile statistics
 pub(all) struct ProfileStats {
-  total_calls : Int
-  total_time_ns : Int
+  total_calls : Int32
+  total_time_ns : Int32
   avg_time_ns : Double
   hottest_function : String
 } derive(Debug, Eq)
+
+///|
 pub extend ProfileStats with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend ProfileStats with Eq::{not_equal, equal}
 
 ///|
 /// 性能分析报告 | Profile report
 pub(all) struct ProfileReport {
   entries : Array[ProfileEntry]
-  total_time_ns : Int
-  total_calls : Int
+  total_time_ns : Int32
+  total_calls : Int32
 } derive(Debug, Eq)
+
+///|
 pub extend ProfileReport with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend ProfileReport with Eq::{not_equal, equal}
 
 ///|
 /// 默认性能分析配置 | Default profiler configuration
 pub fn default_profiler_config() -> ProfilerConfig {
-  { enabled: true, sample_rate: 1, max_entries: 10000, track_memory: false }
+  { enabled: true, sample_rate: 1, max_entries: 10000, track_memory: false, }
 }
 
 ///|
 /// 创建性能分析条目 | Create profile entry
-pub fn make_entry(name : String, duration_ns : Int) -> ProfileEntry {
-  { name, call_count: 1, total_time_ns: duration_ns, min_time_ns: duration_ns, max_time_ns: duration_ns }
+pub fn make_entry(name : String, duration_ns : Int32) -> ProfileEntry {
+  {
+    name,
+    call_count: 1,
+    total_time_ns: duration_ns,
+    min_time_ns: duration_ns,
+    max_time_ns: duration_ns,
+  }
 }
 
 ///|
@@ -102,7 +124,7 @@ pub fn create_report(entries : Array[ProfileEntry]) -> ProfileReport {
     total_time = total_time + entry.total_time_ns
     total_calls = total_calls + entry.call_count
   }
-  { entries, total_time_ns: total_time, total_calls }
+  { entries, total_time_ns: total_time, total_calls, }
 }
 
 ///|
@@ -122,9 +144,7 @@ pub fn find_hotspot(report : ProfileReport) -> ProfileEntry? {
 
 ///|
 /// 按总时间排序（降序） | Sort by total time descending
-pub fn sort_by_total_time(
-  entries : Array[ProfileEntry],
-) -> Array[ProfileEntry] {
+pub fn sort_by_total_time(entries : Array[ProfileEntry]) -> Array[ProfileEntry] {
   let arr = []
   for e in entries {
     arr.push(e)
@@ -145,9 +165,7 @@ pub fn sort_by_total_time(
 
 ///|
 /// 按调用次数排序（降序） | Sort by call count descending
-pub fn sort_by_call_count(
-  entries : Array[ProfileEntry],
-) -> Array[ProfileEntry] {
+pub fn sort_by_call_count(entries : Array[ProfileEntry]) -> Array[ProfileEntry] {
   let arr = []
   for e in entries {
     arr.push(e)
@@ -168,9 +186,7 @@ pub fn sort_by_call_count(
 
 ///|
 /// 合并同名条目 | Merge entries with same name
-pub fn merge_entries(
-  entries : Array[ProfileEntry],
-) -> Array[ProfileEntry] {
+pub fn merge_entries(entries : Array[ProfileEntry]) -> Array[ProfileEntry] {
   let result : Array[ProfileEntry] = []
   for entry in entries {
     let mut found = false
@@ -215,7 +231,12 @@ pub fn summary_stats(report : ProfileReport) -> ProfileStats {
   } else {
     report.total_time_ns.to_double() / report.total_calls.to_double()
   }
-  { total_calls: report.total_calls, total_time_ns: report.total_time_ns, avg_time_ns: avg, hottest_function: hottest_name }
+  {
+    total_calls: report.total_calls,
+    total_time_ns: report.total_time_ns,
+    avg_time_ns: avg,
+    hottest_function: hottest_name,
+  }
 }
 
 ///|
@@ -223,12 +244,24 @@ pub fn summary_stats(report : ProfileReport) -> ProfileStats {
 pub fn format_report_text(report : ProfileReport) -> String {
   let mut result = "Profile Report\n"
   result = result + "==============\n"
-  result = result + "Total time: " + report_total_time_ms(report).to_string() + " ms\n"
+  result = result +
+    "Total time: " +
+    report_total_time_ms(report).to_string() +
+    " ms\n"
   result = result + "Total calls: " + report.total_calls.to_string() + "\n"
   result = result + "\nFunction details:\n"
   let sorted = sort_by_total_time(report.entries)
   for entry in sorted {
-    result = result + "  " + entry.name + ": " + total_time_ms(entry).to_string() + " ms (" + entry.call_count.to_string() + " calls, avg: " + average_time_ms(entry).to_string() + " ms)\n"
+    result = result +
+      "  " +
+      entry.name +
+      ": " +
+      total_time_ms(entry).to_string() +
+      " ms (" +
+      entry.call_count.to_string() +
+      " calls, avg: " +
+      average_time_ms(entry).to_string() +
+      " ms)\n"
   }
   result
 }
@@ -237,7 +270,10 @@ pub fn format_report_text(report : ProfileReport) -> String {
 /// 格式化报告为 JSON | Format report as JSON
 pub fn format_report_json(report : ProfileReport) -> String {
   let mut result = "{\"profile\": {"
-  result = result + "\"total_time_ms\": " + report_total_time_ms(report).to_string() + ", "
+  result = result +
+    "\"total_time_ms\": " +
+    report_total_time_ms(report).to_string() +
+    ", "
   result = result + "\"total_calls\": " + report.total_calls.to_string() + ", "
   result = result + "\"functions\": " + report.entries.length().to_string()
   result = result + "}}"
@@ -253,15 +289,12 @@ pub fn profiler_version() -> String {
 ///|
 /// 空报告 | Empty report
 pub fn empty_report() -> ProfileReport {
-  { entries: [], total_time_ns: 0, total_calls: 0 }
+  { entries: [], total_time_ns: 0, total_calls: 0, }
 }
 
 ///|
 /// 按名称查找条目 | Find entry by name
-pub fn find_entry(
-  report : ProfileReport,
-  name : String,
-) -> ProfileEntry? {
+pub fn find_entry(report : ProfileReport, name : String) -> ProfileEntry? {
   for entry in report.entries {
     if entry.name == name {
       return Some(entry)
@@ -274,7 +307,7 @@ pub fn find_entry(
 /// 过滤高耗时条目 | Filter entries above threshold
 pub fn filter_above_threshold(
   report : ProfileReport,
-  threshold_ns : Int,
+  threshold_ns : Int32,
 ) -> Array[ProfileEntry] {
   let result = []
   for entry in report.entries {
@@ -287,20 +320,24 @@ pub fn filter_above_threshold(
 
 ///|
 /// 条目数 | Entry count
-pub fn entry_count(report : ProfileReport) -> Int {
+pub fn entry_count(report : ProfileReport) -> Int32 {
   report.entries.length()
 }
 
 ///|
 /// ProfileEntry 实现 Named trait | ProfileEntry implements Named
-pub impl @trait.Named for ProfileEntry with name(self) {
+pub impl @trait.Named for ProfileEntry with fn name(self) {
   self.name
 }
+
+///|
 pub extend ProfileEntry with @trait.Named::{name}
 
 ///|
 /// ProfileEntry 实现 Hashable trait | ProfileEntry implements Hashable
-pub impl @trait.Hashable for ProfileEntry with hash(self) {
+pub impl @trait.Hashable for ProfileEntry with fn hash(self) {
   @trait.Named::name(self).length()
 }
+
+///|
 pub extend ProfileEntry with @trait.Hashable::{hash}

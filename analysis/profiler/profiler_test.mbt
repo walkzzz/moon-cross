@@ -1,3 +1,4 @@
+///|
 test "default_profiler_config" {
   let cfg = @profiler.default_profiler_config()
   assert_true(cfg.enabled)
@@ -5,6 +6,7 @@ test "default_profiler_config" {
   assert_true(!cfg.track_memory)
 }
 
+///|
 test "make_entry" {
   let entry = @profiler.make_entry("test_fn", 1000)
   assert_eq(entry.name, "test_fn")
@@ -14,30 +16,35 @@ test "make_entry" {
   assert_eq(entry.max_time_ns, 1000)
 }
 
+///|
 test "average_time" {
   let entry = @profiler.make_entry("test_fn", 3000)
   let avg = @profiler.average_time(entry)
   assert_eq(avg, 3000.0)
 }
 
+///|
 test "average_time_ms" {
   let entry = @profiler.make_entry("test_fn", 3000000)
   let avg_ms = @profiler.average_time_ms(entry)
   assert_eq(avg_ms, 3.0)
 }
 
+///|
 test "total_time_ms" {
   let entry = @profiler.make_entry("test_fn", 5000000)
   let ms = @profiler.total_time_ms(entry)
   assert_eq(ms, 5.0)
 }
 
+///|
 test "total_time_sec" {
   let entry = @profiler.make_entry("test_fn", 2000000000)
   let sec = @profiler.total_time_sec(entry)
   assert_eq(sec, 2.0)
 }
 
+///|
 test "create_report" {
   let e1 = @profiler.make_entry("fn_a", 1000)
   let e2 = @profiler.make_entry("fn_b", 2000)
@@ -46,12 +53,14 @@ test "create_report" {
   assert_eq(report.total_calls, 2)
 }
 
+///|
 test "create_report_empty" {
   let report = @profiler.create_report([])
   assert_eq(report.total_time_ns, 0)
   assert_eq(report.total_calls, 0)
 }
 
+///|
 test "find_hotspot" {
   let e1 = @profiler.make_entry("fn_a", 1000)
   let e2 = @profiler.make_entry("fn_b", 5000)
@@ -63,6 +72,7 @@ test "find_hotspot" {
   }
 }
 
+///|
 test "find_hotspot_empty" {
   let report = @profiler.empty_report()
   match @profiler.find_hotspot(report) {
@@ -71,6 +81,7 @@ test "find_hotspot_empty" {
   }
 }
 
+///|
 test "sort_by_total_time" {
   let e1 = @profiler.make_entry("a", 100)
   let e2 = @profiler.make_entry("b", 500)
@@ -81,6 +92,7 @@ test "sort_by_total_time" {
   assert_eq(sorted[2].name, "a")
 }
 
+///|
 test "sort_by_call_count" {
   let e1 = @profiler.make_entry("a", 100)
   let e2 = @profiler.make_entry("b", 200)
@@ -89,6 +101,7 @@ test "sort_by_call_count" {
   assert_eq(sorted[1].name, "b")
 }
 
+///|
 test "merge_entries" {
   let e1 = @profiler.make_entry("fn_a", 1000)
   let e2 = @profiler.make_entry("fn_a", 2000)
@@ -97,6 +110,7 @@ test "merge_entries" {
   assert_eq(merged.length(), 2)
 }
 
+///|
 test "summary_stats" {
   let e1 = @profiler.make_entry("fn_a", 1000)
   let e2 = @profiler.make_entry("fn_b", 3000)
@@ -107,6 +121,7 @@ test "summary_stats" {
   assert_eq(stats.hottest_function, "fn_b")
 }
 
+///|
 test "summary_stats_empty" {
   let report = @profiler.empty_report()
   let stats = @profiler.summary_stats(report)
@@ -114,6 +129,7 @@ test "summary_stats_empty" {
   assert_eq(stats.hottest_function, "")
 }
 
+///|
 test "format_report_text" {
   let e1 = @profiler.make_entry("fn_a", 1000000)
   let report = @profiler.create_report([e1])
@@ -122,6 +138,7 @@ test "format_report_text" {
   assert_true(text.contains("fn_a"))
 }
 
+///|
 test "format_report_json" {
   let e1 = @profiler.make_entry("fn_a", 1000000)
   let report = @profiler.create_report([e1])
@@ -130,11 +147,13 @@ test "format_report_json" {
   assert_true(json.contains("total_calls"))
 }
 
+///|
 test "profiler_version" {
   let v = @profiler.profiler_version()
   assert_true(v.contains("profiler"))
 }
 
+///|
 test "empty_report" {
   let report = @profiler.empty_report()
   assert_eq(report.total_time_ns, 0)
@@ -142,6 +161,7 @@ test "empty_report" {
   assert_eq(report.entries.length(), 0)
 }
 
+///|
 test "find_entry" {
   let e1 = @profiler.make_entry("fn_a", 1000)
   let e2 = @profiler.make_entry("fn_b", 2000)
@@ -152,6 +172,7 @@ test "find_entry" {
   }
 }
 
+///|
 test "find_entry_not_found" {
   let report = @profiler.empty_report()
   match @profiler.find_entry(report, "fn_x") {
@@ -160,6 +181,7 @@ test "find_entry_not_found" {
   }
 }
 
+///|
 test "filter_above_threshold" {
   let e1 = @profiler.make_entry("a", 100)
   let e2 = @profiler.make_entry("b", 500)
@@ -169,6 +191,7 @@ test "filter_above_threshold" {
   assert_eq(filtered.length(), 2)
 }
 
+///|
 test "entry_count" {
   let e1 = @profiler.make_entry("a", 100)
   let e2 = @profiler.make_entry("b", 200)
@@ -176,12 +199,14 @@ test "entry_count" {
   assert_eq(@profiler.entry_count(report), 2)
 }
 
+///|
 test "report_total_time_ms" {
   let e1 = @profiler.make_entry("a", 3000000)
   let report = @profiler.create_report([e1])
   assert_eq(@profiler.report_total_time_ms(report), 3.0)
 }
 
+///|
 test "report_total_time_sec" {
   let e1 = @profiler.make_entry("a", 2000000000)
   let report = @profiler.create_report([e1])

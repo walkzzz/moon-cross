@@ -1,82 +1,110 @@
 ///|
 /// 池配置 | Pool configuration
 pub(all) struct PoolConfig {
-  min_size : Int
-  max_size : Int
-  idle_timeout_ms : Int
+  min_size : Int32
+  max_size : Int32
+  idle_timeout_ms : Int32
   auto_shrink : Bool
 } derive(Debug, Eq)
+
+///|
 pub extend PoolConfig with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend PoolConfig with Eq::{not_equal, equal}
 
 ///|
 /// 池条目 | Pool entry
 pub(all) struct PoolEntry {
   value : String
-  created_at : Int
-  last_used : Int
-  use_count : Int
+  created_at : Int32
+  last_used : Int32
+  use_count : Int32
 } derive(Debug, Eq)
+
+///|
 pub extend PoolEntry with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend PoolEntry with Eq::{not_equal, equal}
 
 ///|
 /// 池统计 | Pool statistics
 pub(all) struct PoolStats {
-  active : Int
-  idle : Int
-  total_created : Int
-  total_destroyed : Int
-  acquisitions : Int
-  releases : Int
+  active : Int32
+  idle : Int32
+  total_created : Int32
+  total_destroyed : Int32
+  acquisitions : Int32
+  releases : Int32
 } derive(Debug, Eq)
+
+///|
 pub extend PoolStats with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend PoolStats with Eq::{not_equal, equal}
 
 ///|
 /// 对象池 | Object pool
 pub(all) struct Pool {
   idle : Array[PoolEntry]
-  active_count : Int
+  active_count : Int32
   config : PoolConfig
   stats : PoolStats
 } derive(Debug, Eq)
+
+///|
 pub extend Pool with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend Pool with Eq::{not_equal, equal}
 
 ///|
 /// 默认池配置 | Default pool configuration
 pub fn default_pool_config() -> PoolConfig {
-  { min_size: 0, max_size: 10, idle_timeout_ms: 60000, auto_shrink: true }
+  { min_size: 0, max_size: 10, idle_timeout_ms: 60000, auto_shrink: true, }
 }
 
 ///|
 /// 创建池条目 | Create pool entry
-pub fn make_pool_entry(value : String, timestamp : Int) -> PoolEntry {
-  { value, created_at: timestamp, last_used: timestamp, use_count: 0 }
+pub fn make_pool_entry(value : String, timestamp : Int32) -> PoolEntry {
+  { value, created_at: timestamp, last_used: timestamp, use_count: 0, }
 }
 
 ///|
 /// 创建对象池 | Create object pool
 pub fn create_pool(config : PoolConfig) -> Pool {
-  { idle: [], active_count: 0, config, stats: { active: 0, idle: 0, total_created: 0, total_destroyed: 0, acquisitions: 0, releases: 0 } }
+  {
+    idle: [],
+    active_count: 0,
+    config,
+    stats: {
+      active: 0,
+      idle: 0,
+      total_created: 0,
+      total_destroyed: 0,
+      acquisitions: 0,
+      releases: 0,
+    },
+  }
 }
 
 ///|
 /// 池总大小 | Pool total size (idle + active)
-pub fn pool_size(pool : Pool) -> Int {
+pub fn pool_size(pool : Pool) -> Int32 {
   pool.idle.length() + pool.active_count
 }
 
 ///|
 /// 空闲数量 | Idle count
-pub fn pool_idle_count(pool : Pool) -> Int {
+pub fn pool_idle_count(pool : Pool) -> Int32 {
   pool.idle.length()
 }
 
 ///|
 /// 活跃数量 | Active count
-pub fn pool_active_count(pool : Pool) -> Int {
+pub fn pool_active_count(pool : Pool) -> Int32 {
   pool.active_count
 }
 
@@ -94,7 +122,7 @@ pub fn pool_is_empty(pool : Pool) -> Bool {
 
 ///|
 /// 从池中获取对象 | Acquire object from pool
-pub fn pool_acquire(pool : Pool, timestamp : Int) -> (Pool, String?) {
+pub fn pool_acquire(pool : Pool, timestamp : Int32) -> (Pool, String?) {
   if pool.idle.length() > 0 {
     let entry = pool.idle[0]
     let remaining = []
@@ -140,8 +168,13 @@ pub fn pool_acquire(pool : Pool, timestamp : Int) -> (Pool, String?) {
 
 ///|
 /// 归还对象到池 | Release object back to pool
-pub fn pool_release(pool : Pool, value : String, timestamp : Int) -> Pool {
-  let entry = { value, created_at: timestamp, last_used: timestamp, use_count: 0 }
+pub fn pool_release(pool : Pool, value : String, timestamp : Int32) -> Pool {
+  let entry = {
+    value,
+    created_at: timestamp,
+    last_used: timestamp,
+    use_count: 0,
+  }
   let new_stats = {
     active: pool.stats.active - 1,
     idle: pool.stats.idle + 1,
@@ -165,7 +198,7 @@ pub fn pool_release(pool : Pool, value : String, timestamp : Int) -> Pool {
 
 ///|
 /// 预分配对象 | Preallocate objects
-pub fn pool_preallocate(pool : Pool, count : Int, timestamp : Int) -> Pool {
+pub fn pool_preallocate(pool : Pool, count : Int32, timestamp : Int32) -> Pool {
   let new_idle = []
   for e in pool.idle {
     new_idle.push(e)
@@ -215,7 +248,7 @@ pub fn pool_clear(pool : Pool) -> Pool {
 
 ///|
 /// 收缩池（移除多余空闲对象） | Shrink pool (remove excess idle objects)
-pub fn pool_shrink(pool : Pool, target_idle : Int) -> Pool {
+pub fn pool_shrink(pool : Pool, target_idle : Int32) -> Pool {
   if pool.idle.length() <= target_idle {
     return pool
   }
@@ -241,13 +274,17 @@ pub fn pool_shrink(pool : Pool, target_idle : Int) -> Pool {
 
 ///|
 /// 检查空闲对象是否过期 | Check if idle entry is expired
-pub fn is_idle_expired(entry : PoolEntry, current_time : Int, timeout_ms : Int) -> Bool {
+pub fn is_idle_expired(
+  entry : PoolEntry,
+  current_time : Int32,
+  timeout_ms : Int32,
+) -> Bool {
   current_time - entry.last_used > timeout_ms
 }
 
 ///|
 /// 清理过期空闲对象 | Evict expired idle entries
-pub fn pool_evict_expired(pool : Pool, current_time : Int) -> Pool {
+pub fn pool_evict_expired(pool : Pool, current_time : Int32) -> Pool {
   let remaining = []
   let mut evicted = 0
   for entry in pool.idle {
@@ -341,21 +378,27 @@ pub fn pool_version() -> String {
 
 ///|
 /// PoolConfig 实现 Checkable trait | PoolConfig implements Checkable
-pub impl @trait.Checkable for PoolConfig with check(self) {
+pub impl @trait.Checkable for PoolConfig with fn check(self) {
   self.auto_shrink
 }
+
+///|
 pub extend PoolConfig with @trait.Checkable::{check}
 
 ///|
 /// Pool 实现 Countable trait | Pool implements Countable
-pub impl @trait.Countable for Pool with count(self) {
+pub impl @trait.Countable for Pool with fn count(self) {
   self.active_count
 }
+
+///|
 pub extend Pool with @trait.Countable::{count}
 
 ///|
 /// PoolStats 实现 Countable trait | PoolStats implements Countable
-pub impl @trait.Countable for PoolStats with count(self) {
+pub impl @trait.Countable for PoolStats with fn count(self) {
   self.active
 }
+
+///|
 pub extend PoolStats with @trait.Countable::{count}

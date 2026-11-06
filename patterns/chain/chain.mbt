@@ -1,11 +1,15 @@
 ///|
 /// 处理器 | Handler
 pub(all) struct Handler {
-  id : Int
+  id : Int32
   name : String
   can_handle : Bool
 } derive(Debug, Eq)
+
+///|
 pub extend Handler with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend Handler with Eq::{not_equal, equal}
 
 ///|
@@ -15,34 +19,46 @@ pub(all) struct HandleResult {
   handler_name : String
   message : String
 } derive(Debug, Eq)
+
+///|
 pub extend HandleResult with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend HandleResult with Eq::{not_equal, equal}
 
 ///|
 /// 处理链 | Handler chain
 pub(all) struct HandlerChain {
   handlers : Array[Handler]
-  next_id : Int
+  next_id : Int32
 } derive(Debug, Eq)
+
+///|
 pub extend HandlerChain with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend HandlerChain with Eq::{not_equal, equal}
 
 ///|
 /// 创建链 | Create chain
 pub fn chain_create() -> HandlerChain {
-  { handlers: [], next_id: 0 }
+  { handlers: [], next_id: 0, }
 }
 
 ///|
 /// 添加处理器 | Add handler
-pub fn chain_add(chain : HandlerChain, name : String, can_handle : Bool) -> (HandlerChain, Handler) {
-  let handler = { id: chain.next_id, name, can_handle }
+pub fn chain_add(
+  chain : HandlerChain,
+  name : String,
+  can_handle : Bool,
+) -> (HandlerChain, Handler) {
+  let handler = { id: chain.next_id, name, can_handle, }
   let new_handlers = []
   for h in chain.handlers {
     new_handlers.push(h)
   }
   new_handlers.push(handler)
-  ({ handlers: new_handlers, next_id: chain.next_id + 1 }, handler)
+  ({ handlers: new_handlers, next_id: chain.next_id + 1, }, handler)
 }
 
 ///|
@@ -50,28 +66,32 @@ pub fn chain_add(chain : HandlerChain, name : String, can_handle : Bool) -> (Han
 pub fn chain_handle(chain : HandlerChain, request : String) -> HandleResult {
   for h in chain.handlers {
     if h.can_handle {
-      return { handled: true, handler_name: h.name, message: h.name + " handled: " + request }
+      return {
+        handled: true,
+        handler_name: h.name,
+        message: h.name + " handled: " + request,
+      }
     }
   }
-  { handled: false, handler_name: "", message: "no handler available" }
+  { handled: false, handler_name: "", message: "no handler available", }
 }
 
 ///|
 /// 处理器数量 | Handler count
-pub fn chain_size(chain : HandlerChain) -> Int {
+pub fn chain_size(chain : HandlerChain) -> Int32 {
   chain.handlers.length()
 }
 
 ///|
 /// 移除处理器 | Remove handler
-pub fn chain_remove(chain : HandlerChain, handler_id : Int) -> HandlerChain {
+pub fn chain_remove(chain : HandlerChain, handler_id : Int32) -> HandlerChain {
   let new_handlers = []
   for h in chain.handlers {
     if h.id != handler_id {
       new_handlers.push(h)
     }
   }
-  { handlers: new_handlers, next_id: chain.next_id }
+  { handlers: new_handlers, next_id: chain.next_id, }
 }
 
 ///|
@@ -82,14 +102,18 @@ pub fn chain_version() -> String {
 
 ///|
 /// Handler 实现 Named trait | Handler implements Named
-pub impl @trait.Named for Handler with name(self) {
+pub impl @trait.Named for Handler with fn name(self) {
   self.name
 }
+
+///|
 pub extend Handler with @trait.Named::{name}
 
 ///|
 /// Handler 实现 Hashable trait | Handler implements Hashable
-pub impl @trait.Hashable for Handler with hash(self) {
+pub impl @trait.Hashable for Handler with fn hash(self) {
   @trait.Named::name(self).length()
 }
+
+///|
 pub extend Handler with @trait.Hashable::{hash}

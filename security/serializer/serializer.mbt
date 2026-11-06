@@ -5,7 +5,11 @@ pub(all) enum SerializeFormat {
   Binary
   Text
 } derive(Debug, Eq)
+
+///|
 pub extend SerializeFormat with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend SerializeFormat with Eq::{not_equal, equal}
 
 ///|
@@ -18,7 +22,11 @@ pub(all) enum FieldType {
   ArrayType
   ObjectType
 } derive(Debug, Eq)
+
+///|
 pub extend FieldType with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend FieldType with Eq::{not_equal, equal}
 
 ///|
@@ -28,24 +36,32 @@ pub(all) struct SerializedField {
   typ : FieldType
   value : String
 } derive(Debug, Eq)
+
+///|
 pub extend SerializedField with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend SerializedField with Eq::{not_equal, equal}
 
 ///|
 /// 序列化配置 | Serialization configuration
 pub(all) struct SerializeConfig {
   format : SerializeFormat
-  indent : Int
+  indent : Int32
   include_nulls : Bool
-  max_depth : Int
+  max_depth : Int32
 } derive(Debug, Eq)
+
+///|
 pub extend SerializeConfig with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend SerializeConfig with Eq::{not_equal, equal}
 
 ///|
 /// 默认序列化配置 | Default serialization configuration
 pub fn default_serialize_config() -> SerializeConfig {
-  { format: Json, indent: 2, include_nulls: false, max_depth: 100 }
+  { format: Json, indent: 2, include_nulls: false, max_depth: 100, }
 }
 
 ///|
@@ -78,12 +94,12 @@ pub fn make_field(
   typ : FieldType,
   value : String,
 ) -> SerializedField {
-  { name, typ, value }
+  { name, typ, value, }
 }
 
 ///|
 /// 序列化整数 | Serialize integer
-pub fn serialize_int(i : Int) -> String {
+pub fn serialize_int(i : Int32) -> String {
   i.to_string()
 }
 
@@ -151,7 +167,7 @@ pub fn serialize_array(items : Array[String]) -> String {
 
 ///|
 /// 序列化整数数组 | Serialize integer array
-pub fn serialize_int_array(items : Array[Int]) -> String {
+pub fn serialize_int_array(items : Array[Int32]) -> String {
   let mut result = "["
   let mut first = true
   for item in items {
@@ -183,7 +199,7 @@ pub fn serialize_object(fields : Array[SerializedField]) -> String {
 
 ///|
 /// 反序列化整数 | Deserialize integer
-pub fn deserialize_int(s : String) -> Int {
+pub fn deserialize_int(s : String) -> Int32 {
   let mut result = 0
   let mut sign = 1
   let mut start = 0
@@ -289,7 +305,7 @@ pub fn filter_by_type(
 
 ///|
 /// 字段数 | Field count
-pub fn field_count(fields : Array[SerializedField]) -> Int {
+pub fn field_count(fields : Array[SerializedField]) -> Int32 {
   fields.length()
 }
 
@@ -305,7 +321,9 @@ pub fn field_names(fields : Array[SerializedField]) -> Array[String] {
 
 ///|
 /// SerializedField 实现 Named trait | SerializedField implements Named
-pub impl @trait.Named for SerializedField with name(self) {
+pub impl @trait.Named for SerializedField with fn name(self) {
   self.name
 }
+
+///|
 pub extend SerializedField with @trait.Named::{name}

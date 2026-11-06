@@ -7,18 +7,26 @@ pub(all) struct RefactorSuggestion {
   reason : String
   severity : String
 } derive(Debug, Eq)
+
+///|
 pub extend RefactorSuggestion with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend RefactorSuggestion with Eq::{not_equal, equal}
 
 ///|
 /// 重构报告 | Refactoring report
 pub(all) struct RefactorReport {
   suggestions : Array[RefactorSuggestion]
-  total : Int
-  applied : Int
-  skipped : Int
+  total : Int32
+  applied : Int32
+  skipped : Int32
 } derive(Debug, Eq)
+
+///|
 pub extend RefactorReport with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend RefactorReport with Eq::{not_equal, equal}
 
 ///|
@@ -30,24 +38,43 @@ pub(all) struct RefactorPattern {
   after : String
   benefits : Array[String]
 } derive(Debug, Eq)
+
+///|
 pub extend RefactorPattern with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend RefactorPattern with Eq::{not_equal, equal}
 
 ///|
 /// 创建重构建议 | Create refactoring suggestion
-pub fn suggestion_create(target : String, from : String, to : String, reason : String, severity : String) -> RefactorSuggestion {
+pub fn suggestion_create(
+  target : String,
+  from : String,
+  to : String,
+  reason : String,
+  severity : String,
+) -> RefactorSuggestion {
   { target, from_pattern: from, to_pattern: to, reason, severity, }
 }
 
 ///|
 /// 创建重构模式 | Create refactoring pattern
-pub fn pattern_create(name : String, description : String, before : String, after : String, benefits : Array[String]) -> RefactorPattern {
+pub fn pattern_create(
+  name : String,
+  description : String,
+  before : String,
+  after : String,
+  benefits : Array[String],
+) -> RefactorPattern {
   { name, description, before, after, benefits, }
 }
 
 ///|
 /// 生成重构报告 | Generate refactoring report
-pub fn report_create(suggestions : Array[RefactorSuggestion], applied : Int) -> RefactorReport {
+pub fn report_create(
+  suggestions : Array[RefactorSuggestion],
+  applied : Int32,
+) -> RefactorReport {
   let total = suggestions.length()
   let skipped = total - applied
   { suggestions, total, applied, skipped, }
@@ -127,7 +154,10 @@ pub fn all_patterns() -> Array[RefactorPattern] {
 
 ///|
 /// 按严重性过滤建议 | Filter suggestions by severity
-pub fn filter_by_severity(suggestions : Array[RefactorSuggestion], severity : String) -> Array[RefactorSuggestion] {
+pub fn filter_by_severity(
+  suggestions : Array[RefactorSuggestion],
+  severity : String,
+) -> Array[RefactorSuggestion] {
   let result = []
   for s in suggestions {
     if s.severity == severity {
@@ -140,49 +170,74 @@ pub fn filter_by_severity(suggestions : Array[RefactorSuggestion], severity : St
 ///|
 /// 重构报告摘要 | Refactoring report summary
 pub fn report_summary(report : RefactorReport) -> String {
-  "Refactor: " + report.total.to_string() + " suggestions, " + report.applied.to_string() + " applied, " + report.skipped.to_string() + " skipped"
+  "Refactor: " +
+  report.total.to_string() +
+  " suggestions, " +
+  report.applied.to_string() +
+  " applied, " +
+  report.skipped.to_string() +
+  " skipped"
 }
 
 ///|
 /// RefactorSuggestion 实现 Named trait
-pub impl @trait.Named for RefactorSuggestion with name(self) {
+pub impl @trait.Named for RefactorSuggestion with fn name(self) {
   self.target
 }
+
+///|
 pub extend RefactorSuggestion with @trait.Named::{name}
 
 ///|
 /// RefactorSuggestion 实现 Summarizable trait
-pub impl @trait.Summarizable for RefactorSuggestion with summary(self) {
-  self.target + ": " + self.from_pattern + " -> " + self.to_pattern + " (" + self.severity + ")"
+pub impl @trait.Summarizable for RefactorSuggestion with fn summary(self) {
+  self.target +
+  ": " +
+  self.from_pattern +
+  " -> " +
+  self.to_pattern +
+  " (" +
+  self.severity +
+  ")"
 }
+
+///|
 pub extend RefactorSuggestion with @trait.Summarizable::{summary}
 
 ///|
 /// RefactorPattern 实现 Named trait
-pub impl @trait.Named for RefactorPattern with name(self) {
+pub impl @trait.Named for RefactorPattern with fn name(self) {
   self.name
 }
+
+///|
 pub extend RefactorPattern with @trait.Named::{name}
 
 ///|
 /// RefactorPattern 实现 Describable trait
-pub impl @trait.Describable for RefactorPattern with describe(self) {
+pub impl @trait.Describable for RefactorPattern with fn describe(self) {
   self.description
 }
+
+///|
 pub extend RefactorPattern with @trait.Describable::{describe}
 
 ///|
 /// RefactorReport 实现 Countable trait
-pub impl @trait.Countable for RefactorReport with count(self) {
+pub impl @trait.Countable for RefactorReport with fn count(self) {
   self.total
 }
+
+///|
 pub extend RefactorReport with @trait.Countable::{count}
 
 ///|
 /// RefactorReport 实现 Summarizable trait
-pub impl @trait.Summarizable for RefactorReport with summary(self) {
+pub impl @trait.Summarizable for RefactorReport with fn summary(self) {
   report_summary(self)
 }
+
+///|
 pub extend RefactorReport with @trait.Summarizable::{summary}
 
 ///|

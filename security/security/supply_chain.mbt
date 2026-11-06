@@ -7,7 +7,10 @@ pub(all) struct DependencyInfo {
   checksum : String
 } derive(Debug, Eq)
 
+///|
 pub extend DependencyInfo with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend DependencyInfo with Eq::{not_equal, equal}
 
 ///|
@@ -17,7 +20,10 @@ pub(all) struct LicenseCompatResult {
   reason : String
 } derive(Debug, Eq)
 
+///|
 pub extend LicenseCompatResult with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend LicenseCompatResult with Eq::{not_equal, equal}
 
 ///|
@@ -29,13 +35,21 @@ pub(all) struct LockEntry {
   source : String
 } derive(Debug, Eq)
 
+///|
 pub extend LockEntry with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend LockEntry with Eq::{not_equal, equal}
 
 ///|
 /// 创建依赖信息 | Create dependency info
-pub fn make_dependency(name : String, version : String, license : String, checksum : String) -> DependencyInfo {
-  { name, version, license, checksum }
+pub fn make_dependency(
+  name : String,
+  version : String,
+  license : String,
+  checksum : String,
+) -> DependencyInfo {
+  { name, version, license, checksum, }
 }
 
 ///|
@@ -46,27 +60,48 @@ pub fn verify_checksum(expected : String, actual : String) -> Bool {
 
 ///|
 /// 检查许可证兼容性 | Check license compatibility
-pub fn check_license_compatibility(project_license : String, dep_license : String) -> LicenseCompatResult {
+pub fn check_license_compatibility(
+  project_license : String,
+  dep_license : String,
+) -> LicenseCompatResult {
   match (project_license, dep_license) {
-    ("MIT", "MIT") => { compatible: true, reason: "MIT is compatible with MIT" }
-    ("MIT", "Apache-2.0") => { compatible: true, reason: "Apache-2.0 is compatible with MIT" }
-    ("MIT", "BSD-3-Clause") => { compatible: true, reason: "BSD-3-Clause is compatible with MIT" }
-    ("MIT", "ISC") => { compatible: true, reason: "ISC is compatible with MIT" }
-    ("Apache-2.0", "Apache-2.0") => { compatible: true, reason: "Apache-2.0 is compatible with Apache-2.0" }
-    ("Apache-2.0", "MIT") => { compatible: true, reason: "MIT is compatible with Apache-2.0" }
-    ("GPL-3.0", "MIT") => { compatible: true, reason: "MIT is compatible with GPL-3.0" }
-    ("GPL-3.0", "GPL-3.0") => { compatible: true, reason: "GPL-3.0 is compatible with GPL-3.0" }
-    ("GPL-3.0", "Apache-2.0") => { compatible: false, reason: "Apache-2.0 is NOT compatible with GPL-3.0" }
-    (_, "UNLICENSED") => { compatible: false, reason: "unlicensed dependency is not allowed" }
-    (_, "PROPRIETARY") => { compatible: false, reason: "proprietary license is not allowed" }
-    (_, _) => { compatible: true, reason: "unknown license combination, allowing by default" }
+    ("MIT", "MIT") =>
+      { compatible: true, reason: "MIT is compatible with MIT", }
+    ("MIT", "Apache-2.0") =>
+      { compatible: true, reason: "Apache-2.0 is compatible with MIT", }
+    ("MIT", "BSD-3-Clause") =>
+      { compatible: true, reason: "BSD-3-Clause is compatible with MIT", }
+    ("MIT", "ISC") =>
+      { compatible: true, reason: "ISC is compatible with MIT", }
+    ("Apache-2.0", "Apache-2.0") =>
+      { compatible: true, reason: "Apache-2.0 is compatible with Apache-2.0", }
+    ("Apache-2.0", "MIT") =>
+      { compatible: true, reason: "MIT is compatible with Apache-2.0", }
+    ("GPL-3.0", "MIT") =>
+      { compatible: true, reason: "MIT is compatible with GPL-3.0", }
+    ("GPL-3.0", "GPL-3.0") =>
+      { compatible: true, reason: "GPL-3.0 is compatible with GPL-3.0", }
+    ("GPL-3.0", "Apache-2.0") =>
+      {
+        compatible: false,
+        reason: "Apache-2.0 is NOT compatible with GPL-3.0",
+      }
+    (_, "UNLICENSED") =>
+      { compatible: false, reason: "unlicensed dependency is not allowed", }
+    (_, "PROPRIETARY") =>
+      { compatible: false, reason: "proprietary license is not allowed", }
+    (_, _) =>
+      {
+        compatible: true,
+        reason: "unknown license combination, allowing by default",
+      }
   }
 }
 
 ///|
 /// 创建锁定条目 | Create lock entry
 pub fn make_lock_entry(dep : DependencyInfo, source : String) -> LockEntry {
-  { name: dep.name, version: dep.version, checksum: dep.checksum, source }
+  { name: dep.name, version: dep.version, checksum: dep.checksum, source, }
 }
 
 ///|
@@ -123,14 +158,18 @@ pub fn supply_chain_version() -> String {
 
 ///|
 /// DependencyInfo 实现 Named trait | DependencyInfo implements Named
-pub impl @trait.Named for DependencyInfo with name(self) {
+pub impl @trait.Named for DependencyInfo with fn name(self) {
   self.name
 }
+
+///|
 pub extend DependencyInfo with @trait.Named::{name}
 
 ///|
 /// LockEntry 实现 Named trait | LockEntry implements Named
-pub impl @trait.Named for LockEntry with name(self) {
+pub impl @trait.Named for LockEntry with fn name(self) {
   self.name
 }
+
+///|
 pub extend LockEntry with @trait.Named::{name}

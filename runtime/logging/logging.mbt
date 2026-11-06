@@ -7,7 +7,11 @@ pub(all) enum LogLevel {
   Error
   Fatal
 } derive(Debug, Eq)
+
+///|
 pub extend LogLevel with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend LogLevel with Eq::{not_equal, equal}
 
 ///|
@@ -15,11 +19,15 @@ pub extend LogLevel with Eq::{not_equal, equal}
 pub(all) struct LogEntry {
   level : LogLevel
   message : String
-  timestamp : Int
+  timestamp : Int32
   source : String
   context : String
 } derive(Debug, Eq)
+
+///|
 pub extend LogEntry with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend LogEntry with Eq::{not_equal, equal}
 
 ///|
@@ -28,23 +36,31 @@ pub(all) struct LogConfig {
   min_level : LogLevel
   include_timestamp : Bool
   include_source : Bool
-  max_entries : Int
+  max_entries : Int32
 } derive(Debug, Eq)
+
+///|
 pub extend LogConfig with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend LogConfig with Eq::{not_equal, equal}
 
 ///|
 /// 日志统计 | Log statistics
 pub(all) struct LogStats {
-  total_entries : Int
-  debug_count : Int
-  info_count : Int
-  warn_count : Int
-  error_count : Int
-  fatal_count : Int
-  dropped_count : Int
+  total_entries : Int32
+  debug_count : Int32
+  info_count : Int32
+  warn_count : Int32
+  error_count : Int32
+  fatal_count : Int32
+  dropped_count : Int32
 } derive(Debug, Eq)
+
+///|
 pub extend LogStats with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend LogStats with Eq::{not_equal, equal}
 
 ///|
@@ -54,12 +70,16 @@ pub(all) struct Logger {
   entries : Array[LogEntry]
   stats : LogStats
 } derive(Debug, Eq)
+
+///|
 pub extend Logger with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend Logger with Eq::{not_equal, equal}
 
 ///|
 /// 日志级别数值 | Log level numeric value
-pub fn log_level_value(level : LogLevel) -> Int {
+pub fn log_level_value(level : LogLevel) -> Int32 {
   match level {
     Debug => 0
     Info => 1
@@ -83,7 +103,7 @@ pub fn log_level_name(level : LogLevel) -> String {
 
 ///|
 /// 从数值创建日志级别 | Create log level from value
-pub fn log_level_from_value(value : Int) -> LogLevel {
+pub fn log_level_from_value(value : Int32) -> LogLevel {
   if value >= 4 {
     Fatal
   } else if value == 3 {
@@ -100,7 +120,12 @@ pub fn log_level_from_value(value : Int) -> LogLevel {
 ///|
 /// 默认日志配置 | Default log config
 pub fn default_log_config() -> LogConfig {
-  { min_level: Info, include_timestamp: true, include_source: true, max_entries: 1000 }
+  {
+    min_level: Info,
+    include_timestamp: true,
+    include_source: true,
+    max_entries: 1000,
+  }
 }
 
 ///|
@@ -109,7 +134,15 @@ pub fn create_logger(config : LogConfig) -> Logger {
   {
     config,
     entries: [],
-    stats: { total_entries: 0, debug_count: 0, info_count: 0, warn_count: 0, error_count: 0, fatal_count: 0, dropped_count: 0 },
+    stats: {
+      total_entries: 0,
+      debug_count: 0,
+      info_count: 0,
+      warn_count: 0,
+      error_count: 0,
+      fatal_count: 0,
+      dropped_count: 0,
+    },
   }
 }
 
@@ -123,11 +156,11 @@ pub fn log_is_enabled(logger : Logger, level : LogLevel) -> Bool {
 /// 记数器增量 | Increment count for level
 fn inc_count(stats : LogStats, level : LogLevel) -> LogStats {
   match level {
-    Debug => { ..stats, debug_count: stats.debug_count + 1 }
-    Info => { ..stats, info_count: stats.info_count + 1 }
-    Warn => { ..stats, warn_count: stats.warn_count + 1 }
-    Error => { ..stats, error_count: stats.error_count + 1 }
-    Fatal => { ..stats, fatal_count: stats.fatal_count + 1 }
+    Debug => { ..stats, debug_count: stats.debug_count + 1, }
+    Info => { ..stats, info_count: stats.info_count + 1, }
+    Warn => { ..stats, warn_count: stats.warn_count + 1, }
+    Error => { ..stats, error_count: stats.error_count + 1, }
+    Fatal => { ..stats, fatal_count: stats.fatal_count + 1, }
   }
 }
 
@@ -137,14 +170,17 @@ pub fn log_at(
   logger : Logger,
   level : LogLevel,
   message : String,
-  timestamp : Int,
+  timestamp : Int32,
   source : String,
   context : String,
 ) -> Logger {
   if !log_is_enabled(logger, level) {
-    return { ..logger, stats: { ..logger.stats, dropped_count: logger.stats.dropped_count + 1 } }
+    return {
+      ..logger,
+      stats: { ..logger.stats, dropped_count: logger.stats.dropped_count + 1, },
+    }
   }
-  let entry = { level, message, timestamp, source, context }
+  let entry = { level, message, timestamp, source, context, }
   let new_entries = []
   for e in logger.entries {
     new_entries.push(e)
@@ -173,43 +209,71 @@ pub fn log_at(
 
 ///|
 /// Debug 日志 | Debug log
-pub fn log_debug(logger : Logger, message : String, timestamp : Int, source : String) -> Logger {
+pub fn log_debug(
+  logger : Logger,
+  message : String,
+  timestamp : Int32,
+  source : String,
+) -> Logger {
   log_at(logger, Debug, message, timestamp, source, "")
 }
 
 ///|
 /// Info 日志 | Info log
-pub fn log_info(logger : Logger, message : String, timestamp : Int, source : String) -> Logger {
+pub fn log_info(
+  logger : Logger,
+  message : String,
+  timestamp : Int32,
+  source : String,
+) -> Logger {
   log_at(logger, Info, message, timestamp, source, "")
 }
 
 ///|
 /// Warn 日志 | Warn log
-pub fn log_warn(logger : Logger, message : String, timestamp : Int, source : String) -> Logger {
+pub fn log_warn(
+  logger : Logger,
+  message : String,
+  timestamp : Int32,
+  source : String,
+) -> Logger {
   log_at(logger, Warn, message, timestamp, source, "")
 }
 
 ///|
 /// Error 日志 | Error log
-pub fn log_error(logger : Logger, message : String, timestamp : Int, source : String) -> Logger {
+pub fn log_error(
+  logger : Logger,
+  message : String,
+  timestamp : Int32,
+  source : String,
+) -> Logger {
   log_at(logger, Error, message, timestamp, source, "")
 }
 
 ///|
 /// Fatal 日志 | Fatal log
-pub fn log_fatal(logger : Logger, message : String, timestamp : Int, source : String) -> Logger {
+pub fn log_fatal(
+  logger : Logger,
+  message : String,
+  timestamp : Int32,
+  source : String,
+) -> Logger {
   log_at(logger, Fatal, message, timestamp, source, "")
 }
 
 ///|
 /// 日志条目数 | Log entry count
-pub fn log_count(logger : Logger) -> Int {
+pub fn log_count(logger : Logger) -> Int32 {
   logger.entries.length()
 }
 
 ///|
 /// 按级别过滤 | Filter by level
-pub fn log_filter_by_level(logger : Logger, level : LogLevel) -> Array[LogEntry] {
+pub fn log_filter_by_level(
+  logger : Logger,
+  level : LogLevel,
+) -> Array[LogEntry] {
   let result = []
   for e in logger.entries {
     if e.level == level {
@@ -221,7 +285,10 @@ pub fn log_filter_by_level(logger : Logger, level : LogLevel) -> Array[LogEntry]
 
 ///|
 /// 按来源过滤 | Filter by source
-pub fn log_filter_by_source(logger : Logger, source : String) -> Array[LogEntry] {
+pub fn log_filter_by_source(
+  logger : Logger,
+  source : String,
+) -> Array[LogEntry] {
   let result = []
   for e in logger.entries {
     if e.source == source {
@@ -233,7 +300,10 @@ pub fn log_filter_by_source(logger : Logger, source : String) -> Array[LogEntry]
 
 ///|
 /// 按消息包含过滤 | Filter by message contains
-pub fn log_filter_by_message(logger : Logger, keyword : String) -> Array[LogEntry] {
+pub fn log_filter_by_message(
+  logger : Logger,
+  keyword : String,
+) -> Array[LogEntry] {
   let result = []
   for e in logger.entries {
     if e.message.contains(keyword) {
@@ -246,7 +316,7 @@ pub fn log_filter_by_message(logger : Logger, keyword : String) -> Array[LogEntr
 ///|
 /// 清空日志 | Clear logs
 pub fn log_clear(logger : Logger) -> Logger {
-  { ..logger, entries: [] }
+  { ..logger, entries: [], }
 }
 
 ///|
@@ -275,7 +345,7 @@ pub fn log_format_entry(entry : LogEntry, config : LogConfig) -> String {
 
 ///|
 /// 获取最后 N 条日志 | Get last N entries
-pub fn log_last_n(logger : Logger, n : Int) -> Array[LogEntry] {
+pub fn log_last_n(logger : Logger, n : Int32) -> Array[LogEntry] {
   let total = logger.entries.length()
   let start = if total > n { total - n } else { 0 }
   let result = []
@@ -318,7 +388,9 @@ pub fn log_version() -> String {
 
 ///|
 /// Logger 实现 Countable trait | Logger implements Countable
-pub impl @trait.Countable for Logger with count(self) {
+pub impl @trait.Countable for Logger with fn count(self) {
   self.entries.length()
 }
+
+///|
 pub extend Logger with @trait.Countable::{count}

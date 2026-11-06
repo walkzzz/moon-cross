@@ -5,22 +5,28 @@ pub(all) struct PlatformCompileResult {
   success : Bool
   error_message : String?
   output_files : Array[String]
-  duration_ms : Int
+  duration_ms : Int32
 } derive(Debug, Eq)
 
+///|
 pub extend PlatformCompileResult with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend PlatformCompileResult with Eq::{not_equal, equal}
 
 ///|
 /// 多平台编译汇总报告 | Multi-platform compile summary report
 pub(all) struct CompileSummary {
   results : Array[PlatformCompileResult]
-  total_platforms : Int
-  successful_platforms : Int
-  failed_platforms : Int
+  total_platforms : Int32
+  successful_platforms : Int32
+  failed_platforms : Int32
 } derive(Debug, Eq)
 
+///|
 pub extend CompileSummary with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend CompileSummary with Eq::{not_equal, equal}
 
 ///|
@@ -31,7 +37,10 @@ pub(all) enum FfiFallbackMode {
   ManualFfi
 } derive(Debug, Eq)
 
+///|
 pub extend FfiFallbackMode with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend FfiFallbackMode with Eq::{not_equal, equal}
 
 ///|
@@ -41,14 +50,16 @@ pub fn compile_result(
   success : Bool,
   error_message : String?,
   output_files : Array[String],
-  duration_ms : Int,
+  duration_ms : Int32,
 ) -> PlatformCompileResult {
-  { platform, success, error_message, output_files, duration_ms }
+  { platform, success, error_message, output_files, duration_ms, }
 }
 
 ///|
 /// 汇总多平台编译结果 | Summarize multi-platform compile results
-pub fn summarize_compile(results : Array[PlatformCompileResult]) -> CompileSummary {
+pub fn summarize_compile(
+  results : Array[PlatformCompileResult],
+) -> CompileSummary {
   let total = results.length()
   let mut success_count = 0
   let mut fail_count = 0
@@ -59,12 +70,19 @@ pub fn summarize_compile(results : Array[PlatformCompileResult]) -> CompileSumma
       fail_count = fail_count + 1
     }
   }
-  { results, total_platforms: total, successful_platforms: success_count, failed_platforms: fail_count }
+  {
+    results,
+    total_platforms: total,
+    successful_platforms: success_count,
+    failed_platforms: fail_count,
+  }
 }
 
 ///|
 /// 部分成功恢复：单平台失败不阻塞其他平台 | Partial success recovery: single platform failure does not block others
-pub fn partial_success_recovery(results : Array[PlatformCompileResult]) -> Array[@core.Platform] {
+pub fn partial_success_recovery(
+  results : Array[PlatformCompileResult],
+) -> Array[@core.Platform] {
   let successful = []
   for result in results {
     if result.success {
@@ -128,14 +146,18 @@ pub fn recovery_version() -> String {
 
 ///|
 /// PlatformCompileResult 实现 Checkable trait | PlatformCompileResult implements Checkable
-pub impl @trait.Checkable for PlatformCompileResult with check(self) {
+pub impl @trait.Checkable for PlatformCompileResult with fn check(self) {
   self.success
 }
+
+///|
 pub extend PlatformCompileResult with @trait.Checkable::{check}
 
 ///|
 /// CompileSummary 实现 Countable trait | CompileSummary implements Countable
-pub impl @trait.Countable for CompileSummary with count(self) {
+pub impl @trait.Countable for CompileSummary with fn count(self) {
   self.results.length()
 }
+
+///|
 pub extend CompileSummary with @trait.Countable::{count}

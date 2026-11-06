@@ -8,7 +8,10 @@ pub(all) enum OptLevel {
   Os
 } derive(Debug, Eq)
 
+///|
 pub extend OptLevel with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend OptLevel with Eq::{not_equal, equal}
 
 ///|
@@ -21,38 +24,62 @@ pub(all) struct OptConfig {
   lto : Bool
 } derive(Debug, Eq)
 
+///|
 pub extend OptConfig with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend OptConfig with Eq::{not_equal, equal}
 
 ///|
 /// 优化结果 | Optimization result
 pub(all) struct OptResult {
-  original_size_bytes : Int
-  optimized_size_bytes : Int
-  inlined_functions : Int
-  eliminated_functions : Int
-  specialized_templates : Int
+  original_size_bytes : Int32
+  optimized_size_bytes : Int32
+  inlined_functions : Int32
+  eliminated_functions : Int32
+  specialized_templates : Int32
 } derive(Debug, Eq)
 
+///|
 pub extend OptResult with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend OptResult with Eq::{not_equal, equal}
 
 ///|
 /// 默认优化配置 | Default optimization configuration
 pub fn default_opt_config() -> OptConfig {
-  { level: O2, inline_small_functions: true, dead_code_elimination: true, template_specialization: true, lto: false }
+  {
+    level: O2,
+    inline_small_functions: true,
+    dead_code_elimination: true,
+    template_specialization: true,
+    lto: false,
+  }
 }
 
 ///|
 /// 发布优化配置 | Release optimization configuration
 pub fn release_opt_config() -> OptConfig {
-  { level: O3, inline_small_functions: true, dead_code_elimination: true, template_specialization: true, lto: true }
+  {
+    level: O3,
+    inline_small_functions: true,
+    dead_code_elimination: true,
+    template_specialization: true,
+    lto: true,
+  }
 }
 
 ///|
 /// 调试优化配置 | Debug optimization configuration
 pub fn debug_opt_config() -> OptConfig {
-  { level: O0, inline_small_functions: false, dead_code_elimination: false, template_specialization: false, lto: false }
+  {
+    level: O0,
+    inline_small_functions: false,
+    dead_code_elimination: false,
+    template_specialization: false,
+    lto: false,
+  }
 }
 
 ///|
@@ -82,13 +109,16 @@ pub fn opt_flags(config : OptConfig) -> Array[String] {
 
 ///|
 /// 判断函数是否应内联 | Determine if function should be inlined
-pub fn should_inline(function_body_size : Int, call_count : Int) -> Bool {
+pub fn should_inline(function_body_size : Int32, call_count : Int32) -> Bool {
   function_body_size <= 50 && call_count >= 3
 }
 
 ///|
 /// 模板特化：根据参数类型生成特化代码 | Template specialization
-pub fn template_specialize(function_name : String, param_types : Array[String]) -> String {
+pub fn template_specialize(
+  function_name : String,
+  param_types : Array[String],
+) -> String {
   let mut name = function_name + "_specialized"
   for ptype in param_types {
     name = name + "_" + ptype
@@ -98,7 +128,10 @@ pub fn template_specialize(function_name : String, param_types : Array[String]) 
 
 ///|
 /// 死代码消除：检测未使用的导出函数 | Dead code elimination
-pub fn dead_code_eliminate(exported_functions : Array[String], used_functions : Array[String]) -> Array[String] {
+pub fn dead_code_eliminate(
+  exported_functions : Array[String],
+  used_functions : Array[String],
+) -> Array[String] {
   let unused = []
   for func in exported_functions {
     let mut is_used = false
@@ -116,7 +149,10 @@ pub fn dead_code_eliminate(exported_functions : Array[String], used_functions : 
 
 ///|
 /// 计算优化后的大小 | Calculate optimized size
-pub fn estimate_optimized_size(original_size : Int, config : OptConfig) -> Int {
+pub fn estimate_optimized_size(
+  original_size : Int32,
+  config : OptConfig,
+) -> Int32 {
   let mut size = original_size
   if config.dead_code_elimination {
     size = size * 85 / 100
@@ -139,13 +175,19 @@ pub fn estimate_optimized_size(original_size : Int, config : OptConfig) -> Int {
 ///|
 /// 创建优化结果 | Create optimization result
 pub fn make_opt_result(
-  original_size : Int,
-  optimized_size : Int,
-  inlined : Int,
-  eliminated : Int,
-  specialized : Int,
+  original_size : Int32,
+  optimized_size : Int32,
+  inlined : Int32,
+  eliminated : Int32,
+  specialized : Int32,
 ) -> OptResult {
-  { original_size_bytes: original_size, optimized_size_bytes: optimized_size, inlined_functions: inlined, eliminated_functions: eliminated, specialized_templates: specialized }
+  {
+    original_size_bytes: original_size,
+    optimized_size_bytes: optimized_size,
+    inlined_functions: inlined,
+    eliminated_functions: eliminated,
+    specialized_templates: specialized,
+  }
 }
 
 ///|
@@ -154,7 +196,9 @@ pub fn compression_ratio(result : OptResult) -> Double {
   if result.original_size_bytes == 0 {
     0.0
   } else {
-    1.0 - result.optimized_size_bytes.to_double() / result.original_size_bytes.to_double()
+    1.0 -
+    result.optimized_size_bytes.to_double() /
+    result.original_size_bytes.to_double()
   }
 }
 

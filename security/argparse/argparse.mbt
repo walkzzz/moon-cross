@@ -6,7 +6,11 @@ pub(all) enum ArgType {
   Bool
   Flag
 } derive(Debug, Eq)
+
+///|
 pub extend ArgType with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend ArgType with Eq::{not_equal, equal}
 
 ///|
@@ -20,7 +24,11 @@ pub(all) struct ArgDef {
   default_value : String
   description : String
 } derive(Debug, Eq)
+
+///|
 pub extend ArgDef with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend ArgDef with Eq::{not_equal, equal}
 
 ///|
@@ -30,7 +38,11 @@ pub(all) struct ParseResult {
   positional : Array[String]
   errors : Array[String]
 } derive(Debug, Eq)
+
+///|
 pub extend ParseResult with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend ParseResult with Eq::{not_equal, equal}
 
 ///|
@@ -41,7 +53,11 @@ pub(all) struct ArgParser {
   args : Array[ArgDef]
   subcommands : Array[String]
 } derive(Debug, Eq)
+
+///|
 pub extend ArgParser with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend ArgParser with Eq::{not_equal, equal}
 
 ///|
@@ -58,7 +74,7 @@ pub fn arg_type_name(typ : ArgType) -> String {
 ///|
 /// 创建参数解析器 | Create argument parser
 pub fn create_parser(name : String, description : String) -> ArgParser {
-  { name, description, args: [], subcommands: [] }
+  { name, description, args: [], subcommands: [], }
 }
 
 ///|
@@ -69,7 +85,7 @@ pub fn add_arg(parser : ArgParser, def : ArgDef) -> ArgParser {
     new_args.push(a)
   }
   new_args.push(def)
-  { ..parser, args: new_args }
+  { ..parser, args: new_args, }
 }
 
 ///|
@@ -80,7 +96,7 @@ pub fn add_subcommand(parser : ArgParser, name : String) -> ArgParser {
     new_subs.push(s)
   }
   new_subs.push(name)
-  { ..parser, subcommands: new_subs }
+  { ..parser, subcommands: new_subs, }
 }
 
 ///|
@@ -94,30 +110,62 @@ pub fn make_arg(
   default_value : String,
   description : String,
 ) -> ArgDef {
-  { name, short, long, typ, required, default_value, description }
+  { name, short, long, typ, required, default_value, description, }
 }
 
 ///|
 /// 创建标志参数 | Create flag argument
-pub fn make_flag(name : String, short : String, long : String, description : String) -> ArgDef {
-  { name, short, long, typ: Flag, required: false, default_value: "false", description }
+pub fn make_flag(
+  name : String,
+  short : String,
+  long : String,
+  description : String,
+) -> ArgDef {
+  {
+    name,
+    short,
+    long,
+    typ: Flag,
+    required: false,
+    default_value: "false",
+    description,
+  }
 }
 
 ///|
 /// 创建字符串参数 | Create string argument
-pub fn make_string_arg(name : String, short : String, long : String, required : Bool, description : String) -> ArgDef {
-  { name, short, long, typ: String, required, default_value: "", description }
+pub fn make_string_arg(
+  name : String,
+  short : String,
+  long : String,
+  required : Bool,
+  description : String,
+) -> ArgDef {
+  { name, short, long, typ: String, required, default_value: "", description, }
 }
 
 ///|
 /// 创建整数参数 | Create int argument
-pub fn make_int_arg(name : String, short : String, long : String, required : Bool, description : String) -> ArgDef {
-  { name, short, long, typ: Int, required, default_value: "0", description }
+pub fn make_int_arg(
+  name : String,
+  short : String,
+  long : String,
+  required : Bool,
+  description : String,
+) -> ArgDef {
+  { name, short, long, typ: Int, required, default_value: "0", description, }
 }
 
 ///|
 /// 匹配选项定义 | Match option definition
-fn match_option_def(def : ArgDef, args : Array[String], idx : Int, values : Array[(String, String)], errors : Array[String], prefix : String) -> Int {
+fn match_option_def(
+  def : ArgDef,
+  args : Array[String],
+  idx : Int32,
+  values : Array[(String, String)],
+  errors : Array[String],
+  prefix : String,
+) -> Int32 {
   if def.typ is Flag {
     values.push((def.name, "true"))
     idx
@@ -132,14 +180,27 @@ fn match_option_def(def : ArgDef, args : Array[String], idx : Int, values : Arra
 
 ///|
 /// 解析长选项 | Parse long option
-fn parse_long_opt(parser : ArgParser, args : Array[String], idx : Int, values : Array[(String, String)], errors : Array[String]) -> Int {
+fn parse_long_opt(
+  parser : ArgParser,
+  args : Array[String],
+  idx : Int32,
+  values : Array[(String, String)],
+  errors : Array[String],
+) -> Int32 {
   let long_name = args[idx][2:].to_owned()
   let mut found = false
   let mut next_idx = idx
   for def in parser.args {
     if def.long == long_name {
       found = true
-      next_idx = match_option_def(def, args, idx, values, errors, "--" + long_name)
+      next_idx = match_option_def(
+        def,
+        args,
+        idx,
+        values,
+        errors,
+        "--" + long_name,
+      )
     }
   }
   if !found {
@@ -150,14 +211,27 @@ fn parse_long_opt(parser : ArgParser, args : Array[String], idx : Int, values : 
 
 ///|
 /// 解析短选项 | Parse short option
-fn parse_short_opt(parser : ArgParser, args : Array[String], idx : Int, values : Array[(String, String)], errors : Array[String]) -> Int {
+fn parse_short_opt(
+  parser : ArgParser,
+  args : Array[String],
+  idx : Int32,
+  values : Array[(String, String)],
+  errors : Array[String],
+) -> Int32 {
   let short_name = args[idx][1:].to_owned()
   let mut found = false
   let mut next_idx = idx
   for def in parser.args {
     if def.short == short_name {
       found = true
-      next_idx = match_option_def(def, args, idx, values, errors, "-" + short_name)
+      next_idx = match_option_def(
+        def,
+        args,
+        idx,
+        values,
+        errors,
+        "-" + short_name,
+      )
     }
   }
   if !found {
@@ -168,7 +242,11 @@ fn parse_short_opt(parser : ArgParser, args : Array[String], idx : Int, values :
 
 ///|
 /// 检查必需参数 | Check required arguments
-fn check_required_args(parser : ArgParser, values : Array[(String, String)], errors : Array[String]) -> Unit {
+fn check_required_args(
+  parser : ArgParser,
+  values : Array[(String, String)],
+  errors : Array[String],
+) -> Unit {
   for def in parser.args {
     if def.required {
       let mut found = false
@@ -203,9 +281,8 @@ pub fn parse_args(parser : ArgParser, args : Array[String]) -> ParseResult {
     i = i + 1
   }
   check_required_args(parser, values, errors)
-  { values, positional, errors }
+  { values, positional, errors, }
 }
-
 
 ///|
 /// 获取解析值 | Get parsed value
@@ -220,7 +297,11 @@ pub fn get_value(result : ParseResult, name : String) -> String? {
 
 ///|
 /// 获取默认值 | Get value or default
-pub fn get_value_or(result : ParseResult, name : String, default : String) -> String {
+pub fn get_value_or(
+  result : ParseResult,
+  name : String,
+  default : String,
+) -> String {
   for v in result.values {
     if v.0 == name {
       return v.1
@@ -248,13 +329,13 @@ pub fn parse_success(result : ParseResult) -> Bool {
 
 ///|
 /// 错误数量 | Error count
-pub fn error_count(result : ParseResult) -> Int {
+pub fn error_count(result : ParseResult) -> Int32 {
   result.errors.length()
 }
 
 ///|
 /// 位置参数数量 | Positional count
-pub fn positional_count(result : ParseResult) -> Int {
+pub fn positional_count(result : ParseResult) -> Int32 {
   result.positional.length()
 }
 
@@ -267,10 +348,25 @@ pub fn generate_help(parser : ArgParser) -> String {
   }
   help = help + "\n\n" + parser.description + "\n\nOptions:\n"
   for def in parser.args {
-    let short_part = if def.short.length() > 0 { "-" + def.short + ", " } else { "    " }
+    let short_part = if def.short.length() > 0 {
+      "-" + def.short + ", "
+    } else {
+      "    "
+    }
     let long_part = "--" + def.long
-    let type_part = if def.typ is Flag { "" } else { " <" + arg_type_name(def.typ) + ">" }
-    help = help + "  " + short_part + long_part + type_part + "  " + def.description + "\n"
+    let type_part = if def.typ is Flag {
+      ""
+    } else {
+      " <" + arg_type_name(def.typ) + ">"
+    }
+    help = help +
+      "  " +
+      short_part +
+      long_part +
+      type_part +
+      "  " +
+      def.description +
+      "\n"
   }
   if parser.subcommands.length() > 0 {
     help = help + "\nSubcommands:\n"
@@ -283,13 +379,13 @@ pub fn generate_help(parser : ArgParser) -> String {
 
 ///|
 /// 参数数量 | Argument count
-pub fn arg_count(parser : ArgParser) -> Int {
+pub fn arg_count(parser : ArgParser) -> Int32 {
   parser.args.length()
 }
 
 ///|
 /// 子命令数量 | Subcommand count
-pub fn subcommand_count(parser : ArgParser) -> Int {
+pub fn subcommand_count(parser : ArgParser) -> Int32 {
   parser.subcommands.length()
 }
 
@@ -321,7 +417,12 @@ pub fn merge_parsers(p1 : ArgParser, p2 : ArgParser) -> ArgParser {
   for s in p2.subcommands {
     new_subs.push(s)
   }
-  { name: p1.name, description: p1.description, args: new_args, subcommands: new_subs }
+  {
+    name: p1.name,
+    description: p1.description,
+    args: new_args,
+    subcommands: new_subs,
+  }
 }
 
 ///|
@@ -332,28 +433,36 @@ pub fn argparse_version() -> String {
 
 ///|
 /// ArgDef 实现 Named trait | ArgDef implements Named
-pub impl @trait.Named for ArgDef with name(self) {
+pub impl @trait.Named for ArgDef with fn name(self) {
   self.name
 }
+
+///|
 pub extend ArgDef with @trait.Named::{name}
 
 ///|
 /// ArgParser 实现 Named trait | ArgParser implements Named
-pub impl @trait.Named for ArgParser with name(self) {
+pub impl @trait.Named for ArgParser with fn name(self) {
   self.name
 }
+
+///|
 pub extend ArgParser with @trait.Named::{name}
 
 ///|
 /// ArgDef 实现 Describable trait | ArgDef implements Describable
-pub impl @trait.Describable for ArgDef with describe(self) {
+pub impl @trait.Describable for ArgDef with fn describe(self) {
   self.description
 }
+
+///|
 pub extend ArgDef with @trait.Describable::{describe}
 
 ///|
 /// ArgParser 实现 Describable trait | ArgParser implements Describable
-pub impl @trait.Describable for ArgParser with describe(self) {
+pub impl @trait.Describable for ArgParser with fn describe(self) {
   self.description
 }
+
+///|
 pub extend ArgParser with @trait.Describable::{describe}

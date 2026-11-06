@@ -4,26 +4,34 @@ pub(all) struct HashConfig {
   algorithm : String
   salt : String
 } derive(Debug, Eq)
+
+///|
 pub extend HashConfig with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend HashConfig with Eq::{not_equal, equal}
 
 ///|
 /// 随机数状态 | Random state
 pub(all) struct RngState {
-  seed : Int
-  current : Int
+  seed : Int32
+  current : Int32
 } derive(Debug, Eq)
+
+///|
 pub extend RngState with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend RngState with Eq::{not_equal, equal}
 
 ///|
 /// DJB2 哈希 | DJB2 hash
-pub fn hash_djb2(s : String) -> Int {
+pub fn hash_djb2(s : String) -> Int32 {
   let mut hash = 5381
   let len = s.length()
   let mut i = 0
   while i < len {
-    hash = ((hash * 33) + s[i].to_int()) % 1000000007
+    hash = (hash * 33 + s[i].to_int()) % 1000000007
     if hash < 0 {
       hash = -hash
     }
@@ -34,7 +42,7 @@ pub fn hash_djb2(s : String) -> Int {
 
 ///|
 /// FNV-1 哈希 | FNV-1 hash
-pub fn hash_fnv1(s : String) -> Int {
+pub fn hash_fnv1(s : String) -> Int32 {
   let mut hash = 16777619
   let len = s.length()
   let mut i = 0
@@ -50,12 +58,12 @@ pub fn hash_fnv1(s : String) -> Int {
 
 ///|
 /// SDBM 哈希 | SDBM hash
-pub fn hash_sdbm(s : String) -> Int {
+pub fn hash_sdbm(s : String) -> Int32 {
   let mut hash = 0
   let len = s.length()
   let mut i = 0
   while i < len {
-    hash = s[i].to_int() + (hash * 65599)
+    hash = s[i].to_int() + hash * 65599
     hash = hash % 1000000007
     if hash < 0 {
       hash = -hash
@@ -67,7 +75,7 @@ pub fn hash_sdbm(s : String) -> Int {
 
 ///|
 /// 带盐哈希 | Hash with salt
-pub fn hash_with_salt(s : String, config : HashConfig) -> Int {
+pub fn hash_with_salt(s : String, config : HashConfig) -> Int32 {
   let combined = s + config.salt
   if config.algorithm == "djb2" {
     return hash_djb2(combined)
@@ -92,7 +100,9 @@ pub fn hex_encode(data : String) -> String {
     let c = data[i].to_int()
     let hi = c / 16
     let lo = c % 16
-    result = result + hex_chars[hi:hi + 1].to_owned() + hex_chars[lo:lo + 1].to_owned()
+    result = result +
+      hex_chars[hi:hi + 1].to_owned() +
+      hex_chars[lo:lo + 1].to_owned()
     i = i + 1
   }
   result
@@ -159,7 +169,7 @@ pub fn xor_decrypt(ciphertext : String, key : String) -> String {
 
 ///|
 /// 凯撒加密 | Caesar encrypt
-pub fn caesar_encrypt(plaintext : String, shift : Int) -> String {
+pub fn caesar_encrypt(plaintext : String, shift : Int32) -> String {
   let mut result = ""
   let len = plaintext.length()
   let effective_shift = shift % 26
@@ -182,30 +192,34 @@ pub fn caesar_encrypt(plaintext : String, shift : Int) -> String {
 
 ///|
 /// 凯撒解密 | Caesar decrypt
-pub fn caesar_decrypt(ciphertext : String, shift : Int) -> String {
+pub fn caesar_decrypt(ciphertext : String, shift : Int32) -> String {
   caesar_encrypt(ciphertext, -shift)
 }
 
 ///|
 /// 创建随机状态 | Create random state
-pub fn rng_create(seed : Int) -> RngState {
-  { seed, current: seed }
+pub fn rng_create(seed : Int32) -> RngState {
+  { seed, current: seed, }
 }
 
 ///|
 /// 生成随机数 | Generate random number
-pub fn rng_next(state : RngState) -> (RngState, Int) {
+pub fn rng_next(state : RngState) -> (RngState, Int32) {
   let next = (state.current * 17 + 13) % 100000000
   if next < 0 {
-    ({ seed: state.seed, current: -next }, -next)
+    ({ seed: state.seed, current: -next, }, -next)
   } else {
-    ({ seed: state.seed, current: next }, next)
+    ({ seed: state.seed, current: next, }, next)
   }
 }
 
 ///|
 /// 生成范围随机数 | Generate random number in range
-pub fn rng_range(state : RngState, min : Int, max : Int) -> (RngState, Int) {
+pub fn rng_range(
+  state : RngState,
+  min : Int32,
+  max : Int32,
+) -> (RngState, Int32) {
   let (new_state, val) = rng_next(state)
   if max <= min {
     (new_state, min)
@@ -216,7 +230,7 @@ pub fn rng_range(state : RngState, min : Int, max : Int) -> (RngState, Int) {
 
 ///|
 /// 生成盐字符串 | Generate salt string
-pub fn generate_salt(length : Int, seed : Int) -> String {
+pub fn generate_salt(length : Int32, seed : Int32) -> String {
   let chars = "abcdefghijklmnopqrstuvwxyz0123456789"
   let mut result = ""
   let mut state = rng_create(seed)
@@ -238,7 +252,9 @@ pub fn crypto_version() -> String {
 
 ///|
 /// HashConfig 实现 Named trait | HashConfig implements Named
-pub impl @trait.Named for HashConfig with name(self) {
+pub impl @trait.Named for HashConfig with fn name(self) {
   self.algorithm
 }
+
+///|
 pub extend HashConfig with @trait.Named::{name}

@@ -11,7 +11,11 @@ pub(all) struct ParserPipelineResult {
   ios_command : String
   ohos_command : String
 } derive(Debug, Eq)
+
+///|
 pub extend ParserPipelineResult with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend ParserPipelineResult with Eq::{not_equal, equal}
 
 ///|

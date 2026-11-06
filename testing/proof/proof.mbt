@@ -1,11 +1,26 @@
 ///|
+/// 运行时契约检查框架 | Runtime contract checking framework
+///
+/// 注意：本模块是运行时契约检查（类似 PyContract / JML 的运行时检查子集），
+/// 而非基于 Lean 的形式化验证。MoonBit 的 `moon prove` 才是真形式化验证。
+/// 本框架通过运行时布尔断言验证前置条件/后置条件/不变量，有价值但名不副实。
+/// | Note: This module is runtime contract checking (like PyContract / JML runtime
+/// checking subset), NOT Lean-based formal verification. MoonBit's `moon prove` is
+/// true formal verification. This framework validates pre/post-conditions and
+/// invariants via runtime boolean assertions - valuable but not formal proof.
+
+///|
 /// 证明结果 | Proof result
 pub(all) struct ProofResult {
   name : String
   holds : Bool
   message : String
 } derive(Debug, Eq)
+
+///|
 pub extend ProofResult with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend ProofResult with Eq::{not_equal, equal}
 
 ///|
@@ -15,7 +30,11 @@ pub(all) struct Contract {
   pre_condition : String
   post_condition : String
 } derive(Debug, Eq)
+
+///|
 pub extend Contract with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend Contract with Eq::{not_equal, equal}
 
 ///|
@@ -25,12 +44,20 @@ pub(all) struct Invariant {
   description : String
   check : Bool
 } derive(Debug, Eq)
+
+///|
 pub extend Invariant with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend Invariant with Eq::{not_equal, equal}
 
 ///|
 /// 创建证明结果 | Create proof result
-pub fn proof_result(name : String, holds : Bool, message : String) -> ProofResult {
+pub fn proof_result(
+  name : String,
+  holds : Bool,
+  message : String,
+) -> ProofResult {
   { name, holds, message, }
 }
 
@@ -42,19 +69,35 @@ pub fn contract_create(name : String, pre : String, post : String) -> Contract {
 
 ///|
 /// 创建不变量 | Create invariant
-pub fn invariant_create(name : String, desc : String, check : Bool) -> Invariant {
+pub fn invariant_create(
+  name : String,
+  desc : String,
+  check : Bool,
+) -> Invariant {
   { name, description: desc, check, }
 }
 
 ///|
 /// 验证契约 | Verify contract
-pub fn contract_verify(contract : Contract, pre_holds : Bool, post_holds : Bool) -> ProofResult {
+pub fn contract_verify(
+  contract : Contract,
+  pre_holds : Bool,
+  post_holds : Bool,
+) -> ProofResult {
   if pre_holds && post_holds {
     { name: contract.name, holds: true, message: "contract satisfied", }
   } else if !pre_holds {
-    { name: contract.name, holds: false, message: "precondition failed: " + contract.pre_condition, }
+    {
+      name: contract.name,
+      holds: false,
+      message: "precondition failed: " + contract.pre_condition,
+    }
   } else {
-    { name: contract.name, holds: false, message: "postcondition failed: " + contract.post_condition, }
+    {
+      name: contract.name,
+      holds: false,
+      message: "postcondition failed: " + contract.post_condition,
+    }
   }
 }
 
@@ -62,16 +105,32 @@ pub fn contract_verify(contract : Contract, pre_holds : Bool, post_holds : Bool)
 /// 检查不变量 | Check invariant
 pub fn invariant_check(inv : Invariant) -> ProofResult {
   if inv.check {
-    { name: inv.name, holds: true, message: "invariant holds: " + inv.description, }
+    {
+      name: inv.name,
+      holds: true,
+      message: "invariant holds: " + inv.description,
+    }
   } else {
-    { name: inv.name, holds: false, message: "invariant violated: " + inv.description, }
+    {
+      name: inv.name,
+      holds: false,
+      message: "invariant violated: " + inv.description,
+    }
   }
 }
 
 ///|
 /// 性质成立检查 | Property holds check
 pub fn property_holds(name : String, check : Bool) -> ProofResult {
-  { name, holds: check, message: if check { "property holds" } else { "property does not hold" }, }
+  {
+    name,
+    holds: check,
+    message: if check {
+      "property holds"
+    } else {
+      "property does not hold"
+    },
+  }
 }
 
 ///|
@@ -86,7 +145,11 @@ pub fn proof_chain(results : Array[ProofResult]) -> ProofResult {
     }
   }
   if all_holds {
-    { name: "chain", holds: true, message: "all " + results.length().to_string() + " proofs hold", }
+    {
+      name: "chain",
+      holds: true,
+      message: "all " + results.length().to_string() + " proofs hold",
+    }
   } else {
     { name: "chain", holds: false, message: "failed at: " + failed_name, }
   }
@@ -94,69 +157,169 @@ pub fn proof_chain(results : Array[ProofResult]) -> ProofResult {
 
 ///|
 /// 排序不变量：排序后长度不变 | Sorted invariant: length preserved
-pub fn length_preserved(original : Array[Int], sorted : Array[Int]) -> ProofResult {
+pub fn length_preserved(
+  original : Array[Int32],
+  sorted : Array[Int32],
+) -> ProofResult {
   let holds = original.length() == sorted.length()
-  { name: "length_preserved", holds, message: if holds { "lengths match" } else { "lengths differ: " + original.length().to_string() + " vs " + sorted.length().to_string() }, }
+  {
+    name: "length_preserved",
+    holds,
+    message: if holds {
+      "lengths match"
+    } else {
+      "lengths differ: " +
+      original.length().to_string() +
+      " vs " +
+      sorted.length().to_string()
+    },
+  }
 }
 
 ///|
 /// 排序不变量：元素有序 | Sorted invariant: elements ordered
-pub fn is_sorted(arr : Array[Int]) -> ProofResult {
+pub fn is_sorted(arr : Array[Int32]) -> ProofResult {
   let mut holds = true
   for i in 1..<arr.length() {
     if arr[i] < arr[i - 1] {
       holds = false
     }
   }
-  { name: "is_sorted", holds, message: if holds { "array is sorted" } else { "array not sorted" }, }
+  {
+    name: "is_sorted",
+    holds,
+    message: if holds {
+      "array is sorted"
+    } else {
+      "array not sorted"
+    },
+  }
 }
 
 ///|
 /// 幂等性检查 | Idempotent check: f(f(x)) == f(x)
-pub fn idempotent_check(name : String, _x : Int, fx : Int, ffx : Int) -> ProofResult {
+pub fn idempotent_check(
+  name : String,
+  _x : Int32,
+  fx : Int32,
+  ffx : Int32,
+) -> ProofResult {
   let holds = fx == ffx
-  { name: "idempotent_" + name, holds, message: if holds { "f(f(x)) == f(x)" } else { "f(f(x)) != f(x): " + ffx.to_string() + " vs " + fx.to_string() }, }
+  {
+    name: "idempotent_" + name,
+    holds,
+    message: if holds {
+      "f(f(x)) == f(x)"
+    } else {
+      "f(f(x)) != f(x): " + ffx.to_string() + " vs " + fx.to_string()
+    },
+  }
 }
 
 ///|
 /// 交换律检查 | Commutative check: a op b == b op a
-pub fn commutative_check(name : String, _a : Int, _b : Int, ab : Int, ba : Int) -> ProofResult {
+pub fn commutative_check(
+  name : String,
+  _a : Int32,
+  _b : Int32,
+  ab : Int32,
+  ba : Int32,
+) -> ProofResult {
   let holds = ab == ba
-  { name: "commutative_" + name, holds, message: if holds { "a op b == b op a" } else { "not commutative" }, }
+  {
+    name: "commutative_" + name,
+    holds,
+    message: if holds {
+      "a op b == b op a"
+    } else {
+      "not commutative"
+    },
+  }
 }
 
 ///|
 /// 结合律检查 | Associative check: (a op b) op c == a op (b op c)
-pub fn associative_check(name : String, ab_c : Int, a_bc : Int) -> ProofResult {
+pub fn associative_check(
+  name : String,
+  ab_c : Int32,
+  a_bc : Int32,
+) -> ProofResult {
   let holds = ab_c == a_bc
-  { name: "associative_" + name, holds, message: if holds { "(a op b) op c == a op (b op c)" } else { "not associative" }, }
+  {
+    name: "associative_" + name,
+    holds,
+    message: if holds {
+      "(a op b) op c == a op (b op c)"
+    } else {
+      "not associative"
+    },
+  }
 }
 
 ///|
 /// 加密解密互逆 | Encrypt-decrypt inverse: decrypt(encrypt(x)) == x
-pub fn inverse_check(name : String, original : Int, _encrypted : Int, decrypted : Int) -> ProofResult {
+pub fn inverse_check(
+  name : String,
+  original : Int32,
+  _encrypted : Int32,
+  decrypted : Int32,
+) -> ProofResult {
   let holds = original == decrypted
-  { name: "inverse_" + name, holds, message: if holds { "decrypt(encrypt(x)) == x" } else { "inverse failed: " + decrypted.to_string() + " != " + original.to_string() }, }
+  {
+    name: "inverse_" + name,
+    holds,
+    message: if holds {
+      "decrypt(encrypt(x)) == x"
+    } else {
+      "inverse failed: " + decrypted.to_string() + " != " + original.to_string()
+    },
+  }
 }
 
 ///|
 /// 单位元检查 | Identity check: x op identity == x
-pub fn identity_check(name : String, x : Int, _identity : Int, result : Int) -> ProofResult {
+pub fn identity_check(
+  name : String,
+  x : Int32,
+  _identity : Int32,
+  result : Int32,
+) -> ProofResult {
   let holds = x == result
-  { name: "identity_" + name, holds, message: if holds { "x op identity == x" } else { "identity check failed" }, }
+  {
+    name: "identity_" + name,
+    holds,
+    message: if holds {
+      "x op identity == x"
+    } else {
+      "identity check failed"
+    },
+  }
 }
 
 ///|
 /// 范围不变量 | Range invariant: min <= x <= max
-pub fn range_invariant(name : String, x : Int, min_val : Int, max_val : Int) -> ProofResult {
+pub fn range_invariant(
+  name : String,
+  x : Int32,
+  min_val : Int32,
+  max_val : Int32,
+) -> ProofResult {
   let holds = x >= min_val && x <= max_val
-  { name: "range_" + name, holds, message: if holds { "in range [" + min_val.to_string() + ", " + max_val.to_string() + "]" } else { "out of range: " + x.to_string() }, }
+  {
+    name: "range_" + name,
+    holds,
+    message: if holds {
+      "in range [" + min_val.to_string() + ", " + max_val.to_string() + "]"
+    } else {
+      "out of range: " + x.to_string()
+    },
+  }
 }
 
 ///|
 /// 证明包版本 | Proof package version
 pub fn proof_version() -> String {
-  "moon-cross proof v0.3.14"
+  "moon-cross proof v0.3.33"
 }
 
 ///|
@@ -167,7 +330,11 @@ pub(all) struct InductiveStep {
   conclusion : String
   verified : Bool
 } derive(Debug, Eq)
+
+///|
 pub extend InductiveStep with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend InductiveStep with Eq::{not_equal, equal}
 
 ///|
@@ -178,7 +345,11 @@ pub(all) struct ContradictionProof {
   conclusion : String
   valid : Bool
 } derive(Debug, Eq)
+
+///|
 pub extend ContradictionProof with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend ContradictionProof with Eq::{not_equal, equal}
 
 ///|
@@ -189,7 +360,11 @@ pub(all) struct TraitVerification {
   super_trait : String
   holds : Bool
 } derive(Debug, Eq)
+
+///|
 pub extend TraitVerification with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend TraitVerification with Eq::{not_equal, equal}
 
 ///|
@@ -200,33 +375,58 @@ pub(all) struct InvariantProof {
   post_condition : String
   preserves : Bool
 } derive(Debug, Eq)
+
+///|
 pub extend InvariantProof with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend InvariantProof with Eq::{not_equal, equal}
 
 ///|
 /// 创建归纳证明 | Create inductive proof
-pub fn inductive_proof(base : String, step : String, conclusion : String) -> InductiveStep {
-  let verified = base.length() > 0 && step.length() > 0 && conclusion.length() > 0
+pub fn inductive_proof(
+  base : String,
+  step : String,
+  conclusion : String,
+) -> InductiveStep {
+  let verified = base.length() > 0 &&
+    step.length() > 0 &&
+    conclusion.length() > 0
   { base_case: base, inductive_step: step, conclusion, verified, }
 }
 
 ///|
 /// 创建反证法证明 | Create proof by contradiction
-pub fn contradiction_proof(assumption : String, contradiction : String, conclusion : String) -> ContradictionProof {
-  let valid = assumption.length() > 0 && contradiction.length() > 0 && conclusion.length() > 0
+pub fn contradiction_proof(
+  assumption : String,
+  contradiction : String,
+  conclusion : String,
+) -> ContradictionProof {
+  let valid = assumption.length() > 0 &&
+    contradiction.length() > 0 &&
+    conclusion.length() > 0
   { assumption, contradiction, conclusion, valid, }
 }
 
 ///|
 /// 验证 trait 层次 | Verify trait hierarchy
-pub fn verify_trait_hierarchy(trait_name : String, sub : String, sup : String) -> TraitVerification {
+pub fn verify_trait_hierarchy(
+  trait_name : String,
+  sub : String,
+  sup : String,
+) -> TraitVerification {
   let holds = sub.length() > 0 && sup.length() > 0
   { trait_name, sub_trait: sub, super_trait: sup, holds, }
 }
 
 ///|
 /// 验证不变量保持 | Verify invariant preservation
-pub fn verify_invariant(name : String, pre : String, post : String, preserves : Bool) -> InvariantProof {
+pub fn verify_invariant(
+  name : String,
+  pre : String,
+  post : String,
+  preserves : Bool,
+) -> InvariantProof {
   { invariant_name: name, pre_condition: pre, post_condition: post, preserves, }
 }
 
@@ -257,165 +457,240 @@ pub fn type_check_passes(value : Bool) -> Bool {
 
 ///|
 /// 排序性质验证 | Verify sorted property
-pub fn verify_sorted(arr : Array[Int]) -> ProofResult {
+pub fn verify_sorted(arr : Array[Int32]) -> ProofResult {
   let mut is_sorted = true
   for i in 1..<arr.length() {
     if arr[i - 1] > arr[i] {
       is_sorted = false
     }
   }
-  proof_result("sorted", is_sorted, if is_sorted { "array is sorted" } else { "array is not sorted" })
+  proof_result(
+    "sorted",
+    is_sorted,
+    if is_sorted {
+      "array is sorted"
+    } else {
+      "array is not sorted"
+    },
+  )
 }
 
 ///|
 /// 长度保持验证 | Verify length preservation
-pub fn verify_length_preserved(original : Int, transformed : Int) -> ProofResult {
+pub fn verify_length_preserved(
+  original : Int32,
+  transformed : Int32,
+) -> ProofResult {
   let preserved = original == transformed
-  proof_result("length_preserved", preserved, "original=" + original.to_string() + ", transformed=" + transformed.to_string())
+  proof_result(
+    "length_preserved",
+    preserved,
+    "original=" +
+    original.to_string() +
+    ", transformed=" +
+    transformed.to_string(),
+  )
 }
 
 ///|
 /// 幂等性验证 | Verify idempotency (f(f(x)) == f(x))
-pub fn verify_idempotent(fx : Int, ffx : Int) -> ProofResult {
+pub fn verify_idempotent(fx : Int32, ffx : Int32) -> ProofResult {
   let idempotent = fx == ffx
-  proof_result("idempotent", idempotent, "f(x)=" + fx.to_string() + ", f(f(x))=" + ffx.to_string())
+  proof_result(
+    "idempotent",
+    idempotent,
+    "f(x)=" + fx.to_string() + ", f(f(x))=" + ffx.to_string(),
+  )
 }
 
 ///|
 /// InductiveStep 实现 Named trait
-pub impl @trait.Named for InductiveStep with name(self) {
+pub impl @trait.Named for InductiveStep with fn name(self) {
   self.conclusion
 }
+
+///|
 pub extend InductiveStep with @trait.Named::{name}
 
 ///|
 /// InductiveStep 实现 Checkable trait
-pub impl @trait.Checkable for InductiveStep with check(self) {
+pub impl @trait.Checkable for InductiveStep with fn check(self) {
   self.verified
 }
+
+///|
 pub extend InductiveStep with @trait.Checkable::{check}
 
 ///|
 /// ContradictionProof 实现 Named trait
-pub impl @trait.Named for ContradictionProof with name(self) {
+pub impl @trait.Named for ContradictionProof with fn name(self) {
   self.conclusion
 }
+
+///|
 pub extend ContradictionProof with @trait.Named::{name}
 
 ///|
 /// ContradictionProof 实现 Checkable trait
-pub impl @trait.Checkable for ContradictionProof with check(self) {
+pub impl @trait.Checkable for ContradictionProof with fn check(self) {
   self.valid
 }
+
+///|
 pub extend ContradictionProof with @trait.Checkable::{check}
 
 ///|
 /// TraitVerification 实现 Named trait
-pub impl @trait.Named for TraitVerification with name(self) {
+pub impl @trait.Named for TraitVerification with fn name(self) {
   self.trait_name
 }
+
+///|
 pub extend TraitVerification with @trait.Named::{name}
 
 ///|
 /// TraitVerification 实现 Checkable trait
-pub impl @trait.Checkable for TraitVerification with check(self) {
+pub impl @trait.Checkable for TraitVerification with fn check(self) {
   self.holds
 }
+
+///|
 pub extend TraitVerification with @trait.Checkable::{check}
 
 ///|
 /// InvariantProof 实现 Named trait
-pub impl @trait.Named for InvariantProof with name(self) {
+pub impl @trait.Named for InvariantProof with fn name(self) {
   self.invariant_name
 }
+
+///|
 pub extend InvariantProof with @trait.Named::{name}
 
 ///|
 /// InvariantProof 实现 Checkable trait
-pub impl @trait.Checkable for InvariantProof with check(self) {
+pub impl @trait.Checkable for InvariantProof with fn check(self) {
   self.preserves
 }
+
+///|
 pub extend InvariantProof with @trait.Checkable::{check}
 
 ///|
 /// ProofResult 实现 Named trait | ProofResult implements Named
-pub impl @trait.Named for ProofResult with name(self) {
+pub impl @trait.Named for ProofResult with fn name(self) {
   self.name
 }
+
+///|
 pub extend ProofResult with @trait.Named::{name}
 
 ///|
 /// ProofResult 实现 Checkable trait | ProofResult implements Checkable
-pub impl @trait.Checkable for ProofResult with check(self) {
+pub impl @trait.Checkable for ProofResult with fn check(self) {
   self.holds
 }
+
+///|
 pub extend ProofResult with @trait.Checkable::{check}
 
 ///|
 /// ProofResult 实现 Summarizable trait | ProofResult implements Summarizable
-pub impl @trait.Summarizable for ProofResult with summary(self) {
-  self.name + ": " + (if self.holds { "holds" } else { "fails" }) + " — " + self.message
+pub impl @trait.Summarizable for ProofResult with fn summary(self) {
+  self.name +
+  ": " +
+  (if self.holds { "holds" } else { "fails" }) +
+  " — " +
+  self.message
 }
+
+///|
 pub extend ProofResult with @trait.Summarizable::{summary}
 
 ///|
 /// Contract 实现 Named trait | Contract implements Named
-pub impl @trait.Named for Contract with name(self) {
+pub impl @trait.Named for Contract with fn name(self) {
   self.name
 }
+
+///|
 pub extend Contract with @trait.Named::{name}
 
 ///|
 /// Contract 实现 Describable trait | Contract implements Describable
-pub impl @trait.Describable for Contract with describe(self) {
+pub impl @trait.Describable for Contract with fn describe(self) {
   "pre: " + self.pre_condition + ", post: " + self.post_condition
 }
+
+///|
 pub extend Contract with @trait.Describable::{describe}
 
 ///|
 /// Invariant 实现 Named trait | Invariant implements Named
-pub impl @trait.Named for Invariant with name(self) {
+pub impl @trait.Named for Invariant with fn name(self) {
   self.name
 }
+
+///|
 pub extend Invariant with @trait.Named::{name}
 
 ///|
 /// Invariant 实现 Describable trait | Invariant implements Describable
-pub impl @trait.Describable for Invariant with describe(self) {
+pub impl @trait.Describable for Invariant with fn describe(self) {
   self.description
 }
+
+///|
 pub extend Invariant with @trait.Describable::{describe}
 
 ///|
 /// Invariant 实现 Checkable trait | Invariant implements Checkable
-pub impl @trait.Checkable for Invariant with check(self) {
+pub impl @trait.Checkable for Invariant with fn check(self) {
   self.check
 }
+
+///|
 pub extend Invariant with @trait.Checkable::{check}
+
 ///|
 /// ProofResult 实现 Cloneable trait | ProofResult implements Cloneable
-pub impl @trait.Cloneable for ProofResult with clone(self) {
+pub impl @trait.Cloneable for ProofResult with fn clone(self) {
   { name: self.name, holds: self.holds, message: self.message, }
 }
+
+///|
 pub extend ProofResult with @trait.Cloneable::{clone}
 
 ///|
 /// ProofResult 实现 Serializable trait | ProofResult implements Serializable
-pub impl @trait.Serializable for ProofResult with serialize(self) {
-  self.name + ":" + (if self.holds { "true" } else { "false" }) + ":" + self.message
+pub impl @trait.Serializable for ProofResult with fn serialize(self) {
+  self.name +
+  ":" +
+  (if self.holds { "true" } else { "false" }) +
+  ":" +
+  self.message
 }
+
+///|
 pub extend ProofResult with @trait.Serializable::{serialize}
 
 ///|
 /// Contract 实现 Cloneable trait | Contract implements Cloneable
-pub impl @trait.Cloneable for Contract with clone(self) {
-  { name: self.name, pre_condition: self.pre_condition, post_condition: self.post_condition, }
+pub impl @trait.Cloneable for Contract with fn clone(self) {
+  {
+    name: self.name,
+    pre_condition: self.pre_condition,
+    post_condition: self.post_condition,
+  }
 }
+
+///|
 pub extend Contract with @trait.Cloneable::{clone}
 
 ///|
 /// Invariant 实现 Cloneable trait | Invariant implements Cloneable
-pub impl @trait.Cloneable for Invariant with clone(self) {
+pub impl @trait.Cloneable for Invariant with fn clone(self) {
   { name: self.name, description: self.description, check: self.check, }
 }
+
+///|
 pub extend Invariant with @trait.Cloneable::{clone}

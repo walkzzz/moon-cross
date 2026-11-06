@@ -5,7 +5,11 @@ pub(all) enum LintSeverity {
   Warning
   Error
 } derive(Debug, Eq)
+
+///|
 pub extend LintSeverity with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend LintSeverity with Eq::{not_equal, equal}
 
 ///|
@@ -27,7 +31,11 @@ pub(all) struct LintRule {
   severity : LintSeverity
   enabled : Bool
 } derive(Debug, Eq)
+
+///|
 pub extend LintRule with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend LintRule with Eq::{not_equal, equal}
 
 ///|
@@ -38,19 +46,27 @@ pub(all) struct LintIssue {
   message : String
   location : String
 } derive(Debug, Eq)
+
+///|
 pub extend LintIssue with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend LintIssue with Eq::{not_equal, equal}
 
 ///|
 /// Lint 结果 | Lint result
 pub(all) struct LintResult {
   issues : Array[LintIssue]
-  error_count : Int
-  warning_count : Int
-  info_count : Int
+  error_count : Int32
+  warning_count : Int32
+  info_count : Int32
   passed : Bool
 } derive(Debug, Eq)
+
+///|
 pub extend LintResult with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend LintResult with Eq::{not_equal, equal}
 
 ///|
@@ -60,7 +76,11 @@ pub(all) struct LintConfig {
   fail_on_error : Bool
   fail_on_warning : Bool
 } derive(Debug, Eq)
+
+///|
 pub extend LintConfig with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend LintConfig with Eq::{not_equal, equal}
 
 ///|
@@ -71,7 +91,7 @@ pub fn make_rule(
   description : String,
   severity : LintSeverity,
 ) -> LintRule {
-  { id, name, description, severity, enabled: true }
+  { id, name, description, severity, enabled: true, }
 }
 
 ///|
@@ -82,7 +102,7 @@ pub fn make_disabled_rule(
   description : String,
   severity : LintSeverity,
 ) -> LintRule {
-  { id, name, description, severity, enabled: false }
+  { id, name, description, severity, enabled: false, }
 }
 
 ///|
@@ -93,7 +113,7 @@ pub fn make_issue(
   message : String,
   location : String,
 ) -> LintIssue {
-  { rule_id, severity, message, location }
+  { rule_id, severity, message, location, }
 }
 
 ///|
@@ -209,7 +229,14 @@ pub fn check_module_path(path : String) -> Array[LintIssue] {
   if path.length() == 0 {
     [make_issue("MC001", Error, "Module path is empty", "module_path")]
   } else if !path.contains("/") {
-    [make_issue("MC001", Error, "Module path must contain '/' separator: " + path, "module_path")]
+    [
+      make_issue(
+        "MC001",
+        Error,
+        "Module path must contain '/' separator: " + path,
+        "module_path",
+      ),
+    ]
   } else {
     []
   }
@@ -220,7 +247,14 @@ pub fn check_module_path(path : String) -> Array[LintIssue] {
 pub fn check_function_name(name : String) -> Array[LintIssue] {
   let has_upper = contains_uppercase(name)
   if has_upper {
-    [make_issue("MC002", Warning, "Function name should be snake_case: " + name, "function:" + name)]
+    [
+      make_issue(
+        "MC002",
+        Warning,
+        "Function name should be snake_case: " + name,
+        "function:" + name,
+      ),
+    ]
   } else {
     []
   }
@@ -240,7 +274,9 @@ fn contains_uppercase(s : String) -> Bool {
 
 ///|
 /// 检查导出函数非空 | Check non-empty exports
-pub fn check_non_empty_exports(functions : Array[@config.ExportFunction]) -> Array[LintIssue] {
+pub fn check_non_empty_exports(
+  functions : Array[@config.ExportFunction],
+) -> Array[LintIssue] {
   if functions.length() == 0 {
     [make_issue("MC003", Error, "No export functions defined", "functions")]
   } else {
@@ -250,7 +286,9 @@ pub fn check_non_empty_exports(functions : Array[@config.ExportFunction]) -> Arr
 
 ///|
 /// 检查目标平台非空 | Check non-empty targets
-pub fn check_non_empty_targets(targets : Array[@core.Platform]) -> Array[LintIssue] {
+pub fn check_non_empty_targets(
+  targets : Array[@core.Platform],
+) -> Array[LintIssue] {
   if targets.length() == 0 {
     [make_issue("MC004", Error, "No target platforms specified", "targets")]
   } else {
@@ -260,9 +298,16 @@ pub fn check_non_empty_targets(targets : Array[@core.Platform]) -> Array[LintIss
 
 ///|
 /// 检查版本号格式 | Check version format
-pub fn check_version(version : Int) -> Array[LintIssue] {
+pub fn check_version(version : Int32) -> Array[LintIssue] {
   if version <= 0 {
-    [make_issue("MC005", Warning, "Version should be positive: " + version.to_string(), "version")]
+    [
+      make_issue(
+        "MC005",
+        Warning,
+        "Version should be positive: " + version.to_string(),
+        "version",
+      ),
+    ]
   } else {
     []
   }
@@ -345,7 +390,12 @@ pub fn check_param_types(
           make_issue(
             "MC008",
             Warning,
-            "Unknown param type: " + p.typ + " in function " + f.name + " param " + p.name,
+            "Unknown param type: " +
+            p.typ +
+            " in function " +
+            f.name +
+            " param " +
+            p.name,
             "function:" + f.name,
           ),
         )
@@ -401,13 +451,26 @@ pub fn summarize(issues : Array[LintIssue]) -> LintResult {
       Info => infos = infos + 1
     }
   }
-  { issues, error_count: errors, warning_count: warnings, info_count: infos, passed: errors == 0 }
+  {
+    issues,
+    error_count: errors,
+    warning_count: warnings,
+    info_count: infos,
+    passed: errors == 0,
+  }
 }
 
 ///|
 /// 格式化 lint 问题 | Format lint issue
 pub fn format_issue(issue : LintIssue) -> String {
-  issue.severity.to_string() + ": [" + issue.rule_id + "] " + issue.message + " (at " + issue.location + ")"
+  issue.severity.to_string() +
+  ": [" +
+  issue.rule_id +
+  "] " +
+  issue.message +
+  " (at " +
+  issue.location +
+  ")"
 }
 
 ///|
@@ -417,11 +480,7 @@ pub fn format_result(result : LintResult) -> String {
   output = output + "  Errors:   " + result.error_count.to_string() + "\n"
   output = output + "  Warnings: " + result.warning_count.to_string() + "\n"
   output = output + "  Info:     " + result.info_count.to_string() + "\n"
-  let status = if result.passed {
-    "PASSED"
-  } else {
-    "FAILED"
-  }
+  let status = if result.passed { "PASSED" } else { "FAILED" }
   output = output + "  Status:   " + status + "\n"
   if result.issues.length() > 0 {
     output = output + "\nIssues:\n"
@@ -489,48 +548,46 @@ pub fn filter_by_severity(
 
 ///|
 /// 启用规则 | Enable rule
-pub fn enable_rule(
-  config : LintConfig,
-  rule_id : String,
-) -> LintConfig {
+pub fn enable_rule(config : LintConfig, rule_id : String) -> LintConfig {
   let new_rules = []
   for rule in config.rules {
     if rule.id == rule_id {
-      new_rules.push({ ..rule, enabled: true })
+      new_rules.push({ ..rule, enabled: true, })
     } else {
       new_rules.push(rule)
     }
   }
-  { ..config, rules: new_rules }
+  { ..config, rules: new_rules, }
 }
 
 ///|
 /// 禁用规则 | Disable rule
-pub fn disable_rule(
-  config : LintConfig,
-  rule_id : String,
-) -> LintConfig {
+pub fn disable_rule(config : LintConfig, rule_id : String) -> LintConfig {
   let new_rules = []
   for rule in config.rules {
     if rule.id == rule_id {
-      new_rules.push({ ..rule, enabled: false })
+      new_rules.push({ ..rule, enabled: false, })
     } else {
       new_rules.push(rule)
     }
   }
-  { ..config, rules: new_rules }
+  { ..config, rules: new_rules, }
 }
 
 ///|
 /// LintRule 实现 Named trait | LintRule implements Named
-pub impl @trait.Named for LintRule with name(self) {
+pub impl @trait.Named for LintRule with fn name(self) {
   self.name
 }
+
+///|
 pub extend LintRule with @trait.Named::{name}
 
 ///|
 /// LintRule 实现 Describable trait | LintRule implements Describable
-pub impl @trait.Describable for LintRule with describe(self) {
+pub impl @trait.Describable for LintRule with fn describe(self) {
   self.description
 }
+
+///|
 pub extend LintRule with @trait.Describable::{describe}

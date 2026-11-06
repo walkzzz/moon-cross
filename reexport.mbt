@@ -4,7 +4,7 @@
 
 ///|
 /// 核心类型重导出 | Core types re-export
-pub using @core { type Platform, type Arch, type TargetTriple }
+pub using @core {type Platform, type Arch, type TargetTriple}
 
 ///|
 /// Trait 重导出 | Trait re-exports
@@ -32,23 +32,28 @@ pub using @trait {
 }
 
 ///|
-/// 形式化证明重导出 | Proof types re-export
-pub using @proof { type ProofResult, type Contract, type Invariant }
+/// 契约检查重导出（运行时契约检查，非 Lean 形式化验证） | Contract checking re-export
+pub using @proof {type ProofResult, type Contract, type Invariant}
 
 ///|
 /// Mock 框架重导出 | Mock types re-export
-pub using @mock { type Mock, type Stub, type Spy, type Fake }
+pub using @mock {type Mock, type Stub, type Spy, type Fake}
 
 ///|
 /// E2E 测试框架重导出 | E2E types re-export
-pub using @e2e { type Step, type Scenario, type ScenarioResult, type E2EReport }
+pub using @e2e {type Step, type Scenario, type ScenarioResult, type E2EReport}
 
 ///|
 /// AI 测试工具重导出 | AI test types re-export
-pub using @ai_test { type TestCase, type BoundaryCase, type CoverageReport, type AITestResult }
+pub using @ai_test {
+  type TestCase,
+  type BoundaryCase,
+  type CoverageReport,
+  type AITestResult,
+}
 
 ///|
 /// 根包版本 | Root package version
 pub fn moon_cross_version() -> String {
-  "moon-cross v0.3.4"
+  "moon-cross v0.3.33"
 }

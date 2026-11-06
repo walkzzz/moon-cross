@@ -9,7 +9,11 @@ pub(all) struct PublishConfig {
   readme_path : String
   keywords : Array[String]
 } derive(Debug, Eq)
+
+///|
 pub extend PublishConfig with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend PublishConfig with Eq::{not_equal, equal}
 
 ///|
@@ -19,7 +23,11 @@ pub(all) struct PublishCheck {
   passed : Bool
   message : String
 } derive(Debug, Eq)
+
+///|
 pub extend PublishCheck with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend PublishCheck with Eq::{not_equal, equal}
 
 ///|
@@ -29,7 +37,11 @@ pub(all) struct PublishReadiness {
   ready : Bool
   summary : String
 } derive(Debug, Eq)
+
+///|
 pub extend PublishReadiness with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend PublishReadiness with Eq::{not_equal, equal}
 
 ///|
@@ -44,7 +56,11 @@ pub(all) struct MooncakesMetadata {
   keywords : Array[String]
   checksum : String
 } derive(Debug, Eq)
+
+///|
 pub extend MooncakesMetadata with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend MooncakesMetadata with Eq::{not_equal, equal}
 
 ///|
@@ -58,15 +74,8 @@ pub fn default_publish_config() -> PublishConfig {
     repository: "https://github.com/walkzzz/moon-cross",
     readme_path: "README.md",
     keywords: [
-      "cross-platform",
-      "ffi",
-      "native",
-      "ios",
-      "android",
-      "windows",
-      "harmonyos",
-      "scaffold",
-      "code-generation",
+      "cross-platform", "ffi", "native", "ios", "android", "windows", "harmonyos",
+      "scaffold", "code-generation",
     ],
   }
 }
@@ -76,9 +85,17 @@ pub fn default_publish_config() -> PublishConfig {
 pub fn check_module_name(name : String) -> PublishCheck {
   let valid = name.length() > 0 && name.contains("/")
   if valid {
-    { name: "module_name", passed: true, message: "Module name is valid: " + name }
+    {
+      name: "module_name",
+      passed: true,
+      message: "Module name is valid: " + name,
+    }
   } else {
-    { name: "module_name", passed: false, message: "Module name must contain '/' separator" }
+    {
+      name: "module_name",
+      passed: false,
+      message: "Module name must contain '/' separator",
+    }
   }
 }
 
@@ -92,9 +109,17 @@ pub fn check_version_format(version : String) -> PublishCheck {
   }
   let valid = count == 3
   if valid {
-    { name: "version_format", passed: true, message: "Version format is valid: " + version }
+    {
+      name: "version_format",
+      passed: true,
+      message: "Version format is valid: " + version,
+    }
   } else {
-    { name: "version_format", passed: false, message: "Version must be X.Y.Z format (3 segments)" }
+    {
+      name: "version_format",
+      passed: false,
+      message: "Version must be X.Y.Z format (3 segments)",
+    }
   }
 }
 
@@ -103,9 +128,9 @@ pub fn check_version_format(version : String) -> PublishCheck {
 pub fn check_license(license : String) -> PublishCheck {
   let valid = license.length() > 0
   if valid {
-    { name: "license", passed: true, message: "License is set: " + license }
+    { name: "license", passed: true, message: "License is set: " + license, }
   } else {
-    { name: "license", passed: false, message: "License must be specified" }
+    { name: "license", passed: false, message: "License must be specified", }
   }
 }
 
@@ -114,9 +139,13 @@ pub fn check_license(license : String) -> PublishCheck {
 pub fn check_description(description : String) -> PublishCheck {
   let valid = description.length() > 10
   if valid {
-    { name: "description", passed: true, message: "Description is set" }
+    { name: "description", passed: true, message: "Description is set", }
   } else {
-    { name: "description", passed: false, message: "Description must be at least 10 characters" }
+    {
+      name: "description",
+      passed: false,
+      message: "Description must be at least 10 characters",
+    }
   }
 }
 
@@ -125,9 +154,17 @@ pub fn check_description(description : String) -> PublishCheck {
 pub fn check_repository(repository : String) -> PublishCheck {
   let valid = repository.length() > 0 && repository.contains("://")
   if valid {
-    { name: "repository", passed: true, message: "Repository URL is set: " + repository }
+    {
+      name: "repository",
+      passed: true,
+      message: "Repository URL is set: " + repository,
+    }
   } else {
-    { name: "repository", passed: false, message: "Repository URL must be a valid URL" }
+    {
+      name: "repository",
+      passed: false,
+      message: "Repository URL must be a valid URL",
+    }
   }
 }
 
@@ -136,9 +173,17 @@ pub fn check_repository(repository : String) -> PublishCheck {
 pub fn check_readme(readme_path : String) -> PublishCheck {
   let valid = readme_path.length() > 0 && readme_path.contains(".md")
   if valid {
-    { name: "readme", passed: true, message: "README path is set: " + readme_path }
+    {
+      name: "readme",
+      passed: true,
+      message: "README path is set: " + readme_path,
+    }
   } else {
-    { name: "readme", passed: false, message: "README path must be a .md file" }
+    {
+      name: "readme",
+      passed: false,
+      message: "README path must be a .md file",
+    }
   }
 }
 
@@ -147,9 +192,17 @@ pub fn check_readme(readme_path : String) -> PublishCheck {
 pub fn check_keywords(keywords : Array[String]) -> PublishCheck {
   let valid = keywords.length() >= 3
   if valid {
-    { name: "keywords", passed: true, message: "Keywords count: " + keywords.length().to_string() }
+    {
+      name: "keywords",
+      passed: true,
+      message: "Keywords count: " + keywords.length().to_string(),
+    }
   } else {
-    { name: "keywords", passed: false, message: "At least 3 keywords are required" }
+    {
+      name: "keywords",
+      passed: false,
+      message: "At least 3 keywords are required",
+    }
   }
 }
 
@@ -177,7 +230,7 @@ pub fn validate_publish_readiness(config : PublishConfig) -> PublishReadiness {
   } else {
     "Some checks failed. Please fix before publishing."
   }
-  { checks, ready: all_passed, summary }
+  { checks, ready: all_passed, summary, }
 }
 
 ///|
@@ -229,12 +282,19 @@ pub fn check_version_consistency(
 ) -> PublishCheck {
   let consistent = mod_version == cli_version
   if consistent {
-    { name: "version_consistency", passed: true, message: "Versions are consistent: " + mod_version }
+    {
+      name: "version_consistency",
+      passed: true,
+      message: "Versions are consistent: " + mod_version,
+    }
   } else {
     {
       name: "version_consistency",
       passed: false,
-      message: "Version mismatch: moon.mod=" + mod_version + " cli=" + cli_version,
+      message: "Version mismatch: moon.mod=" +
+      mod_version +
+      " cli=" +
+      cli_version,
     }
   }
 }
@@ -245,11 +305,7 @@ pub fn publish_checklist(config : PublishConfig) -> Array[String] {
   let readiness = validate_publish_readiness(config)
   let result = []
   for check in readiness.checks {
-    let status = if check.passed {
-      "[x]"
-    } else {
-      "[ ]"
-    }
+    let status = if check.passed { "[x]" } else { "[ ]" }
     result.push(status + " " + check.name + ": " + check.message)
   }
   result
@@ -258,7 +314,9 @@ pub fn publish_checklist(config : PublishConfig) -> Array[String] {
 ///|
 /// 许可证兼容性检查 | License compatibility check
 pub fn check_license_compatibility(license : String) -> Bool {
-  let compatible_licenses = ["MIT", "Apache-2.0", "BSD-3-Clause", "MPL-2.0", "ISC"]
+  let compatible_licenses = [
+    "MIT", "Apache-2.0", "BSD-3-Clause", "MPL-2.0", "ISC",
+  ]
   let mut found = false
   for lic in compatible_licenses {
     if lic == license {
@@ -297,7 +355,11 @@ pub(all) enum PublishStatus {
   Published
   Failed(String)
 } derive(Debug, Eq)
+
+///|
 pub extend PublishStatus with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend PublishStatus with Eq::{not_equal, equal}
 
 ///|
@@ -307,7 +369,11 @@ pub(all) struct PublishResult {
   message : String
   metadata : MooncakesMetadata?
 } derive(Debug, Eq)
+
+///|
 pub extend PublishResult with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend PublishResult with Eq::{not_equal, equal}
 
 ///|
@@ -317,11 +383,18 @@ pub fn simulate_publish(config : PublishConfig) -> PublishResult {
   if readiness.ready {
     {
       status: Published,
-      message: "Publish successful: " + config.module_name + "@" + config.version,
+      message: "Publish successful: " +
+      config.module_name +
+      "@" +
+      config.version,
       metadata: Some(generate_mooncakes_metadata(config)),
     }
   } else {
-    { status: Failed(readiness.summary), message: readiness.summary, metadata: None }
+    {
+      status: Failed(readiness.summary),
+      message: readiness.summary,
+      metadata: None,
+    }
   }
 }
 
@@ -340,31 +413,38 @@ pub fn get_publish_metadata(result : PublishResult) -> MooncakesMetadata? {
   result.metadata
 }
 
-
 ///|
 /// PublishCheck 实现 Named trait | PublishCheck implements Named
-pub impl @trait.Named for PublishCheck with name(self) {
+pub impl @trait.Named for PublishCheck with fn name(self) {
   self.name
 }
+
+///|
 pub extend PublishCheck with @trait.Named::{name}
 
 ///|
 /// MooncakesMetadata 实现 Named trait | MooncakesMetadata implements Named
-pub impl @trait.Named for MooncakesMetadata with name(self) {
+pub impl @trait.Named for MooncakesMetadata with fn name(self) {
   self.name
 }
+
+///|
 pub extend MooncakesMetadata with @trait.Named::{name}
 
 ///|
 /// PublishConfig 实现 Describable trait | PublishConfig implements Describable
-pub impl @trait.Describable for PublishConfig with describe(self) {
+pub impl @trait.Describable for PublishConfig with fn describe(self) {
   self.description
 }
+
+///|
 pub extend PublishConfig with @trait.Describable::{describe}
 
 ///|
 /// MooncakesMetadata 实现 Describable trait | MooncakesMetadata implements Describable
-pub impl @trait.Describable for MooncakesMetadata with describe(self) {
+pub impl @trait.Describable for MooncakesMetadata with fn describe(self) {
   self.description
 }
+
+///|
 pub extend MooncakesMetadata with @trait.Describable::{describe}

@@ -6,7 +6,11 @@ pub(all) struct Math64PipelineResult {
   platform_specs : Array[@platform.PlatformSpec]
   ffi_bindings : Array[@ffi.FfiBindingType]
 } derive(Debug, Eq)
+
+///|
 pub extend Math64PipelineResult with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend Math64PipelineResult with Eq::{not_equal, equal}
 
 ///|
@@ -20,7 +24,12 @@ pub fn run_math64_pipeline() -> Math64PipelineResult {
   for p in @core.all_platforms() {
     bindings.push(@ffi.ffi_binding_for_platform(p))
   }
-  { config: math64_cross_config(), c_header: @codegen_c.generate_header(math64_module_name()), platform_specs: specs, ffi_bindings: bindings }
+  {
+    config: math64_cross_config(),
+    c_header: @codegen_c.generate_header(math64_module_name()),
+    platform_specs: specs,
+    ffi_bindings: bindings,
+  }
 }
 
 ///|
@@ -31,7 +40,11 @@ pub(all) struct BitsPipelineResult {
   platform_specs : Array[@platform.PlatformSpec]
   ffi_bindings : Array[@ffi.FfiBindingType]
 } derive(Debug, Eq)
+
+///|
 pub extend BitsPipelineResult with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend BitsPipelineResult with Eq::{not_equal, equal}
 
 ///|
@@ -45,7 +58,12 @@ pub fn run_bits_pipeline() -> BitsPipelineResult {
   for p in @core.all_platforms() {
     bindings.push(@ffi.ffi_binding_for_platform(p))
   }
-  { config: bits_cross_config(), c_header: @codegen_c.generate_header(bits_module_name()), platform_specs: specs, ffi_bindings: bindings }
+  {
+    config: bits_cross_config(),
+    c_header: @codegen_c.generate_header(bits_module_name()),
+    platform_specs: specs,
+    ffi_bindings: bindings,
+  }
 }
 
 ///|
@@ -56,7 +74,11 @@ pub(all) struct FmtPipelineResult {
   platform_specs : Array[@platform.PlatformSpec]
   ffi_bindings : Array[@ffi.FfiBindingType]
 } derive(Debug, Eq)
+
+///|
 pub extend FmtPipelineResult with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend FmtPipelineResult with Eq::{not_equal, equal}
 
 ///|
@@ -70,5 +92,10 @@ pub fn run_fmt_pipeline() -> FmtPipelineResult {
   for p in @core.all_platforms() {
     bindings.push(@ffi.ffi_binding_for_platform(p))
   }
-  { config: fmt_cross_config(), c_header: @codegen_c.generate_header(fmt_module_name()), platform_specs: specs, ffi_bindings: bindings }
+  {
+    config: fmt_cross_config(),
+    c_header: @codegen_c.generate_header(fmt_module_name()),
+    platform_specs: specs,
+    ffi_bindings: bindings,
+  }
 }

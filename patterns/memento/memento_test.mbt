@@ -1,15 +1,18 @@
+///|
 test "memento_create" {
   let m = @memento.memento_create("state1", 42)
   assert_eq(m.state, "state1")
   assert_eq(m.value, 42)
 }
 
+///|
 test "originator_create" {
   let o = @memento.originator_create("init", 0)
   assert_eq(o.state, "init")
   assert_eq(o.value, 0)
 }
 
+///|
 test "originator_save" {
   let o = @memento.originator_create("running", 100)
   let m = @memento.originator_save(o)
@@ -17,6 +20,7 @@ test "originator_save" {
   assert_eq(m.value, 100)
 }
 
+///|
 test "originator_restore" {
   let o = @memento.originator_create("old", 0)
   let m = @memento.memento_create("new", 99)
@@ -25,12 +29,14 @@ test "originator_restore" {
   assert_eq(o2.value, 99)
 }
 
+///|
 test "caretaker_create" {
   let ck = @memento.caretaker_create()
   assert_eq(@memento.caretaker_size(ck), 0)
   assert_eq(@memento.caretaker_position(ck), -1)
 }
 
+///|
 test "caretaker_save" {
   let ck = @memento.caretaker_create()
   let ck1 = @memento.caretaker_save(ck, @memento.memento_create("s1", 1))
@@ -38,6 +44,7 @@ test "caretaker_save" {
   assert_eq(@memento.caretaker_position(ck1), 0)
 }
 
+///|
 test "caretaker_undo" {
   let ck = @memento.caretaker_create()
   let ck1 = @memento.caretaker_save(ck, @memento.memento_create("s1", 1))
@@ -50,6 +57,7 @@ test "caretaker_undo" {
   }
 }
 
+///|
 test "caretaker_redo" {
   let ck = @memento.caretaker_create()
   let ck1 = @memento.caretaker_save(ck, @memento.memento_create("s1", 1))
@@ -67,6 +75,7 @@ test "caretaker_redo" {
   }
 }
 
+///|
 test "caretaker_undo_at_start" {
   let ck = @memento.caretaker_create()
   let ck1 = @memento.caretaker_save(ck, @memento.memento_create("s1", 1))
@@ -74,6 +83,7 @@ test "caretaker_undo_at_start" {
   assert_true(result is None)
 }
 
+///|
 test "caretaker_redo_at_end" {
   let ck = @memento.caretaker_create()
   let ck1 = @memento.caretaker_save(ck, @memento.memento_create("s1", 1))
@@ -81,6 +91,7 @@ test "caretaker_redo_at_end" {
   assert_true(result is None)
 }
 
+///|
 test "caretaker_current" {
   let ck = @memento.caretaker_create()
   let ck1 = @memento.caretaker_save(ck, @memento.memento_create("s1", 1))
@@ -91,6 +102,7 @@ test "caretaker_current" {
   }
 }
 
+///|
 test "caretaker_save_truncates_redo" {
   let ck = @memento.caretaker_create()
   let ck1 = @memento.caretaker_save(ck, @memento.memento_create("s1", 1))
@@ -106,6 +118,7 @@ test "caretaker_save_truncates_redo" {
   }
 }
 
+///|
 test "caretaker_size_and_position" {
   let ck = @memento.caretaker_create()
   let ck1 = @memento.caretaker_save(ck, @memento.memento_create("a", 1))
@@ -115,6 +128,7 @@ test "caretaker_size_and_position" {
   assert_eq(@memento.caretaker_position(ck3), 2)
 }
 
+///|
 test "memento_version" {
   let v = @memento.memento_version()
   assert_true(v.contains("memento"))

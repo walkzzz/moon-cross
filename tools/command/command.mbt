@@ -1,12 +1,16 @@
 ///|
 /// 命令 | Command
 pub(all) struct Command {
-  id : Int
+  id : Int32
   name : String
   args : String
   executed : Bool
 } derive(Debug, Eq)
+
+///|
 pub extend Command with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend Command with Eq::{not_equal, equal}
 
 ///|
@@ -14,33 +18,41 @@ pub extend Command with Eq::{not_equal, equal}
 pub(all) struct CommandHistory {
   commands : Array[Command]
   undone : Array[Command]
-  next_id : Int
+  next_id : Int32
 } derive(Debug, Eq)
+
+///|
 pub extend CommandHistory with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend CommandHistory with Eq::{not_equal, equal}
 
 ///|
 /// 创建历史 | Create history
 pub fn history_create() -> CommandHistory {
-  { commands: [], undone: [], next_id: 0 }
+  { commands: [], undone: [], next_id: 0, }
 }
 
 ///|
 /// 创建命令 | Create command
 pub fn command_create(name : String, args : String) -> Command {
-  { id: 0, name, args, executed: false }
+  { id: 0, name, args, executed: false, }
 }
 
 ///|
 /// 执行命令 | Execute command
-pub fn history_execute(h : CommandHistory, name : String, args : String) -> (CommandHistory, Command) {
-  let cmd = { id: h.next_id, name, args, executed: true }
+pub fn history_execute(
+  h : CommandHistory,
+  name : String,
+  args : String,
+) -> (CommandHistory, Command) {
+  let cmd = { id: h.next_id, name, args, executed: true, }
   let new_commands = []
   for c in h.commands {
     new_commands.push(c)
   }
   new_commands.push(cmd)
-  ({ commands: new_commands, undone: [], next_id: h.next_id + 1 }, cmd)
+  ({ commands: new_commands, undone: [], next_id: h.next_id + 1, }, cmd)
 }
 
 ///|
@@ -62,7 +74,10 @@ pub fn history_undo(h : CommandHistory) -> (CommandHistory, Command?) {
     new_undone.push(u)
   }
   new_undone.push(cmd)
-  ({ commands: new_commands, undone: new_undone, next_id: h.next_id }, Some(cmd))
+  (
+    { commands: new_commands, undone: new_undone, next_id: h.next_id, },
+    Some(cmd),
+  )
 }
 
 ///|
@@ -84,31 +99,34 @@ pub fn history_redo(h : CommandHistory) -> (CommandHistory, Command?) {
     new_commands.push(c)
   }
   new_commands.push(cmd)
-  ({ commands: new_commands, undone: new_undone, next_id: h.next_id }, Some(cmd))
+  (
+    { commands: new_commands, undone: new_undone, next_id: h.next_id, },
+    Some(cmd),
+  )
 }
 
 ///|
 /// 历史大小 | History size
-pub fn history_size(h : CommandHistory) -> Int {
+pub fn history_size(h : CommandHistory) -> Int32 {
   h.commands.length()
 }
 
 ///|
 /// 可撤销数量 | Undoable count
-pub fn history_undoable_count(h : CommandHistory) -> Int {
+pub fn history_undoable_count(h : CommandHistory) -> Int32 {
   h.commands.length()
 }
 
 ///|
 /// 可重做数量 | Redoable count
-pub fn history_redoable_count(h : CommandHistory) -> Int {
+pub fn history_redoable_count(h : CommandHistory) -> Int32 {
   h.undone.length()
 }
 
 ///|
 /// 清空历史 | Clear history
 pub fn history_clear(_h : CommandHistory) -> CommandHistory {
-  { commands: [], undone: [], next_id: _h.next_id }
+  { commands: [], undone: [], next_id: _h.next_id, }
 }
 
 ///|
@@ -119,7 +137,9 @@ pub fn command_version() -> String {
 
 ///|
 /// Command 实现 Named trait | Command implements Named
-pub impl @trait.Named for Command with name(self) {
+pub impl @trait.Named for Command with fn name(self) {
   self.name
 }
+
+///|
 pub extend Command with @trait.Named::{name}

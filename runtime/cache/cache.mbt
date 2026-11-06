@@ -5,7 +5,11 @@ pub(all) enum EvictionPolicy {
   Fifo
   Ttl
 } derive(Debug, Eq)
+
+///|
 pub extend EvictionPolicy with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend EvictionPolicy with Eq::{not_equal, equal}
 
 ///|
@@ -13,32 +17,44 @@ pub extend EvictionPolicy with Eq::{not_equal, equal}
 pub(all) struct CacheEntry {
   key : String
   value : String
-  timestamp : Int
-  access_count : Int
-  last_access : Int
+  timestamp : Int32
+  access_count : Int32
+  last_access : Int32
 } derive(Debug, Eq)
+
+///|
 pub extend CacheEntry with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend CacheEntry with Eq::{not_equal, equal}
 
 ///|
 /// 缓存配置 | Cache configuration
 pub(all) struct CacheConfig {
-  max_size : Int
-  ttl_ms : Int
+  max_size : Int32
+  ttl_ms : Int32
   eviction_policy : EvictionPolicy
 } derive(Debug, Eq)
+
+///|
 pub extend CacheConfig with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend CacheConfig with Eq::{not_equal, equal}
 
 ///|
 /// 缓存统计 | Cache statistics
 pub(all) struct CacheStats {
-  hits : Int
-  misses : Int
-  evictions : Int
-  size : Int
+  hits : Int32
+  misses : Int32
+  evictions : Int32
+  size : Int32
 } derive(Debug, Eq)
+
+///|
 pub extend CacheStats with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend CacheStats with Eq::{not_equal, equal}
 
 ///|
@@ -48,19 +64,23 @@ pub(all) struct Cache {
   config : CacheConfig
   stats : CacheStats
 } derive(Debug, Eq)
+
+///|
 pub extend Cache with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend Cache with Eq::{not_equal, equal}
 
 ///|
 /// 默认缓存配置 | Default cache configuration
 pub fn default_cache_config() -> CacheConfig {
-  { max_size: 100, ttl_ms: 60000, eviction_policy: Lru }
+  { max_size: 100, ttl_ms: 60000, eviction_policy: Lru, }
 }
 
 ///|
 /// 创建缓存条目 | Create cache entry
 pub fn make_entry(key : String, value : String) -> CacheEntry {
-  { key, value, timestamp: 0, access_count: 1, last_access: 0 }
+  { key, value, timestamp: 0, access_count: 1, last_access: 0, }
 }
 
 ///|
@@ -68,20 +88,24 @@ pub fn make_entry(key : String, value : String) -> CacheEntry {
 pub fn make_entry_at(
   key : String,
   value : String,
-  timestamp : Int,
+  timestamp : Int32,
 ) -> CacheEntry {
-  { key, value, timestamp, access_count: 1, last_access: timestamp }
+  { key, value, timestamp, access_count: 1, last_access: timestamp, }
 }
 
 ///|
 /// 创建缓存 | Create cache
 pub fn create_cache(config : CacheConfig) -> Cache {
-  { entries: [], config, stats: { hits: 0, misses: 0, evictions: 0, size: 0 } }
+  {
+    entries: [],
+    config,
+    stats: { hits: 0, misses: 0, evictions: 0, size: 0, },
+  }
 }
 
 ///|
 /// 缓存大小 | Cache size
-pub fn cache_size(cache : Cache) -> Int {
+pub fn cache_size(cache : Cache) -> Int32 {
   cache.entries.length()
 }
 
@@ -109,23 +133,19 @@ pub fn cache_get(cache : Cache, key : String) -> String? {
 
 ///|
 /// 缓存放入 | Cache put
-pub fn cache_put(
-  cache : Cache,
-  key : String,
-  value : String,
-) -> Cache {
+pub fn cache_put(cache : Cache, key : String, value : String) -> Cache {
   let entries = []
   let mut found = false
   for entry in cache.entries {
     if entry.key == key {
-      entries.push({ ..entry, value, access_count: entry.access_count + 1 })
+      entries.push({ ..entry, value, access_count: entry.access_count + 1, })
       found = true
     } else {
       entries.push(entry)
     }
   }
   if !found {
-    entries.push({ key, value, timestamp: 0, access_count: 1, last_access: 0 })
+    entries.push({ key, value, timestamp: 0, access_count: 1, last_access: 0, })
   }
   let result_entries = entries
   let mut evictions = cache.stats.evictions
@@ -141,7 +161,16 @@ pub fn cache_put(
     let _ = result_entries.remove(min_idx)
     evictions = evictions + 1
   }
-  { entries: result_entries, config: cache.config, stats: { hits: cache.stats.hits, misses: cache.stats.misses, evictions, size: result_entries.length() } }
+  {
+    entries: result_entries,
+    config: cache.config,
+    stats: {
+      hits: cache.stats.hits,
+      misses: cache.stats.misses,
+      evictions,
+      size: result_entries.length(),
+    },
+  }
 }
 
 ///|
@@ -153,13 +182,26 @@ pub fn cache_remove(cache : Cache, key : String) -> Cache {
       entries.push(entry)
     }
   }
-  { entries, config: cache.config, stats: { ..cache.stats, size: entries.length() } }
+  {
+    entries,
+    config: cache.config,
+    stats: { ..cache.stats, size: entries.length(), },
+  }
 }
 
 ///|
 /// 缓存清空 | Cache clear
 pub fn cache_clear(cache : Cache) -> Cache {
-  { entries: [], config: cache.config, stats: { hits: cache.stats.hits, misses: cache.stats.misses, evictions: cache.stats.evictions, size: 0 } }
+  {
+    entries: [],
+    config: cache.config,
+    stats: {
+      hits: cache.stats.hits,
+      misses: cache.stats.misses,
+      evictions: cache.stats.evictions,
+      size: 0,
+    },
+  }
 }
 
 ///|
@@ -201,31 +243,28 @@ pub fn cache_hit_ratio(cache : Cache) -> Double {
 ///|
 /// 记录命中 | Record hit
 pub fn record_hit(cache : Cache) -> Cache {
-  { ..cache, stats: { ..cache.stats, hits: cache.stats.hits + 1 } }
+  { ..cache, stats: { ..cache.stats, hits: cache.stats.hits + 1, }, }
 }
 
 ///|
 /// 记录未命中 | Record miss
 pub fn record_miss(cache : Cache) -> Cache {
-  { ..cache, stats: { ..cache.stats, misses: cache.stats.misses + 1 } }
+  { ..cache, stats: { ..cache.stats, misses: cache.stats.misses + 1, }, }
 }
 
 ///|
 /// 是否过期 | Check if expired
 pub fn is_expired(
   entry : CacheEntry,
-  current_time : Int,
-  ttl_ms : Int,
+  current_time : Int32,
+  ttl_ms : Int32,
 ) -> Bool {
   current_time - entry.timestamp > ttl_ms
 }
 
 ///|
 /// 清理过期条目 | Evict expired entries
-pub fn evict_expired(
-  cache : Cache,
-  current_time : Int,
-) -> Cache {
+pub fn evict_expired(cache : Cache, current_time : Int32) -> Cache {
   let entries = []
   let mut evictions = cache.stats.evictions
   for entry in cache.entries {
@@ -235,7 +274,11 @@ pub fn evict_expired(
       entries.push(entry)
     }
   }
-  { entries, config: cache.config, stats: { ..cache.stats, evictions, size: entries.length() } }
+  {
+    entries,
+    config: cache.config,
+    stats: { ..cache.stats, evictions, size: entries.length(), },
+  }
 }
 
 ///|
@@ -273,12 +316,23 @@ pub fn merge_caches(c1 : Cache, c2 : Cache) -> Cache {
       entries.push(e)
     }
   }
-  { entries, config: c1.config, stats: { hits: c1.stats.hits + c2.stats.hits, misses: c1.stats.misses + c2.stats.misses, evictions: c1.stats.evictions + c2.stats.evictions, size: entries.length() } }
+  {
+    entries,
+    config: c1.config,
+    stats: {
+      hits: c1.stats.hits + c2.stats.hits,
+      misses: c1.stats.misses + c2.stats.misses,
+      evictions: c1.stats.evictions + c2.stats.evictions,
+      size: entries.length(),
+    },
+  }
 }
 
 ///|
 /// CacheStats 实现 Countable trait | CacheStats implements Countable
-pub impl @trait.Countable for CacheStats with count(self) {
+pub impl @trait.Countable for CacheStats with fn count(self) {
   self.size
 }
+
+///|
 pub extend CacheStats with @trait.Countable::{count}

@@ -4,7 +4,11 @@ pub(all) struct QueryParam {
   name : String
   value : String
 } derive(Debug, Eq)
+
+///|
 pub extend QueryParam with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend QueryParam with Eq::{not_equal, equal}
 
 ///|
@@ -12,17 +16,21 @@ pub extend QueryParam with Eq::{not_equal, equal}
 pub(all) struct Uri {
   scheme : String
   host : String
-  port : Int
+  port : Int32
   path : String
   query : String
   fragment : String
 } derive(Debug, Eq)
+
+///|
 pub extend Uri with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend Uri with Eq::{not_equal, equal}
 
 ///|
 /// 查找字符串位置 | Find string position
-fn find_str(s : String, sub : String, start : Int) -> Int {
+fn find_str(s : String, sub : String, start : Int32) -> Int32 {
   let slen = s.length()
   let sublen = sub.length()
   if sublen == 0 || sublen > slen {
@@ -49,7 +57,7 @@ fn find_str(s : String, sub : String, start : Int) -> Int {
 
 ///|
 /// 从字符串解析整数 | Parse int from string
-fn parse_int_safe(s : String) -> Int {
+fn parse_int_safe(s : String) -> Int32 {
   let len = s.length()
   if len == 0 {
     return 0
@@ -71,13 +79,20 @@ fn parse_int_safe(s : String) -> Int {
 ///|
 /// 创建空 URI | Create empty URI
 pub fn empty_uri() -> Uri {
-  { scheme: "", host: "", port: 0, path: "", query: "", fragment: "" }
+  { scheme: "", host: "", port: 0, path: "", query: "", fragment: "", }
 }
 
 ///|
 /// 创建 URI | Create URI
-pub fn make_uri(scheme : String, host : String, port : Int, path : String, query : String, fragment : String) -> Uri {
-  { scheme, host, port, path, query, fragment }
+pub fn make_uri(
+  scheme : String,
+  host : String,
+  port : Int32,
+  path : String,
+  query : String,
+  fragment : String,
+) -> Uri {
+  { scheme, host, port, path, query, fragment, }
 }
 
 ///|
@@ -95,7 +110,7 @@ pub fn parse_uri(uri : String) -> Uri {
     scheme = uri[0:scheme_end].to_owned()
     rest_start = scheme_end + 3
   } else {
-    return { ..result, path: uri }
+    return { ..result, path: uri, }
   }
   let rest = uri[rest_start:].to_owned()
   let frag_pos = find_str(rest, "#", 0)
@@ -127,7 +142,7 @@ pub fn parse_uri(uri : String) -> Uri {
     let port_str = host_port[colon_pos + 1:].to_owned()
     port = parse_int_safe(port_str)
   }
-  { scheme, host, port, path, query, fragment }
+  { scheme, host, port, path, query, fragment, }
 }
 
 ///|
@@ -165,14 +180,23 @@ pub fn uri_encode(s : String) -> String {
   let mut i = 0
   while i < len {
     let c = s[i].to_int()
-    if (c >= 97 && c <= 122) || (c >= 65 && c <= 90) || (c >= 48 && c <= 57) || c == 45 || c == 95 || c == 46 || c == 126 {
+    if (c >= 97 && c <= 122) ||
+      (c >= 65 && c <= 90) ||
+      (c >= 48 && c <= 57) ||
+      c == 45 ||
+      c == 95 ||
+      c == 46 ||
+      c == 126 {
       output = output + s[i:i + 1].to_owned()
     } else if c == 32 {
       output = output + "%20"
     } else {
       let hi = c / 16
       let lo = c % 16
-      output = output + "%" + hex_chars[hi:hi + 1].to_owned() + hex_chars[lo:lo + 1].to_owned()
+      output = output +
+        "%" +
+        hex_chars[hi:hi + 1].to_owned() +
+        hex_chars[lo:lo + 1].to_owned()
     }
     i = i + 1
   }
@@ -232,9 +256,9 @@ pub fn parse_query(query : String) -> Array[QueryParam] {
         if eq_pos >= 0 {
           let name = current[0:eq_pos].to_owned()
           let value = current[eq_pos + 1:].to_owned()
-          result.push({ name, value })
+          result.push({ name, value, })
         } else {
-          result.push({ name: current, value: "" })
+          result.push({ name: current, value: "", })
         }
       }
       current = ""
@@ -248,9 +272,9 @@ pub fn parse_query(query : String) -> Array[QueryParam] {
     if eq_pos >= 0 {
       let name = current[0:eq_pos].to_owned()
       let value = current[eq_pos + 1:].to_owned()
-      result.push({ name, value })
+      result.push({ name, value, })
     } else {
-      result.push({ name: current, value: "" })
+      result.push({ name: current, value: "", })
     }
   }
   result
@@ -275,8 +299,12 @@ pub fn build_query(params : Array[QueryParam]) -> String {
 /// 添加查询参数 | Add query parameter
 pub fn add_query_param(uri : Uri, name : String, value : String) -> Uri {
   let param = name + "=" + value
-  let new_query = if uri.query.length() > 0 { uri.query + "&" + param } else { param }
-  { ..uri, query: new_query }
+  let new_query = if uri.query.length() > 0 {
+    uri.query + "&" + param
+  } else {
+    param
+  }
+  { ..uri, query: new_query, }
 }
 
 ///|
@@ -314,12 +342,36 @@ pub fn uri_full_path(uri : Uri) -> String {
 /// 合并 URI | Merge URIs
 pub fn merge_uris(u1 : Uri, u2 : Uri) -> Uri {
   {
-    scheme: if u1.scheme.length() > 0 { u1.scheme } else { u2.scheme },
-    host: if u1.host.length() > 0 { u1.host } else { u2.host },
-    port: if u1.port > 0 { u1.port } else { u2.port },
-    path: if u1.path.length() > 0 { u1.path } else { u2.path },
-    query: if u1.query.length() > 0 { u1.query } else { u2.query },
-    fragment: if u1.fragment.length() > 0 { u1.fragment } else { u2.fragment },
+    scheme: if u1.scheme.length() > 0 {
+      u1.scheme
+    } else {
+      u2.scheme
+    },
+    host: if u1.host.length() > 0 {
+      u1.host
+    } else {
+      u2.host
+    },
+    port: if u1.port > 0 {
+      u1.port
+    } else {
+      u2.port
+    },
+    path: if u1.path.length() > 0 {
+      u1.path
+    } else {
+      u2.path
+    },
+    query: if u1.query.length() > 0 {
+      u1.query
+    } else {
+      u2.query
+    },
+    fragment: if u1.fragment.length() > 0 {
+      u1.fragment
+    } else {
+      u2.fragment
+    },
   }
 }
 
@@ -331,7 +383,9 @@ pub fn uri_version() -> String {
 
 ///|
 /// QueryParam 实现 Named trait | QueryParam implements Named
-pub impl @trait.Named for QueryParam with name(self) {
+pub impl @trait.Named for QueryParam with fn name(self) {
   self.name
 }
+
+///|
 pub extend QueryParam with @trait.Named::{name}

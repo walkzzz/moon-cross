@@ -1,3 +1,4 @@
+///|
 test "interactive: default init wizard" {
   let wizard = @interactive.default_init_wizard()
   assert_eq(wizard.project_name, "my-lib")
@@ -6,11 +7,13 @@ test "interactive: default init wizard" {
   assert_eq(wizard.template, "basic-library")
 }
 
+///|
 test "interactive: wizard steps" {
   let steps = @interactive.wizard_steps()
   assert_true(steps.length() >= 4)
 }
 
+///|
 test "interactive: make progress step" {
   let step = @interactive.make_progress_step("compile", @core.Platform::Windows)
   assert_eq(step.name, "compile")
@@ -18,6 +21,7 @@ test "interactive: make progress step" {
   assert_eq(step.duration_ms, 0)
 }
 
+///|
 test "interactive: create progress bar" {
   let steps = [
     @interactive.make_progress_step("compile", @core.Platform::Windows),
@@ -29,6 +33,7 @@ test "interactive: create progress bar" {
   assert_false(@interactive.is_complete(bar))
 }
 
+///|
 test "interactive: complete step" {
   let steps = [
     @interactive.make_progress_step("compile", @core.Platform::Windows),
@@ -40,6 +45,7 @@ test "interactive: complete step" {
   assert_eq(bar2.current_step, "compile")
 }
 
+///|
 test "interactive: complete all steps" {
   let steps = [
     @interactive.make_progress_step("compile", @core.Platform::Windows),
@@ -51,12 +57,14 @@ test "interactive: complete all steps" {
   assert_true(@interactive.is_complete(bar3))
 }
 
+///|
 test "interactive: display progress empty" {
   let bar = @interactive.create_progress_bar([])
   let display = @interactive.display_progress(bar)
   assert_true(display.contains("0/0"))
 }
 
+///|
 test "interactive: display progress partial" {
   let steps = [
     @interactive.make_progress_step("a", @core.Platform::Windows),
@@ -69,8 +77,12 @@ test "interactive: display progress partial" {
   assert_true(display.contains("a"))
 }
 
+///|
 test "interactive: plan visualization" {
-  let plan = @interactive.plan_visualization("mylib", [@core.Platform::Windows, @core.Platform::Ios])
+  let plan = @interactive.plan_visualization("mylib", [
+    @core.Platform::Windows,
+    @core.Platform::Ios,
+  ])
   assert_true(plan.contains("mylib"))
   assert_true(plan.contains("Windows"))
   assert_true(plan.contains("iOS"))
@@ -79,6 +91,7 @@ test "interactive: plan visualization" {
   assert_true(plan.contains("ffi"))
 }
 
+///|
 test "interactive: version" {
   assert_true(@interactive.interactive_version().contains("v0.1.2"))
 }

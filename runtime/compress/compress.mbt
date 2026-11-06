@@ -2,11 +2,15 @@
 /// 压缩结果 | Compression result
 pub(all) struct CompressionResult {
   data : String
-  original_size : Int
-  compressed_size : Int
-  ratio : Int
+  original_size : Int32
+  compressed_size : Int32
+  ratio : Int32
 } derive(Debug, Eq)
+
+///|
 pub extend CompressionResult with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend CompressionResult with Eq::{not_equal, equal}
 
 ///|
@@ -65,11 +69,19 @@ pub fn rle_decode(s : String) -> String {
 
 ///|
 /// 压缩统计 | Compression stats
-pub fn compress_stats(original : String, compressed : String) -> CompressionResult {
+pub fn compress_stats(
+  original : String,
+  compressed : String,
+) -> CompressionResult {
   let orig_size = original.length()
   let comp_size = compressed.length()
-  let ratio = if orig_size == 0 { 0 } else { (comp_size * 100) / orig_size }
-  { data: compressed, original_size: orig_size, compressed_size: comp_size, ratio }
+  let ratio = if orig_size == 0 { 0 } else { comp_size * 100 / orig_size }
+  {
+    data: compressed,
+    original_size: orig_size,
+    compressed_size: comp_size,
+    ratio,
+  }
 }
 
 ///|
@@ -102,7 +114,9 @@ pub fn compress_version() -> String {
 
 ///|
 /// CompressionResult 实现 Countable trait | CompressionResult implements Countable
-pub impl @trait.Countable for CompressionResult with count(self) {
+pub impl @trait.Countable for CompressionResult with fn count(self) {
   self.original_size
 }
+
+///|
 pub extend CompressionResult with @trait.Countable::{count}

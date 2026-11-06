@@ -5,7 +5,11 @@ pub(all) struct ProductInfo {
   version : String
   attributes : Array[String]
 } derive(Debug, Eq)
+
+///|
 pub extend ProductInfo with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend ProductInfo with Eq::{not_equal, equal}
 
 ///|
@@ -14,7 +18,11 @@ pub(all) struct FactoryRegistration {
   type_name : String
   creator : String
 } derive(Debug, Eq)
+
+///|
 pub extend FactoryRegistration with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend FactoryRegistration with Eq::{not_equal, equal}
 
 ///|
@@ -22,32 +30,44 @@ pub extend FactoryRegistration with Eq::{not_equal, equal}
 pub(all) struct Factory {
   registrations : Array[FactoryRegistration]
 } derive(Debug, Eq)
+
+///|
 pub extend Factory with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend Factory with Eq::{not_equal, equal}
 
 ///|
 /// 创建工厂 | Create factory
 pub fn factory_create() -> Factory {
-  { registrations: [] }
+  { registrations: [], }
 }
 
 ///|
 /// 注册类型 | Register type
-pub fn factory_register(f : Factory, type_name : String, creator : String) -> Factory {
+pub fn factory_register(
+  f : Factory,
+  type_name : String,
+  creator : String,
+) -> Factory {
   let new_regs = []
   for r in f.registrations {
     new_regs.push(r)
   }
-  new_regs.push({ type_name, creator })
-  { registrations: new_regs }
+  new_regs.push({ type_name, creator, })
+  { registrations: new_regs, }
 }
 
 ///|
 /// 创建产品 | Create product
-pub fn factory_make(f : Factory, type_name : String, version : String) -> ProductInfo? {
+pub fn factory_make(
+  f : Factory,
+  type_name : String,
+  version : String,
+) -> ProductInfo? {
   for r in f.registrations {
     if r.type_name == type_name {
-      return Some({ type_name, version, attributes: [] })
+      return Some({ type_name, version, attributes: [], })
     }
   }
   None
@@ -55,10 +75,15 @@ pub fn factory_make(f : Factory, type_name : String, version : String) -> Produc
 
 ///|
 /// 创建带属性产品 | Create product with attributes
-pub fn factory_make_with_attrs(f : Factory, type_name : String, version : String, attrs : Array[String]) -> ProductInfo? {
+pub fn factory_make_with_attrs(
+  f : Factory,
+  type_name : String,
+  version : String,
+  attrs : Array[String],
+) -> ProductInfo? {
   for r in f.registrations {
     if r.type_name == type_name {
-      return Some({ type_name, version, attributes: attrs })
+      return Some({ type_name, version, attributes: attrs, })
     }
   }
   None
@@ -77,7 +102,7 @@ pub fn factory_has_type(f : Factory, type_name : String) -> Bool {
 
 ///|
 /// 已注册类型数量 | Registered type count
-pub fn factory_type_count(f : Factory) -> Int {
+pub fn factory_type_count(f : Factory) -> Int32 {
   f.registrations.length()
 }
 
@@ -90,7 +115,7 @@ pub fn factory_unregister(f : Factory, type_name : String) -> Factory {
       new_regs.push(r)
     }
   }
-  { registrations: new_regs }
+  { registrations: new_regs, }
 }
 
 ///|
@@ -101,14 +126,18 @@ pub fn factory_version() -> String {
 
 ///|
 /// ProductInfo 实现 Named trait | ProductInfo implements Named
-pub impl @trait.Named for ProductInfo with name(self) {
+pub impl @trait.Named for ProductInfo with fn name(self) {
   self.type_name
 }
+
+///|
 pub extend ProductInfo with @trait.Named::{name}
 
 ///|
 /// ProductInfo 实现 Hashable trait | ProductInfo implements Hashable
-pub impl @trait.Hashable for ProductInfo with hash(self) {
+pub impl @trait.Hashable for ProductInfo with fn hash(self) {
   @trait.Named::name(self).length()
 }
+
+///|
 pub extend ProductInfo with @trait.Hashable::{hash}

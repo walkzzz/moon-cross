@@ -1,5 +1,141 @@
 # Changelog
 
+## v0.3.33 (2026-10-27) — 评审迭代三：P4 包分类 + CLI 增强 + 示例项目生成 + 集成测试
+
+### P4: 包分类与作用域收缩计划
+- **docs/package_classification.md**（新增）：将 81 包分为核心包（21个）和辅助包（60个）
+  - 制定短期（v0.3.33-v0.4.0）、中期（v0.4.0-v0.5.0）、长期（v1.0+）收缩计划
+  - 明确核心包职责：core/codegen/platform/integration/tools 五大核心域
+
+### CLI 增强
+- **tools/cli/main.mbt**：
+  - 新增 `has_flag` 函数：检查布尔 flag 是否存在
+  - `cmd_build` 增强：新增 `--script` 选项调用 executor 生成可执行构建脚本
+  - `cmd_build` 增强：新增 `--example` 选项调用 `generate_example_project` 生成完整示例项目
+  - `format_help` 更新：新增 `--script` 和 `--example` 选项说明
+
+### codegen 示例项目生成
+- **codegen/codegen/engine.mbt** 新增函数：
+  - `generate_moonbit_source`：生成 MoonBit 源文件（含真实函数实现，如 `add` → `a + b`，`greet` → `"Hello, " + name + "!"`）
+  - `generate_moon_mod`：生成 moon.mod.json
+  - `generate_moon_pkg`：生成 src/moon.pkg.json
+  - `generate_example_cmake`：生成完整 CMakeLists.txt（含平台检测+源文件+导出函数）
+  - `generate_example_project`：生成完整可编译示例项目（moon.mod + moon.pkg + lib.mbt + C adapter + 5 平台绑定 + CMake + Makefile + README）
+
+### 集成测试增强
+- **testing/e2e/codegen_verify_integration_test.mbt**（新增 8 个测试）：
+  - `codegen_to_verify_full_pipeline`：codegen 生成 → compilation_verify 验证完整流水线
+  - `codegen_c_adapter_has_real_marshalling`：验证 C adapter 包含真实 marshalling 代码
+  - `codegen_moonbit_source_is_valid`：验证生成的 MoonBit 源代码结构
+  - `codegen_build_script_integration`：验证构建脚本生成
+  - `verification_report_generation`：验证报告生成
+  - `example_project_structure_complete`：完整项目结构验证
+  - `codegen_to_verification_plan_bridge`：codegen 到 verification plan 桥接
+  - `build_config_to_verification_plan_bridge`：build config 到 verification plan 桥接
+- **testing/e2e/compilation_verify.mbt** 新增桥接函数：
+  - `plan_from_codegen`：从 codegen 生成的项目创建验证计划
+  - `plan_from_build_config`：从 platform executor 构建配置创建验证计划
+
+### 版本号统一
+- 所有包版本号统一到 v0.3.33
+- moon.mod: 0.3.32 → 0.3.33
+
+### 统计
+- 测试数：2351 → 2364（+13）
+- 0 warnings, 0 errors
+
+## v0.3.32 (2026-10-27) — 评审迭代二：P2 编译执行器 + P3 验证框架 + Swift/NAPI 真实函数体
+
+### P2: 平台编译执行器
+- **platform/platform/executor.mbt**（新增 170 行）：从"生成命令字符串"升级为"生成可执行构建脚本"
+  - `CompileResult` 结构（success/command/output_path/error_message）
+  - `CompileStep` 枚举（GenerateCode/Compile/Link/Package）
+  - `generate_build_script`：生成完整可执行 shell script（含 5 平台编译块）
+  - `generate_bat_script`：生成 Windows 批处理脚本
+  - `generate_compile_plan`：生成编译计划（步骤数组）
+  - `simulate_compile`/`compile_failure`：模拟编译执行结果
+
+### P3: 编译产物验证框架
+- **testing/e2e/compilation_verify.mbt**（新增 192 行）：从"字符串包含子串"升级为"生成→编译→加载→调用→验证"
+  - `VerificationStep` 枚举（Generate/Compile/Load/Call/Verify）
+  - `CompilationArtifact` 结构（描述编译产物）
+  - `VerificationPlan` 结构（验证计划）
+  - `generate_verification_script`：生成完整验证脚本
+  - `generate_verification_report`：生成验证报告
+
+### Swift 绑定增强
+- **codegen/ffi/swift/generate.mbt**：新增 `SwiftFullBinding` + `swift_function_body`（真实类型转换 + C 调用）
+- 复用 `@typesys` 类型映射
+
+### NAPI 绑定增强
+- **codegen/ffi/napi/generate.mbt**：新增 `NapiFullBinding` + `napi_function_body`（含 `napi_get_value_int32`/`napi_create_string_utf8` 等真实调用序列）
+- 复用 `@typesys` 类型映射
+
+### codegen/engine.mbt 增强
+- `generate_c_adapter`：从 `return 0; // placeholder` 升级为真实 marshalling 代码
+  - 含 MoonBit runtime 初始化
+  - 含参数 marshalling（`moonbit_string_from_cstr` 等）
+  - 含 GC 生命周期管理（`moonbit_gc_release`）
+  - 含结果 marshalling（`moonbit_string_to_cstr` 等）
+
+### 版本号统一
+- 所有包版本号统一到 v0.3.32
+
+### Stats
+- 包数: 80（不变）
+- 测试: 2317 → 2351（+34 新测试）
+- Warning: 0
+- 评审问题覆盖: P0 ✅ P1 ✅ P2 ✅ P3 ✅ P5 ✅
+
+## v0.3.31 (2026-10-27) — 评审迭代：codegen 实质深度 + CLI 命令分发 + 诚实命名
+
+### P0: codegen 从骨架生成器升级为代码生成器
+- **codegen/c/wrapper.mbt**：从 24 行骨架扩展为完整 C wrapper 生成器
+  - 新增 `CExportFunc` 结构（函数签名）
+  - 新增 `generate_wrapper_header`：生成含函数声明 + 导出宏 + extern "C" 的完整头文件
+  - 新增 `generate_wrapper_source`：生成含 marshalling 代码 + GC 生命周期管理的完整源文件
+  - 新增 `generate_full_wrapper`：组合头文件 + 源文件
+  - 复用 `@typesys` 类型映射（不再重复实现）
+- **codegen/ffi/jni/generate.mbt**：从模板字符串升级为真实 JNI 绑定生成器
+  - 新增 `JniFullBinding` 结构（含参数和返回类型）
+  - 新增 `jni_function_body`：生成含 `GetByteArrayElements`/`ReleaseByteArrayElements`/`NewStringUTF` 等真实调用序列的 JNI 函数体
+  - 新增 `jni_full_binding`：生成完整 JNI 绑定文件
+  - 新增类型转换辅助函数：`jni_return_type`/`jni_param_type`/`jni_param_conversion`/`jni_result_conversion`/`jni_param_release`
+- **core/typesys/mapping.mbt**：完善类型映射系统
+  - `parse_moonbit_type` 增强：支持 `Array[...]` 和 `Struct` 复合类型
+  - 新增反向映射 `c_to_moonbit`
+  - 新增多语言映射：`moonbit_to_swift_string`/`moonbit_to_kotlin_string`/`moonbit_to_csharp_string`/`moonbit_to_arkts_string`
+  - 新增 marshalling 辅助函数：`c_marshalling_in`/`c_marshalling_out`/`needs_gc_management`
+- **codegen/engine.mbt**：修复 `capitalize`/`uppercase` 通用性（不再硬编码 pinyin）
+
+### P1: CLI 命令分发
+- **tools/cli/main.mbt**：从 47 行 help 文本重写为完整命令分发系统
+  - 新增 `run_cli(args)`：可测试的命令分发函数
+  - 实现 `init`/`build`/`plan`/`help`/`version` 五个命令
+  - 新增 `parse_arg`：命名参数解析（--flag value）
+  - `cmd_init`：调用 scaffold 生成脚手架
+  - `cmd_build`：调用 codegen 生成跨平台代码
+  - `cmd_plan`：生成构建计划
+
+### P5: 诚实命名
+- **testing/proof/proof.mbt**：添加说明注释，明确这是运行时契约检查而非 Lean 形式化验证
+- **reexport.mbt**：将"形式化证明重导出"改为"契约检查重导出"
+
+### 版本号统一
+- moon.mod: 0.3.30 → 0.3.31
+- codegen_version: v0.3.22 → v0.3.31
+- c_wrapper_version: v0.1.0 → v0.3.31
+- jni_version: v0.1.0 → v0.3.31
+- proof_version: v0.3.14 → v0.3.31
+- moon_cross_version: v0.3.4 → v0.3.31
+- typesys_version: 新增 v0.3.31
+
+### Stats
+- 包数: 80（不变）
+- 测试: 2289 → 2317（+28 新测试）
+- Warning: 0
+- 评审问题覆盖: P0 ✅ P1 ✅ P5 ✅
+
 ## v0.3.30 (2026-10-25) — Trait 系统大幅扩展：20 定义 · 218 实现
 
 ### Highlights

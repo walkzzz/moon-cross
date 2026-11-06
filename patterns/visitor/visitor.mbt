@@ -1,11 +1,15 @@
 ///|
 /// 元素 | Element
 pub(all) struct Element {
-  id : Int
+  id : Int32
   name : String
-  value : Int
+  value : Int32
 } derive(Debug, Eq)
+
+///|
 pub extend Element with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend Element with Eq::{not_equal, equal}
 
 ///|
@@ -13,44 +17,59 @@ pub extend Element with Eq::{not_equal, equal}
 pub(all) struct VisitResult {
   element_name : String
   operation : String
-  result_value : Int
+  result_value : Int32
 } derive(Debug, Eq)
+
+///|
 pub extend VisitResult with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend VisitResult with Eq::{not_equal, equal}
 
 ///|
 /// 创建元素 | Create element
-pub fn element_create(id : Int, name : String, value : Int) -> Element {
-  { id, name, value }
+pub fn element_create(id : Int32, name : String, value : Int32) -> Element {
+  { id, name, value, }
 }
 
 ///|
 /// 访问-求和 | Visit - sum
 pub fn visit_sum(elem : Element) -> VisitResult {
-  { element_name: elem.name, operation: "sum", result_value: elem.value }
+  { element_name: elem.name, operation: "sum", result_value: elem.value, }
 }
 
 ///|
 /// 访问-平方 | Visit - square
 pub fn visit_square(elem : Element) -> VisitResult {
-  { element_name: elem.name, operation: "square", result_value: elem.value * elem.value }
+  {
+    element_name: elem.name,
+    operation: "square",
+    result_value: elem.value * elem.value,
+  }
 }
 
 ///|
 /// 访问-加倍 | Visit - double
 pub fn visit_double(elem : Element) -> VisitResult {
-  { element_name: elem.name, operation: "double", result_value: elem.value * 2 }
+  {
+    element_name: elem.name,
+    operation: "double",
+    result_value: elem.value * 2,
+  }
 }
 
 ///|
 /// 访问-取反 | Visit - negate
 pub fn visit_negate(elem : Element) -> VisitResult {
-  { element_name: elem.name, operation: "negate", result_value: -elem.value }
+  { element_name: elem.name, operation: "negate", result_value: -elem.value, }
 }
 
 ///|
 /// 批量访问 | Batch visit
-pub fn visit_batch(elements : Array[Element], operation : String) -> Array[VisitResult] {
+pub fn visit_batch(
+  elements : Array[Element],
+  operation : String,
+) -> Array[VisitResult] {
   let result = []
   for elem in elements {
     if operation == "sum" {
@@ -68,7 +87,7 @@ pub fn visit_batch(elements : Array[Element], operation : String) -> Array[Visit
 
 ///|
 /// 汇总结果 | Aggregate results
-pub fn visit_aggregate(results : Array[VisitResult]) -> Int {
+pub fn visit_aggregate(results : Array[VisitResult]) -> Int32 {
   let mut total = 0
   for r in results {
     total = total + r.result_value
@@ -84,14 +103,18 @@ pub fn visitor_version() -> String {
 
 ///|
 /// Element 实现 Named trait | Element implements Named
-pub impl @trait.Named for Element with name(self) {
+pub impl @trait.Named for Element with fn name(self) {
   self.name
 }
+
+///|
 pub extend Element with @trait.Named::{name}
 
 ///|
 /// Element 实现 Hashable trait | Element implements Hashable
-pub impl @trait.Hashable for Element with hash(self) {
+pub impl @trait.Hashable for Element with fn hash(self) {
   @trait.Named::name(self).length()
 }
+
+///|
 pub extend Element with @trait.Hashable::{hash}

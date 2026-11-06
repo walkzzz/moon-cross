@@ -4,7 +4,11 @@ pub(all) struct StrategyContext {
   strategy_name : String
   config : String
 } derive(Debug, Eq)
+
+///|
 pub extend StrategyContext with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend StrategyContext with Eq::{not_equal, equal}
 
 ///|
@@ -14,19 +18,26 @@ pub(all) struct StrategyResult {
   output : String
   strategy_used : String
 } derive(Debug, Eq)
+
+///|
 pub extend StrategyResult with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend StrategyResult with Eq::{not_equal, equal}
 
 ///|
 /// 创建上下文 | Create context
 pub fn context_create(strategy_name : String) -> StrategyContext {
-  { strategy_name, config: "" }
+  { strategy_name, config: "", }
 }
 
 ///|
 /// 设置配置 | Set config
-pub fn context_set_config(ctx : StrategyContext, config : String) -> StrategyContext {
-  { strategy_name: ctx.strategy_name, config }
+pub fn context_set_config(
+  ctx : StrategyContext,
+  config : String,
+) -> StrategyContext {
+  { strategy_name: ctx.strategy_name, config, }
 }
 
 ///|
@@ -34,17 +45,21 @@ pub fn context_set_config(ctx : StrategyContext, config : String) -> StrategyCon
 pub fn context_execute(ctx : StrategyContext, input : String) -> StrategyResult {
   if ctx.strategy_name == "reverse" {
     let reversed = reverse_string(input)
-    { success: true, output: reversed, strategy_used: ctx.strategy_name }
+    { success: true, output: reversed, strategy_used: ctx.strategy_name, }
   } else if ctx.strategy_name == "upper" {
     let upper = to_upper_string(input)
-    { success: true, output: upper, strategy_used: ctx.strategy_name }
+    { success: true, output: upper, strategy_used: ctx.strategy_name, }
   } else if ctx.strategy_name == "trim" {
     let trimmed = trim_string(input)
-    { success: true, output: trimmed, strategy_used: ctx.strategy_name }
+    { success: true, output: trimmed, strategy_used: ctx.strategy_name, }
   } else if ctx.strategy_name == "prefix" {
-    { success: true, output: ctx.config + input, strategy_used: ctx.strategy_name }
+    {
+      success: true,
+      output: ctx.config + input,
+      strategy_used: ctx.strategy_name,
+    }
   } else {
-    { success: false, output: "", strategy_used: ctx.strategy_name }
+    { success: false, output: "", strategy_used: ctx.strategy_name, }
   }
 }
 
@@ -105,13 +120,20 @@ fn trim_string(s : String) -> String {
       break
     }
   }
-  if start >= end { "" } else { s[start:end].to_owned() }
+  if start >= end {
+    ""
+  } else {
+    s[start:end].to_owned()
+  }
 }
 
 ///|
 /// 切换策略 | Switch strategy
-pub fn context_switch(_ctx : StrategyContext, new_strategy : String) -> StrategyContext {
-  { strategy_name: new_strategy, config: "" }
+pub fn context_switch(
+  _ctx : StrategyContext,
+  new_strategy : String,
+) -> StrategyContext {
+  { strategy_name: new_strategy, config: "", }
 }
 
 ///|
@@ -120,10 +142,11 @@ pub fn strategy_version() -> String {
   "moon-cross strategy v0.3.2"
 }
 
-
 ///|
 /// StrategyResult 实现 Checkable trait | StrategyResult implements Checkable
-pub impl @trait.Checkable for StrategyResult with check(self) {
+pub impl @trait.Checkable for StrategyResult with fn check(self) {
   self.success
 }
+
+///|
 pub extend StrategyResult with @trait.Checkable::{check}

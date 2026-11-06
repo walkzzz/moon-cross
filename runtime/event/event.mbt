@@ -6,7 +6,11 @@ pub(all) enum EventPriority {
   High
   Critical
 } derive(Debug, Eq)
+
+///|
 pub extend EventPriority with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend EventPriority with Eq::{not_equal, equal}
 
 ///|
@@ -14,33 +18,45 @@ pub extend EventPriority with Eq::{not_equal, equal}
 pub(all) struct Event {
   name : String
   data : String
-  timestamp : Int
+  timestamp : Int32
   source : String
   priority : EventPriority
 } derive(Debug, Eq)
+
+///|
 pub extend Event with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend Event with Eq::{not_equal, equal}
 
 ///|
 /// 事件处理器 | Event handler
 pub(all) struct EventHandler {
-  id : Int
+  id : Int32
   event_name : String
   handler_name : String
   priority : EventPriority
   active : Bool
 } derive(Debug, Eq)
+
+///|
 pub extend EventHandler with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend EventHandler with Eq::{not_equal, equal}
 
 ///|
 /// 事件总线统计 | Event bus statistics
 pub(all) struct EventBusStats {
-  total_published : Int
-  total_handlers : Int
-  total_dispatched : Int
+  total_published : Int32
+  total_handlers : Int32
+  total_dispatched : Int32
 } derive(Debug, Eq)
+
+///|
 pub extend EventBusStats with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend EventBusStats with Eq::{not_equal, equal}
 
 ///|
@@ -50,12 +66,16 @@ pub(all) struct EventBus {
   history : Array[Event]
   stats : EventBusStats
 } derive(Debug, Eq)
+
+///|
 pub extend EventBus with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend EventBus with Eq::{not_equal, equal}
 
 ///|
 /// 优先级数值 | Priority numeric value
-pub fn priority_value(priority : EventPriority) -> Int {
+pub fn priority_value(priority : EventPriority) -> Int32 {
   match priority {
     Low => 0
     Normal => 1
@@ -77,7 +97,7 @@ pub fn priority_name(priority : EventPriority) -> String {
 
 ///|
 /// 从数值创建优先级 | Create priority from value
-pub fn priority_from_value(value : Int) -> EventPriority {
+pub fn priority_from_value(value : Int32) -> EventPriority {
   if value >= 3 {
     Critical
   } else if value == 2 {
@@ -91,8 +111,8 @@ pub fn priority_from_value(value : Int) -> EventPriority {
 
 ///|
 /// 创建事件 | Create event
-pub fn make_event(name : String, data : String, timestamp : Int) -> Event {
-  { name, data, timestamp, source: "", priority: Normal }
+pub fn make_event(name : String, data : String, timestamp : Int32) -> Event {
+  { name, data, timestamp, source: "", priority: Normal, }
 }
 
 ///|
@@ -100,10 +120,10 @@ pub fn make_event(name : String, data : String, timestamp : Int) -> Event {
 pub fn make_event_with_source(
   name : String,
   data : String,
-  timestamp : Int,
+  timestamp : Int32,
   source : String,
 ) -> Event {
-  { name, data, timestamp, source, priority: Normal }
+  { name, data, timestamp, source, priority: Normal, }
 }
 
 ///|
@@ -111,28 +131,32 @@ pub fn make_event_with_source(
 pub fn make_event_with_priority(
   name : String,
   data : String,
-  timestamp : Int,
+  timestamp : Int32,
   priority : EventPriority,
 ) -> Event {
-  { name, data, timestamp, source: "", priority }
+  { name, data, timestamp, source: "", priority, }
 }
 
 ///|
 /// 创建事件总线 | Create event bus
 pub fn create_event_bus() -> EventBus {
-  { handlers: [], history: [], stats: { total_published: 0, total_handlers: 0, total_dispatched: 0 } }
+  {
+    handlers: [],
+    history: [],
+    stats: { total_published: 0, total_handlers: 0, total_dispatched: 0, },
+  }
 }
 
 ///|
 /// 订阅事件 | Subscribe to event
 pub fn event_subscribe(
   bus : EventBus,
-  id : Int,
+  id : Int32,
   event_name : String,
   handler_name : String,
   priority : EventPriority,
 ) -> EventBus {
-  let handler = { id, event_name, handler_name, priority, active: true }
+  let handler = { id, event_name, handler_name, priority, active: true, }
   let new_handlers = []
   for h in bus.handlers {
     new_handlers.push(h)
@@ -151,7 +175,7 @@ pub fn event_subscribe(
 
 ///|
 /// 取消订阅 | Unsubscribe from event
-pub fn event_unsubscribe(bus : EventBus, id : Int) -> EventBus {
+pub fn event_unsubscribe(bus : EventBus, id : Int32) -> EventBus {
   let remaining = []
   let mut removed = 0
   for h in bus.handlers {
@@ -255,22 +279,18 @@ pub fn event_filter_by_source(bus : EventBus, source : String) -> Array[Event] {
 ///|
 /// 清空历史 | Clear history
 pub fn event_clear_history(bus : EventBus) -> EventBus {
-  {
-    handlers: bus.handlers,
-    history: [],
-    stats: bus.stats,
-  }
+  { handlers: bus.handlers, history: [], stats: bus.stats, }
 }
 
 ///|
 /// 处理器数量 | Handler count
-pub fn event_handler_count(bus : EventBus) -> Int {
+pub fn event_handler_count(bus : EventBus) -> Int32 {
   bus.handlers.length()
 }
 
 ///|
 /// 活跃处理器数量 | Active handler count
-pub fn event_active_handler_count(bus : EventBus) -> Int {
+pub fn event_active_handler_count(bus : EventBus) -> Int32 {
   let mut count = 0
   for h in bus.handlers {
     if h.active {
@@ -293,35 +313,38 @@ pub fn event_has_handler(bus : EventBus, event_name : String) -> Bool {
 
 ///|
 /// 禁用处理器 | Disable handler
-pub fn event_disable_handler(bus : EventBus, id : Int) -> EventBus {
+pub fn event_disable_handler(bus : EventBus, id : Int32) -> EventBus {
   let new_handlers = []
   for h in bus.handlers {
     if h.id == id {
-      new_handlers.push({ ..h, active: false })
+      new_handlers.push({ ..h, active: false, })
     } else {
       new_handlers.push(h)
     }
   }
-  { ..bus, handlers: new_handlers }
+  { ..bus, handlers: new_handlers, }
 }
 
 ///|
 /// 启用处理器 | Enable handler
-pub fn event_enable_handler(bus : EventBus, id : Int) -> EventBus {
+pub fn event_enable_handler(bus : EventBus, id : Int32) -> EventBus {
   let new_handlers = []
   for h in bus.handlers {
     if h.id == id {
-      new_handlers.push({ ..h, active: true })
+      new_handlers.push({ ..h, active: true, })
     } else {
       new_handlers.push(h)
     }
   }
-  { ..bus, handlers: new_handlers }
+  { ..bus, handlers: new_handlers, }
 }
 
 ///|
 /// 获取事件名称的处理器 | Get handlers for event name
-pub fn event_handlers_for(bus : EventBus, event_name : String) -> Array[EventHandler] {
+pub fn event_handlers_for(
+  bus : EventBus,
+  event_name : String,
+) -> Array[EventHandler] {
   let result = []
   for h in bus.handlers {
     if h.event_name == event_name {
@@ -339,7 +362,7 @@ pub fn event_stats(bus : EventBus) -> EventBusStats {
 
 ///|
 /// 历史数量 | History count
-pub fn event_history_count(bus : EventBus) -> Int {
+pub fn event_history_count(bus : EventBus) -> Int32 {
   bus.history.length()
 }
 
@@ -379,7 +402,9 @@ pub fn event_version() -> String {
 
 ///|
 /// Event 实现 Named trait | Event implements Named
-pub impl @trait.Named for Event with name(self) {
+pub impl @trait.Named for Event with fn name(self) {
   self.name
 }
+
+///|
 pub extend Event with @trait.Named::{name}

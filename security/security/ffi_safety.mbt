@@ -7,7 +7,10 @@ pub(all) enum SafetyCheckType {
   LifetimeCheck
 } derive(Debug, Eq)
 
+///|
 pub extend SafetyCheckType with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend SafetyCheckType with Eq::{not_equal, equal}
 
 ///|
@@ -19,7 +22,10 @@ pub(all) struct SafetyIssue {
   severity : String
 } derive(Debug, Eq)
 
+///|
 pub extend SafetyIssue with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend SafetyIssue with Eq::{not_equal, equal}
 
 ///|
@@ -30,7 +36,10 @@ pub(all) struct FfiSafetyResult {
   injected_checks : Array[String]
 } derive(Debug, Eq)
 
+///|
 pub extend FfiSafetyResult with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend FfiSafetyResult with Eq::{not_equal, equal}
 
 ///|
@@ -41,12 +50,15 @@ pub fn make_safety_issue(
   message : String,
   severity : String,
 ) -> SafetyIssue {
-  { check_type, function_name, message, severity }
+  { check_type, function_name, message, severity, }
 }
 
 ///|
 /// 检查空指针安全 | Check null safety
-pub fn check_null_safety(function_name : String, params : Array[String]) -> SafetyIssue? {
+pub fn check_null_safety(
+  function_name : String,
+  params : Array[String],
+) -> SafetyIssue? {
   let mut has_pointer_param = false
   for param in params {
     if param.contains("*") {
@@ -54,7 +66,14 @@ pub fn check_null_safety(function_name : String, params : Array[String]) -> Safe
     }
   }
   if has_pointer_param {
-    Some(make_safety_issue(NullCheck, function_name, "pointer parameter requires null check", "warning"))
+    Some(
+      make_safety_issue(
+        NullCheck,
+        function_name,
+        "pointer parameter requires null check",
+        "warning",
+      ),
+    )
   } else {
     None
   }
@@ -62,9 +81,19 @@ pub fn check_null_safety(function_name : String, params : Array[String]) -> Safe
 
 ///|
 /// 检查缓冲区边界 | Check buffer bounds
-pub fn check_buffer_bounds(function_name : String, has_array_param : Bool) -> SafetyIssue? {
+pub fn check_buffer_bounds(
+  function_name : String,
+  has_array_param : Bool,
+) -> SafetyIssue? {
   if has_array_param {
-    Some(make_safety_issue(BufferBounds, function_name, "array parameter requires bounds check", "warning"))
+    Some(
+      make_safety_issue(
+        BufferBounds,
+        function_name,
+        "array parameter requires bounds check",
+        "warning",
+      ),
+    )
   } else {
     None
   }
@@ -72,9 +101,19 @@ pub fn check_buffer_bounds(function_name : String, has_array_param : Bool) -> Sa
 
 ///|
 /// 检查类型安全 | Check type safety
-pub fn check_type_safety(function_name : String, return_type : String) -> SafetyIssue? {
+pub fn check_type_safety(
+  function_name : String,
+  return_type : String,
+) -> SafetyIssue? {
   if return_type.contains("*") {
-    Some(make_safety_issue(TypeCheck, function_name, "raw pointer return type is unsafe", "error"))
+    Some(
+      make_safety_issue(
+        TypeCheck,
+        function_name,
+        "raw pointer return type is unsafe",
+        "error",
+      ),
+    )
   } else {
     None
   }
@@ -82,7 +121,10 @@ pub fn check_type_safety(function_name : String, return_type : String) -> Safety
 
 ///|
 /// 生成安全包装代码 | Generate safety wrapper code
-pub fn generate_safety_wrapper(function_name : String, params : Array[String]) -> String {
+pub fn generate_safety_wrapper(
+  function_name : String,
+  params : Array[String],
+) -> String {
   let mut code = "// Safety wrapper for \{function_name}\n"
   code = code + "int safe_\{function_name}("
   let mut first = true
@@ -178,7 +220,9 @@ pub fn comprehensive_safety_check(
   }
   let injected = []
   for issue in issues {
-    injected.push("// \{issue.check_type.to_string()} for \{issue.function_name}")
+    injected.push(
+      "// \{issue.check_type.to_string()} for \{issue.function_name}",
+    )
   }
   let mut has_error = false
   for issue in issues {
@@ -186,7 +230,7 @@ pub fn comprehensive_safety_check(
       has_error = true
     }
   }
-  { safe: !has_error, issues, injected_checks: injected }
+  { safe: !has_error, issues, injected_checks: injected, }
 }
 
 ///|
@@ -206,31 +250,38 @@ pub fn ffi_safety_version() -> String {
   "moon-cross security/ffi_safety v0.0.9"
 }
 
-
 ///|
 /// AsanConfig 实现 Checkable trait | AsanConfig implements Checkable
-pub impl @trait.Checkable for AsanConfig with check(self) {
+pub impl @trait.Checkable for AsanConfig with fn check(self) {
   self.enabled
 }
+
+///|
 pub extend AsanConfig with @trait.Checkable::{check}
 
 ///|
 /// AsanResult 实现 Checkable trait | AsanResult implements Checkable
-pub impl @trait.Checkable for AsanResult with check(self) {
+pub impl @trait.Checkable for AsanResult with fn check(self) {
   self.passed
 }
+
+///|
 pub extend AsanResult with @trait.Checkable::{check}
 
 ///|
 /// AsanResult 实现 Countable trait | AsanResult implements Countable
-pub impl @trait.Countable for AsanResult with count(self) {
+pub impl @trait.Countable for AsanResult with fn count(self) {
   self.errors.length()
 }
+
+///|
 pub extend AsanResult with @trait.Countable::{count}
 
 ///|
 /// SandboxResult 实现 Checkable trait | SandboxResult implements Checkable
-pub impl @trait.Checkable for SandboxResult with check(self) {
+pub impl @trait.Checkable for SandboxResult with fn check(self) {
   self.success
 }
+
+///|
 pub extend SandboxResult with @trait.Checkable::{check}

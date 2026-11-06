@@ -3,7 +3,11 @@
 pub(all) struct TemplateContext {
   vars : Array[(String, String)]
 } derive(Debug, Eq)
+
+///|
 pub extend TemplateContext with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend TemplateContext with Eq::{not_equal, equal}
 
 ///|
@@ -11,12 +15,16 @@ pub extend TemplateContext with Eq::{not_equal, equal}
 pub(all) struct Template {
   source : String
 } derive(Debug, Eq)
+
+///|
 pub extend Template with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend Template with Eq::{not_equal, equal}
 
 ///|
 /// 查找字符串位置 | Find string position
-fn find_str(s : String, sub : String, start : Int) -> Int {
+fn find_str(s : String, sub : String, start : Int32) -> Int32 {
   let slen = s.length()
   let sublen = sub.length()
   if sublen == 0 || sublen > slen {
@@ -76,12 +84,16 @@ fn trim_str(s : String) -> String {
 ///|
 /// 创建空上下文 | Create empty context
 pub fn empty_context() -> TemplateContext {
-  { vars: [] }
+  { vars: [], }
 }
 
 ///|
 /// 设置上下文变量 | Set context variable
-pub fn context_set(ctx : TemplateContext, key : String, value : String) -> TemplateContext {
+pub fn context_set(
+  ctx : TemplateContext,
+  key : String,
+  value : String,
+) -> TemplateContext {
   let mut found = false
   let new_vars = []
   for pair in ctx.vars {
@@ -95,7 +107,7 @@ pub fn context_set(ctx : TemplateContext, key : String, value : String) -> Templ
   if !found {
     new_vars.push((key, value))
   }
-  { vars: new_vars }
+  { vars: new_vars, }
 }
 
 ///|
@@ -129,18 +141,23 @@ pub fn context_remove(ctx : TemplateContext, key : String) -> TemplateContext {
       new_vars.push(pair)
     }
   }
-  { vars: new_vars }
+  { vars: new_vars, }
 }
 
 ///|
 /// 上下文变量数量 | Context variable count
-pub fn context_size(ctx : TemplateContext) -> Int {
+pub fn context_size(ctx : TemplateContext) -> Int32 {
   ctx.vars.length()
 }
 
 ///|
 /// 查找匹配的块结束标记 | Find matching block end
-fn find_block_end(source : String, start : Int, open_tag : String, close_tag : String) -> Int {
+fn find_block_end(
+  source : String,
+  start : Int32,
+  open_tag : String,
+  close_tag : String,
+) -> Int32 {
   let open_marker = "{{" + open_tag
   let close_marker = "{{" + close_tag + "}}"
   let mut depth = 1
@@ -233,9 +250,8 @@ fn render_internal(source : String, ctx : TemplateContext) -> String {
         let block_content = source[block_start:block_end].to_owned()
         let val = context_get(ctx, var_name)
         match val {
-          Some(v) => {
+          Some(v) =>
             if v.length() > 0 {
-
               let vlen = v.length()
               let mut k = 0
               while k <= vlen {
@@ -250,7 +266,6 @@ fn render_internal(source : String, ctx : TemplateContext) -> String {
                 k = comma + 1
               }
             }
-          }
           None => ()
         }
         i = block_end + 9
@@ -295,21 +310,27 @@ pub fn template_version() -> String {
 
 ///|
 /// TemplateContext 实现 Countable trait | TemplateContext implements Countable
-pub impl @trait.Countable for TemplateContext with count(self) {
+pub impl @trait.Countable for TemplateContext with fn count(self) {
   self.vars.length()
 }
+
+///|
 pub extend TemplateContext with @trait.Countable::{count}
 
 ///|
 /// Template 实现 Named trait | Template implements Named
-pub impl @trait.Named for Template with name(self) {
+pub impl @trait.Named for Template with fn name(self) {
   self.source
 }
+
+///|
 pub extend Template with @trait.Named::{name}
 
 ///|
 /// TemplateContext 实现 Iterable trait | TemplateContext implements Iterable
-pub impl @trait.Iterable for TemplateContext with iter_count(self) {
+pub impl @trait.Iterable for TemplateContext with fn iter_count(self) {
   self.vars.length()
 }
+
+///|
 pub extend TemplateContext with @trait.Iterable::{iter_count}

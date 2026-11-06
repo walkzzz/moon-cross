@@ -8,7 +8,11 @@ pub(all) enum LogLevel {
   Error
   Fatal
 } derive(Debug, Eq)
+
+///|
 pub extend LogLevel with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend LogLevel with Eq::{not_equal, equal}
 
 ///|
@@ -26,7 +30,7 @@ pub fn LogLevel::to_string(self : LogLevel) -> String {
 
 ///|
 /// 日志级别转数值 | Convert log level to numeric value
-pub fn LogLevel::to_int(self : LogLevel) -> Int {
+pub fn LogLevel::to_int(self : LogLevel) -> Int32 {
   match self {
     Trace => 0
     Debug => 1
@@ -39,7 +43,7 @@ pub fn LogLevel::to_int(self : LogLevel) -> Int {
 
 ///|
 /// 从数值创建日志级别 | Create log level from numeric value
-pub fn log_level_from_int(value : Int) -> LogLevel {
+pub fn log_level_from_int(value : Int32) -> LogLevel {
   match value {
     0 => Trace
     1 => Debug
@@ -53,24 +57,32 @@ pub fn log_level_from_int(value : Int) -> LogLevel {
 ///|
 /// 追踪事件 | Trace event
 pub(all) struct TraceEvent {
-  timestamp_ms : Int
+  timestamp_ms : Int32
   level : LogLevel
   source : String
   message : String
 } derive(Debug, Eq)
+
+///|
 pub extend TraceEvent with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend TraceEvent with Eq::{not_equal, equal}
 
 ///|
 /// 追踪区间 | Trace span
 pub(all) struct TraceSpan {
   name : String
-  start_ms : Int
-  end_ms : Int
+  start_ms : Int32
+  end_ms : Int32
   events : Array[TraceEvent]
   parent : String?
 } derive(Debug, Eq)
+
+///|
 pub extend TraceSpan with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend TraceSpan with Eq::{not_equal, equal}
 
 ///|
@@ -78,10 +90,14 @@ pub extend TraceSpan with Eq::{not_equal, equal}
 pub(all) struct TraceConfig {
   enabled : Bool
   min_level : LogLevel
-  max_events : Int
+  max_events : Int32
   output_format : String
 } derive(Debug, Eq)
+
+///|
 pub extend TraceConfig with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend TraceConfig with Eq::{not_equal, equal}
 
 ///|
@@ -90,84 +106,82 @@ pub(all) struct TraceCollector {
   config : TraceConfig
   events : Array[TraceEvent]
   spans : Array[TraceSpan]
-  current_ms : Int
+  current_ms : Int32
 } derive(Debug, Eq)
+
+///|
 pub extend TraceCollector with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend TraceCollector with Eq::{not_equal, equal}
 
 ///|
 /// 默认追踪配置 | Default trace configuration
 pub fn default_trace_config() -> TraceConfig {
-  { enabled: true, min_level: Info, max_events: 1000, output_format: "text" }
+  { enabled: true, min_level: Info, max_events: 1000, output_format: "text", }
 }
 
 ///|
 /// 调试追踪配置 | Debug trace configuration
 pub fn debug_trace_config() -> TraceConfig {
-  { enabled: true, min_level: Debug, max_events: 5000, output_format: "json" }
+  { enabled: true, min_level: Debug, max_events: 5000, output_format: "json", }
 }
 
 ///|
 /// 生产追踪配置 | Production trace configuration
 pub fn production_trace_config() -> TraceConfig {
-  { enabled: true, min_level: Warn, max_events: 500, output_format: "json" }
+  { enabled: true, min_level: Warn, max_events: 500, output_format: "json", }
 }
 
 ///|
 /// 创建追踪事件 | Create trace event
 pub fn make_event(
-  timestamp_ms : Int,
+  timestamp_ms : Int32,
   level : LogLevel,
   source : String,
   message : String,
 ) -> TraceEvent {
-  { timestamp_ms, level, source, message }
+  { timestamp_ms, level, source, message, }
 }
 
 ///|
 /// 创建追踪区间 | Create trace span
 pub fn make_span(
   name : String,
-  start_ms : Int,
-  end_ms : Int,
+  start_ms : Int32,
+  end_ms : Int32,
   parent : String?,
 ) -> TraceSpan {
-  { name, start_ms, end_ms, events: [], parent }
+  { name, start_ms, end_ms, events: [], parent, }
 }
 
 ///|
 /// 创建追踪收集器 | Create trace collector
 pub fn create_collector(config : TraceConfig) -> TraceCollector {
-  { config, events: [], spans: [], current_ms: 0 }
+  { config, events: [], spans: [], current_ms: 0, }
 }
 
 ///|
 /// 检查日志级别是否启用 | Check if log level is enabled
-pub fn is_level_enabled(
-  config : TraceConfig,
-  level : LogLevel,
-) -> Bool {
+pub fn is_level_enabled(config : TraceConfig, level : LogLevel) -> Bool {
   config.enabled && level.to_int() >= config.min_level.to_int()
 }
 
 ///|
 /// 记算区间持续时间 | Calculate span duration
-pub fn span_duration(span : TraceSpan) -> Int {
+pub fn span_duration(span : TraceSpan) -> Int32 {
   span.end_ms - span.start_ms
 }
 
 ///|
 /// 向区间添加事件 | Add event to span
-pub fn add_event_to_span(
-  span : TraceSpan,
-  event : TraceEvent,
-) -> TraceSpan {
+pub fn add_event_to_span(span : TraceSpan, event : TraceEvent) -> TraceSpan {
   let new_events = []
   for e in span.events {
     new_events.push(e)
   }
   new_events.push(event)
-  { ..span, events: new_events }
+  { ..span, events: new_events, }
 }
 
 ///|
@@ -187,7 +201,7 @@ pub fn emit_event(
     new_events.push(e)
   }
   new_events.push(event)
-  { ..collector, events: new_events }
+  { ..collector, events: new_events, }
 }
 
 ///|
@@ -201,16 +215,16 @@ pub fn emit_span(
     new_spans.push(s)
   }
   new_spans.push(span)
-  { ..collector, spans: new_spans }
+  { ..collector, spans: new_spans, }
 }
 
 ///|
 /// 推进时间 | Advance time
 pub fn advance_time(
   collector : TraceCollector,
-  delta_ms : Int,
+  delta_ms : Int32,
 ) -> TraceCollector {
-  { ..collector, current_ms: collector.current_ms + delta_ms }
+  { ..collector, current_ms: collector.current_ms + delta_ms, }
 }
 
 ///|
@@ -271,7 +285,15 @@ pub fn format_event(event : TraceEvent) -> String {
 ///|
 /// 格式化追踪区间 | Format trace span
 pub fn format_span(span : TraceSpan) -> String {
-  let mut output = "Span: " + span.name + " (" + span.start_ms.to_string() + "ms - " + span.end_ms.to_string() + "ms, " + span_duration(span).to_string() + "ms)"
+  let mut output = "Span: " +
+    span.name +
+    " (" +
+    span.start_ms.to_string() +
+    "ms - " +
+    span.end_ms.to_string() +
+    "ms, " +
+    span_duration(span).to_string() +
+    "ms)"
   if span.events.length() > 0 {
     output = output + "\n"
     for e in span.events {
@@ -285,8 +307,14 @@ pub fn format_span(span : TraceSpan) -> String {
 /// 格式化收集器摘要 | Format collector summary
 pub fn format_summary(collector : TraceCollector) -> String {
   let mut output = "Trace Summary:\n"
-  output = output + "  Total events: " + collector.events.length().to_string() + "\n"
-  output = output + "  Total spans:  " + collector.spans.length().to_string() + "\n"
+  output = output +
+    "  Total events: " +
+    collector.events.length().to_string() +
+    "\n"
+  output = output +
+    "  Total spans:  " +
+    collector.spans.length().to_string() +
+    "\n"
   let mut error_count = 0
   let mut warn_count = 0
   for e in collector.events {
@@ -324,7 +352,7 @@ pub fn trace_version() -> String {
 
 ///|
 /// 统计错误数 | Count errors
-pub fn count_errors(events : Array[TraceEvent]) -> Int {
+pub fn count_errors(events : Array[TraceEvent]) -> Int32 {
   let mut count = 0
   for e in events {
     match e.level {
@@ -338,7 +366,7 @@ pub fn count_errors(events : Array[TraceEvent]) -> Int {
 
 ///|
 /// 统计警告数 | Count warnings
-pub fn count_warnings(events : Array[TraceEvent]) -> Int {
+pub fn count_warnings(events : Array[TraceEvent]) -> Int32 {
   let mut count = 0
   for e in events {
     match e.level {
@@ -381,7 +409,7 @@ pub fn find_fastest_span(spans : Array[TraceSpan]) -> TraceSpan? {
 
 ///|
 /// 计算总持续时间 | Calculate total duration
-pub fn total_duration(spans : Array[TraceSpan]) -> Int {
+pub fn total_duration(spans : Array[TraceSpan]) -> Int32 {
   let mut total = 0
   for s in spans {
     total = total + span_duration(s)
@@ -397,14 +425,18 @@ pub fn has_errors(events : Array[TraceEvent]) -> Bool {
 
 ///|
 /// TraceSpan 实现 Named trait | TraceSpan implements Named
-pub impl @trait.Named for TraceSpan with name(self) {
+pub impl @trait.Named for TraceSpan with fn name(self) {
   self.name
 }
+
+///|
 pub extend TraceSpan with @trait.Named::{name}
 
 ///|
 /// TraceSpan 实现 Hashable trait | TraceSpan implements Hashable
-pub impl @trait.Hashable for TraceSpan with hash(self) {
+pub impl @trait.Hashable for TraceSpan with fn hash(self) {
   @trait.Named::name(self).length()
 }
+
+///|
 pub extend TraceSpan with @trait.Hashable::{hash}

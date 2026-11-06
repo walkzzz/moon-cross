@@ -11,7 +11,11 @@ pub(all) struct ZlibPipelineResult {
   ios_command : String
   ohos_command : String
 } derive(Debug, Eq)
+
+///|
 pub extend ZlibPipelineResult with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend ZlibPipelineResult with Eq::{not_equal, equal}
 
 ///|
@@ -50,7 +54,6 @@ pub fn zlib_ffi_bindings() -> Array[@ffi.FfiBindingType] {
 /// 生成 zlib Windows 编译命令 | Generate zlib Windows compile command
 pub fn zlib_windows_compile_command() -> String {
   let cfg = @platform_windows.default_windows_config(
-
     "output",
     zlib_module_name(),
   )

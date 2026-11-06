@@ -6,7 +6,11 @@ pub(all) enum EventType {
   Deleted
   Renamed
 } derive(Debug, Eq)
+
+///|
 pub extend EventType with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend EventType with Eq::{not_equal, equal}
 
 ///|
@@ -14,9 +18,13 @@ pub extend EventType with Eq::{not_equal, equal}
 pub(all) struct WatchEvent {
   path : String
   event_type : EventType
-  timestamp : Int
+  timestamp : Int32
 } derive(Debug, Eq)
+
+///|
 pub extend WatchEvent with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend WatchEvent with Eq::{not_equal, equal}
 
 ///|
@@ -24,10 +32,14 @@ pub extend WatchEvent with Eq::{not_equal, equal}
 pub(all) struct WatchConfig {
   paths : Array[String]
   ignore_patterns : Array[String]
-  poll_interval_ms : Int
+  poll_interval_ms : Int32
   recursive : Bool
 } derive(Debug, Eq)
+
+///|
 pub extend WatchConfig with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend WatchConfig with Eq::{not_equal, equal}
 
 ///|
@@ -35,26 +47,39 @@ pub extend WatchConfig with Eq::{not_equal, equal}
 pub(all) struct FileChange {
   path : String
   old_path : String
-  size : Int
+  size : Int32
   hash : String
 } derive(Debug, Eq)
+
+///|
 pub extend FileChange with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend FileChange with Eq::{not_equal, equal}
 
 ///|
 /// 监视结果 | Watch result
 pub(all) struct WatchResult {
   events : Array[WatchEvent]
-  total_changes : Int
+  total_changes : Int32
   has_errors : Bool
 } derive(Debug, Eq)
+
+///|
 pub extend WatchResult with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend WatchResult with Eq::{not_equal, equal}
 
 ///|
 /// 默认监视配置 | Default watch configuration
 pub fn default_watch_config() -> WatchConfig {
-  { paths: [], ignore_patterns: [".git", "target", "node_modules"], poll_interval_ms: 1000, recursive: true }
+  {
+    paths: [],
+    ignore_patterns: [".git", "target", "node_modules"],
+    poll_interval_ms: 1000,
+    recursive: true,
+  }
 }
 
 ///|
@@ -62,19 +87,19 @@ pub fn default_watch_config() -> WatchConfig {
 pub fn make_event(
   path : String,
   event_type : EventType,
-  timestamp : Int,
+  timestamp : Int32,
 ) -> WatchEvent {
-  { path, event_type, timestamp }
+  { path, event_type, timestamp, }
 }
 
 ///|
 /// 创建文件变更 | Create file change
 pub fn make_file_change(
   path : String,
-  size : Int,
+  size : Int32,
   hash : String,
 ) -> FileChange {
-  { path, old_path: "", size, hash }
+  { path, old_path: "", size, hash, }
 }
 
 ///|
@@ -82,18 +107,15 @@ pub fn make_file_change(
 pub fn make_rename_change(
   old_path : String,
   new_path : String,
-  size : Int,
+  size : Int32,
   hash : String,
 ) -> FileChange {
-  { path: new_path, old_path, size, hash }
+  { path: new_path, old_path, size, hash, }
 }
 
 ///|
 /// 检查路径是否被忽略 | Check if path is ignored
-pub fn is_ignored(
-  path : String,
-  patterns : Array[String],
-) -> Bool {
+pub fn is_ignored(path : String, patterns : Array[String]) -> Bool {
   for pattern in patterns {
     if path_contains(path, pattern) {
       return true
@@ -179,7 +201,7 @@ fn path_starts_with(path : String, prefix : String) -> Bool {
 pub fn count_by_type(
   events : Array[WatchEvent],
   event_type : EventType,
-) -> Int {
+) -> Int32 {
   let mut count = 0
   for event in events {
     if event.event_type == event_type {
@@ -198,14 +220,14 @@ pub fn has_changes(events : Array[WatchEvent]) -> Bool {
 ///|
 /// 创建监视结果 | Create watch result
 pub fn make_watch_result(events : Array[WatchEvent]) -> WatchResult {
-  { events, total_changes: events.length(), has_errors: false }
+  { events, total_changes: events.length(), has_errors: false, }
 }
 
 ///|
 /// 创建带错误的监视结果 | Create watch result with errors
 pub fn make_error_result(error_msg : String) -> WatchResult {
   let _ = error_msg
-  { events: [], total_changes: 0, has_errors: true }
+  { events: [], total_changes: 0, has_errors: true, }
 }
 
 ///|
@@ -216,7 +238,17 @@ pub fn event_summary(events : Array[WatchEvent]) -> String {
   let deleted = count_by_type(events, Deleted)
   let renamed = count_by_type(events, Renamed)
   let total = events.length()
-  "Watch summary: " + total.to_string() + " events (created: " + created.to_string() + ", modified: " + modified.to_string() + ", deleted: " + deleted.to_string() + ", renamed: " + renamed.to_string() + ")"
+  "Watch summary: " +
+  total.to_string() +
+  " events (created: " +
+  created.to_string() +
+  ", modified: " +
+  modified.to_string() +
+  ", deleted: " +
+  deleted.to_string() +
+  ", renamed: " +
+  renamed.to_string() +
+  ")"
 }
 
 ///|
@@ -233,14 +265,17 @@ pub fn event_type_to_string(event_type : EventType) -> String {
 ///|
 /// 格式化事件 | Format event
 pub fn format_event(event : WatchEvent) -> String {
-  "[" + event.timestamp.to_string() + "] " + event_type_to_string(event.event_type) + ": " + event.path
+  "[" +
+  event.timestamp.to_string() +
+  "] " +
+  event_type_to_string(event.event_type) +
+  ": " +
+  event.path
 }
 
 ///|
 /// 去重事件 | Deduplicate events
-pub fn deduplicate_events(
-  events : Array[WatchEvent],
-) -> Array[WatchEvent] {
+pub fn deduplicate_events(events : Array[WatchEvent]) -> Array[WatchEvent] {
   let result : Array[WatchEvent] = []
   for event in events {
     let mut found = false
@@ -259,10 +294,7 @@ pub fn deduplicate_events(
 
 ///|
 /// 合并监视结果 | Merge watch results
-pub fn merge_results(
-  r1 : WatchResult,
-  r2 : WatchResult,
-) -> WatchResult {
+pub fn merge_results(r1 : WatchResult, r2 : WatchResult) -> WatchResult {
   let events = []
   for e in r1.events {
     events.push(e)
@@ -270,7 +302,11 @@ pub fn merge_results(
   for e in r2.events {
     events.push(e)
   }
-  { events, total_changes: r1.total_changes + r2.total_changes, has_errors: r1.has_errors || r2.has_errors }
+  {
+    events,
+    total_changes: r1.total_changes + r2.total_changes,
+    has_errors: r1.has_errors || r2.has_errors,
+  }
 }
 
 ///|
@@ -281,16 +317,13 @@ pub fn watcher_version() -> String {
 
 ///|
 /// 添加监视路径 | Add watch path
-pub fn add_watch_path(
-  config : WatchConfig,
-  path : String,
-) -> WatchConfig {
+pub fn add_watch_path(config : WatchConfig, path : String) -> WatchConfig {
   let paths = []
   for p in config.paths {
     paths.push(p)
   }
   paths.push(path)
-  { ..config, paths }
+  { ..config, paths, }
 }
 
 ///|
@@ -304,7 +337,7 @@ pub fn add_ignore_pattern(
     patterns.push(p)
   }
   patterns.push(pattern)
-  { ..config, ignore_patterns: patterns }
+  { ..config, ignore_patterns: patterns, }
 }
 
 ///|
@@ -332,7 +365,7 @@ pub fn sort_by_timestamp(events : Array[WatchEvent]) -> Array[WatchEvent] {
 /// 获取最新事件 | Get latest events
 pub fn latest_events(
   events : Array[WatchEvent],
-  count : Int,
+  count : Int32,
 ) -> Array[WatchEvent] {
   let sorted = sort_by_timestamp(events)
   let result = []
@@ -346,14 +379,18 @@ pub fn latest_events(
 
 ///|
 /// FileChange 实现 Countable trait | FileChange implements Countable
-pub impl @trait.Countable for FileChange with count(self) {
+pub impl @trait.Countable for FileChange with fn count(self) {
   self.size
 }
+
+///|
 pub extend FileChange with @trait.Countable::{count}
 
 ///|
 /// WatchResult 实现 Countable trait | WatchResult implements Countable
-pub impl @trait.Countable for WatchResult with count(self) {
+pub impl @trait.Countable for WatchResult with fn count(self) {
   self.events.length()
 }
+
+///|
 pub extend WatchResult with @trait.Countable::{count}

@@ -4,20 +4,28 @@ pub(all) enum IndentStyle {
   Spaces
   Tabs
 } derive(Debug, Eq)
+
+///|
 pub extend IndentStyle with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend IndentStyle with Eq::{not_equal, equal}
 
 ///|
 /// 格式化配置 | Format configuration
 pub(all) struct FormatConfig {
   indent_style : IndentStyle
-  indent_width : Int
-  max_line_width : Int
+  indent_width : Int32
+  max_line_width : Int32
   trailing_comma : Bool
   blank_line_before_export : Bool
   align_comments : Bool
 } derive(Debug, Eq)
+
+///|
 pub extend FormatConfig with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend FormatConfig with Eq::{not_equal, equal}
 
 ///|
@@ -26,9 +34,13 @@ pub(all) struct FormatResult {
   original : String
   formatted : String
   changed : Bool
-  lines_changed : Int
+  lines_changed : Int32
 } derive(Debug, Eq)
+
+///|
 pub extend FormatResult with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend FormatResult with Eq::{not_equal, equal}
 
 ///|
@@ -38,7 +50,11 @@ pub(all) struct FormatRule {
   description : String
   enabled : Bool
 } derive(Debug, Eq)
+
+///|
 pub extend FormatRule with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend FormatRule with Eq::{not_equal, equal}
 
 ///|
@@ -82,7 +98,7 @@ pub fn c_format_config() -> FormatConfig {
 
 ///|
 /// 生成缩进字符串 | Generate indentation string
-pub fn indent_string(config : FormatConfig, level : Int) -> String {
+pub fn indent_string(config : FormatConfig, level : Int32) -> String {
   let unit = match config.indent_style {
     Spaces => " "
     Tabs => "\t"
@@ -96,7 +112,7 @@ pub fn indent_string(config : FormatConfig, level : Int) -> String {
 
 ///|
 /// 统计行数 | Count lines
-pub fn count_lines(text : String) -> Int {
+pub fn count_lines(text : String) -> Int32 {
   let mut count = 1
   for c in text.to_array() {
     if c.to_int() == 10 {
@@ -108,19 +124,13 @@ pub fn count_lines(text : String) -> Int {
 
 ///|
 /// 检查行是否过长 | Check if line is too long
-pub fn is_line_too_long(
-  config : FormatConfig,
-  line : String,
-) -> Bool {
+pub fn is_line_too_long(config : FormatConfig, line : String) -> Bool {
   line.length() > config.max_line_width
 }
 
 ///|
 /// 查找过长行 | Find too-long lines
-pub fn find_long_lines(
-  config : FormatConfig,
-  text : String,
-) -> Array[Int] {
+pub fn find_long_lines(config : FormatConfig, text : String) -> Array[Int32] {
   let result = []
   let lines = text.split("\n")
   let mut line_num = 0
@@ -186,17 +196,14 @@ pub fn ensure_trailing_newline(text : String) -> String {
 
 ///|
 /// 格式化文本 | Format text
-pub fn format_text(
-  config : FormatConfig,
-  text : String,
-) -> FormatResult {
+pub fn format_text(config : FormatConfig, text : String) -> FormatResult {
   let mut formatted = text
   formatted = strip_trailing_whitespace(formatted)
   formatted = ensure_trailing_newline(formatted)
   let _ = config.max_line_width
   let changed = formatted != text
   let lines_diff = count_lines(formatted) - count_lines(text)
-  { original: text, formatted, changed, lines_changed: lines_diff }
+  { original: text, formatted, changed, lines_changed: lines_diff, }
 }
 
 ///|
@@ -221,21 +228,38 @@ pub fn format_json(json : String) -> FormatResult {
 /// 内置格式化规则列表 | Built-in format rules
 pub fn builtin_format_rules() -> Array[FormatRule] {
   [
-    { name: "strip-trailing-ws", description: "Strip trailing whitespace", enabled: true },
-    { name: "trailing-newline", description: "Ensure trailing newline", enabled: true },
-    { name: "indent-style", description: "Enforce indent style", enabled: true },
-    { name: "max-line-width", description: "Enforce max line width", enabled: true },
-    { name: "trailing-comma", description: "Enforce trailing comma in multi-line", enabled: true },
+    {
+      name: "strip-trailing-ws",
+      description: "Strip trailing whitespace",
+      enabled: true,
+    },
+    {
+      name: "trailing-newline",
+      description: "Ensure trailing newline",
+      enabled: true,
+    },
+    {
+      name: "indent-style",
+      description: "Enforce indent style",
+      enabled: true,
+    },
+    {
+      name: "max-line-width",
+      description: "Enforce max line width",
+      enabled: true,
+    },
+    {
+      name: "trailing-comma",
+      description: "Enforce trailing comma in multi-line",
+      enabled: true,
+    },
   ]
 }
 
 ///|
 /// 创建格式化规则 | Create format rule
-pub fn make_rule(
-  name : String,
-  description : String,
-) -> FormatRule {
-  { name, description, enabled: true }
+pub fn make_rule(name : String, description : String) -> FormatRule {
+  { name, description, enabled: true, }
 }
 
 ///|
@@ -247,7 +271,7 @@ pub fn disable_rule(
   let result = []
   for rule in rules {
     if rule.name == name {
-      result.push({ ..rule, enabled: false })
+      result.push({ ..rule, enabled: false, })
     } else {
       result.push(rule)
     }
@@ -264,7 +288,7 @@ pub fn enable_rule(
   let result = []
   for rule in rules {
     if rule.name == name {
-      result.push({ ..rule, enabled: true })
+      result.push({ ..rule, enabled: true, })
     } else {
       result.push(rule)
     }
@@ -299,12 +323,12 @@ pub fn needs_formatting(result : FormatResult) -> Bool {
 ///|
 /// 格式化摘要 | Format summary
 pub fn format_summary(result : FormatResult) -> String {
-  let status = if result.changed {
-    "changed"
-  } else {
-    "unchanged"
-  }
-  "Format result: " + status + " (" + result.lines_changed.to_string() + " lines diff)"
+  let status = if result.changed { "changed" } else { "unchanged" }
+  "Format result: " +
+  status +
+  " (" +
+  result.lines_changed.to_string() +
+  " lines diff)"
 }
 
 ///|
@@ -322,7 +346,7 @@ pub fn batch_format(
 
 ///|
 /// 统计格式化变更数 | Count formatting changes
-pub fn count_changes(results : Array[FormatResult]) -> Int {
+pub fn count_changes(results : Array[FormatResult]) -> Int32 {
   let mut count = 0
   for r in results {
     if r.changed {
@@ -334,14 +358,18 @@ pub fn count_changes(results : Array[FormatResult]) -> Int {
 
 ///|
 /// FormatRule 实现 Named trait | FormatRule implements Named
-pub impl @trait.Named for FormatRule with name(self) {
+pub impl @trait.Named for FormatRule with fn name(self) {
   self.name
 }
+
+///|
 pub extend FormatRule with @trait.Named::{name}
 
 ///|
 /// FormatRule 实现 Describable trait | FormatRule implements Describable
-pub impl @trait.Describable for FormatRule with describe(self) {
+pub impl @trait.Describable for FormatRule with fn describe(self) {
   self.description
 }
+
+///|
 pub extend FormatRule with @trait.Describable::{describe}

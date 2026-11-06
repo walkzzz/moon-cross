@@ -8,7 +8,10 @@ pub(all) enum Platform {
   Linux
 } derive(Debug, Eq)
 
+///|
 pub extend Platform with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend Platform with Eq::{not_equal, equal}
 
 ///|
@@ -18,7 +21,10 @@ pub(all) enum Arch {
   X86_64
 } derive(Debug, Eq)
 
+///|
 pub extend Arch with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend Arch with Eq::{not_equal, equal}
 
 ///|
@@ -29,7 +35,10 @@ pub(all) struct TargetTriple {
   triple : String
 } derive(Debug, Eq)
 
+///|
 pub extend TargetTriple with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend TargetTriple with Eq::{not_equal, equal}
 
 ///|

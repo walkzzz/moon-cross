@@ -1,3 +1,4 @@
+///|
 test "log_level_value" {
   assert_eq(@logging.log_level_value(@logging.LogLevel::Debug), 0)
   assert_eq(@logging.log_level_value(@logging.LogLevel::Info), 1)
@@ -6,6 +7,7 @@ test "log_level_value" {
   assert_eq(@logging.log_level_value(@logging.LogLevel::Fatal), 4)
 }
 
+///|
 test "log_level_name" {
   assert_eq(@logging.log_level_name(@logging.LogLevel::Debug), "DEBUG")
   assert_eq(@logging.log_level_name(@logging.LogLevel::Info), "INFO")
@@ -14,6 +16,7 @@ test "log_level_name" {
   assert_eq(@logging.log_level_name(@logging.LogLevel::Fatal), "FATAL")
 }
 
+///|
 test "log_level_from_value" {
   assert_eq(@logging.log_level_from_value(0), @logging.LogLevel::Debug)
   assert_eq(@logging.log_level_from_value(1), @logging.LogLevel::Info)
@@ -23,6 +26,7 @@ test "log_level_from_value" {
   assert_eq(@logging.log_level_from_value(5), @logging.LogLevel::Fatal)
 }
 
+///|
 test "default_log_config" {
   let cfg = @logging.default_log_config()
   assert_eq(cfg.min_level, @logging.LogLevel::Info)
@@ -30,12 +34,14 @@ test "default_log_config" {
   assert_true(cfg.include_source)
 }
 
+///|
 test "create_logger" {
   let cfg = @logging.default_log_config()
   let logger = @logging.create_logger(cfg)
   assert_eq(@logging.log_count(logger), 0)
 }
 
+///|
 test "log_is_enabled" {
   let cfg = @logging.default_log_config()
   let logger = @logging.create_logger(cfg)
@@ -46,6 +52,7 @@ test "log_is_enabled" {
   assert_true(@logging.log_is_enabled(logger, @logging.LogLevel::Fatal))
 }
 
+///|
 test "log_info" {
   let cfg = @logging.default_log_config()
   let logger = @logging.create_logger(cfg)
@@ -53,6 +60,7 @@ test "log_info" {
   assert_eq(@logging.log_count(logger1), 1)
 }
 
+///|
 test "log_debug_filtered" {
   let cfg = @logging.default_log_config()
   let logger = @logging.create_logger(cfg)
@@ -62,6 +70,7 @@ test "log_debug_filtered" {
   assert_eq(s.dropped_count, 1)
 }
 
+///|
 test "log_warn" {
   let cfg = @logging.default_log_config()
   let logger = @logging.create_logger(cfg)
@@ -69,6 +78,7 @@ test "log_warn" {
   assert_eq(@logging.log_count(logger1), 1)
 }
 
+///|
 test "log_error" {
   let cfg = @logging.default_log_config()
   let logger = @logging.create_logger(cfg)
@@ -76,6 +86,7 @@ test "log_error" {
   assert_eq(@logging.log_count(logger1), 1)
 }
 
+///|
 test "log_fatal" {
   let cfg = @logging.default_log_config()
   let logger = @logging.create_logger(cfg)
@@ -83,13 +94,22 @@ test "log_fatal" {
   assert_eq(@logging.log_count(logger1), 1)
 }
 
+///|
 test "log_at_with_context" {
   let cfg = @logging.default_log_config()
   let logger = @logging.create_logger(cfg)
-  let logger1 = @logging.log_at(logger, @logging.LogLevel::Info, "msg", 1000, "src", "ctx")
+  let logger1 = @logging.log_at(
+    logger,
+    @logging.LogLevel::Info,
+    "msg",
+    1000,
+    "src",
+    "ctx",
+  )
   assert_eq(@logging.log_count(logger1), 1)
 }
 
+///|
 test "log_multiple" {
   let cfg = @logging.default_log_config()
   let logger = @logging.create_logger(cfg)
@@ -99,6 +119,7 @@ test "log_multiple" {
   assert_eq(@logging.log_count(logger3), 3)
 }
 
+///|
 test "log_filter_by_level" {
   let cfg = @logging.default_log_config()
   let logger = @logging.create_logger(cfg)
@@ -109,6 +130,7 @@ test "log_filter_by_level" {
   assert_eq(warnings.length(), 1)
 }
 
+///|
 test "log_filter_by_source" {
   let cfg = @logging.default_log_config()
   let logger = @logging.create_logger(cfg)
@@ -119,6 +141,7 @@ test "log_filter_by_source" {
   assert_eq(filtered.length(), 2)
 }
 
+///|
 test "log_filter_by_message" {
   let cfg = @logging.default_log_config()
   let logger = @logging.create_logger(cfg)
@@ -129,6 +152,7 @@ test "log_filter_by_message" {
   assert_eq(filtered.length(), 2)
 }
 
+///|
 test "log_clear" {
   let cfg = @logging.default_log_config()
   let logger = @logging.create_logger(cfg)
@@ -137,6 +161,7 @@ test "log_clear" {
   assert_eq(@logging.log_count(logger2), 0)
 }
 
+///|
 test "log_stats" {
   let cfg = @logging.default_log_config()
   let logger = @logging.create_logger(cfg)
@@ -150,23 +175,38 @@ test "log_stats" {
   assert_eq(s.error_count, 1)
 }
 
+///|
 test "log_format_entry" {
   let cfg = @logging.default_log_config()
-  let entry = @logging.LogEntry::{ level: @logging.LogLevel::Info, message: "test", timestamp: 1000, source: "src", context: "" }
+  let entry = @logging.LogEntry::{
+    level: @logging.LogLevel::Info,
+    message: "test",
+    timestamp: 1000,
+    source: "src",
+    context: "",
+  }
   let formatted = @logging.log_format_entry(entry, cfg)
   assert_true(formatted.contains("INFO"))
   assert_true(formatted.contains("test"))
   assert_true(formatted.contains("src"))
 }
 
+///|
 test "log_format_entry_with_context" {
   let cfg = @logging.default_log_config()
-  let entry = @logging.LogEntry::{ level: @logging.LogLevel::Error, message: "fail", timestamp: 2000, source: "db", context: "query=SELECT" }
+  let entry = @logging.LogEntry::{
+    level: @logging.LogLevel::Error,
+    message: "fail",
+    timestamp: 2000,
+    source: "db",
+    context: "query=SELECT",
+  }
   let formatted = @logging.log_format_entry(entry, cfg)
   assert_true(formatted.contains("ERROR"))
   assert_true(formatted.contains("query=SELECT"))
 }
 
+///|
 test "log_last_n" {
   let cfg = @logging.default_log_config()
   let logger = @logging.create_logger(cfg)
@@ -179,8 +219,14 @@ test "log_last_n" {
   assert_eq(last[1].message, "msg3")
 }
 
+///|
 test "log_max_entries_eviction" {
-  let cfg = @logging.LogConfig::{ min_level: @logging.LogLevel::Debug, include_timestamp: true, include_source: true, max_entries: 3 }
+  let cfg = @logging.LogConfig::{
+    min_level: @logging.LogLevel::Debug,
+    include_timestamp: true,
+    include_source: true,
+    max_entries: 3,
+  }
   let logger = @logging.create_logger(cfg)
   let logger1 = @logging.log_info(logger, "msg1", 1000, "src")
   let logger2 = @logging.log_info(logger1, "msg2", 2000, "src")
@@ -189,6 +235,7 @@ test "log_max_entries_eviction" {
   assert_eq(@logging.log_count(logger4), 3)
 }
 
+///|
 test "merge_loggers" {
   let cfg = @logging.default_log_config()
   let l1 = @logging.create_logger(cfg)
@@ -199,6 +246,7 @@ test "merge_loggers" {
   assert_eq(@logging.log_count(merged), 2)
 }
 
+///|
 test "log_version" {
   let v = @logging.log_version()
   assert_true(v.contains("logging"))

@@ -2,33 +2,45 @@
 /// 沙箱配置 | Sandbox configuration
 pub(all) struct SandboxConfig {
   work_dir : String
-  timeout_ms : Int
-  max_memory_mb : Int
+  timeout_ms : Int32
+  max_memory_mb : Int32
   isolated : Bool
   read_only : Bool
 } derive(Debug, Eq)
 
+///|
 pub extend SandboxConfig with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend SandboxConfig with Eq::{not_equal, equal}
 
 ///|
 /// 沙箱执行结果 | Sandbox execution result
 pub(all) struct SandboxResult {
   success : Bool
-  exit_code : Int
+  exit_code : Int32
   stdout : String
   stderr : String
-  duration_ms : Int
+  duration_ms : Int32
   timed_out : Bool
 } derive(Debug, Eq)
 
+///|
 pub extend SandboxResult with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend SandboxResult with Eq::{not_equal, equal}
 
 ///|
 /// 默认沙箱配置 | Default sandbox configuration
 pub fn default_sandbox_config() -> SandboxConfig {
-  { work_dir: ".moon-cross-sandbox", timeout_ms: 60000, max_memory_mb: 512, isolated: true, read_only: false }
+  {
+    work_dir: ".moon-cross-sandbox",
+    timeout_ms: 60000,
+    max_memory_mb: 512,
+    isolated: true,
+    read_only: false,
+  }
 }
 
 ///|
@@ -39,7 +51,10 @@ pub fn sandbox_work_dir(platform : @core.Platform) -> String {
 
 ///|
 /// 沙箱编译命令包装 | Sandbox compile command wrapper
-pub fn sandbox_compile_command(config : SandboxConfig, base_command : String) -> String {
+pub fn sandbox_compile_command(
+  config : SandboxConfig,
+  base_command : String,
+) -> String {
   let mut cmd = ""
   if config.isolated {
     cmd = cmd + "cd \{config.work_dir} && "
@@ -63,20 +78,45 @@ pub fn cleanup_sandbox(config : SandboxConfig) -> String {
 
 ///|
 /// 创建沙箱成功结果 | Create sandbox success result
-pub fn sandbox_success(stdout : String, duration_ms : Int) -> SandboxResult {
-  { success: true, exit_code: 0, stdout, stderr: "", duration_ms, timed_out: false }
+pub fn sandbox_success(stdout : String, duration_ms : Int32) -> SandboxResult {
+  {
+    success: true,
+    exit_code: 0,
+    stdout,
+    stderr: "",
+    duration_ms,
+    timed_out: false,
+  }
 }
 
 ///|
 /// 创建沙箱失败结果 | Create sandbox failure result
-pub fn sandbox_failure(exit_code : Int, stderr : String, duration_ms : Int) -> SandboxResult {
-  { success: false, exit_code, stdout: "", stderr, duration_ms, timed_out: false }
+pub fn sandbox_failure(
+  exit_code : Int32,
+  stderr : String,
+  duration_ms : Int32,
+) -> SandboxResult {
+  {
+    success: false,
+    exit_code,
+    stdout: "",
+    stderr,
+    duration_ms,
+    timed_out: false,
+  }
 }
 
 ///|
 /// 创建沙箱超时结果 | Create sandbox timeout result
-pub fn sandbox_timeout(timeout_ms : Int) -> SandboxResult {
-  { success: false, exit_code: 124, stdout: "", stderr: "Execution timed out after \{timeout_ms}ms", duration_ms: timeout_ms, timed_out: true }
+pub fn sandbox_timeout(timeout_ms : Int32) -> SandboxResult {
+  {
+    success: false,
+    exit_code: 124,
+    stdout: "",
+    stderr: "Execution timed out after \{timeout_ms}ms",
+    duration_ms: timeout_ms,
+    timed_out: true,
+  }
 }
 
 ///|

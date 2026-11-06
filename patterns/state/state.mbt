@@ -5,7 +5,11 @@ pub(all) struct State {
   is_initial : Bool
   is_final : Bool
 } derive(Debug, Eq)
+
+///|
 pub extend State with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend State with Eq::{not_equal, equal}
 
 ///|
@@ -15,16 +19,24 @@ pub(all) struct Transition {
   to_state : String
   event : String
 } derive(Debug, Eq)
+
+///|
 pub extend Transition with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend Transition with Eq::{not_equal, equal}
 
 ///|
 /// 状态机统计 | State machine statistics
 pub(all) struct StateMachineStats {
-  transitions_count : Int
-  states_visited_count : Int
+  transitions_count : Int32
+  states_visited_count : Int32
 } derive(Debug, Eq)
+
+///|
 pub extend StateMachineStats with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend StateMachineStats with Eq::{not_equal, equal}
 
 ///|
@@ -37,25 +49,29 @@ pub(all) struct StateMachine {
   started : Bool
   stats : StateMachineStats
 } derive(Debug, Eq)
+
+///|
 pub extend StateMachine with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend StateMachine with Eq::{not_equal, equal}
 
 ///|
 /// 创建状态 | Create state
 pub fn make_state(name : String) -> State {
-  { name, is_initial: false, is_final: false }
+  { name, is_initial: false, is_final: false, }
 }
 
 ///|
 /// 创建初始状态 | Create initial state
 pub fn make_initial_state(name : String) -> State {
-  { name, is_initial: true, is_final: false }
+  { name, is_initial: true, is_final: false, }
 }
 
 ///|
 /// 创建终态 | Create final state
 pub fn make_final_state(name : String) -> State {
-  { name, is_initial: false, is_final: true }
+  { name, is_initial: false, is_final: true, }
 }
 
 ///|
@@ -65,7 +81,7 @@ pub fn make_transition(
   to_state : String,
   event : String,
 ) -> Transition {
-  { from_state, to_state, event }
+  { from_state, to_state, event, }
 }
 
 ///|
@@ -77,7 +93,7 @@ pub fn create_state_machine() -> StateMachine {
     current_state: "",
     history: [],
     started: false,
-    stats: { transitions_count: 0, states_visited_count: 0 },
+    stats: { transitions_count: 0, states_visited_count: 0, },
   }
 }
 
@@ -89,18 +105,21 @@ pub fn sm_add_state(sm : StateMachine, state : State) -> StateMachine {
     new_states.push(s)
   }
   new_states.push(state)
-  { ..sm, states: new_states }
+  { ..sm, states: new_states, }
 }
 
 ///|
 /// 添加转换 | Add transition
-pub fn sm_add_transition(sm : StateMachine, transition : Transition) -> StateMachine {
+pub fn sm_add_transition(
+  sm : StateMachine,
+  transition : Transition,
+) -> StateMachine {
   let new_transitions = []
   for t in sm.transitions {
     new_transitions.push(t)
   }
   new_transitions.push(transition)
-  { ..sm, transitions: new_transitions }
+  { ..sm, transitions: new_transitions, }
 }
 
 ///|
@@ -120,7 +139,7 @@ pub fn sm_start(sm : StateMachine) -> StateMachine {
     current_state: initial,
     history: new_history,
     started: true,
-    stats: { transitions_count: 0, states_visited_count: 1 },
+    stats: { transitions_count: 0, states_visited_count: 1, },
   }
 }
 
@@ -262,13 +281,16 @@ pub fn sm_stats(sm : StateMachine) -> StateMachineStats {
 
 ///|
 /// 历史长度 | History length
-pub fn sm_history_length(sm : StateMachine) -> Int {
+pub fn sm_history_length(sm : StateMachine) -> Int32 {
   sm.history.length()
 }
 
 ///|
 /// 合并状态机 | Merge state machines
-pub fn merge_state_machines(sm1 : StateMachine, sm2 : StateMachine) -> StateMachine {
+pub fn merge_state_machines(
+  sm1 : StateMachine,
+  sm2 : StateMachine,
+) -> StateMachine {
   let new_states = []
   for s in sm1.states {
     new_states.push(s)
@@ -301,21 +323,27 @@ pub fn sm_version() -> String {
 
 ///|
 /// State 实现 Named trait | State implements Named
-pub impl @trait.Named for State with name(self) {
+pub impl @trait.Named for State with fn name(self) {
   self.name
 }
+
+///|
 pub extend State with @trait.Named::{name}
 
 ///|
 /// StateMachine 实现 Resettable trait | StateMachine implements Resettable
-pub impl @trait.Resettable for StateMachine with reset(self) {
+pub impl @trait.Resettable for StateMachine with fn reset(self) {
   sm_reset(self)
 }
+
+///|
 pub extend StateMachine with @trait.Resettable::{reset}
 
 ///|
 /// State 实现 Hashable trait | State implements Hashable
-pub impl @trait.Hashable for State with hash(self) {
+pub impl @trait.Hashable for State with fn hash(self) {
   @trait.Named::name(self).length()
 }
+
+///|
 pub extend State with @trait.Hashable::{hash}

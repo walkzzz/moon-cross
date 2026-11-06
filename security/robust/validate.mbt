@@ -6,7 +6,10 @@ pub(all) enum Severity {
   Info
 } derive(Debug, Eq)
 
+///|
 pub extend Severity with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend Severity with Eq::{not_equal, equal}
 
 ///|
@@ -17,7 +20,10 @@ pub(all) struct ValidationIssue {
   severity : Severity
 } derive(Debug, Eq)
 
+///|
 pub extend ValidationIssue with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend ValidationIssue with Eq::{not_equal, equal}
 
 ///|
@@ -27,19 +33,26 @@ pub(all) struct ValidationResult {
   issues : Array[ValidationIssue]
 } derive(Debug, Eq)
 
+///|
 pub extend ValidationResult with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend ValidationResult with Eq::{not_equal, equal}
 
 ///|
 /// 创建校验问题 | Create validation issue
-pub fn make_issue(field : String, message : String, severity : Severity) -> ValidationIssue {
-  { field, message, severity }
+pub fn make_issue(
+  field : String,
+  message : String,
+  severity : Severity,
+) -> ValidationIssue {
+  { field, message, severity, }
 }
 
 ///|
 /// 创建有效校验结果 | Create valid validation result
 pub fn validation_valid() -> ValidationResult {
-  { valid: true, issues: [] }
+  { valid: true, issues: [], }
 }
 
 ///|
@@ -51,7 +64,7 @@ pub fn validation_invalid(issues : Array[ValidationIssue]) -> ValidationResult {
       has_error = true
     }
   }
-  { valid: !has_error, issues }
+  { valid: !has_error, issues, }
 }
 
 ///|
@@ -70,7 +83,13 @@ pub fn validate_function_name(name : String) -> ValidationIssue? {
   if name.length() == 0 {
     Some(make_issue("function_name", "function name must not be empty", Error))
   } else if name.contains(" ") {
-    Some(make_issue("function_name", "function name must not contain spaces", Error))
+    Some(
+      make_issue(
+        "function_name",
+        "function name must not contain spaces",
+        Error,
+      ),
+    )
   } else {
     None
   }
@@ -83,13 +102,18 @@ pub fn validate_platform_compatibility(
   platform : @core.Platform,
 ) -> ValidationIssue? {
   match platform {
-    Ohos => {
+    Ohos =>
       if func_name.contains("windows") || func_name.contains("ios") {
-        Some(make_issue("platform_compat", "function \{func_name} may not be compatible with HarmonyOS", Warning))
+        Some(
+          make_issue(
+            "platform_compat",
+            "function \{func_name} may not be compatible with HarmonyOS",
+            Warning,
+          ),
+        )
       } else {
         None
       }
-    }
     _ => None
   }
 }
@@ -114,7 +138,9 @@ pub fn validate_version() -> String {
 
 ///|
 /// ValidationResult 实现 Checkable trait | ValidationResult implements Checkable
-pub impl @trait.Checkable for ValidationResult with check(self) {
+pub impl @trait.Checkable for ValidationResult with fn check(self) {
   self.valid
 }
+
+///|
 pub extend ValidationResult with @trait.Checkable::{check}

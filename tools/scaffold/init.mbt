@@ -5,7 +5,11 @@ pub(all) struct ScaffoldOptions {
   platforms : Array[@core.Platform]
   output_dir : String
 } derive(Debug, Eq)
+
+///|
 pub extend ScaffoldOptions with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 pub extend ScaffoldOptions with Eq::{not_equal, equal}
 
 ///|
@@ -31,10 +35,11 @@ pub fn default_scaffold_options(name : String) -> ScaffoldOptions {
   { name, platforms: @core.all_platforms(), output_dir: "./" + name, }
 }
 
-
 ///|
 /// ScaffoldOptions 实现 Named trait | ScaffoldOptions implements Named
-pub impl @trait.Named for ScaffoldOptions with name(self) {
+pub impl @trait.Named for ScaffoldOptions with fn name(self) {
   self.name
 }
+
+///|
 pub extend ScaffoldOptions with @trait.Named::{name}
