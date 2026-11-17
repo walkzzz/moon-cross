@@ -1,5 +1,10 @@
 import {
+  "moonbitlang/core/env",
+  "moonbitlang/core/async",
+  "moonbitlang/core/async/fs",
+  "moonbitlang/core/async/process",
   "walkzzz/moon-cross/core/core",
+  "walkzzz/moon-cross/core/config",
   "walkzzz/moon-cross/codegen/codegen",
   "walkzzz/moon-cross/platform/platform",
   "walkzzz/moon-cross/platform/platform/android" @platform_android,
@@ -14,5 +19,13 @@ import {
   "walkzzz/moon-cross/tools/publish",
   "walkzzz/moon-cross/analysis/discovery",
 }
+
+options(
+  "allow-experimental-packages": [
+    "moonbitlang/core/async",
+    "moonbitlang/core/async/fs",
+    "moonbitlang/core/async/process",
+  ],
+)
 
 pkgtype(kind: "executable")

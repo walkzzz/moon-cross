@@ -1,7 +1,7 @@
 ///|
-/// Moon Cross 错误类型 | Moon Cross error type
+/// Moon Cross 错误类型（error type，可 raise） | Moon Cross error type (raisable)
 #derive(Debug)
-pub(all) enum MoonCrossError {
+pub(all) suberror MoonCrossError {
   ConfigError(String)
   ParseError(String)
   CodegenError(String)
