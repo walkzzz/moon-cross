@@ -18,17 +18,37 @@ jobs:
           echo "$HOME/.moon/bin" >> $GITHUB_PATH
 
       - name: Moon version
-        run: moon version
+        run: moon version --all
 
-      - name: Moon check
-        run: moon check
+      - name: Moon fmt check
+        run: moon fmt --check
+
+      - name: Moon check (deny warnings)
+        run: moon check --deny-warn
 
       - name: Moon test
         run: moon test
 
-      - name: Test summary
+      - name: Build native
+        run: moon build --target native
+
+      - name: Examples check and test
+        run: |
+          for ex in zlib-cross toml-cross quickcheck-cross parser-cross; do
+            echo "== example: $ex =="
+            (cd "examples/$ex" && moon check --deny-warn && moon test --target native)
+          done
+
+      - name: End-to-end (scaffold -> static library -> C host -> assertions)
+        run: bash scripts/e2e_linux.sh
+
+      - name: Summary
         if: always()
         run: |
-          echo "## Test Results" >> $GITHUB_STEP_SUMMARY
-          echo "✅ moon check passed" >> $GITHUB_STEP_SUMMARY
-          echo "✅ moon test passed (442 tests)" >> $GITHUB_STEP_SUMMARY
+          echo "## CI Results" >> $GITHUB_STEP_SUMMARY
+          echo "✅ moon fmt --check" >> $GITHUB_STEP_SUMMARY
+          echo "✅ moon check --deny-warn (0 warnings)" >> $GITHUB_STEP_SUMMARY
+          echo "✅ moon test (2374+ tests)" >> $GITHUB_STEP_SUMMARY
+          echo "✅ moon build --target native" >> $GITHUB_STEP_SUMMARY
+          echo "✅ 4 examples: check + test" >> $GITHUB_STEP_SUMMARY
+          echo "✅ e2e: scaffold -> static lib -> C host FFI assertions" >> $GITHUB_STEP_SUMMARY

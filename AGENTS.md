@@ -8,10 +8,12 @@
 
 ## 当前状态
 
-- **80 包** · **2364 测试** · **0 warnings** · **5 平台**
+- **80 包** · **2374 测试（主仓）+ 18 测试（4 个示例）** · **0 warnings（deny-warn）** · **5 平台**
+- **CLI 8 命令全部真实可用**（init/build/check/plan/sync/doctor/publish/wizard，真实读写磁盘）
+- **4 个可运行示例**（zlib/toml/quickcheck/parser-cross，真实 mooncakes 第三方库包装）
 - **20 个 trait 定义** · **218+ trait 实现** · **71/80 包有 trait（89% 覆盖）**
-- R1-R19 规则全合规
-- 工具链：MoonBit v0.1.20260920
+- 工具链：MoonBit 0.1.20261104（moonc v0.10.20）
+- e2e：`scripts/e2e_linux.sh`（脚手架→静态库→C 宿主 moonbit_init→断言，CI ubuntu 跑）
 
 ## 项目结构
 

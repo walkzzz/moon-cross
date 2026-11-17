@@ -4,13 +4,13 @@
 ///|
 /// CLI 版本号 | CLI version
 pub fn cli_version() -> String {
-  "moon-cross v0.3.34"
+  "moon-cross v0.3.36"
 }
 
 ///|
 /// 格式化帮助文本 | Format help text
 pub fn format_help() -> String {
-  "Moon Cross v0.3.34 - MoonBit Cross-Platform Native Framework\n\n" +
+  "Moon Cross v0.3.36 - MoonBit Cross-Platform Native Framework\n\n" +
   "Usage: moon-cross <command> [options]\n\n" +
   "Commands:\n" +
   "  build    - Generate cross-platform bindings and build scripts from moon-cross.json\n" +

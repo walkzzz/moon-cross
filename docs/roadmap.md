@@ -85,6 +85,9 @@
 | v0.3.31 | ✅ Done | codegen实质深度提升+CLI命令分发+typesys完善+诚实命名(评审迭代) | 2317 |
 | v0.3.32 | ✅ Done | P2编译执行器+P3验证框架+Swift/NAPI真实函数体+generate_c_adapter真实marshalling | 2351 |
 | v0.3.33 | ✅ Done | P4包分类+CLI增强(has_flag/--example)+generate_example_project+集成测试连接compilation_verify | 2364 |
+| v0.3.34 | ✅ Done (ceae349) | 语法迁移:307处derive→#derive前置声明(102文件)+moon fmt归一, deny-warn 0警告 | 2364 |
+| v0.3.35 | ✅ Done (6bf53ac) | CLI真实化:argv接入+moon-cross.json解析(config/parser)+落盘能力(async/fs)+8命令全实现+10新测试 | 2374 |
+| v0.3.36 | ✅ Done (fcc457b) | 4个可运行示例:zlib/toml/quickcheck/parser-cross真实第三方库包装+18示例测试+e2e脚本zlib段 | 2392 |
 
 ## 远期计划预览（v0.2.16 → v1.0.0）
 

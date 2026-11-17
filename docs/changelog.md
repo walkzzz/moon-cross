@@ -1,5 +1,37 @@
 # Changelog
 
+## v0.3.36 (2026-11-17) — 阶段 3：4 个可运行示例补齐
+
+### examples/ 四个真实第三方库导出示例
+- **zlib-cross**：mizchi/zlib@0.4.12（压缩/解压/校验和，纯 MoonBit 全后端）— 9 导出函数（mz_ 前缀），6 测试；e2e 载体
+- **toml-cross**：moonbit-community/toml@0.5.1（TOML 1.1 解析器）— 4 导出函数（mt_ 前缀），5 测试
+- **quickcheck-cross**：moonbitlang/quickcheck@0.15.1 — 固定性质包装（泛型 API 无法直接 FFI），3 导出函数，3 测试
+- **parser-cross**：moonbitlang/parser@0.4.9（MoonBit 语言解析器）— 5 导出函数（pr_ 前缀），4 测试
+- 每个示例含：moon.mod（MoonBit DSL 格式）+ foreign_library 包 + #export_name 导出层 + moon-cross.json + 测试 + README 三步复现
+- scripts/e2e_linux.sh 增加 zlib 真实库端到端段（生成→静态库→C 宿主→断言）
+- 18 个示例测试全通过，4/4 check --deny-warn 全绿
+
+## v0.3.35 (2026-11-17) — 阶段 2：CLI 真实化 + 8 命令全实现
+
+### CLI 真实能力
+- **tools/cli/main.mbt**：async main 接收真实 argv（@env.args），错误退出码 1，正常显式退出
+- **core/config/parser.mbt**（新增）：moon-cross.json JSON 解析（@json 模式匹配风格，MoonCrossError 错误类型）
+- **core/core/error.mbt**：MoonCrossError 升级为 suberror（可 raise 的 error type）
+- **tools/cli/config_io.mbt**（新增）：load_config / ensure_dir / write_file / write_cross_platform_codes（core/async/fs 落盘）
+- **tools/cli/commands.mbt**（新增）：8 命令真实实现
+  - init：生成可构建骨架（moon.mod + foreign_library src/moon.pkg + #export_name 源码 + moon-cross.json + README）
+  - build：读配置 → C 适配层 + 五平台绑定 + Makefile 落盘（实测 7 文件）
+  - check：函数名唯一性/类型映射/平台校验（validate_config 纯函数）
+  - plan / sync / doctor（@process 子进程探测 moon/clang/gcc）/ publish（moon.mod 预检）/ wizard
+- **tools/cli/commands_wbtest.mbt**：10 个测试（参数解析/分发/校验）
+- scripts/e2e_linux.sh（新增）：Linux 端到端（脚手架→静态库→C 宿主 moonbit_init→断言 PASS）
+
+## v0.3.34 (2026-11-17) — 阶段 1：语法迁移
+
+- 307 处 `derive(Debug, Eq)` 迁移为 `#derive(Debug, Eq)` 前置声明（102 文件，deprecated_syntax #27 清零）
+- moon fmt 全量格式化（moon.pkg JSON → MoonBit DSL 语法归一）
+- moon check --deny-warn：0 警告 0 错误；2364 测试全通过
+
 ## v0.3.33 (2026-10-27) — 评审迭代三：P4 包分类 + CLI 增强 + 示例项目生成 + 集成测试
 
 ### P4: 包分类与作用域收缩计划
