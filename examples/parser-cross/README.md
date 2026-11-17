@@ -1,61 +1,53 @@
-# parser-cross：moonbitlang/parser 跨平台导出示例
+# parser-cross
 
-> 使用 Moon Cross 将 [moonbitlang/parser](https://mooncakes.io/docs/moonbitlang/parser@0.4.4) v0.4.4 导出为四平台 Native 库
+将 [moonbitlang/parser](https://mooncakes.io/docs/moonbitlang/parser)（MoonBit 语言解析器，AST/词法/语法）通过 moon-cross 导出的示例。
 
-## 概述
+> 注：moonbitlang/parser 官方声明 "highly experimental and unstable"，本示例锁定 0.4.9 版本。
 
-本示例展示如何使用 Moon Cross 框架，将 mooncakes 上的 AST 解析库 `moonbitlang/parser` 一次导出为 iOS / Android / Windows / 鸿蒙四平台 Native 库。
+## 导出函数（C 符号前缀 `pr_`）
 
-## 前置条件
+| MoonBit 函数 | C 符号 | 说明 |
+|---|---|---|
+| `parse_impl_count` | `pr_parse_impl_count` | 顶层声明数量 |
+| `parse_report_count` | `pr_parse_report_count` | 解析诊断数量 |
+| `parse_ok` | `pr_parse_ok` | 是否零诊断（干净解析） |
+| `parse_first_top_kind` | `pr_parse_first_top_kind` | 第一个顶层声明的 AST kind |
+| `parse_total_count` | `pr_parse_total_count` | 多源片段声明总数 |
 
-```bash
-# 安装 MoonBit 工具链
-# https://www.moonbitlang.com/download/
-
-# 添加 moonbitlang/parser 依赖
-moon add moonbitlang/parser@0.4.4
-```
-
-## 使用方法
+## 三步复现
 
 ```bash
-# 1. 初始化跨平台项目
-moon-cross init --name parser-cross --platform all
+# 1. 构建为 native 静态库
+cd examples/parser-cross
+moon build --target native --release
 
-# 2. 一键四平台编译
-moon-cross build --config moon-cross.json --platform ios,android,windows,ohos
+# 2. 生成五平台 FFI 绑定
+moon-cross build --config moon-cross.json --platform all --output moon-cross-output
 
-# 3. 验证配置
-moon-cross check --config moon-cross.json
-
-# 4. 查看构建计划
-moon-cross plan --config moon-cross.json
+# 3. 运行测试
+moon test --target native
 ```
 
-## 导出的函数
+## C 宿主调用示例
 
-| 函数 | 参数 | 返回值 | 说明 |
-|------|------|--------|------|
-| `parser_parse` | `String` | `Ast` | 解析源码为 AST |
-| `parser_tokenize` | `String` | `Array` | 词法分析 |
-| `parser_to_string` | `Ast` | `String` | AST 转源码 |
-| `parser_ast_kind` | `Ast` | `String` | 获取 AST 节点类型 |
-| `parser_ast_children` | `Ast` | `Array` | 获取 AST 子节点 |
-| `parser_token_kind` | `Token` | `String` | 获取 token 类型 |
-| `parser_token_value` | `Token` | `String` | 获取 token 值 |
-| `parser_token_position` | `Token` | `Span` | 获取 token 位置 |
-| `parser_format` | `Ast` | `String` | 格式化 AST |
-| `parser_comments` | `Ast` | `Array` | 提取注释 |
+```c
+#include "moonbit.h"
+#include <stdio.h>
+extern int32_t pr_parse_impl_count(const char *source);
+extern int32_t pr_parse_ok(const char *source);
 
-## 四平台输出
+int main(void) {
+  moonbit_init();
+  const char *src = "fn add(a: Int, b: Int) -> Int { a + b }";
+  printf("decls=%d ok=%d\n", pr_parse_impl_count(src), pr_parse_ok(src));
+  return 0;
+}
+```
 
-| 平台 | 输出格式 | FFI 机制 | 编译器 |
-|------|----------|----------|--------|
-| iOS | `.dylib` / `.xcframework` | Swift C interop | xcrun clang |
-| Android | `.so` | JNI | NDK clang |
-| Windows | `.dll` | DllImport | clang-cl |
-| 鸿蒙 | `.so` | NAPI + ArkTS | OHOS clang |
+> String 参数跨 FFI 传递需经 UTF-8 转换层，上例为示意。
 
-## 许可证
+## 运行测试
 
-moonbitlang/parser 使用 Apache-2.0 许可证，Moon Cross 使用 MIT 许可证。
+```bash
+moon test --target native
+```

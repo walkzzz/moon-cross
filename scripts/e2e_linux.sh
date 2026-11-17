@@ -48,3 +48,32 @@ cc -I "$MOON_HOME/include" "$WORK/host.c" "$LIB" -lm -o "$WORK/host"
 
 echo "== [5/5] running FFI assertions =="
 "$WORK/host"
+
+echo "== [6/6] real third-party library: zlib-cross end-to-end =="
+# 用真实 mooncakes 第三方库（mizchi/zlib，纯 MoonBit）走完整链路 | full chain with a real mooncakes third-party library
+cd examples/zlib-cross
+moon build --target native --release
+ZLIB_LIB="$(find _build/native/release/build -name 'src.a' -o -name 'src.lib' | head -1)"
+test -n "$ZLIB_LIB" || { echo "FAIL: zlib static library not found"; exit 1; }
+cat > zlib_host.c <<'EOF'
+#include "moonbit.h"
+#include <stdio.h>
+extern int32_t mz_adler32(uint8_t *data);
+extern int32_t mz_crc32(uint8_t *data);
+extern int32_t mz_zlib_can_decompress(uint8_t *data);
+int main(void) {
+  moonbit_init();
+  uint8_t payload[] = "hello";
+  int32_t a = mz_adler32(payload);
+  int32_t c = mz_crc32(payload);
+  printf("adler32=%d crc32=%d\n", a, c);
+  if (a == 103547413 && c == 907060870) {
+    printf("ZLIB E2E PASS\n");
+    return 0;
+  }
+  printf("ZLIB E2E FAIL\n");
+  return 1;
+}
+EOF
+cc -I "$MOON_HOME/include" zlib_host.c "$ZLIB_LIB" -lm -o zlib_host
+./zlib_host

@@ -1,61 +1,49 @@
-# quickcheck-cross：moonbitlang/quickcheck 跨平台导出示例
+# quickcheck-cross
 
-> 使用 Moon Cross 将 [moonbitlang/quickcheck](https://mooncakes.io/docs/moonbitlang/quickcheck@0.15.0) v0.15.0 导出为四平台 Native 库
+将 [moonbitlang/quickcheck](https://mooncakes.io/docs/moonbitlang/quickcheck)（属性测试框架）通过 moon-cross 导出的示例。
 
-## 概述
+## 为什么是"固定性质"包装
 
-本示例展示如何使用 Moon Cross 框架，将 mooncakes 上的属性测试库 `moonbitlang/quickcheck` 一次导出为 iOS / Android / Windows / 鸿蒙四平台 Native 库。
+QuickCheck 的核心 API（`quick_check_fn`/`Arbitrary`/`Testable`）面向泛型与 trait 抽象，无法直接跨 FFI 导出。本示例展示另一种集成模式：**把若干"固定性质 + 固定种子"的属性检查包装为 C 可调用入口**，调用方拿到 QuickCheck 驱动器的报告字符串（如 `+++ [100/0/100] Ok, passed!`）。
 
-## 前置条件
+## 导出函数（C 符号前缀 `qc_`）
 
-```bash
-# 安装 MoonBit 工具链
-# https://www.moonbitlang.com/download/
+| MoonBit 函数 | C 符号 | 说明 |
+|---|---|---|
+| `run_add_commutative` | `qc_run_add_commutative` | 加法交换律检查报告 |
+| `run_reverse_twice` | `qc_run_reverse_twice` | 列表反转两次恢复原状检查报告 |
+| `run_distributive` | `qc_run_distributive` | 乘法分配律检查报告 |
 
-# 添加 moonbitlang/quickcheck 依赖
-moon add moonbitlang/quickcheck@0.15.0
-```
-
-## 使用方法
+## 三步复现
 
 ```bash
-# 1. 初始化跨平台项目
-moon-cross init --name quickcheck-cross --platform all
+# 1. 构建为 native 静态库
+cd examples/quickcheck-cross
+moon build --target native --release
 
-# 2. 一键四平台编译
-moon-cross build --config moon-cross.json --platform ios,android,windows,ohos
+# 2. 生成五平台 FFI 绑定
+moon-cross build --config moon-cross.json --platform all --output moon-cross-output
 
-# 3. 验证配置
-moon-cross check --config moon-cross.json
-
-# 4. 查看构建计划
-moon-cross plan --config moon-cross.json
+# 3. 运行测试
+moon test --target native
 ```
 
-## 导出的函数
+## C 宿主调用示例
 
-| 函数 | 参数 | 返回值 | 说明 |
-|------|------|--------|------|
-| `quickcheck_check` | `Property, Int` | `QuickCheckResult` | 运行属性检查 |
-| `quickcheck_for_all_int` | `Property` | `QuickCheckResult` | 检查所有整数 |
-| `quickcheck_for_all_bool` | `Property` | `QuickCheckResult` | 检查所有布尔值 |
-| `quickcheck_for_all_string` | `Property` | `QuickCheckResult` | 检查所有字符串 |
-| `quickcheck_arbitrary_int` | `UInt` | `Int` | 生成随机整数 |
-| `quickcheck_arbitrary_bool` | `UInt` | `Bool` | 生成随机布尔值 |
-| `quickcheck_arbitrary_string` | `UInt, Int` | `String` | 生成随机字符串 |
-| `quickcheck_with_seed` | `Property, UInt, Int` | `QuickCheckResult` | 指定种子检查 |
-| `quickcheck_minimize` | `QuickCheckResult, Property` | `QuickCheckResult` | 最小化反例 |
-| `quickcheck_result_passed` | `QuickCheckResult` | `Bool` | 检查是否通过 |
+```c
+#include "moonbit.h"
+#include <stdio.h>
+extern void qc_run_add_commutative(uint8_t *out);
 
-## 四平台输出
+int main(void) {
+  moonbit_init();
+  /* 报告字符串经 FFI Bytes 返回，此处示意调用 */
+  return 0;
+}
+```
 
-| 平台 | 输出格式 | FFI 机制 | 编译器 |
-|------|----------|----------|--------|
-| iOS | `.dylib` / `.xcframework` | Swift C interop | xcrun clang |
-| Android | `.so` | JNI | NDK clang |
-| Windows | `.dll` | DllImport | clang-cl |
-| 鸿蒙 | `.so` | NAPI + ArkTS | OHOS clang |
+## 运行测试
 
-## 许可证
-
-moonbitlang/quickcheck 使用 Apache-2.0 许可证，Moon Cross 使用 MIT 许可证。
+```bash
+moon test --target native
+```

@@ -1,61 +1,51 @@
-# toml-cross：bobzhang/toml 跨平台导出示例
+# toml-cross
 
-> 使用 Moon Cross 将 [bobzhang/toml](https://mooncakes.io/docs/bobzhang/toml@0.4.3) v0.4.3 导出为四平台 Native 库
+将 [moonbit-community/toml](https://mooncakes.io/docs/moonbit-community/toml)（TOML 1.1 解析器，toml-test 合规 98.8%）通过 moon-cross 导出为跨平台原生静态库的完整示例。
 
-## 概述
+## 导出函数（C 符号前缀 `mt_`）
 
-本示例展示如何使用 Moon Cross 框架，将 mooncakes 上的 TOML 解析库 `bobzhang/toml` 一次导出为 iOS / Android / Windows / 鸿蒙四平台 Native 库。
+| MoonBit 函数 | C 符号 | 说明 |
+|---|---|---|
+| `toml_format` | `mt_toml_format` | 解析并重排 TOML 文档（失败返回空串） |
+| `toml_validate` | `mt_toml_validate` | 判断输入是否为合法 TOML 文档 |
+| `toml_root_type` | `mt_toml_root_type` | 根节点类型名（如 `TomlTable`） |
+| `toml_top_keys` | `mt_toml_top_keys` | 顶层键数量（失败返回 -1） |
 
-## 前置条件
-
-```bash
-# 安装 MoonBit 工具链
-# https://www.moonbitlang.com/download/
-
-# 添加 bobzhang/toml 依赖
-moon add bobzhang/toml@0.4.3
-```
-
-## 使用方法
+## 三步复现
 
 ```bash
-# 1. 初始化跨平台项目
-moon-cross init --name toml-cross --platform all
+# 1. 构建为 native 静态库
+cd examples/toml-cross
+moon build --target native --release
 
-# 2. 一键四平台编译
-moon-cross build --config moon-cross.json --platform ios,android,windows,ohos
+# 2. 生成五平台 FFI 绑定
+moon-cross build --config moon-cross.json --platform all --output moon-cross-output
 
-# 3. 验证配置
-moon-cross check --config moon-cross.json
-
-# 4. 查看构建计划
-moon-cross plan --config moon-cross.json
+# 3. 运行测试
+moon test --target native
 ```
 
-## 导出的函数
+## C 宿主调用示例
 
-| 函数 | 参数 | 返回值 | 说明 |
-|------|------|--------|------|
-| `toml_parse` | `String` | `TomlValue` | 解析 TOML 字符串 |
-| `toml_to_string` | `TomlValue` | `String` | 序列化为 TOML 字符串 |
-| `toml_get` | `TomlValue, String` | `TomlValue` | 按键获取值 |
-| `toml_get_string` | `TomlValue, String` | `String` | 获取字符串值 |
-| `toml_get_int` | `TomlValue, String` | `Int` | 获取整数值 |
-| `toml_get_double` | `TomlValue, String` | `Double` | 获取浮点值 |
-| `toml_get_bool` | `TomlValue, String` | `Bool` | 获取布尔值 |
-| `toml_value_type` | `TomlValue` | `String` | 获取值类型 |
-| `toml_table_keys` | `TomlValue` | `Array` | 获取表所有键 |
-| `toml_array_length` | `TomlValue` | `Int` | 获取数组长度 |
+```c
+#include "moonbit.h"
+#include <stdio.h>
+extern int32_t mt_toml_validate(const char *input);
+extern int32_t mt_toml_top_keys(const char *input);
 
-## 四平台输出
+int main(void) {
+  moonbit_init();
+  printf("valid=%d keys=%d\n",
+         mt_toml_validate("a = 1\n"),
+         mt_toml_top_keys("a = 1\nb = 2\n"));
+  return 0;
+}
+```
 
-| 平台 | 输出格式 | FFI 机制 | 编译器 |
-|------|----------|----------|--------|
-| iOS | `.dylib` / `.xcframework` | Swift C interop | xcrun clang |
-| Android | `.so` | JNI | NDK clang |
-| Windows | `.dll` | DllImport | clang-cl |
-| 鸿蒙 | `.so` | NAPI + ArkTS | OHOS clang |
+> String 参数跨 FFI 传递需经 UTF-8 转换层（见 moon-cross 文档的类型映射章节），上例为示意。
 
-## 许可证
+## 运行测试
 
-bobzhang/toml 使用 Apache-2.0 许可证，Moon Cross 使用 MIT 许可证。
+```bash
+moon test --target native
+```

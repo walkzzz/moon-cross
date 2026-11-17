@@ -1,0 +1,7 @@
+import {
+  "moonbit-community/toml",
+}
+
+pkgtype(kind: "foreign_library")
+
+supported_targets = "native"

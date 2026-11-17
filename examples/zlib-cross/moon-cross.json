@@ -1,8 +1,8 @@
 {
   "version": 1,
   "module_path": "mizchi/zlib",
-  "package_name": "mizchi/zlib",
-  "targets": ["ios", "android", "windows", "ohos"],
+  "package_name": "walkzzz/zlib-cross",
+  "targets": ["ios", "android", "windows", "ohos", "linux"],
   "functions": [
     {
       "name": "zlib_compress",
@@ -42,16 +42,13 @@
     {
       "name": "crc32",
       "params": [{ "name": "data", "typ": "Bytes" }],
-      "return_type": "UInt"
+      "return_type": "Int"
+    },
+    {
+      "name": "zlib_can_decompress",
+      "params": [{ "name": "data", "typ": "Bytes" }],
+      "return_type": "Bool"
     }
   ],
-  "types": [
-    {
-      "name": "ZlibError",
-      "fields": [
-        { "name": "InvalidData", "typ": "String" },
-        { "name": "OutputTooLarge", "typ": "String" }
-      ]
-    }
-  ]
+  "types": []
 }

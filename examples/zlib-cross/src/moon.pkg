@@ -1,0 +1,7 @@
+import {
+  "mizchi/zlib",
+}
+
+pkgtype(kind: "foreign_library")
+
+supported_targets = "native"

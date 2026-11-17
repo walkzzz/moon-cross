@@ -1,0 +1,7 @@
+import {
+  "moonbitlang/quickcheck" @qc,
+}
+
+pkgtype(kind: "foreign_library")
+
+supported_targets = "native"
