@@ -1,12 +1,13 @@
 ///|
 /// 函数复杂度信息 | Function complexity info
+#derive(Debug, Eq)
 pub(all) struct FuncComplexity {
   name : String
   cyclomatic : Int32
   lines : Int32
   branches : Int32
   loops : Int32
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend FuncComplexity with @moonbitlang/core/debug.Debug::{to_repr}
@@ -16,12 +17,13 @@ pub extend FuncComplexity with Eq::{not_equal, equal}
 
 ///|
 /// 覆盖率信息 | Coverage info
+#derive(Debug, Eq)
 pub(all) struct CoverageInfo {
   total_lines : Int32
   covered_lines : Int32
   total_branches : Int32
   covered_branches : Int32
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend CoverageInfo with @moonbitlang/core/debug.Debug::{to_repr}
@@ -31,13 +33,14 @@ pub extend CoverageInfo with Eq::{not_equal, equal}
 
 ///|
 /// CRAP 指标结果 | CRAP metric result
+#derive(Debug, Eq)
 pub(all) struct CrapResult {
   func_name : String
   complexity : Int32
   coverage : Int32
   crap_score : Int32
   risk_level : String
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend CrapResult with @moonbitlang/core/debug.Debug::{to_repr}
@@ -47,6 +50,7 @@ pub extend CrapResult with Eq::{not_equal, equal}
 
 ///|
 /// CRAP 报告 | CRAP report
+#derive(Debug, Eq)
 pub(all) struct CrapReport {
   results : Array[CrapResult]
   total_funcs : Int32
@@ -54,7 +58,7 @@ pub(all) struct CrapReport {
   high_risk : Int32
   medium_risk : Int32
   low_risk : Int32
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend CrapReport with @moonbitlang/core/debug.Debug::{to_repr}

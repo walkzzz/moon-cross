@@ -1,10 +1,11 @@
 ///|
 /// 脚手架初始化选项 | Scaffold initialization options
+#derive(Debug, Eq)
 pub(all) struct ScaffoldOptions {
   name : String
   platforms : Array[@core.Platform]
   output_dir : String
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend ScaffoldOptions with @moonbitlang/core/debug.Debug::{to_repr}

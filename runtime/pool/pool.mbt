@@ -1,11 +1,12 @@
 ///|
 /// 池配置 | Pool configuration
+#derive(Debug, Eq)
 pub(all) struct PoolConfig {
   min_size : Int32
   max_size : Int32
   idle_timeout_ms : Int32
   auto_shrink : Bool
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend PoolConfig with @moonbitlang/core/debug.Debug::{to_repr}
@@ -15,12 +16,13 @@ pub extend PoolConfig with Eq::{not_equal, equal}
 
 ///|
 /// 池条目 | Pool entry
+#derive(Debug, Eq)
 pub(all) struct PoolEntry {
   value : String
   created_at : Int32
   last_used : Int32
   use_count : Int32
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend PoolEntry with @moonbitlang/core/debug.Debug::{to_repr}
@@ -30,6 +32,7 @@ pub extend PoolEntry with Eq::{not_equal, equal}
 
 ///|
 /// 池统计 | Pool statistics
+#derive(Debug, Eq)
 pub(all) struct PoolStats {
   active : Int32
   idle : Int32
@@ -37,7 +40,7 @@ pub(all) struct PoolStats {
   total_destroyed : Int32
   acquisitions : Int32
   releases : Int32
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend PoolStats with @moonbitlang/core/debug.Debug::{to_repr}
@@ -47,12 +50,13 @@ pub extend PoolStats with Eq::{not_equal, equal}
 
 ///|
 /// 对象池 | Object pool
+#derive(Debug, Eq)
 pub(all) struct Pool {
   idle : Array[PoolEntry]
   active_count : Int32
   config : PoolConfig
   stats : PoolStats
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend Pool with @moonbitlang/core/debug.Debug::{to_repr}

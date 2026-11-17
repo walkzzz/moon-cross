@@ -1,5 +1,6 @@
 ///|
 /// HTTP 方法 | HTTP method
+#derive(Debug, Eq)
 pub(all) enum HttpMethod {
   Get
   Post
@@ -8,7 +9,7 @@ pub(all) enum HttpMethod {
   Patch
   Head
   Options
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend HttpMethod with @moonbitlang/core/debug.Debug::{to_repr}
@@ -18,10 +19,11 @@ pub extend HttpMethod with Eq::{not_equal, equal}
 
 ///|
 /// HTTP 头部 | HTTP header
+#derive(Debug, Eq)
 pub(all) struct HttpHeader {
   name : String
   value : String
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend HttpHeader with @moonbitlang/core/debug.Debug::{to_repr}
@@ -31,12 +33,13 @@ pub extend HttpHeader with Eq::{not_equal, equal}
 
 ///|
 /// HTTP 请求 | HTTP request
+#derive(Debug, Eq)
 pub(all) struct HttpRequest {
   http_method : HttpMethod
   url : String
   headers : Array[HttpHeader]
   body : String
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend HttpRequest with @moonbitlang/core/debug.Debug::{to_repr}
@@ -46,11 +49,12 @@ pub extend HttpRequest with Eq::{not_equal, equal}
 
 ///|
 /// HTTP 响应 | HTTP response
+#derive(Debug, Eq)
 pub(all) struct HttpResponse {
   status_code : Int32
   headers : Array[HttpHeader]
   body : String
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend HttpResponse with @moonbitlang/core/debug.Debug::{to_repr}

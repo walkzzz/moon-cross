@@ -1,10 +1,11 @@
 ///|
 /// 测试步骤 | Test step
+#derive(Debug, Eq)
 pub(all) struct Step {
   name : String
   action : String
   expected : String
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend Step with @moonbitlang/core/debug.Debug::{to_repr}
@@ -14,12 +15,13 @@ pub extend Step with Eq::{not_equal, equal}
 
 ///|
 /// 步骤结果 | Step result
+#derive(Debug, Eq)
 pub(all) struct StepResult {
   step_name : String
   passed : Bool
   actual : String
   expected : String
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend StepResult with @moonbitlang/core/debug.Debug::{to_repr}
@@ -29,11 +31,12 @@ pub extend StepResult with Eq::{not_equal, equal}
 
 ///|
 /// 测试场景 | Test scenario
+#derive(Debug, Eq)
 pub(all) struct Scenario {
   name : String
   description : String
   steps : Array[Step]
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend Scenario with @moonbitlang/core/debug.Debug::{to_repr}
@@ -43,11 +46,12 @@ pub extend Scenario with Eq::{not_equal, equal}
 
 ///|
 /// 场景结果 | Scenario result
+#derive(Debug, Eq)
 pub(all) struct ScenarioResult {
   scenario_name : String
   step_results : Array[StepResult]
   passed : Bool
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend ScenarioResult with @moonbitlang/core/debug.Debug::{to_repr}
@@ -57,12 +61,13 @@ pub extend ScenarioResult with Eq::{not_equal, equal}
 
 ///|
 /// E2E 报告 | E2E report
+#derive(Debug, Eq)
 pub(all) struct E2EReport {
   total_scenarios : Int32
   passed_scenarios : Int32
   failed_scenarios : Int32
   results : Array[ScenarioResult]
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend E2EReport with @moonbitlang/core/debug.Debug::{to_repr}

@@ -1,11 +1,12 @@
 ///|
 /// 压缩结果 | Compression result
+#derive(Debug, Eq)
 pub(all) struct CompressionResult {
   data : String
   original_size : Int32
   compressed_size : Int32
   ratio : Int32
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend CompressionResult with @moonbitlang/core/debug.Debug::{to_repr}

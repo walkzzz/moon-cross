@@ -1,12 +1,13 @@
 ///|
 /// 插件信息 | Plugin information
+#derive(Debug, Eq)
 pub(all) struct PluginInfo {
   name : String
   version : String
   author : String
   description : String
   enabled : Bool
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend PluginInfo with @moonbitlang/core/debug.Debug::{to_repr}
@@ -16,6 +17,7 @@ pub extend PluginInfo with Eq::{not_equal, equal}
 
 ///|
 /// 插件钩子类型 | Plugin hook type
+#derive(Debug, Eq)
 pub(all) enum PluginHook {
   PreCompile
   PostCompile
@@ -23,7 +25,7 @@ pub(all) enum PluginHook {
   PostCodegen
   PreFfi
   PostFfi
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend PluginHook with @moonbitlang/core/debug.Debug::{to_repr}
@@ -33,11 +35,12 @@ pub extend PluginHook with Eq::{not_equal, equal}
 
 ///|
 /// 插件注册条目 | Plugin registry entry
+#derive(Debug, Eq)
 pub(all) struct PluginEntry {
   info : PluginInfo
   hooks : Array[PluginHook]
   priority : Int32
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend PluginEntry with @moonbitlang/core/debug.Debug::{to_repr}
@@ -47,12 +50,13 @@ pub extend PluginEntry with Eq::{not_equal, equal}
 
 ///|
 /// 钩子执行结果 | Hook execution result
+#derive(Debug, Eq)
 pub(all) struct HookResult {
   hook : PluginHook
   plugin_name : String
   success : Bool
   message : String
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend HookResult with @moonbitlang/core/debug.Debug::{to_repr}

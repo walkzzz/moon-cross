@@ -1,5 +1,6 @@
 ///|
 /// 平台编译规格 | Platform compilation specification
+#derive(Debug, Eq)
 pub(all) struct PlatformSpec {
   platform : @core.Platform
   compiler : String
@@ -7,7 +8,7 @@ pub(all) struct PlatformSpec {
   sysroot : String
   output_format : String
   ffi_mechanism : String
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend PlatformSpec with @moonbitlang/core/debug.Debug::{to_repr}

@@ -1,11 +1,12 @@
 ///|
 /// 命令 | Command
+#derive(Debug, Eq)
 pub(all) struct Command {
   id : Int32
   name : String
   args : String
   executed : Bool
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend Command with @moonbitlang/core/debug.Debug::{to_repr}
@@ -15,11 +16,12 @@ pub extend Command with Eq::{not_equal, equal}
 
 ///|
 /// 命令历史 | Command history
+#derive(Debug, Eq)
 pub(all) struct CommandHistory {
   commands : Array[Command]
   undone : Array[Command]
   next_id : Int32
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend CommandHistory with @moonbitlang/core/debug.Debug::{to_repr}

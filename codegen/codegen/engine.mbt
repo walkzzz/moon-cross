@@ -1,9 +1,10 @@
 ///|
 /// 代码生成结果（文件名 + 内容） | Code generation result (filename + content)
+#derive(Debug, Eq)
 pub(all) struct CodegenResult {
   filename : String
   content : String
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend CodegenResult with @moonbitlang/core/debug.Debug::{to_repr}
@@ -13,11 +14,12 @@ pub extend CodegenResult with Eq::{not_equal, equal}
 
 ///|
 /// 导出函数签名 | Export function signature
+#derive(Debug, Eq)
 pub(all) struct ExportFunction {
   name : String
   params : Array[(String, String)]
   return_type : String
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend ExportFunction with @moonbitlang/core/debug.Debug::{to_repr}
@@ -27,11 +29,12 @@ pub extend ExportFunction with Eq::{not_equal, equal}
 
 ///|
 /// 跨平台代码生成结果 | Cross-platform code generation result
+#derive(Debug, Eq)
 pub(all) struct CrossPlatformCode {
   platform : String
   filename : String
   content : String
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend CrossPlatformCode with @moonbitlang/core/debug.Debug::{to_repr}

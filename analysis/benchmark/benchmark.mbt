@@ -1,11 +1,12 @@
 ///|
 /// 基准测试配置 | Benchmark configuration
+#derive(Debug, Eq)
 pub(all) struct BenchmarkConfig {
   name : String
   iterations : Int32
   warmup_runs : Int32
   timeout_ms : Int32
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend BenchmarkConfig with @moonbitlang/core/debug.Debug::{to_repr}
@@ -15,6 +16,7 @@ pub extend BenchmarkConfig with Eq::{not_equal, equal}
 
 ///|
 /// 单次基准测试结果 | Single benchmark result
+#derive(Debug, Eq)
 pub(all) struct BenchmarkResult {
   name : String
   iterations : Int32
@@ -24,7 +26,7 @@ pub(all) struct BenchmarkResult {
   max_time_ns : Int32
   median_time_ns : Int32
   ops_per_second : Int32
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend BenchmarkResult with @moonbitlang/core/debug.Debug::{to_repr}
@@ -34,11 +36,12 @@ pub extend BenchmarkResult with Eq::{not_equal, equal}
 
 ///|
 /// 基准测试套件 | Benchmark suite
+#derive(Debug, Eq)
 pub(all) struct BenchmarkSuite {
   name : String
   configs : Array[BenchmarkConfig]
   results : Array[BenchmarkResult]
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend BenchmarkSuite with @moonbitlang/core/debug.Debug::{to_repr}
@@ -48,6 +51,7 @@ pub extend BenchmarkSuite with Eq::{not_equal, equal}
 
 ///|
 /// 统计摘要 | Statistics summary
+#derive(Debug, Eq)
 pub(all) struct StatsSummary {
   mean : Double
   median : Double
@@ -57,7 +61,7 @@ pub(all) struct StatsSummary {
   std_dev : Double
   p95 : Double
   p99 : Double
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend StatsSummary with @moonbitlang/core/debug.Debug::{to_repr}
@@ -67,13 +71,14 @@ pub extend StatsSummary with Eq::{not_equal, equal}
 
 ///|
 /// 性能比较结果 | Performance comparison result
+#derive(Debug, Eq)
 pub(all) struct ComparisonResult {
   baseline_name : String
   candidate_name : String
   speedup : Double
   improvement_pct : Double
   significant : Bool
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend ComparisonResult with @moonbitlang/core/debug.Debug::{to_repr}

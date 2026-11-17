@@ -1,10 +1,11 @@
 ///|
 /// 行覆盖状态 | Line coverage status
+#derive(Debug, Eq)
 pub(all) enum LineStatus {
   Covered
   Uncovered
   Partial
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend LineStatus with @moonbitlang/core/debug.Debug::{to_repr}
@@ -14,12 +15,13 @@ pub extend LineStatus with Eq::{not_equal, equal}
 
 ///|
 /// 覆盖率条目 | Coverage entry
+#derive(Debug, Eq)
 pub(all) struct CoverageEntry {
   file : String
   total_lines : Int32
   covered_lines : Int32
   missed_lines : Array[Int32]
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend CoverageEntry with @moonbitlang/core/debug.Debug::{to_repr}
@@ -29,12 +31,13 @@ pub extend CoverageEntry with Eq::{not_equal, equal}
 
 ///|
 /// 覆盖率报告 | Coverage report
+#derive(Debug, Eq)
 pub(all) struct CoverageReport {
   entries : Array[CoverageEntry]
   total_lines : Int32
   covered_lines : Int32
   missed_lines : Int32
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend CoverageReport with @moonbitlang/core/debug.Debug::{to_repr}
@@ -44,12 +47,13 @@ pub extend CoverageReport with Eq::{not_equal, equal}
 
 ///|
 /// 覆盖率配置 | Coverage configuration
+#derive(Debug, Eq)
 pub(all) struct CoverageConfig {
   min_threshold : Double
   fail_below : Bool
   show_missing : Bool
   sort_descending : Bool
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend CoverageConfig with @moonbitlang/core/debug.Debug::{to_repr}
@@ -228,12 +232,13 @@ pub fn sort_by_coverage_descending(
 
 ///|
 /// 覆盖率摘要统计 | Coverage summary statistics
+#derive(Debug, Eq)
 pub(all) struct CoverageStats {
   min : Double
   max : Double
   mean : Double
   files : Int32
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend CoverageStats with @moonbitlang/core/debug.Debug::{to_repr}

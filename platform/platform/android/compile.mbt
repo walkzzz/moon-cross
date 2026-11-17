@@ -1,12 +1,13 @@
 ///|
 /// Android NDK 编译配置 | Android NDK compilation configuration
+#derive(Debug, Eq)
 pub(all) struct AndroidCompileConfig {
   arch : @core.Arch
   api_level : Int32
   ndk_path : String
   output_dir : String
   output_name : String
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend AndroidCompileConfig with @moonbitlang/core/debug.Debug::{to_repr}

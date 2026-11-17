@@ -1,9 +1,10 @@
 ///|
 /// 查询参数 | Query parameter
+#derive(Debug, Eq)
 pub(all) struct QueryParam {
   name : String
   value : String
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend QueryParam with @moonbitlang/core/debug.Debug::{to_repr}
@@ -13,6 +14,7 @@ pub extend QueryParam with Eq::{not_equal, equal}
 
 ///|
 /// URI | URI
+#derive(Debug, Eq)
 pub(all) struct Uri {
   scheme : String
   host : String
@@ -20,7 +22,7 @@ pub(all) struct Uri {
   path : String
   query : String
   fragment : String
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend Uri with @moonbitlang/core/debug.Debug::{to_repr}

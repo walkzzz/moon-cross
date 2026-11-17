@@ -1,11 +1,12 @@
 ///|
 /// 鸿蒙 OHOS 编译配置 | HarmonyOS OHOS compile configuration
+#derive(Debug, Eq)
 pub(all) struct OhosCompileConfig {
   arch : @core.Arch
   sdk_path : String
   output_dir : String
   output_name : String
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend OhosCompileConfig with @moonbitlang/core/debug.Debug::{to_repr}

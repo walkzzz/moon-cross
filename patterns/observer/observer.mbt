@@ -1,10 +1,11 @@
 ///|
 /// 观察者 | Observer
+#derive(Debug, Eq)
 pub(all) struct Observer {
   id : Int32
   name : String
   active : Bool
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend Observer with @moonbitlang/core/debug.Debug::{to_repr}
@@ -14,11 +15,12 @@ pub extend Observer with Eq::{not_equal, equal}
 
 ///|
 /// 主题 | Subject
+#derive(Debug, Eq)
 pub(all) struct Subject {
   observers : Array[Observer]
   state : String
   next_id : Int32
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend Subject with @moonbitlang/core/debug.Debug::{to_repr}
@@ -28,11 +30,12 @@ pub extend Subject with Eq::{not_equal, equal}
 
 ///|
 /// 事件 | Event
+#derive(Debug, Eq)
 pub(all) struct Event {
   name : String
   data : String
   timestamp : Int32
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend Event with @moonbitlang/core/debug.Debug::{to_repr}

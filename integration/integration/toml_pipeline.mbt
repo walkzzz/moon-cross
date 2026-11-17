@@ -1,5 +1,6 @@
 ///|
 /// toml 端到端流水线结果 | toml end-to-end pipeline result
+#derive(Debug, Eq)
 pub(all) struct TomlPipelineResult {
   config : @config.CrossConfig
   c_header : String
@@ -10,7 +11,7 @@ pub(all) struct TomlPipelineResult {
   android_command : String
   ios_command : String
   ohos_command : String
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend TomlPipelineResult with @moonbitlang/core/debug.Debug::{to_repr}

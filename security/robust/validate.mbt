@@ -1,10 +1,11 @@
 ///|
 /// 校验严重级别 | Validation severity level
+#derive(Debug, Eq)
 pub(all) enum Severity {
   Error
   Warning
   Info
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend Severity with @moonbitlang/core/debug.Debug::{to_repr}
@@ -14,11 +15,12 @@ pub extend Severity with Eq::{not_equal, equal}
 
 ///|
 /// 校验问题 | Validation issue
+#derive(Debug, Eq)
 pub(all) struct ValidationIssue {
   field : String
   message : String
   severity : Severity
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend ValidationIssue with @moonbitlang/core/debug.Debug::{to_repr}
@@ -28,10 +30,11 @@ pub extend ValidationIssue with Eq::{not_equal, equal}
 
 ///|
 /// 校验结果 | Validation result
+#derive(Debug, Eq)
 pub(all) struct ValidationResult {
   valid : Bool
   issues : Array[ValidationIssue]
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend ValidationResult with @moonbitlang/core/debug.Debug::{to_repr}

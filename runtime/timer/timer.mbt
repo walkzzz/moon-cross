@@ -1,9 +1,10 @@
 ///|
 /// 定时器类型 | Timer type
+#derive(Debug, Eq)
 pub(all) enum TimerType {
   OneShot
   Periodic
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend TimerType with @moonbitlang/core/debug.Debug::{to_repr}
@@ -13,11 +14,12 @@ pub extend TimerType with Eq::{not_equal, equal}
 
 ///|
 /// 定时器配置 | Timer configuration
+#derive(Debug, Eq)
 pub(all) struct TimerConfig {
   interval_ms : Int32
   timer_type : TimerType
   auto_start : Bool
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend TimerConfig with @moonbitlang/core/debug.Debug::{to_repr}
@@ -27,6 +29,7 @@ pub extend TimerConfig with Eq::{not_equal, equal}
 
 ///|
 /// 定时器 | Timer
+#derive(Debug, Eq)
 pub(all) struct Timer {
   id : Int32
   name : String
@@ -35,7 +38,7 @@ pub(all) struct Timer {
   last_fired : Int32
   fire_count : Int32
   active : Bool
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend Timer with @moonbitlang/core/debug.Debug::{to_repr}
@@ -45,12 +48,13 @@ pub extend Timer with Eq::{not_equal, equal}
 
 ///|
 /// 定时器统计 | Timer statistics
+#derive(Debug, Eq)
 pub(all) struct TimerStats {
   total_created : Int32
   total_fired : Int32
   total_cancelled : Int32
   active_count : Int32
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend TimerStats with @moonbitlang/core/debug.Debug::{to_repr}
@@ -60,10 +64,11 @@ pub extend TimerStats with Eq::{not_equal, equal}
 
 ///|
 /// 定时器管理器 | Timer manager
+#derive(Debug, Eq)
 pub(all) struct TimerManager {
   timers : Array[Timer]
   stats : TimerStats
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend TimerManager with @moonbitlang/core/debug.Debug::{to_repr}

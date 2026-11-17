@@ -1,10 +1,11 @@
 ///|
 /// 淘汰策略 | Eviction policy
+#derive(Debug, Eq)
 pub(all) enum EvictionPolicy {
   Lru
   Fifo
   Ttl
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend EvictionPolicy with @moonbitlang/core/debug.Debug::{to_repr}
@@ -14,13 +15,14 @@ pub extend EvictionPolicy with Eq::{not_equal, equal}
 
 ///|
 /// 缓存条目 | Cache entry
+#derive(Debug, Eq)
 pub(all) struct CacheEntry {
   key : String
   value : String
   timestamp : Int32
   access_count : Int32
   last_access : Int32
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend CacheEntry with @moonbitlang/core/debug.Debug::{to_repr}
@@ -30,11 +32,12 @@ pub extend CacheEntry with Eq::{not_equal, equal}
 
 ///|
 /// 缓存配置 | Cache configuration
+#derive(Debug, Eq)
 pub(all) struct CacheConfig {
   max_size : Int32
   ttl_ms : Int32
   eviction_policy : EvictionPolicy
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend CacheConfig with @moonbitlang/core/debug.Debug::{to_repr}
@@ -44,12 +47,13 @@ pub extend CacheConfig with Eq::{not_equal, equal}
 
 ///|
 /// 缓存统计 | Cache statistics
+#derive(Debug, Eq)
 pub(all) struct CacheStats {
   hits : Int32
   misses : Int32
   evictions : Int32
   size : Int32
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend CacheStats with @moonbitlang/core/debug.Debug::{to_repr}
@@ -59,11 +63,12 @@ pub extend CacheStats with Eq::{not_equal, equal}
 
 ///|
 /// 缓存 | Cache
+#derive(Debug, Eq)
 pub(all) struct Cache {
   entries : Array[CacheEntry]
   config : CacheConfig
   stats : CacheStats
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend Cache with @moonbitlang/core/debug.Debug::{to_repr}

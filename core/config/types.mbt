@@ -1,9 +1,10 @@
 ///|
 /// 导出函数参数声明 | Export function parameter declaration
+#derive(Debug, Eq)
 pub(all) struct ExportParam {
   name : String
   typ : String
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend ExportParam with @moonbitlang/core/debug.Debug::{to_repr}
@@ -13,11 +14,12 @@ pub extend ExportParam with Eq::{not_equal, equal}
 
 ///|
 /// 导出函数声明 | Export function declaration
+#derive(Debug, Eq)
 pub(all) struct ExportFunction {
   name : String
   params : Array[ExportParam]
   return_type : String
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend ExportFunction with @moonbitlang/core/debug.Debug::{to_repr}
@@ -27,10 +29,11 @@ pub extend ExportFunction with Eq::{not_equal, equal}
 
 ///|
 /// 导出类型字段声明 | Export type field declaration
+#derive(Debug, Eq)
 pub(all) struct ExportField {
   name : String
   typ : String
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend ExportField with @moonbitlang/core/debug.Debug::{to_repr}
@@ -40,10 +43,11 @@ pub extend ExportField with Eq::{not_equal, equal}
 
 ///|
 /// 导出类型声明 | Export type declaration
+#derive(Debug, Eq)
 pub(all) struct ExportType {
   name : String
   fields : Array[ExportField]
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend ExportType with @moonbitlang/core/debug.Debug::{to_repr}
@@ -53,6 +57,7 @@ pub extend ExportType with Eq::{not_equal, equal}
 
 ///|
 /// moon-cross.json 完整配置 | moon-cross.json full configuration
+#derive(Debug, Eq)
 pub(all) struct CrossConfig {
   version : Int32
   module_path : String
@@ -60,7 +65,7 @@ pub(all) struct CrossConfig {
   targets : Array[@core.Platform]
   functions : Array[ExportFunction]
   types : Array[ExportType]
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend CrossConfig with @moonbitlang/core/debug.Debug::{to_repr}

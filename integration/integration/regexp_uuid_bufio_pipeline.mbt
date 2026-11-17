@@ -1,11 +1,12 @@
 ///|
 /// regexp 流水线结果 | regexp pipeline result
+#derive(Debug, Eq)
 pub(all) struct RegexpPipelineResult {
   config : @config.CrossConfig
   c_header : String
   platform_specs : Array[@platform.PlatformSpec]
   ffi_bindings : Array[@ffi.FfiBindingType]
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend RegexpPipelineResult with @moonbitlang/core/debug.Debug::{to_repr}
@@ -34,12 +35,13 @@ pub fn run_regexp_pipeline() -> RegexpPipelineResult {
 
 ///|
 /// uuid 流水线结果 | uuid pipeline result
+#derive(Debug, Eq)
 pub(all) struct UuidPipelineResult {
   config : @config.CrossConfig
   c_header : String
   platform_specs : Array[@platform.PlatformSpec]
   ffi_bindings : Array[@ffi.FfiBindingType]
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend UuidPipelineResult with @moonbitlang/core/debug.Debug::{to_repr}
@@ -68,12 +70,13 @@ pub fn run_uuid_pipeline() -> UuidPipelineResult {
 
 ///|
 /// bufio 流水线结果 | bufio pipeline result
+#derive(Debug, Eq)
 pub(all) struct BufioPipelineResult {
   config : @config.CrossConfig
   c_header : String
   platform_specs : Array[@platform.PlatformSpec]
   ffi_bindings : Array[@ffi.FfiBindingType]
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend BufioPipelineResult with @moonbitlang/core/debug.Debug::{to_repr}

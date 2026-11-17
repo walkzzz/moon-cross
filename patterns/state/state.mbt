@@ -1,10 +1,11 @@
 ///|
 /// 状态 | State
+#derive(Debug, Eq)
 pub(all) struct State {
   name : String
   is_initial : Bool
   is_final : Bool
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend State with @moonbitlang/core/debug.Debug::{to_repr}
@@ -14,11 +15,12 @@ pub extend State with Eq::{not_equal, equal}
 
 ///|
 /// 状态转换 | State transition
+#derive(Debug, Eq)
 pub(all) struct Transition {
   from_state : String
   to_state : String
   event : String
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend Transition with @moonbitlang/core/debug.Debug::{to_repr}
@@ -28,10 +30,11 @@ pub extend Transition with Eq::{not_equal, equal}
 
 ///|
 /// 状态机统计 | State machine statistics
+#derive(Debug, Eq)
 pub(all) struct StateMachineStats {
   transitions_count : Int32
   states_visited_count : Int32
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend StateMachineStats with @moonbitlang/core/debug.Debug::{to_repr}
@@ -41,6 +44,7 @@ pub extend StateMachineStats with Eq::{not_equal, equal}
 
 ///|
 /// 状态机 | State machine
+#derive(Debug, Eq)
 pub(all) struct StateMachine {
   states : Array[State]
   transitions : Array[Transition]
@@ -48,7 +52,7 @@ pub(all) struct StateMachine {
   history : Array[String]
   started : Bool
   stats : StateMachineStats
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend StateMachine with @moonbitlang/core/debug.Debug::{to_repr}

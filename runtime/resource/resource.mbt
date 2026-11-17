@@ -1,12 +1,13 @@
 ///|
 /// 资源类型 | Resource type
+#derive(Debug, Eq)
 pub(all) enum ResourceType {
   File
   Memory
   Network
   Handle
   Custom
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend ResourceType with @moonbitlang/core/debug.Debug::{to_repr}
@@ -16,6 +17,7 @@ pub extend ResourceType with Eq::{not_equal, equal}
 
 ///|
 /// 资源 | Resource
+#derive(Debug, Eq)
 pub(all) struct Resource {
   id : Int32
   name : String
@@ -24,7 +26,7 @@ pub(all) struct Resource {
   acquired_at : Int32
   released_at : Int32
   active : Bool
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend Resource with @moonbitlang/core/debug.Debug::{to_repr}
@@ -34,11 +36,12 @@ pub extend Resource with Eq::{not_equal, equal}
 
 ///|
 /// 资源配置 | Resource configuration
+#derive(Debug, Eq)
 pub(all) struct ResourceConfig {
   max_resources : Int32
   track_size : Bool
   leak_detection : Bool
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend ResourceConfig with @moonbitlang/core/debug.Debug::{to_repr}
@@ -48,13 +51,14 @@ pub extend ResourceConfig with Eq::{not_equal, equal}
 
 ///|
 /// 资源统计 | Resource statistics
+#derive(Debug, Eq)
 pub(all) struct ResourceStats {
   total_acquired : Int32
   total_released : Int32
   total_leaked : Int32
   active_count : Int32
   total_size : Int32
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend ResourceStats with @moonbitlang/core/debug.Debug::{to_repr}
@@ -64,11 +68,12 @@ pub extend ResourceStats with Eq::{not_equal, equal}
 
 ///|
 /// 资源管理器 | Resource manager
+#derive(Debug, Eq)
 pub(all) struct ResourceManager {
   resources : Array[Resource]
   config : ResourceConfig
   stats : ResourceStats
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend ResourceManager with @moonbitlang/core/debug.Debug::{to_repr}

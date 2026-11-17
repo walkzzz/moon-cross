@@ -1,11 +1,12 @@
 ///|
 /// 内存块 | Memory block
+#derive(Debug, Eq)
 pub(all) struct MemoryBlock {
   id : Int32
   size : Int32
   tag : String
   freed : Bool
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend MemoryBlock with @moonbitlang/core/debug.Debug::{to_repr}
@@ -15,12 +16,13 @@ pub extend MemoryBlock with Eq::{not_equal, equal}
 
 ///|
 /// 内存追踪器 | Memory tracker
+#derive(Debug, Eq)
 pub(all) struct MemoryTracker {
   blocks : Array[MemoryBlock]
   total_allocated : Int32
   total_freed : Int32
   next_id : Int32
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend MemoryTracker with @moonbitlang/core/debug.Debug::{to_repr}
@@ -30,12 +32,13 @@ pub extend MemoryTracker with Eq::{not_equal, equal}
 
 ///|
 /// 竞技场分配器 | Arena allocator
+#derive(Debug, Eq)
 pub(all) struct Arena {
   name : String
   blocks : Array[MemoryBlock]
   total_size : Int32
   next_id : Int32
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend Arena with @moonbitlang/core/debug.Debug::{to_repr}
@@ -45,10 +48,11 @@ pub extend Arena with Eq::{not_equal, equal}
 
 ///|
 /// 引用计数器 | Reference counter
+#derive(Debug, Eq)
 pub(all) struct RefCounter {
   count : Int32
   value : String
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend RefCounter with @moonbitlang/core/debug.Debug::{to_repr}
@@ -58,12 +62,13 @@ pub extend RefCounter with Eq::{not_equal, equal}
 
 ///|
 /// 内存池 | Memory pool
+#derive(Debug, Eq)
 pub(all) struct MemoryPool {
   block_size : Int32
   free_count : Int32
   allocated_count : Int32
   total_capacity : Int32
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend MemoryPool with @moonbitlang/core/debug.Debug::{to_repr}
@@ -73,12 +78,13 @@ pub extend MemoryPool with Eq::{not_equal, equal}
 
 ///|
 /// GC 统计 | GC statistics
+#derive(Debug, Eq)
 pub(all) struct GcStats {
   collections : Int32
   reclaimed_bytes : Int32
   live_objects : Int32
   total_allocated : Int32
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend GcStats with @moonbitlang/core/debug.Debug::{to_repr}

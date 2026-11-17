@@ -1,12 +1,13 @@
 ///|
 /// FFI 绑定类型 | FFI binding type
+#derive(Debug, Eq)
 pub(all) enum FfiBindingType {
   JniBinding
   NapiBinding
   DllImportBinding
   SwiftInteropBinding
   CffiBinding
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend FfiBindingType with @moonbitlang/core/debug.Debug::{to_repr}
@@ -16,11 +17,12 @@ pub extend FfiBindingType with Eq::{not_equal, equal}
 
 ///|
 /// FFI 绑定生成结果 | FFI binding generation result
+#derive(Debug, Eq)
 pub(all) struct FfiBindingResult {
   binding_type : FfiBindingType
   filename : String
   content : String
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend FfiBindingResult with @moonbitlang/core/debug.Debug::{to_repr}

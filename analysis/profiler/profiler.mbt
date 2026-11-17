@@ -1,12 +1,13 @@
 ///|
 /// 性能分析条目 | Profile entry
+#derive(Debug, Eq)
 pub(all) struct ProfileEntry {
   name : String
   call_count : Int32
   total_time_ns : Int32
   min_time_ns : Int32
   max_time_ns : Int32
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend ProfileEntry with @moonbitlang/core/debug.Debug::{to_repr}
@@ -16,12 +17,13 @@ pub extend ProfileEntry with Eq::{not_equal, equal}
 
 ///|
 /// 性能分析配置 | Profiler configuration
+#derive(Debug, Eq)
 pub(all) struct ProfilerConfig {
   enabled : Bool
   sample_rate : Int32
   max_entries : Int32
   track_memory : Bool
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend ProfilerConfig with @moonbitlang/core/debug.Debug::{to_repr}
@@ -31,12 +33,13 @@ pub extend ProfilerConfig with Eq::{not_equal, equal}
 
 ///|
 /// 性能分析统计 | Profile statistics
+#derive(Debug, Eq)
 pub(all) struct ProfileStats {
   total_calls : Int32
   total_time_ns : Int32
   avg_time_ns : Double
   hottest_function : String
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend ProfileStats with @moonbitlang/core/debug.Debug::{to_repr}
@@ -46,11 +49,12 @@ pub extend ProfileStats with Eq::{not_equal, equal}
 
 ///|
 /// 性能分析报告 | Profile report
+#derive(Debug, Eq)
 pub(all) struct ProfileReport {
   entries : Array[ProfileEntry]
   total_time_ns : Int32
   total_calls : Int32
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend ProfileReport with @moonbitlang/core/debug.Debug::{to_repr}

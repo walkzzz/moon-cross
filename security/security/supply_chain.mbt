@@ -1,11 +1,12 @@
 ///|
 /// 依赖信息 | Dependency information
+#derive(Debug, Eq)
 pub(all) struct DependencyInfo {
   name : String
   version : String
   license : String
   checksum : String
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend DependencyInfo with @moonbitlang/core/debug.Debug::{to_repr}
@@ -15,10 +16,11 @@ pub extend DependencyInfo with Eq::{not_equal, equal}
 
 ///|
 /// 许可证兼容性结果 | License compatibility result
+#derive(Debug, Eq)
 pub(all) struct LicenseCompatResult {
   compatible : Bool
   reason : String
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend LicenseCompatResult with @moonbitlang/core/debug.Debug::{to_repr}
@@ -28,12 +30,13 @@ pub extend LicenseCompatResult with Eq::{not_equal, equal}
 
 ///|
 /// 依赖锁定文件条目 | Dependency lock file entry
+#derive(Debug, Eq)
 pub(all) struct LockEntry {
   name : String
   version : String
   checksum : String
   source : String
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend LockEntry with @moonbitlang/core/debug.Debug::{to_repr}

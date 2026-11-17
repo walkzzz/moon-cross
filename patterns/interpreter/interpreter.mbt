@@ -1,11 +1,12 @@
 ///|
 /// 表达式 | Expression
+#derive(Debug)
 pub(all) enum Expr {
   Num(Int32)
   Add(Expr, Expr)
   Sub(Expr, Expr)
   Mul(Expr, Expr)
-} derive(Debug)
+}
 
 ///|
 pub extend Expr with @moonbitlang/core/debug.Debug::{to_repr}

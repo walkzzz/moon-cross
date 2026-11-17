@@ -1,10 +1,11 @@
 ///|
 /// 文档格式 | Documentation format
+#derive(Debug, Eq)
 pub(all) enum DocFormat {
   Markdown
   Json
   Html
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend DocFormat with @moonbitlang/core/debug.Debug::{to_repr}
@@ -14,13 +15,14 @@ pub extend DocFormat with Eq::{not_equal, equal}
 
 ///|
 /// API 文档条目 | API documentation entry
+#derive(Debug, Eq)
 pub(all) struct ApiDocEntry {
   name : String
   signature : String
   description : String
   examples : Array[String]
   platform_support : Array[@core.Platform]
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend ApiDocEntry with @moonbitlang/core/debug.Debug::{to_repr}
@@ -30,11 +32,12 @@ pub extend ApiDocEntry with Eq::{not_equal, equal}
 
 ///|
 /// 文档章节 | Documentation section
+#derive(Debug, Eq)
 pub(all) struct DocSection {
   title : String
   description : String
   entries : Array[ApiDocEntry]
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend DocSection with @moonbitlang/core/debug.Debug::{to_repr}
@@ -44,12 +47,13 @@ pub extend DocSection with Eq::{not_equal, equal}
 
 ///|
 /// 文档配置 | Documentation configuration
+#derive(Debug, Eq)
 pub(all) struct DocConfig {
   format : DocFormat
   output_dir : String
   include_private : Bool
   include_examples : Bool
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend DocConfig with @moonbitlang/core/debug.Debug::{to_repr}

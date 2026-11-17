@@ -1,12 +1,13 @@
 ///|
 /// iOS 编译配置 | iOS compile configuration
+#derive(Debug, Eq)
 pub(all) struct IosCompileConfig {
   arch : @core.Arch
   sdk_path : String
   output_dir : String
   output_name : String
   is_simulator : Bool
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend IosCompileConfig with @moonbitlang/core/debug.Debug::{to_repr}

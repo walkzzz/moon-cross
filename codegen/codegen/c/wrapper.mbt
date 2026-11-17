@@ -1,9 +1,10 @@
 ///|
 /// C wrapper 生成结果（头文件 + 源文件） | C wrapper generation result (header + source)
+#derive(Debug, Eq)
 pub(all) struct CWrapperResult {
   header : String
   source : String
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend CWrapperResult with @moonbitlang/core/debug.Debug::{to_repr}
@@ -13,11 +14,12 @@ pub extend CWrapperResult with Eq::{not_equal, equal}
 
 ///|
 /// C 导出函数签名 | C export function signature
+#derive(Debug, Eq)
 pub(all) struct CExportFunc {
   name : String
   params : Array[(String, String)]
   return_type : String
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend CExportFunc with @moonbitlang/core/debug.Debug::{to_repr}

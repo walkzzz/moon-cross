@@ -1,10 +1,11 @@
 ///|
 /// 代理配置 | Proxy config
+#derive(Debug, Eq)
 pub(all) struct ProxyConfig {
   enabled : Bool
   access_list : Array[String]
   cache : Array[(String, String)]
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend ProxyConfig with @moonbitlang/core/debug.Debug::{to_repr}

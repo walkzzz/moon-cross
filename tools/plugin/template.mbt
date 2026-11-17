@@ -1,11 +1,12 @@
 ///|
 /// 模板信息 | Template information
+#derive(Debug, Eq)
 pub(all) struct TemplateInfo {
   name : String
   description : String
   category : String
   file_count : Int32
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend TemplateInfo with @moonbitlang/core/debug.Debug::{to_repr}
@@ -15,11 +16,12 @@ pub extend TemplateInfo with Eq::{not_equal, equal}
 
 ///|
 /// 模板文件 | Template file
+#derive(Debug, Eq)
 pub(all) struct TemplateFile {
   path : String
   content : String
   is_binary : Bool
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend TemplateFile with @moonbitlang/core/debug.Debug::{to_repr}
@@ -29,12 +31,13 @@ pub extend TemplateFile with Eq::{not_equal, equal}
 
 ///|
 /// 模板实例化参数 | Template instantiation parameters
+#derive(Debug, Eq)
 pub(all) struct TemplateParams {
   project_name : String
   target_platforms : Array[String]
   ffi_enabled : Bool
   author : String
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend TemplateParams with @moonbitlang/core/debug.Debug::{to_repr}

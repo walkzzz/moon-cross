@@ -1,9 +1,10 @@
 ///|
 /// 依赖边 | Dependency edge
+#derive(Debug, Eq)
 pub(all) struct DependencyEdge {
   from : String
   to : String
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend DependencyEdge with @moonbitlang/core/debug.Debug::{to_repr}
@@ -13,11 +14,12 @@ pub extend DependencyEdge with Eq::{not_equal, equal}
 
 ///|
 /// 依赖节点 | Dependency node
+#derive(Debug, Eq)
 pub(all) struct DependencyNode {
   name : String
   dependencies : Array[String]
   dependents : Array[String]
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend DependencyNode with @moonbitlang/core/debug.Debug::{to_repr}
@@ -27,10 +29,11 @@ pub extend DependencyNode with Eq::{not_equal, equal}
 
 ///|
 /// 依赖图 | Dependency graph
+#derive(Debug, Eq)
 pub(all) struct DependencyGraph {
   nodes : Array[DependencyNode]
   edges : Array[DependencyEdge]
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend DependencyGraph with @moonbitlang/core/debug.Debug::{to_repr}
@@ -40,11 +43,12 @@ pub extend DependencyGraph with Eq::{not_equal, equal}
 
 ///|
 /// 依赖配置 | Dependency configuration
+#derive(Debug, Eq)
 pub(all) struct DependencyConfig {
   include_dev : Bool
   include_transitive : Bool
   max_depth : Int32
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend DependencyConfig with @moonbitlang/core/debug.Debug::{to_repr}

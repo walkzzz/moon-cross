@@ -1,11 +1,12 @@
 ///|
 /// crypto 流水线结果 | crypto pipeline result
+#derive(Debug, Eq)
 pub(all) struct CryptoPipelineResult {
   config : @config.CrossConfig
   c_header : String
   platform_specs : Array[@platform.PlatformSpec]
   ffi_bindings : Array[@ffi.FfiBindingType]
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend CryptoPipelineResult with @moonbitlang/core/debug.Debug::{to_repr}
@@ -34,12 +35,13 @@ pub fn run_crypto_pipeline() -> CryptoPipelineResult {
 
 ///|
 /// time 流水线结果 | time pipeline result
+#derive(Debug, Eq)
 pub(all) struct TimePipelineResult {
   config : @config.CrossConfig
   c_header : String
   platform_specs : Array[@platform.PlatformSpec]
   ffi_bindings : Array[@ffi.FfiBindingType]
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend TimePipelineResult with @moonbitlang/core/debug.Debug::{to_repr}
@@ -68,12 +70,13 @@ pub fn run_time_pipeline() -> TimePipelineResult {
 
 ///|
 /// sort 流水线结果 | sort pipeline result
+#derive(Debug, Eq)
 pub(all) struct SortPipelineResult {
   config : @config.CrossConfig
   c_header : String
   platform_specs : Array[@platform.PlatformSpec]
   ffi_bindings : Array[@ffi.FfiBindingType]
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend SortPipelineResult with @moonbitlang/core/debug.Debug::{to_repr}

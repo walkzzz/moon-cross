@@ -1,10 +1,11 @@
 ///|
 /// 序列化格式 | Serialization format
+#derive(Debug, Eq)
 pub(all) enum SerializeFormat {
   Json
   Binary
   Text
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend SerializeFormat with @moonbitlang/core/debug.Debug::{to_repr}
@@ -14,6 +15,7 @@ pub extend SerializeFormat with Eq::{not_equal, equal}
 
 ///|
 /// 字段类型 | Field type
+#derive(Debug, Eq)
 pub(all) enum FieldType {
   IntType
   DoubleType
@@ -21,7 +23,7 @@ pub(all) enum FieldType {
   BoolType
   ArrayType
   ObjectType
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend FieldType with @moonbitlang/core/debug.Debug::{to_repr}
@@ -31,11 +33,12 @@ pub extend FieldType with Eq::{not_equal, equal}
 
 ///|
 /// 序列化字段 | Serialized field
+#derive(Debug, Eq)
 pub(all) struct SerializedField {
   name : String
   typ : FieldType
   value : String
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend SerializedField with @moonbitlang/core/debug.Debug::{to_repr}
@@ -45,12 +48,13 @@ pub extend SerializedField with Eq::{not_equal, equal}
 
 ///|
 /// 序列化配置 | Serialization configuration
+#derive(Debug, Eq)
 pub(all) struct SerializeConfig {
   format : SerializeFormat
   indent : Int32
   include_nulls : Bool
   max_depth : Int32
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend SerializeConfig with @moonbitlang/core/debug.Debug::{to_repr}

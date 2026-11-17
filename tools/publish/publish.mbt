@@ -1,5 +1,6 @@
 ///|
 /// 发布配置 | Publish configuration
+#derive(Debug, Eq)
 pub(all) struct PublishConfig {
   module_name : String
   version : String
@@ -8,7 +9,7 @@ pub(all) struct PublishConfig {
   repository : String
   readme_path : String
   keywords : Array[String]
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend PublishConfig with @moonbitlang/core/debug.Debug::{to_repr}
@@ -18,11 +19,12 @@ pub extend PublishConfig with Eq::{not_equal, equal}
 
 ///|
 /// 发布就绪检查项 | Publish readiness check item
+#derive(Debug, Eq)
 pub(all) struct PublishCheck {
   name : String
   passed : Bool
   message : String
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend PublishCheck with @moonbitlang/core/debug.Debug::{to_repr}
@@ -32,11 +34,12 @@ pub extend PublishCheck with Eq::{not_equal, equal}
 
 ///|
 /// 发布就绪结果 | Publish readiness result
+#derive(Debug, Eq)
 pub(all) struct PublishReadiness {
   checks : Array[PublishCheck]
   ready : Bool
   summary : String
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend PublishReadiness with @moonbitlang/core/debug.Debug::{to_repr}
@@ -46,6 +49,7 @@ pub extend PublishReadiness with Eq::{not_equal, equal}
 
 ///|
 /// mooncakes 注册表元数据 | mooncakes registry metadata
+#derive(Debug, Eq)
 pub(all) struct MooncakesMetadata {
   name : String
   version : String
@@ -55,7 +59,7 @@ pub(all) struct MooncakesMetadata {
   readme : String
   keywords : Array[String]
   checksum : String
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend MooncakesMetadata with @moonbitlang/core/debug.Debug::{to_repr}
@@ -349,12 +353,13 @@ pub fn generate_mooncakes_toml(config : PublishConfig) -> String {
 
 ///|
 /// 发布状态 | Publish status
+#derive(Debug, Eq)
 pub(all) enum PublishStatus {
   NotPublished
   Staging
   Published
   Failed(String)
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend PublishStatus with @moonbitlang/core/debug.Debug::{to_repr}
@@ -364,11 +369,12 @@ pub extend PublishStatus with Eq::{not_equal, equal}
 
 ///|
 /// 发布结果 | Publish result
+#derive(Debug, Eq)
 pub(all) struct PublishResult {
   status : PublishStatus
   message : String
   metadata : MooncakesMetadata?
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend PublishResult with @moonbitlang/core/debug.Debug::{to_repr}

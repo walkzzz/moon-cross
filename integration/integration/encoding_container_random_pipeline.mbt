@@ -1,11 +1,12 @@
 ///|
 /// encoding 流水线结果 | encoding pipeline result
+#derive(Debug, Eq)
 pub(all) struct EncodingPipelineResult {
   config : @config.CrossConfig
   c_header : String
   platform_specs : Array[@platform.PlatformSpec]
   ffi_bindings : Array[@ffi.FfiBindingType]
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend EncodingPipelineResult with @moonbitlang/core/debug.Debug::{to_repr}
@@ -34,12 +35,13 @@ pub fn run_encoding_pipeline() -> EncodingPipelineResult {
 
 ///|
 /// container 流水线结果 | container pipeline result
+#derive(Debug, Eq)
 pub(all) struct ContainerPipelineResult {
   config : @config.CrossConfig
   c_header : String
   platform_specs : Array[@platform.PlatformSpec]
   ffi_bindings : Array[@ffi.FfiBindingType]
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend ContainerPipelineResult with @moonbitlang/core/debug.Debug::{to_repr}
@@ -68,12 +70,13 @@ pub fn run_container_pipeline() -> ContainerPipelineResult {
 
 ///|
 /// random 流水线结果 | random pipeline result
+#derive(Debug, Eq)
 pub(all) struct RandomPipelineResult {
   config : @config.CrossConfig
   c_header : String
   platform_specs : Array[@platform.PlatformSpec]
   ffi_bindings : Array[@ffi.FfiBindingType]
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend RandomPipelineResult with @moonbitlang/core/debug.Debug::{to_repr}

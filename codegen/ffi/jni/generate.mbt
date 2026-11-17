@@ -1,10 +1,11 @@
 ///|
 /// JNI 绑定生成配置 | JNI binding generation config
+#derive(Debug, Eq)
 pub(all) struct JniBindingConfig {
   java_package : String
   class_name : String
   function_name : String
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend JniBindingConfig with @moonbitlang/core/debug.Debug::{to_repr}
@@ -14,13 +15,14 @@ pub extend JniBindingConfig with Eq::{not_equal, equal}
 
 ///|
 /// JNI 完整绑定配置（含参数和返回类型） | JNI full binding config with params and return type
+#derive(Debug, Eq)
 pub(all) struct JniFullBinding {
   java_package : String
   class_name : String
   function_name : String
   params : Array[(String, String)]
   return_type : String
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend JniFullBinding with @moonbitlang/core/debug.Debug::{to_repr}

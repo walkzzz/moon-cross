@@ -1,9 +1,10 @@
 ///|
 /// Swift 绑定生成配置 | Swift binding generation config
+#derive(Debug, Eq)
 pub(all) struct SwiftBindingConfig {
   module_name : String
   function_name : String
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend SwiftBindingConfig with @moonbitlang/core/debug.Debug::{to_repr}
@@ -95,12 +96,13 @@ pub fn swift_bridging_header(module_name : String) -> String {
 
 ///|
 /// Swift 完整绑定配置（含参数和返回类型） | Swift full binding config
+#derive(Debug, Eq)
 pub(all) struct SwiftFullBinding {
   module_name : String
   function_name : String
   params : Array[(String, String)]
   return_type : String
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend SwiftFullBinding with @moonbitlang/core/debug.Debug::{to_repr}

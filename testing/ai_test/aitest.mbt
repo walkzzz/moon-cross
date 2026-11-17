@@ -1,11 +1,12 @@
 ///|
 /// 测试用例 | Test case
+#derive(Debug, Eq)
 pub(all) struct TestCase {
   name : String
   input : String
   expected : String
   category : String
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend TestCase with @moonbitlang/core/debug.Debug::{to_repr}
@@ -15,11 +16,12 @@ pub extend TestCase with Eq::{not_equal, equal}
 
 ///|
 /// 边界用例 | Boundary case
+#derive(Debug, Eq)
 pub(all) struct BoundaryCase {
   name : String
   value : Int32
   boundary_type : String
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend BoundaryCase with @moonbitlang/core/debug.Debug::{to_repr}
@@ -29,11 +31,12 @@ pub extend BoundaryCase with Eq::{not_equal, equal}
 
 ///|
 /// 覆盖率报告 | Coverage report
+#derive(Debug, Eq)
 pub(all) struct CoverageReport {
   total_lines : Int32
   covered_lines : Int32
   percentage : Int32
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend CoverageReport with @moonbitlang/core/debug.Debug::{to_repr}
@@ -43,13 +46,14 @@ pub extend CoverageReport with Eq::{not_equal, equal}
 
 ///|
 /// AI 测试结果 | AI test result
+#derive(Debug, Eq)
 pub(all) struct AITestResult {
   test_name : String
   total_cases : Int32
   passed : Int32
   failed : Int32
   coverage : Int32
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend AITestResult with @moonbitlang/core/debug.Debug::{to_repr}

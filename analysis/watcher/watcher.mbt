@@ -1,11 +1,12 @@
 ///|
 /// 文件事件类型 | File event type
+#derive(Debug, Eq)
 pub(all) enum EventType {
   Created
   Modified
   Deleted
   Renamed
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend EventType with @moonbitlang/core/debug.Debug::{to_repr}
@@ -15,11 +16,12 @@ pub extend EventType with Eq::{not_equal, equal}
 
 ///|
 /// 文件监视事件 | File watch event
+#derive(Debug, Eq)
 pub(all) struct WatchEvent {
   path : String
   event_type : EventType
   timestamp : Int32
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend WatchEvent with @moonbitlang/core/debug.Debug::{to_repr}
@@ -29,12 +31,13 @@ pub extend WatchEvent with Eq::{not_equal, equal}
 
 ///|
 /// 文件监视配置 | File watch configuration
+#derive(Debug, Eq)
 pub(all) struct WatchConfig {
   paths : Array[String]
   ignore_patterns : Array[String]
   poll_interval_ms : Int32
   recursive : Bool
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend WatchConfig with @moonbitlang/core/debug.Debug::{to_repr}
@@ -44,12 +47,13 @@ pub extend WatchConfig with Eq::{not_equal, equal}
 
 ///|
 /// 文件变更记录 | File change record
+#derive(Debug, Eq)
 pub(all) struct FileChange {
   path : String
   old_path : String
   size : Int32
   hash : String
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend FileChange with @moonbitlang/core/debug.Debug::{to_repr}
@@ -59,11 +63,12 @@ pub extend FileChange with Eq::{not_equal, equal}
 
 ///|
 /// 监视结果 | Watch result
+#derive(Debug, Eq)
 pub(all) struct WatchResult {
   events : Array[WatchEvent]
   total_changes : Int32
   has_errors : Bool
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend WatchResult with @moonbitlang/core/debug.Debug::{to_repr}

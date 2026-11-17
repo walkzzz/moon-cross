@@ -1,11 +1,12 @@
 ///|
 /// 差异行类型 | Diff line type
+#derive(Debug, Eq)
 pub(all) enum DiffLineType {
   Added
   Removed
   Unchanged
   Context
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend DiffLineType with @moonbitlang/core/debug.Debug::{to_repr}
@@ -15,12 +16,13 @@ pub extend DiffLineType with Eq::{not_equal, equal}
 
 ///|
 /// 差异行 | Diff line
+#derive(Debug, Eq)
 pub(all) struct DiffLine {
   content : String
   line_type : DiffLineType
   old_line_num : Int32
   new_line_num : Int32
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend DiffLine with @moonbitlang/core/debug.Debug::{to_repr}
@@ -30,12 +32,13 @@ pub extend DiffLine with Eq::{not_equal, equal}
 
 ///|
 /// 差异结果 | Diff result
+#derive(Debug, Eq)
 pub(all) struct DiffResult {
   lines : Array[DiffLine]
   added_count : Int32
   removed_count : Int32
   unchanged_count : Int32
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend DiffResult with @moonbitlang/core/debug.Debug::{to_repr}
@@ -45,11 +48,12 @@ pub extend DiffResult with Eq::{not_equal, equal}
 
 ///|
 /// 差异配置 | Diff configuration
+#derive(Debug, Eq)
 pub(all) struct DiffConfig {
   context_lines : Int32
   ignore_whitespace : Bool
   max_diff_lines : Int32
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend DiffConfig with @moonbitlang/core/debug.Debug::{to_repr}
@@ -59,13 +63,14 @@ pub extend DiffConfig with Eq::{not_equal, equal}
 
 ///|
 /// 差异统计 | Diff statistics
+#derive(Debug, Eq)
 pub(all) struct DiffStats {
   total_lines : Int32
   change_ratio : Double
   added : Int32
   removed : Int32
   unchanged : Int32
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend DiffStats with @moonbitlang/core/debug.Debug::{to_repr}

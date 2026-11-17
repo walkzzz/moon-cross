@@ -1,11 +1,12 @@
 ///|
 /// 诊断状态 | Diagnostic status
+#derive(Debug, Eq)
 pub(all) enum DiagStatus {
   Ok
   Warning
   Error
   NotFound
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend DiagStatus with @moonbitlang/core/debug.Debug::{to_repr}
@@ -15,12 +16,13 @@ pub extend DiagStatus with Eq::{not_equal, equal}
 
 ///|
 /// 诊断检查项 | Diagnostic check item
+#derive(Debug, Eq)
 pub(all) struct DiagCheck {
   name : String
   status : DiagStatus
   message : String
   fix_hint : String?
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend DiagCheck with @moonbitlang/core/debug.Debug::{to_repr}
@@ -30,13 +32,14 @@ pub extend DiagCheck with Eq::{not_equal, equal}
 
 ///|
 /// 诊断结果 | Diagnostic result
+#derive(Debug, Eq)
 pub(all) struct DiagResult {
   checks : Array[DiagCheck]
   total : Int32
   passed : Int32
   warnings : Int32
   errors : Int32
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend DiagResult with @moonbitlang/core/debug.Debug::{to_repr}

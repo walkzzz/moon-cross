@@ -1,5 +1,6 @@
 ///|
 /// Moon Cross 错误类型 | Moon Cross error type
+#derive(Debug)
 pub(all) enum MoonCrossError {
   ConfigError(String)
   ParseError(String)
@@ -9,7 +10,7 @@ pub(all) enum MoonCrossError {
   FfiError(String)
   ValidationError(String)
   IoError(String)
-} derive(Debug)
+}
 
 ///|
 pub extend MoonCrossError with @moonbitlang/core/debug.Debug::{to_repr}

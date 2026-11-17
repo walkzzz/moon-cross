@@ -1,11 +1,12 @@
 ///|
 /// 缓存条目 | Cache entry
+#derive(Debug, Eq)
 pub(all) struct CacheEntry {
   key : String
   hash : String
   timestamp : Int32
   size_bytes : Int32
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend CacheEntry with @moonbitlang/core/debug.Debug::{to_repr}
@@ -15,11 +16,12 @@ pub extend CacheEntry with Eq::{not_equal, equal}
 
 ///|
 /// 缓存配置 | Cache configuration
+#derive(Debug, Eq)
 pub(all) struct CacheConfig {
   enabled : Bool
   max_size_mb : Int32
   ttl_seconds : Int32
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend CacheConfig with @moonbitlang/core/debug.Debug::{to_repr}
@@ -29,11 +31,12 @@ pub extend CacheConfig with Eq::{not_equal, equal}
 
 ///|
 /// 缓存统计 | Cache statistics
+#derive(Debug, Eq)
 pub(all) struct CacheStats {
   hits : Int32
   misses : Int32
   total_size_bytes : Int32
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend CacheStats with @moonbitlang/core/debug.Debug::{to_repr}

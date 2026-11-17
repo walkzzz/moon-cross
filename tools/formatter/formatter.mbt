@@ -1,9 +1,10 @@
 ///|
 /// 缩进风格 | Indentation style
+#derive(Debug, Eq)
 pub(all) enum IndentStyle {
   Spaces
   Tabs
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend IndentStyle with @moonbitlang/core/debug.Debug::{to_repr}
@@ -13,6 +14,7 @@ pub extend IndentStyle with Eq::{not_equal, equal}
 
 ///|
 /// 格式化配置 | Format configuration
+#derive(Debug, Eq)
 pub(all) struct FormatConfig {
   indent_style : IndentStyle
   indent_width : Int32
@@ -20,7 +22,7 @@ pub(all) struct FormatConfig {
   trailing_comma : Bool
   blank_line_before_export : Bool
   align_comments : Bool
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend FormatConfig with @moonbitlang/core/debug.Debug::{to_repr}
@@ -30,12 +32,13 @@ pub extend FormatConfig with Eq::{not_equal, equal}
 
 ///|
 /// 格式化结果 | Format result
+#derive(Debug, Eq)
 pub(all) struct FormatResult {
   original : String
   formatted : String
   changed : Bool
   lines_changed : Int32
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend FormatResult with @moonbitlang/core/debug.Debug::{to_repr}
@@ -45,11 +48,12 @@ pub extend FormatResult with Eq::{not_equal, equal}
 
 ///|
 /// 格式化规则 | Format rule
+#derive(Debug, Eq)
 pub(all) struct FormatRule {
   name : String
   description : String
   enabled : Bool
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend FormatRule with @moonbitlang/core/debug.Debug::{to_repr}

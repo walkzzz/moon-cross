@@ -1,9 +1,10 @@
 ///|
 /// 互斥锁 | Mutex
+#derive(Debug, Eq)
 pub(all) struct Mutex {
   locked : Bool
   owner : String
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend Mutex with @moonbitlang/core/debug.Debug::{to_repr}
@@ -13,10 +14,11 @@ pub extend Mutex with Eq::{not_equal, equal}
 
 ///|
 /// 信号量 | Semaphore
+#derive(Debug, Eq)
 pub(all) struct Semaphore {
   count : Int32
   max : Int32
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend Semaphore with @moonbitlang/core/debug.Debug::{to_repr}
@@ -26,11 +28,12 @@ pub extend Semaphore with Eq::{not_equal, equal}
 
 ///|
 /// 缓冲通道 | Buffered channel
+#derive(Debug, Eq)
 pub(all) struct Channel {
   buffer : Array[String]
   capacity : Int32
   closed : Bool
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend Channel with @moonbitlang/core/debug.Debug::{to_repr}
@@ -40,10 +43,11 @@ pub extend Channel with Eq::{not_equal, equal}
 
 ///|
 /// 未来值 | Future value
+#derive(Debug, Eq)
 pub(all) struct Future {
   value : String
   completed : Bool
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend Future with @moonbitlang/core/debug.Debug::{to_repr}
@@ -53,9 +57,10 @@ pub extend Future with Eq::{not_equal, equal}
 
 ///|
 /// 原子计数器 | Atomic counter
+#derive(Debug, Eq)
 pub(all) struct AtomicCounter {
   value : Int32
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend AtomicCounter with @moonbitlang/core/debug.Debug::{to_repr}
@@ -65,11 +70,12 @@ pub extend AtomicCounter with Eq::{not_equal, equal}
 
 ///|
 /// 任务项 | Task item
+#derive(Debug, Eq)
 pub(all) struct Task {
   id : Int32
   name : String
   priority : Int32
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend Task with @moonbitlang/core/debug.Debug::{to_repr}
@@ -79,10 +85,11 @@ pub extend Task with Eq::{not_equal, equal}
 
 ///|
 /// 任务队列 | Task queue
+#derive(Debug, Eq)
 pub(all) struct TaskQueue {
   tasks : Array[Task]
   next_id : Int32
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend TaskQueue with @moonbitlang/core/debug.Debug::{to_repr}

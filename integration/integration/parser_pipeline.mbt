@@ -1,5 +1,6 @@
 ///|
 /// parser 端到端流水线结果 | parser end-to-end pipeline result
+#derive(Debug, Eq)
 pub(all) struct ParserPipelineResult {
   config : @config.CrossConfig
   c_header : String
@@ -10,7 +11,7 @@ pub(all) struct ParserPipelineResult {
   android_command : String
   ios_command : String
   ohos_command : String
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend ParserPipelineResult with @moonbitlang/core/debug.Debug::{to_repr}

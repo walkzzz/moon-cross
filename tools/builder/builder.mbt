@@ -1,11 +1,12 @@
 ///|
 /// 构建产品 | Build product
+#derive(Debug, Eq)
 pub(all) struct Product {
   name : String
   parts : Array[String]
   tags : Array[String]
   metadata : Array[(String, String)]
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend Product with @moonbitlang/core/debug.Debug::{to_repr}
@@ -15,12 +16,13 @@ pub extend Product with Eq::{not_equal, equal}
 
 ///|
 /// 构建器 | Builder
+#derive(Debug, Eq)
 pub(all) struct Builder {
   name : String
   parts : Array[String]
   tags : Array[String]
   metadata : Array[(String, String)]
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend Builder with @moonbitlang/core/debug.Debug::{to_repr}

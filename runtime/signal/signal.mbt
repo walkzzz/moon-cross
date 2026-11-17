@@ -1,12 +1,13 @@
 ///|
 /// 信号类型 | Signal type
+#derive(Debug, Eq)
 pub(all) enum SignalType {
   User
   System
   Interrupt
   Error
   Custom
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend SignalType with @moonbitlang/core/debug.Debug::{to_repr}
@@ -16,6 +17,7 @@ pub extend SignalType with Eq::{not_equal, equal}
 
 ///|
 /// 信号 | Signal
+#derive(Debug, Eq)
 pub(all) struct Signal {
   id : Int32
   name : String
@@ -23,7 +25,7 @@ pub(all) struct Signal {
   data : String
   timestamp : Int32
   priority : Int32
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend Signal with @moonbitlang/core/debug.Debug::{to_repr}
@@ -33,6 +35,7 @@ pub extend Signal with Eq::{not_equal, equal}
 
 ///|
 /// 信号处理器 | Signal handler
+#derive(Debug, Eq)
 pub(all) struct SignalHandler {
   id : Int32
   signal_name : String
@@ -40,7 +43,7 @@ pub(all) struct SignalHandler {
   priority : Int32
   active : Bool
   call_count : Int32
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend SignalHandler with @moonbitlang/core/debug.Debug::{to_repr}
@@ -50,12 +53,13 @@ pub extend SignalHandler with Eq::{not_equal, equal}
 
 ///|
 /// 信号统计 | Signal statistics
+#derive(Debug, Eq)
 pub(all) struct SignalStats {
   total_sent : Int32
   total_handled : Int32
   total_dropped : Int32
   handler_count : Int32
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend SignalStats with @moonbitlang/core/debug.Debug::{to_repr}
@@ -65,11 +69,12 @@ pub extend SignalStats with Eq::{not_equal, equal}
 
 ///|
 /// 信号管理器 | Signal manager
+#derive(Debug, Eq)
 pub(all) struct SignalManager {
   handlers : Array[SignalHandler]
   history : Array[Signal]
   stats : SignalStats
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend SignalManager with @moonbitlang/core/debug.Debug::{to_repr}

@@ -1,11 +1,12 @@
 ///|
 /// 编译执行结果 | Compilation execution result
+#derive(Debug, Eq)
 pub(all) struct CompileResult {
   success : Bool
   command : String
   output_path : String
   error_message : String
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend CompileResult with @moonbitlang/core/debug.Debug::{to_repr}
@@ -15,12 +16,13 @@ pub extend CompileResult with Eq::{not_equal, equal}
 
 ///|
 /// 编译步骤 | Compilation step
+#derive(Debug, Eq)
 pub(all) enum CompileStep {
   GenerateCode(String)
   Compile(String)
   Link(String)
   Package(String)
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend CompileStep with @moonbitlang/core/debug.Debug::{to_repr}
@@ -30,12 +32,13 @@ pub extend CompileStep with Eq::{not_equal, equal}
 
 ///|
 /// 构建脚本配置 | Build script configuration
+#derive(Debug, Eq)
 pub(all) struct BuildScriptConfig {
   module_name : String
   platforms : Array[String]
   output_dir : String
   source_files : Array[String]
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend BuildScriptConfig with @moonbitlang/core/debug.Debug::{to_repr}

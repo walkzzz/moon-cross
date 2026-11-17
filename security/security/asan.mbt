@@ -1,11 +1,12 @@
 ///|
 /// ASAN 配置 | ASAN configuration
+#derive(Debug, Eq)
 pub(all) struct AsanConfig {
   enabled : Bool
   detect_leaks : Bool
   detect_undefined_behavior : Bool
   detect_stack_use_after_return : Bool
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend AsanConfig with @moonbitlang/core/debug.Debug::{to_repr}
@@ -15,12 +16,13 @@ pub extend AsanConfig with Eq::{not_equal, equal}
 
 ///|
 /// ASAN 验证结果 | ASAN verification result
+#derive(Debug, Eq)
 pub(all) struct AsanResult {
   passed : Bool
   errors : Array[String]
   warnings : Array[String]
   duration_ms : Int32
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend AsanResult with @moonbitlang/core/debug.Debug::{to_repr}

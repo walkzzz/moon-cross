@@ -1,11 +1,12 @@
 ///|
 /// 安全检查类型 | Safety check type
+#derive(Debug, Eq)
 pub(all) enum SafetyCheckType {
   NullCheck
   BufferBounds
   TypeCheck
   LifetimeCheck
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend SafetyCheckType with @moonbitlang/core/debug.Debug::{to_repr}
@@ -15,12 +16,13 @@ pub extend SafetyCheckType with Eq::{not_equal, equal}
 
 ///|
 /// 安全问题 | Safety issue
+#derive(Debug, Eq)
 pub(all) struct SafetyIssue {
   check_type : SafetyCheckType
   function_name : String
   message : String
   severity : String
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend SafetyIssue with @moonbitlang/core/debug.Debug::{to_repr}
@@ -30,11 +32,12 @@ pub extend SafetyIssue with Eq::{not_equal, equal}
 
 ///|
 /// FFI 安全检查结果 | FFI safety check result
+#derive(Debug, Eq)
 pub(all) struct FfiSafetyResult {
   safe : Bool
   issues : Array[SafetyIssue]
   injected_checks : Array[String]
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend FfiSafetyResult with @moonbitlang/core/debug.Debug::{to_repr}

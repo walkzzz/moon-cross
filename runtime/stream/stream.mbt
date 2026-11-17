@@ -1,10 +1,11 @@
 ///|
 /// 流操作统计 | Stream operation stats
+#derive(Debug, Eq)
 pub(all) struct StreamStats {
   input_count : Int32
   output_count : Int32
   operations : Int32
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend StreamStats with @moonbitlang/core/debug.Debug::{to_repr}

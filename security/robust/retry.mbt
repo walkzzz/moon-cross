@@ -1,11 +1,12 @@
 ///|
 /// 重试配置 | Retry configuration
+#derive(Debug, Eq)
 pub(all) struct RetryConfig {
   max_attempts : Int32
   initial_delay_ms : Int32
   backoff_multiplier : Int32
   timeout_ms : Int32
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend RetryConfig with @moonbitlang/core/debug.Debug::{to_repr}
@@ -15,12 +16,13 @@ pub extend RetryConfig with Eq::{not_equal, equal}
 
 ///|
 /// 重试结果 | Retry result
+#derive(Debug, Eq)
 pub(all) struct RetryResult {
   success : Bool
   attempts : Int32
   last_error : String?
   total_delay_ms : Int32
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend RetryResult with @moonbitlang/core/debug.Debug::{to_repr}

@@ -1,9 +1,10 @@
 ///|
 /// 备忘录 | Memento
+#derive(Debug, Eq)
 pub(all) struct Memento {
   state : String
   value : Int32
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend Memento with @moonbitlang/core/debug.Debug::{to_repr}
@@ -13,10 +14,11 @@ pub extend Memento with Eq::{not_equal, equal}
 
 ///|
 /// 原发器 | Originator
+#derive(Debug, Eq)
 pub(all) struct Originator {
   state : String
   value : Int32
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend Originator with @moonbitlang/core/debug.Debug::{to_repr}
@@ -26,10 +28,11 @@ pub extend Originator with Eq::{not_equal, equal}
 
 ///|
 /// 管理者 | Caretaker
+#derive(Debug, Eq)
 pub(all) struct Caretaker {
   mementos : Array[Memento]
   current : Int32
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend Caretaker with @moonbitlang/core/debug.Debug::{to_repr}

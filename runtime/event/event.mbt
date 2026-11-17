@@ -1,11 +1,12 @@
 ///|
 /// 事件优先级 | Event priority
+#derive(Debug, Eq)
 pub(all) enum EventPriority {
   Low
   Normal
   High
   Critical
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend EventPriority with @moonbitlang/core/debug.Debug::{to_repr}
@@ -15,13 +16,14 @@ pub extend EventPriority with Eq::{not_equal, equal}
 
 ///|
 /// 事件 | Event
+#derive(Debug, Eq)
 pub(all) struct Event {
   name : String
   data : String
   timestamp : Int32
   source : String
   priority : EventPriority
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend Event with @moonbitlang/core/debug.Debug::{to_repr}
@@ -31,13 +33,14 @@ pub extend Event with Eq::{not_equal, equal}
 
 ///|
 /// 事件处理器 | Event handler
+#derive(Debug, Eq)
 pub(all) struct EventHandler {
   id : Int32
   event_name : String
   handler_name : String
   priority : EventPriority
   active : Bool
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend EventHandler with @moonbitlang/core/debug.Debug::{to_repr}
@@ -47,11 +50,12 @@ pub extend EventHandler with Eq::{not_equal, equal}
 
 ///|
 /// 事件总线统计 | Event bus statistics
+#derive(Debug, Eq)
 pub(all) struct EventBusStats {
   total_published : Int32
   total_handlers : Int32
   total_dispatched : Int32
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend EventBusStats with @moonbitlang/core/debug.Debug::{to_repr}
@@ -61,11 +65,12 @@ pub extend EventBusStats with Eq::{not_equal, equal}
 
 ///|
 /// 事件总线 | Event bus
+#derive(Debug, Eq)
 pub(all) struct EventBus {
   handlers : Array[EventHandler]
   history : Array[Event]
   stats : EventBusStats
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend EventBus with @moonbitlang/core/debug.Debug::{to_repr}

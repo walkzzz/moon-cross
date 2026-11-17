@@ -1,11 +1,12 @@
 ///|
 /// Linux 编译配置 | Linux compile configuration
+#derive(Debug, Eq)
 pub(all) struct LinuxCompileConfig {
   arch : @core.Arch
   output_dir : String
   output_name : String
   use_static : Bool
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend LinuxCompileConfig with @moonbitlang/core/debug.Debug::{to_repr}

@@ -1,12 +1,13 @@
 ///|
 /// 优化级别 | Optimization level
+#derive(Debug, Eq)
 pub(all) enum OptLevel {
   O0
   O1
   O2
   O3
   Os
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend OptLevel with @moonbitlang/core/debug.Debug::{to_repr}
@@ -16,13 +17,14 @@ pub extend OptLevel with Eq::{not_equal, equal}
 
 ///|
 /// 优化配置 | Optimization configuration
+#derive(Debug, Eq)
 pub(all) struct OptConfig {
   level : OptLevel
   inline_small_functions : Bool
   dead_code_elimination : Bool
   template_specialization : Bool
   lto : Bool
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend OptConfig with @moonbitlang/core/debug.Debug::{to_repr}
@@ -32,13 +34,14 @@ pub extend OptConfig with Eq::{not_equal, equal}
 
 ///|
 /// 优化结果 | Optimization result
+#derive(Debug, Eq)
 pub(all) struct OptResult {
   original_size_bytes : Int32
   optimized_size_bytes : Int32
   inlined_functions : Int32
   eliminated_functions : Int32
   specialized_templates : Int32
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend OptResult with @moonbitlang/core/debug.Debug::{to_repr}

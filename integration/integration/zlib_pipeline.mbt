@@ -1,5 +1,6 @@
 ///|
 /// 端到端流水线结果 | End-to-end pipeline result
+#derive(Debug, Eq)
 pub(all) struct ZlibPipelineResult {
   config : @config.CrossConfig
   c_header : String
@@ -10,7 +11,7 @@ pub(all) struct ZlibPipelineResult {
   android_command : String
   ios_command : String
   ohos_command : String
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend ZlibPipelineResult with @moonbitlang/core/debug.Debug::{to_repr}

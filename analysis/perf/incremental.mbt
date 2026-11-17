@@ -1,10 +1,11 @@
 ///|
 /// 变更类型 | Change type
+#derive(Debug, Eq)
 pub(all) enum ChangeType {
   Added
   Modified
   Removed
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend ChangeType with @moonbitlang/core/debug.Debug::{to_repr}
@@ -14,12 +15,13 @@ pub extend ChangeType with Eq::{not_equal, equal}
 
 ///|
 /// 文件变更 | File change
+#derive(Debug, Eq)
 pub(all) struct FileChange {
   path : String
   change_type : ChangeType
   old_hash : String?
   new_hash : String?
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend FileChange with @moonbitlang/core/debug.Debug::{to_repr}
@@ -29,10 +31,11 @@ pub extend FileChange with Eq::{not_equal, equal}
 
 ///|
 /// 变更集 | Change set
+#derive(Debug, Eq)
 pub(all) struct ChangeSet {
   changes : Array[FileChange]
   total_files : Int32
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend ChangeSet with @moonbitlang/core/debug.Debug::{to_repr}
@@ -42,12 +45,13 @@ pub extend ChangeSet with Eq::{not_equal, equal}
 
 ///|
 /// 增量构建结果 | Incremental build result
+#derive(Debug, Eq)
 pub(all) struct IncrementalResult {
   needs_rebuild : Bool
   affected_platforms : Array[@core.Platform]
   skipped_files : Int32
   rebuilt_files : Int32
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend IncrementalResult with @moonbitlang/core/debug.Debug::{to_repr}

@@ -1,5 +1,6 @@
 ///|
 /// quickcheck 端到端流水线结果 | quickcheck end-to-end pipeline result
+#derive(Debug, Eq)
 pub(all) struct QuickcheckPipelineResult {
   config : @config.CrossConfig
   c_header : String
@@ -10,7 +11,7 @@ pub(all) struct QuickcheckPipelineResult {
   android_command : String
   ios_command : String
   ohos_command : String
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend QuickcheckPipelineResult with @moonbitlang/core/debug.Debug::{

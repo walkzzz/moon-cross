@@ -1,5 +1,6 @@
 ///|
 /// 日志级别 | Log level
+#derive(Debug, Eq)
 pub(all) enum LogLevel {
   Trace
   Debug
@@ -7,7 +8,7 @@ pub(all) enum LogLevel {
   Warn
   Error
   Fatal
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend LogLevel with @moonbitlang/core/debug.Debug::{to_repr}
@@ -56,12 +57,13 @@ pub fn log_level_from_int(value : Int32) -> LogLevel {
 
 ///|
 /// 追踪事件 | Trace event
+#derive(Debug, Eq)
 pub(all) struct TraceEvent {
   timestamp_ms : Int32
   level : LogLevel
   source : String
   message : String
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend TraceEvent with @moonbitlang/core/debug.Debug::{to_repr}
@@ -71,13 +73,14 @@ pub extend TraceEvent with Eq::{not_equal, equal}
 
 ///|
 /// 追踪区间 | Trace span
+#derive(Debug, Eq)
 pub(all) struct TraceSpan {
   name : String
   start_ms : Int32
   end_ms : Int32
   events : Array[TraceEvent]
   parent : String?
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend TraceSpan with @moonbitlang/core/debug.Debug::{to_repr}
@@ -87,12 +90,13 @@ pub extend TraceSpan with Eq::{not_equal, equal}
 
 ///|
 /// 追踪配置 | Trace configuration
+#derive(Debug, Eq)
 pub(all) struct TraceConfig {
   enabled : Bool
   min_level : LogLevel
   max_events : Int32
   output_format : String
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend TraceConfig with @moonbitlang/core/debug.Debug::{to_repr}
@@ -102,12 +106,13 @@ pub extend TraceConfig with Eq::{not_equal, equal}
 
 ///|
 /// 追踪收集器 | Trace collector
+#derive(Debug, Eq)
 pub(all) struct TraceCollector {
   config : TraceConfig
   events : Array[TraceEvent]
   spans : Array[TraceSpan]
   current_ms : Int32
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend TraceCollector with @moonbitlang/core/debug.Debug::{to_repr}

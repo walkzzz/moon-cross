@@ -1,11 +1,12 @@
 ///|
 /// math64 流水线结果 | math64 pipeline result
+#derive(Debug, Eq)
 pub(all) struct Math64PipelineResult {
   config : @config.CrossConfig
   c_header : String
   platform_specs : Array[@platform.PlatformSpec]
   ffi_bindings : Array[@ffi.FfiBindingType]
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend Math64PipelineResult with @moonbitlang/core/debug.Debug::{to_repr}
@@ -34,12 +35,13 @@ pub fn run_math64_pipeline() -> Math64PipelineResult {
 
 ///|
 /// bits 流水线结果 | bits pipeline result
+#derive(Debug, Eq)
 pub(all) struct BitsPipelineResult {
   config : @config.CrossConfig
   c_header : String
   platform_specs : Array[@platform.PlatformSpec]
   ffi_bindings : Array[@ffi.FfiBindingType]
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend BitsPipelineResult with @moonbitlang/core/debug.Debug::{to_repr}
@@ -68,12 +70,13 @@ pub fn run_bits_pipeline() -> BitsPipelineResult {
 
 ///|
 /// fmt 流水线结果 | fmt pipeline result
+#derive(Debug, Eq)
 pub(all) struct FmtPipelineResult {
   config : @config.CrossConfig
   c_header : String
   platform_specs : Array[@platform.PlatformSpec]
   ffi_bindings : Array[@ffi.FfiBindingType]
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend FmtPipelineResult with @moonbitlang/core/debug.Debug::{to_repr}

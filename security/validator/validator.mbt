@@ -1,10 +1,11 @@
 ///|
 /// 验证错误 | Validation error
+#derive(Debug, Eq)
 pub(all) struct ValidationError {
   field : String
   message : String
   code : String
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend ValidationError with @moonbitlang/core/debug.Debug::{to_repr}
@@ -14,10 +15,11 @@ pub extend ValidationError with Eq::{not_equal, equal}
 
 ///|
 /// 验证结果 | Validation result
+#derive(Debug, Eq)
 pub(all) struct ValidationResult {
   valid : Bool
   errors : Array[ValidationError]
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend ValidationResult with @moonbitlang/core/debug.Debug::{to_repr}
@@ -27,10 +29,11 @@ pub extend ValidationResult with Eq::{not_equal, equal}
 
 ///|
 /// 验证配置 | Validation configuration
+#derive(Debug, Eq)
 pub(all) struct ValidationConfig {
   strict : Bool
   stop_on_first_error : Bool
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend ValidationConfig with @moonbitlang/core/debug.Debug::{to_repr}
@@ -40,11 +43,12 @@ pub extend ValidationConfig with Eq::{not_equal, equal}
 
 ///|
 /// 验证规则 | Validation rule
+#derive(Debug, Eq)
 pub(all) struct ValidationRule {
   name : String
   description : String
   enabled : Bool
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend ValidationRule with @moonbitlang/core/debug.Debug::{to_repr}

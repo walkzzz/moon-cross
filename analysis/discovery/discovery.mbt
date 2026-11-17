@@ -1,11 +1,12 @@
 ///|
 /// 自动发现结果 | Auto-discovery result
+#derive(Debug, Eq)
 pub(all) struct DiscoveryResult {
   found_functions : Array[String]
   found_types : Array[String]
   detected_platforms : Array[@core.Platform]
   config_generated : Bool
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend DiscoveryResult with @moonbitlang/core/debug.Debug::{to_repr}
@@ -15,12 +16,13 @@ pub extend DiscoveryResult with Eq::{not_equal, equal}
 
 ///|
 /// 平台 SDK 检测结果 | Platform SDK detection result
+#derive(Debug, Eq)
 pub(all) struct PlatformDetection {
   platform : @core.Platform
   available : Bool
   sdk_path : String?
   version : String?
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend PlatformDetection with @moonbitlang/core/debug.Debug::{to_repr}
@@ -30,13 +32,14 @@ pub extend PlatformDetection with Eq::{not_equal, equal}
 
 ///|
 /// 源码分析结果 | Source analysis result
+#derive(Debug, Eq)
 pub(all) struct SourceAnalysis {
   has_pub_fn : Bool
   has_pub_struct : Bool
   has_pub_enum : Bool
   has_extern : Bool
   has_derive : Bool
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend SourceAnalysis with @moonbitlang/core/debug.Debug::{to_repr}

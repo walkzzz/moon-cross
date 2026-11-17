@@ -1,9 +1,10 @@
 ///|
 /// 图类型 | Graph type
+#derive(Debug, Eq)
 pub(all) enum GraphType {
   Directed
   Undirected
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend GraphType with @moonbitlang/core/debug.Debug::{to_repr}
@@ -13,11 +14,12 @@ pub extend GraphType with Eq::{not_equal, equal}
 
 ///|
 /// 图边 | Graph edge
+#derive(Debug, Eq)
 pub(all) struct GraphEdge {
   from : String
   to : String
   weight : Int32
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend GraphEdge with @moonbitlang/core/debug.Debug::{to_repr}
@@ -27,11 +29,12 @@ pub extend GraphEdge with Eq::{not_equal, equal}
 
 ///|
 /// 图 | Graph
+#derive(Debug, Eq)
 pub(all) struct Graph {
   nodes : Array[String]
   edges : Array[GraphEdge]
   graph_type : GraphType
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend Graph with @moonbitlang/core/debug.Debug::{to_repr}

@@ -1,8 +1,9 @@
 ///|
 /// 模板上下文 | Template context
+#derive(Debug, Eq)
 pub(all) struct TemplateContext {
   vars : Array[(String, String)]
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend TemplateContext with @moonbitlang/core/debug.Debug::{to_repr}
@@ -12,9 +13,10 @@ pub extend TemplateContext with Eq::{not_equal, equal}
 
 ///|
 /// 模板 | Template
+#derive(Debug, Eq)
 pub(all) struct Template {
   source : String
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend Template with @moonbitlang/core/debug.Debug::{to_repr}

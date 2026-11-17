@@ -1,5 +1,6 @@
 ///|
 /// openseek 端到端流水线结果 | openseek end-to-end pipeline result
+#derive(Debug, Eq)
 pub(all) struct OpenseekPipelineResult {
   config : @config.CrossConfig
   c_header : String
@@ -10,7 +11,7 @@ pub(all) struct OpenseekPipelineResult {
   android_command : String
   ios_command : String
   ohos_command : String
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend OpenseekPipelineResult with @moonbitlang/core/debug.Debug::{to_repr}

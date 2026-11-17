@@ -1,5 +1,6 @@
 ///|
 /// 变异算子类型 | Mutation operator type
+#derive(Debug, Eq)
 pub(all) enum MutOperator {
   AOR // 算术运算符替换 | Arithmetic Operator Replacement
   ROR // 关系运算符替换 | Relational Operator Replacement
@@ -7,7 +8,7 @@ pub(all) enum MutOperator {
   UOI // 一元运算符插入 | Unary Operator Insertion
   ROI // 返回值修改 | Return Operator Insertion
   SDL // 语句删除 | Statement Deletion
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend MutOperator with @moonbitlang/core/debug.Debug::{to_repr}
@@ -17,13 +18,14 @@ pub extend MutOperator with Eq::{not_equal, equal}
 
 ///|
 /// 变异体 | Mutant
+#derive(Debug, Eq)
 pub(all) struct Mutant {
   id : Int32
   operator : MutOperator
   original : String
   mutated : String
   location : String
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend Mutant with @moonbitlang/core/debug.Debug::{to_repr}
@@ -33,12 +35,13 @@ pub extend Mutant with Eq::{not_equal, equal}
 
 ///|
 /// 变异测试结果 | Mutation test result
+#derive(Debug, Eq)
 pub(all) struct MutantResult {
   mutant_id : Int32
   killed : Bool
   surviving : Bool
   test_that_killed : String
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend MutantResult with @moonbitlang/core/debug.Debug::{to_repr}
@@ -48,13 +51,14 @@ pub extend MutantResult with Eq::{not_equal, equal}
 
 ///|
 /// 变异测试报告 | Mutation testing report
+#derive(Debug, Eq)
 pub(all) struct MutationReport {
   total_mutants : Int32
   killed : Int32
   surviving : Int32
   mutation_score : Int32
   results : Array[MutantResult]
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend MutationReport with @moonbitlang/core/debug.Debug::{to_repr}

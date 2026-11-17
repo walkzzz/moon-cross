@@ -1,10 +1,11 @@
 ///|
 /// 处理器 | Handler
+#derive(Debug, Eq)
 pub(all) struct Handler {
   id : Int32
   name : String
   can_handle : Bool
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend Handler with @moonbitlang/core/debug.Debug::{to_repr}
@@ -14,11 +15,12 @@ pub extend Handler with Eq::{not_equal, equal}
 
 ///|
 /// 处理结果 | Handle result
+#derive(Debug, Eq)
 pub(all) struct HandleResult {
   handled : Bool
   handler_name : String
   message : String
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend HandleResult with @moonbitlang/core/debug.Debug::{to_repr}
@@ -28,10 +30,11 @@ pub extend HandleResult with Eq::{not_equal, equal}
 
 ///|
 /// 处理链 | Handler chain
+#derive(Debug, Eq)
 pub(all) struct HandlerChain {
   handlers : Array[Handler]
   next_id : Int32
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend HandlerChain with @moonbitlang/core/debug.Debug::{to_repr}

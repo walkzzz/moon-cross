@@ -1,12 +1,13 @@
 ///|
 /// 验证步骤类型 | Verification step type
+#derive(Debug, Eq)
 pub(all) enum VerificationStep {
   Generate(String)
   Compile(String)
   Load(String)
   Call(String)
   Verify(String)
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend VerificationStep with @moonbitlang/core/debug.Debug::{to_repr}
@@ -16,12 +17,13 @@ pub extend VerificationStep with Eq::{not_equal, equal}
 
 ///|
 /// 编译产物描述 | Compilation artifact description
+#derive(Debug, Eq)
 pub(all) struct CompilationArtifact {
   platform : String
   file_path : String
   format : String
   functions : Array[String]
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend CompilationArtifact with @moonbitlang/core/debug.Debug::{to_repr}
@@ -31,11 +33,12 @@ pub extend CompilationArtifact with Eq::{not_equal, equal}
 
 ///|
 /// 验证结果 | Verification result
+#derive(Debug, Eq)
 pub(all) struct VerificationResult {
   step : String
   passed : Bool
   detail : String
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend VerificationResult with @moonbitlang/core/debug.Debug::{to_repr}
@@ -45,11 +48,12 @@ pub extend VerificationResult with Eq::{not_equal, equal}
 
 ///|
 /// 验证计划 | Verification plan
+#derive(Debug, Eq)
 pub(all) struct VerificationPlan {
   module_name : String
   steps : Array[VerificationStep]
   artifacts : Array[CompilationArtifact]
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend VerificationPlan with @moonbitlang/core/debug.Debug::{to_repr}

@@ -1,9 +1,10 @@
 ///|
 /// 哈希配置 | Hash configuration
+#derive(Debug, Eq)
 pub(all) struct HashConfig {
   algorithm : String
   salt : String
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend HashConfig with @moonbitlang/core/debug.Debug::{to_repr}
@@ -13,10 +14,11 @@ pub extend HashConfig with Eq::{not_equal, equal}
 
 ///|
 /// 随机数状态 | Random state
+#derive(Debug, Eq)
 pub(all) struct RngState {
   seed : Int32
   current : Int32
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend RngState with @moonbitlang/core/debug.Debug::{to_repr}

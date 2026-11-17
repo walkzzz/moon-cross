@@ -1,10 +1,11 @@
 ///|
 /// 交通灯状态 | Traffic light state
+#derive(Debug, Eq)
 pub(all) enum TrafficLight {
   Red
   Yellow
   Green
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend TrafficLight with @moonbitlang/core/debug.Debug::{to_repr}
@@ -14,10 +15,11 @@ pub extend TrafficLight with Eq::{not_equal, equal}
 
 ///|
 /// 状态上下文 | State context
+#derive(Debug, Eq)
 pub(all) struct StateContext {
   light : TrafficLight
   transitions : Int32
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend StateContext with @moonbitlang/core/debug.Debug::{to_repr}

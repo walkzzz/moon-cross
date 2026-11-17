@@ -11,11 +11,12 @@
 
 ///|
 /// 证明结果 | Proof result
+#derive(Debug, Eq)
 pub(all) struct ProofResult {
   name : String
   holds : Bool
   message : String
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend ProofResult with @moonbitlang/core/debug.Debug::{to_repr}
@@ -25,11 +26,12 @@ pub extend ProofResult with Eq::{not_equal, equal}
 
 ///|
 /// 契约 | Contract (precondition + postcondition)
+#derive(Debug, Eq)
 pub(all) struct Contract {
   name : String
   pre_condition : String
   post_condition : String
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend Contract with @moonbitlang/core/debug.Debug::{to_repr}
@@ -39,11 +41,12 @@ pub extend Contract with Eq::{not_equal, equal}
 
 ///|
 /// 不变量 | Invariant
+#derive(Debug, Eq)
 pub(all) struct Invariant {
   name : String
   description : String
   check : Bool
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend Invariant with @moonbitlang/core/debug.Debug::{to_repr}
@@ -324,12 +327,13 @@ pub fn proof_version() -> String {
 
 ///|
 /// 归纳证明步骤 | Inductive proof step
+#derive(Debug, Eq)
 pub(all) struct InductiveStep {
   base_case : String
   inductive_step : String
   conclusion : String
   verified : Bool
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend InductiveStep with @moonbitlang/core/debug.Debug::{to_repr}
@@ -339,12 +343,13 @@ pub extend InductiveStep with Eq::{not_equal, equal}
 
 ///|
 /// 反证法证明 | Proof by contradiction
+#derive(Debug, Eq)
 pub(all) struct ContradictionProof {
   assumption : String
   contradiction : String
   conclusion : String
   valid : Bool
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend ContradictionProof with @moonbitlang/core/debug.Debug::{to_repr}
@@ -354,12 +359,13 @@ pub extend ContradictionProof with Eq::{not_equal, equal}
 
 ///|
 /// trait 层次验证 | Trait hierarchy verification
+#derive(Debug, Eq)
 pub(all) struct TraitVerification {
   trait_name : String
   sub_trait : String
   super_trait : String
   holds : Bool
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend TraitVerification with @moonbitlang/core/debug.Debug::{to_repr}
@@ -369,12 +375,13 @@ pub extend TraitVerification with Eq::{not_equal, equal}
 
 ///|
 /// 不变量证明 | Invariant proof
+#derive(Debug, Eq)
 pub(all) struct InvariantProof {
   invariant_name : String
   pre_condition : String
   post_condition : String
   preserves : Bool
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend InvariantProof with @moonbitlang/core/debug.Debug::{to_repr}

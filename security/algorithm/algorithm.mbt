@@ -1,10 +1,11 @@
 ///|
 /// 搜索结果 | Search result
+#derive(Debug, Eq)
 pub(all) struct SearchResult {
   found : Bool
   index : Int32
   comparisons : Int32
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend SearchResult with @moonbitlang/core/debug.Debug::{to_repr}

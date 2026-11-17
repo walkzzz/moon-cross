@@ -1,12 +1,13 @@
 ///|
 /// 重构建议类型 | Refactoring suggestion type
+#derive(Debug, Eq)
 pub(all) struct RefactorSuggestion {
   target : String
   from_pattern : String
   to_pattern : String
   reason : String
   severity : String
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend RefactorSuggestion with @moonbitlang/core/debug.Debug::{to_repr}
@@ -16,12 +17,13 @@ pub extend RefactorSuggestion with Eq::{not_equal, equal}
 
 ///|
 /// 重构报告 | Refactoring report
+#derive(Debug, Eq)
 pub(all) struct RefactorReport {
   suggestions : Array[RefactorSuggestion]
   total : Int32
   applied : Int32
   skipped : Int32
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend RefactorReport with @moonbitlang/core/debug.Debug::{to_repr}
@@ -31,13 +33,14 @@ pub extend RefactorReport with Eq::{not_equal, equal}
 
 ///|
 /// 重构模式 | Refactoring pattern
+#derive(Debug, Eq)
 pub(all) struct RefactorPattern {
   name : String
   description : String
   before : String
   after : String
   benefits : Array[String]
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend RefactorPattern with @moonbitlang/core/debug.Debug::{to_repr}

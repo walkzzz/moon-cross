@@ -1,10 +1,11 @@
 ///|
 /// 元素 | Element
+#derive(Debug, Eq)
 pub(all) struct Element {
   id : Int32
   name : String
   value : Int32
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend Element with @moonbitlang/core/debug.Debug::{to_repr}
@@ -14,11 +15,12 @@ pub extend Element with Eq::{not_equal, equal}
 
 ///|
 /// 访问结果 | Visit result
+#derive(Debug, Eq)
 pub(all) struct VisitResult {
   element_name : String
   operation : String
   result_value : Int32
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend VisitResult with @moonbitlang/core/debug.Debug::{to_repr}

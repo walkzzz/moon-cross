@@ -1,11 +1,12 @@
 ///|
 /// 参数类型 | Argument type
+#derive(Debug, Eq)
 pub(all) enum ArgType {
   String
   Int
   Bool
   Flag
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend ArgType with @moonbitlang/core/debug.Debug::{to_repr}
@@ -15,6 +16,7 @@ pub extend ArgType with Eq::{not_equal, equal}
 
 ///|
 /// 参数定义 | Argument definition
+#derive(Debug, Eq)
 pub(all) struct ArgDef {
   name : String
   short : String
@@ -23,7 +25,7 @@ pub(all) struct ArgDef {
   required : Bool
   default_value : String
   description : String
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend ArgDef with @moonbitlang/core/debug.Debug::{to_repr}
@@ -33,11 +35,12 @@ pub extend ArgDef with Eq::{not_equal, equal}
 
 ///|
 /// 解析结果 | Parse result
+#derive(Debug, Eq)
 pub(all) struct ParseResult {
   values : Array[(String, String)]
   positional : Array[String]
   errors : Array[String]
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend ParseResult with @moonbitlang/core/debug.Debug::{to_repr}
@@ -47,12 +50,13 @@ pub extend ParseResult with Eq::{not_equal, equal}
 
 ///|
 /// 参数解析器 | Argument parser
+#derive(Debug, Eq)
 pub(all) struct ArgParser {
   name : String
   description : String
   args : Array[ArgDef]
   subcommands : Array[String]
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend ArgParser with @moonbitlang/core/debug.Debug::{to_repr}

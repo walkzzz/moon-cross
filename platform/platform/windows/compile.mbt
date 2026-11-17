@@ -1,10 +1,11 @@
 ///|
 /// Windows 编译配置 | Windows compilation configuration
+#derive(Debug, Eq)
 pub(all) struct WindowsCompileConfig {
   arch : @core.Arch
   output_dir : String
   output_name : String
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend WindowsCompileConfig with @moonbitlang/core/debug.Debug::{to_repr}

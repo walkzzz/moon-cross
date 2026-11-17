@@ -1,10 +1,11 @@
 ///|
 /// 增量同步结果 | Incremental sync result
+#derive(Debug, Eq)
 pub(all) struct SyncResult {
   platform : @core.Platform
   updated_files : Array[String]
   success : Bool
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend SyncResult with @moonbitlang/core/debug.Debug::{to_repr}

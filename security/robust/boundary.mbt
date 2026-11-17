@@ -1,10 +1,11 @@
 ///|
 /// 边界检查结果 | Boundary check result
+#derive(Debug, Eq)
 pub(all) struct BoundaryCheckResult {
   safe : Bool
   warning : String?
   sanitized : String?
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend BoundaryCheckResult with @moonbitlang/core/debug.Debug::{to_repr}

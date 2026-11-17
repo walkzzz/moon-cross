@@ -1,9 +1,10 @@
 ///|
 /// 调用记录 | Call record
+#derive(Debug, Eq)
 pub(all) struct MockCall {
   method_name : String
   args : String
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend MockCall with @moonbitlang/core/debug.Debug::{to_repr}
@@ -13,10 +14,11 @@ pub extend MockCall with Eq::{not_equal, equal}
 
 ///|
 /// Mock 对象 | Mock object
+#derive(Debug, Eq)
 pub(all) struct Mock {
   calls : Array[MockCall]
   expectations : Array[MockCall]
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend Mock with @moonbitlang/core/debug.Debug::{to_repr}
@@ -26,11 +28,12 @@ pub extend Mock with Eq::{not_equal, equal}
 
 ///|
 /// Stub 对象 | Stub object
+#derive(Debug, Eq)
 pub(all) struct Stub {
   method_name : String
   return_value : String
   call_count : Int32
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend Stub with @moonbitlang/core/debug.Debug::{to_repr}
@@ -40,10 +43,11 @@ pub extend Stub with Eq::{not_equal, equal}
 
 ///|
 /// Spy 对象 | Spy object
+#derive(Debug, Eq)
 pub(all) struct Spy {
   calls : Array[MockCall]
   wrapped : String
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend Spy with @moonbitlang/core/debug.Debug::{to_repr}
@@ -53,11 +57,12 @@ pub extend Spy with Eq::{not_equal, equal}
 
 ///|
 /// Fake 对象 | Fake object
+#derive(Debug, Eq)
 pub(all) struct Fake {
   name : String
   behavior : String
   call_count : Int32
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend Fake with @moonbitlang/core/debug.Debug::{to_repr}

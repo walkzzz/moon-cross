@@ -1,12 +1,13 @@
 ///|
 /// 沙箱配置 | Sandbox configuration
+#derive(Debug, Eq)
 pub(all) struct SandboxConfig {
   work_dir : String
   timeout_ms : Int32
   max_memory_mb : Int32
   isolated : Bool
   read_only : Bool
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend SandboxConfig with @moonbitlang/core/debug.Debug::{to_repr}
@@ -16,6 +17,7 @@ pub extend SandboxConfig with Eq::{not_equal, equal}
 
 ///|
 /// 沙箱执行结果 | Sandbox execution result
+#derive(Debug, Eq)
 pub(all) struct SandboxResult {
   success : Bool
   exit_code : Int32
@@ -23,7 +25,7 @@ pub(all) struct SandboxResult {
   stderr : String
   duration_ms : Int32
   timed_out : Bool
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend SandboxResult with @moonbitlang/core/debug.Debug::{to_repr}

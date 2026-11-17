@@ -1,12 +1,13 @@
 ///|
 /// 单平台编译结果 | Single platform compile result
+#derive(Debug, Eq)
 pub(all) struct PlatformCompileResult {
   platform : @core.Platform
   success : Bool
   error_message : String?
   output_files : Array[String]
   duration_ms : Int32
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend PlatformCompileResult with @moonbitlang/core/debug.Debug::{to_repr}
@@ -16,12 +17,13 @@ pub extend PlatformCompileResult with Eq::{not_equal, equal}
 
 ///|
 /// 多平台编译汇总报告 | Multi-platform compile summary report
+#derive(Debug, Eq)
 pub(all) struct CompileSummary {
   results : Array[PlatformCompileResult]
   total_platforms : Int32
   successful_platforms : Int32
   failed_platforms : Int32
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend CompileSummary with @moonbitlang/core/debug.Debug::{to_repr}
@@ -31,11 +33,12 @@ pub extend CompileSummary with Eq::{not_equal, equal}
 
 ///|
 /// FFI 回退模式 | FFI fallback mode
+#derive(Debug, Eq)
 pub(all) enum FfiFallbackMode {
   FullFfi
   PureC
   ManualFfi
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend FfiFallbackMode with @moonbitlang/core/debug.Debug::{to_repr}

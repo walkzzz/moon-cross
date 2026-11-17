@@ -1,10 +1,11 @@
 ///|
 /// Init 向导步骤 | Init wizard step
+#derive(Debug, Eq)
 pub(all) struct WizardStep {
   prompt : String
   default_value : String
   options : Array[String]
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend WizardStep with @moonbitlang/core/debug.Debug::{to_repr}
@@ -14,13 +15,14 @@ pub extend WizardStep with Eq::{not_equal, equal}
 
 ///|
 /// Init 向导配置 | Init wizard configuration
+#derive(Debug, Eq)
 pub(all) struct InitWizard {
   project_name : String
   target_platforms : Array[@core.Platform]
   ffi_enabled : Bool
   author : String
   template : String
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend InitWizard with @moonbitlang/core/debug.Debug::{to_repr}
@@ -30,12 +32,13 @@ pub extend InitWizard with Eq::{not_equal, equal}
 
 ///|
 /// 进度步骤 | Progress step
+#derive(Debug, Eq)
 pub(all) struct ProgressStep {
   name : String
   platform : @core.Platform
   completed : Bool
   duration_ms : Int32
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend ProgressStep with @moonbitlang/core/debug.Debug::{to_repr}
@@ -45,12 +48,13 @@ pub extend ProgressStep with Eq::{not_equal, equal}
 
 ///|
 /// 进度条 | Progress bar
+#derive(Debug, Eq)
 pub(all) struct ProgressBar {
   total : Int32
   completed : Int32
   current_step : String
   steps : Array[ProgressStep]
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend ProgressBar with @moonbitlang/core/debug.Debug::{to_repr}

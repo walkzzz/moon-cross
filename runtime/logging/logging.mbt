@@ -1,12 +1,13 @@
 ///|
 /// 日志级别 | Log level
+#derive(Debug, Eq)
 pub(all) enum LogLevel {
   Debug
   Info
   Warn
   Error
   Fatal
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend LogLevel with @moonbitlang/core/debug.Debug::{to_repr}
@@ -16,13 +17,14 @@ pub extend LogLevel with Eq::{not_equal, equal}
 
 ///|
 /// 日志条目 | Log entry
+#derive(Debug, Eq)
 pub(all) struct LogEntry {
   level : LogLevel
   message : String
   timestamp : Int32
   source : String
   context : String
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend LogEntry with @moonbitlang/core/debug.Debug::{to_repr}
@@ -32,12 +34,13 @@ pub extend LogEntry with Eq::{not_equal, equal}
 
 ///|
 /// 日志配置 | Log configuration
+#derive(Debug, Eq)
 pub(all) struct LogConfig {
   min_level : LogLevel
   include_timestamp : Bool
   include_source : Bool
   max_entries : Int32
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend LogConfig with @moonbitlang/core/debug.Debug::{to_repr}
@@ -47,6 +50,7 @@ pub extend LogConfig with Eq::{not_equal, equal}
 
 ///|
 /// 日志统计 | Log statistics
+#derive(Debug, Eq)
 pub(all) struct LogStats {
   total_entries : Int32
   debug_count : Int32
@@ -55,7 +59,7 @@ pub(all) struct LogStats {
   error_count : Int32
   fatal_count : Int32
   dropped_count : Int32
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend LogStats with @moonbitlang/core/debug.Debug::{to_repr}
@@ -65,11 +69,12 @@ pub extend LogStats with Eq::{not_equal, equal}
 
 ///|
 /// 日志器 | Logger
+#derive(Debug, Eq)
 pub(all) struct Logger {
   config : LogConfig
   entries : Array[LogEntry]
   stats : LogStats
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend Logger with @moonbitlang/core/debug.Debug::{to_repr}

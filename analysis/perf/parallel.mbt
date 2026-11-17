@@ -1,10 +1,11 @@
 ///|
 /// 并行编译配置 | Parallel compilation configuration
+#derive(Debug, Eq)
 pub(all) struct ParallelConfig {
   max_parallelism : Int32
   enabled : Bool
   multi_arch : Bool
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend ParallelConfig with @moonbitlang/core/debug.Debug::{to_repr}
@@ -14,12 +15,13 @@ pub extend ParallelConfig with Eq::{not_equal, equal}
 
 ///|
 /// 并行任务 | Parallel task
+#derive(Debug, Eq)
 pub(all) struct ParallelTask {
   platform : @core.Platform
   arch : @core.Arch
   command : String
   priority : Int32
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend ParallelTask with @moonbitlang/core/debug.Debug::{to_repr}
@@ -29,11 +31,12 @@ pub extend ParallelTask with Eq::{not_equal, equal}
 
 ///|
 /// 任务调度结果 | Task schedule result
+#derive(Debug, Eq)
 pub(all) struct TaskSchedule {
   tasks : Array[ParallelTask]
   batches : Int32
   estimated_speedup : Double
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend TaskSchedule with @moonbitlang/core/debug.Debug::{to_repr}

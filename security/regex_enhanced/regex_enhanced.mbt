@@ -1,11 +1,12 @@
 ///|
 /// 正则模式 | Regex pattern
+#derive(Debug, Eq)
 pub(all) struct RegexPattern {
   pattern : String
   has_start_anchor : Bool
   has_end_anchor : Bool
   core : String
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend RegexPattern with @moonbitlang/core/debug.Debug::{to_repr}
@@ -15,11 +16,12 @@ pub extend RegexPattern with Eq::{not_equal, equal}
 
 ///|
 /// 正则匹配结果 | Regex match result
+#derive(Debug, Eq)
 pub(all) struct RegexMatch {
   matched : String
   start : Int32
   end : Int32
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend RegexMatch with @moonbitlang/core/debug.Debug::{to_repr}

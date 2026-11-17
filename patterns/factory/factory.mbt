@@ -1,10 +1,11 @@
 ///|
 /// 产品类型 | Product type
+#derive(Debug, Eq)
 pub(all) struct ProductInfo {
   type_name : String
   version : String
   attributes : Array[String]
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend ProductInfo with @moonbitlang/core/debug.Debug::{to_repr}
@@ -14,10 +15,11 @@ pub extend ProductInfo with Eq::{not_equal, equal}
 
 ///|
 /// 工厂注册项 | Factory registration
+#derive(Debug, Eq)
 pub(all) struct FactoryRegistration {
   type_name : String
   creator : String
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend FactoryRegistration with @moonbitlang/core/debug.Debug::{to_repr}
@@ -27,9 +29,10 @@ pub extend FactoryRegistration with Eq::{not_equal, equal}
 
 ///|
 /// 工厂 | Factory
+#derive(Debug, Eq)
 pub(all) struct Factory {
   registrations : Array[FactoryRegistration]
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend Factory with @moonbitlang/core/debug.Debug::{to_repr}

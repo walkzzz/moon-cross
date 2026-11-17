@@ -1,11 +1,12 @@
 ///|
 /// 拼音转换结果 | Pinyin conversion result
+#derive(Debug, Eq)
 pub(all) struct PinyinResult {
   input : String
   pinyin : String
   short_pinyin : String
   has_chinese : Bool
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend PinyinResult with Debug::{to_repr}
@@ -15,10 +16,11 @@ pub extend PinyinResult with Eq::{not_equal, equal}
 
 ///|
 /// 输入验证结果 | Input validation result
+#derive(Debug, Eq)
 pub(all) struct ValidationResult {
   valid : Bool
   error_message : String
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend ValidationResult with Debug::{to_repr}

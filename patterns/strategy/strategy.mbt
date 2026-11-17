@@ -1,9 +1,10 @@
 ///|
 /// 策略上下文 | Strategy context
+#derive(Debug, Eq)
 pub(all) struct StrategyContext {
   strategy_name : String
   config : String
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend StrategyContext with @moonbitlang/core/debug.Debug::{to_repr}
@@ -13,11 +14,12 @@ pub extend StrategyContext with Eq::{not_equal, equal}
 
 ///|
 /// 策略结果 | Strategy result
+#derive(Debug, Eq)
 pub(all) struct StrategyResult {
   success : Bool
   output : String
   strategy_used : String
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend StrategyResult with @moonbitlang/core/debug.Debug::{to_repr}

@@ -1,12 +1,13 @@
 ///|
 /// 调度任务 | Scheduled task
+#derive(Debug, Eq)
 pub(all) struct ScheduledTask {
   id : Int32
   name : String
   delay : Int32
   priority : Int32
   executed : Bool
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend ScheduledTask with @moonbitlang/core/debug.Debug::{to_repr}
@@ -16,12 +17,13 @@ pub extend ScheduledTask with Eq::{not_equal, equal}
 
 ///|
 /// 调度器 | Scheduler
+#derive(Debug, Eq)
 pub(all) struct Scheduler {
   tasks : Array[ScheduledTask]
   current_time : Int32
   next_id : Int32
   executed_count : Int32
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend Scheduler with @moonbitlang/core/debug.Debug::{to_repr}

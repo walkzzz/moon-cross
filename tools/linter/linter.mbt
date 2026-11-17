@@ -1,10 +1,11 @@
 ///|
 /// Lint 严重级别 | Lint severity level
+#derive(Debug, Eq)
 pub(all) enum LintSeverity {
   Info
   Warning
   Error
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend LintSeverity with @moonbitlang/core/debug.Debug::{to_repr}
@@ -24,13 +25,14 @@ pub fn LintSeverity::to_string(self : LintSeverity) -> String {
 
 ///|
 /// Lint 规则 | Lint rule
+#derive(Debug, Eq)
 pub(all) struct LintRule {
   id : String
   name : String
   description : String
   severity : LintSeverity
   enabled : Bool
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend LintRule with @moonbitlang/core/debug.Debug::{to_repr}
@@ -40,12 +42,13 @@ pub extend LintRule with Eq::{not_equal, equal}
 
 ///|
 /// Lint 问题 | Lint issue
+#derive(Debug, Eq)
 pub(all) struct LintIssue {
   rule_id : String
   severity : LintSeverity
   message : String
   location : String
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend LintIssue with @moonbitlang/core/debug.Debug::{to_repr}
@@ -55,13 +58,14 @@ pub extend LintIssue with Eq::{not_equal, equal}
 
 ///|
 /// Lint 结果 | Lint result
+#derive(Debug, Eq)
 pub(all) struct LintResult {
   issues : Array[LintIssue]
   error_count : Int32
   warning_count : Int32
   info_count : Int32
   passed : Bool
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend LintResult with @moonbitlang/core/debug.Debug::{to_repr}
@@ -71,11 +75,12 @@ pub extend LintResult with Eq::{not_equal, equal}
 
 ///|
 /// Lint 配置 | Lint configuration
+#derive(Debug, Eq)
 pub(all) struct LintConfig {
   rules : Array[LintRule]
   fail_on_error : Bool
   fail_on_warning : Bool
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend LintConfig with @moonbitlang/core/debug.Debug::{to_repr}

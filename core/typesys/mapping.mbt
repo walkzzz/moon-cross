@@ -1,5 +1,6 @@
 ///|
 /// MoonBit 源类型 | MoonBit source type
+#derive(Debug, Eq)
 pub(all) enum MoonBitType {
   IntT
   DoubleT
@@ -9,7 +10,7 @@ pub(all) enum MoonBitType {
   BytesT
   ArrayT(String)
   StructT(String)
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend MoonBitType with @moonbitlang/core/debug.Debug::{to_repr}
@@ -19,6 +20,7 @@ pub extend MoonBitType with Eq::{not_equal, equal}
 
 ///|
 /// C 适配层类型 | C adapter type
+#derive(Debug, Eq)
 pub(all) enum CType {
   CInt32
   CDouble
@@ -27,7 +29,7 @@ pub(all) enum CType {
   CMoonbitString
   CMoonbitBytes
   COpaquePtr
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend CType with @moonbitlang/core/debug.Debug::{to_repr}
